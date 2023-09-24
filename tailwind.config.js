@@ -1,0 +1,38 @@
+module.exports = {
+  darkMode: "class",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        body: ["Poppins", "sans-serif;"],
+      },
+      colors: {
+        primary: "#00B207",
+        softPrimary: "#84D187",
+        darkPrimary: "#2C742F",
+        warning: "#FF8A00",
+        danger: "#EA4B48",
+        gray8: "#333",
+        gray4: "#999",
+        gray1: "#E6E6E6",
+        gray2: "#CCC",
+        gray3: "#B3B3B3",
+        gray5: "#808080",
+        gray6: "#666",
+        gray7: "#4D4D4D",
+        gray9: "#1A1A1A",
+        gray5_1: "#F2F2F2",
+        greenGray7: "#2B572E",
+        greenGray4: "#7A997C",
+        greenGray1: "#DAE5DA",
+        greenGray2: "#B4CCB4",
+        greenGray3: "#96B297",
+        greenGray5: "#618062",
+        greenGray6: "#406B42",
+        greenGray8: "#173B1A",
+        greenGray9: "#002603",
+      },
+    },
+  },
+  plugins: [],
+};

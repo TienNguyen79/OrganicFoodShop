@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply font-body;
+    overflow-x: hidden;
+  }
+  input {
+    @apply outline-none;
+  }
+}
+
+.connectNav::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 50px;
+  height: 30px;
+  background-color: transparent;
+}
+
+.gradient-banner {
+  background-image: linear-gradient(
+      179.14deg,
+      rgba(32, 18, 63, 0.4) -7.14%,
+      rgba(0, 0, 0, 0.4) 87.01%
+    ),
+    url("https://images.unsplash.com/photo-1610348725531-843dff563e2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80");
+}
+
+.shadow1 {
+  box-shadow: 4px 4px 8px 0px rgba(226, 226, 226, 0.2),
+    -4px 4px 8px 0px rgba(226, 226, 226, 0.2);
+}
