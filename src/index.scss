@@ -34,3 +34,9 @@
   box-shadow: 4px 4px 8px 0px rgba(226, 226, 226, 0.2),
     -4px 4px 8px 0px rgba(226, 226, 226, 0.2);
 }
+
+.code-input {
+  letter-spacing: 10px; /* Khoảng cách giữa các ký tự */
+  text-align: center; /* Căn giữa các ký tự trong ô vuông */
+  padding: 5px; /* Kích thước của mỗi ô vuông */
+}

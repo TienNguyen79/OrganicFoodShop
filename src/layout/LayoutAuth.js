@@ -4,7 +4,13 @@ import BannerNav from "../components/banner/BannerNav";
 import Footer from "../components/Footer/Footer";
 import { Link } from "react-router-dom";
 
-const LayoutAuth = ({ children, heading, navName, navLink }) => {
+const LayoutAuth = ({
+  children,
+  heading,
+  navName,
+  navLink,
+  contentFooter = "Don’t have account?",
+}) => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="">
@@ -20,7 +26,7 @@ const LayoutAuth = ({ children, heading, navName, navLink }) => {
 
           <div className="mt-[18px] text-center">
             <span className="text-sm text-gray-600 font-normal">
-              Don’t have account?
+              {contentFooter}
             </span>
             <Link to={navLink}>
               <span className="font-medium text-sm text-gray9"> {navName}</span>

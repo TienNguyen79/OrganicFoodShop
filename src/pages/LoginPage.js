@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutAuth from "../layout/LayoutAuth";
 import { useForm } from "react-hook-form";
 import useToggleValue from "../hooks/useToggleValue";
@@ -6,6 +6,27 @@ import Input from "../components/input/Input";
 import IconEyeToggle from "../components/Icons/IconEyeToggle";
 import Checkbox from "../components/checkbox/Checkbox";
 import Button from "../components/button/Button";
+import axios from "axios";
+import fetchApiData1 from "../api/apiMethod1";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  authCheckToken,
+  authGetStatus,
+  authLogin,
+} from "../store/auth/auth-slice";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("E-mail is required")
+    .email("Field should contain a valid e-mail"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be 8 character "),
+});
 
 const LoginPage = () => {
   const {
@@ -15,6 +36,7 @@ const LoginPage = () => {
     formState: { isValid, isSubmitting, errors },
     watch,
   } = useForm({
+    resolver: yupResolver(schema),
     mode: "onChange",
   });
 
@@ -23,15 +45,29 @@ const LoginPage = () => {
 
   const { value: showEye, handleToggleValue: handleToggleEye } =
     useToggleValue();
+  const { loading } = useSelector((state) => state.auth);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handlelogin = async (values) => {
+    console.log("🚀 ~ file: LoginPage.js:28 ~ handlelogin ~ values:", values);
+
+    try {
+      dispatch(authLogin({ ...values }));
+    } catch (error) {
+      console.log("🚀 ~ file: LoginPage.js:38 ~ handlelogin ~ error:", error);
+    }
+  };
   return (
     <LayoutAuth heading="Login" navName="Register" navLink="/register">
-      <form action="">
+      <form action="" onSubmit={handleSubmit(handlelogin)}>
         <Input
           control={control}
           name="email"
           placeholder="Email"
           className="mb-3"
+          error={errors.email?.message}
         ></Input>
         <Input
           control={control}
@@ -40,6 +76,7 @@ const LoginPage = () => {
           kind="eye"
           type={`${showEye ? "text" : "password"}`}
           className="mb-3"
+          error={errors.password?.message}
         >
           <IconEyeToggle
             open={showEye}
@@ -47,16 +84,29 @@ const LoginPage = () => {
           ></IconEyeToggle>
         </Input>
 
-        <Checkbox
-          name="remember"
-          checked={acceptTerm}
-          onClick={handleToggleTerm}
-          value="remember"
-        >
-          Remember me
-        </Checkbox>
+        <div className="flex items-start justify-between">
+          <Checkbox
+            name="remember"
+            checked={acceptTerm}
+            onClick={handleToggleTerm}
+            value="remember"
+          >
+            Remember me
+          </Checkbox>
 
-        <Button className="w-full text-sm" kind="primary">
+          <Link to="/forgot-pass">
+            <span className="text-gray6 text-sm font-medium">
+              Forgot Password
+            </span>
+          </Link>
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full text-sm"
+          kind="primary"
+          isLoading={loading}
+        >
           Login
         </Button>
       </form>

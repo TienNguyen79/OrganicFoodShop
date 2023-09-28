@@ -9,7 +9,11 @@ const Button = ({
   ...rest
 }) => {
   const child = !!isLoading ? (
-    <img src="/Spin-1s-200px.svg" className="loadingsvg" alt="loading" />
+    <img
+      src="/Spin-1s-200px.svg"
+      className="loadingsvg h-[30px]"
+      alt="loading"
+    />
   ) : (
     children
   );
@@ -48,7 +52,9 @@ const Button = ({
       type={type}
       {...rest}
       className={`${defaultClassName} ${
-        !!isLoading ? "opacity-50 pointer-events-none select-none" : ""
+        !!isLoading
+          ? "opacity-50 pointer-events-none select-none !py-[10px]"
+          : ""
       } ${className}`}
     >
       {child}

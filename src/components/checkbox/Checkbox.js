@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useController } from "react-hook-form";
 
 const Checkbox = ({
@@ -8,9 +8,10 @@ const Checkbox = ({
   value,
   children,
   control,
+  showError,
 }) => {
   return (
-    <div className="flex items-start gap-x-5">
+    <div className="flex items-start gap-x-5 ">
       <div
         className={`inline-flex items-center justify-center  text-white  w-5 h-5 border rounded  cursor-pointer mb-5 ${
           checked ? "bg-primary border-primary " : "border-strock"
@@ -43,11 +44,21 @@ const Checkbox = ({
         </span>
       </div>
       {children && (
-        <div
-          onClick={onClick}
-          className="cursor-pointer text-sm font-normal text-gray6"
-        >
-          {children}
+        <div>
+          <div
+            onClick={onClick}
+            className="cursor-pointer text-sm font-normal text-gray6"
+          >
+            {children}
+          </div>
+
+          {showError && !checked ? (
+            <span className=" block mt-4 text-[14px] font-medium text-danger top-2/4 left-6 -translate-y-2/4 pointer-events-none error-input ">
+              Please accpect the terms and condition
+            </span>
+          ) : (
+            ""
+          )}
         </div>
       )}
     </div>

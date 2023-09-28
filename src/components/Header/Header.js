@@ -8,9 +8,15 @@ import IconUser from "../Icons/IconUser";
 import Input from "../input/Input";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import PopupMe from "../popup/PopupMe";
+import useClickOutSide from "../../hooks/useClickOutSide";
 
 const Header = () => {
   const { control } = useForm();
+  const { user, accessToken } = useSelector((state) => state.auth);
+
+  const { show, setShow, nodeRef } = useClickOutSide();
   return (
     <div className="w-full ">
       <div className="h-[42px] bg-gray8 flex  justify-around  ">
@@ -75,16 +81,20 @@ const Header = () => {
               />
             </svg>
           </span>
-          <div className="w-[1px] h-[15px] bg-white opacity-10"></div>
-          <div className="flex text-xs text-gray3 font-normal gap-x-1">
-            <Link to="/login">
-              <span className="hover:opacity-75">SignIn</span>
-            </Link>
-            <span>/</span>
-            <Link to="/register">
-              <span className="hover:opacity-75">SignUp</span>
-            </Link>
-          </div>
+          {!user && (
+            <Fragment>
+              <div className="w-[1px] h-[15px] bg-white opacity-10"></div>
+              <div className="flex text-xs text-gray3 font-normal gap-x-1">
+                <Link to="/login">
+                  <span className="hover:opacity-75">SignIn</span>
+                </Link>
+                <span>/</span>
+                <Link to="/register">
+                  <span className="hover:opacity-75">SignUp</span>
+                </Link>
+              </div>
+            </Fragment>
+          )}
         </div>
       </div>
       <div className="shadow-lg  py-5 flex items-center justify-around px-[151px]">
@@ -107,7 +117,11 @@ const Header = () => {
             <div className="flex items-center gap-x-5">
               <div className="relative group ">
                 <IconSearch></IconSearch>
-                <div className="absolute w-[350px] flex -translate-y-9   translate-x-[500px] transition-all duration-250  group-hover:translate-x-0  ">
+                <div
+                  className={`absolute ${
+                    user ? "w-[350px] " : "w-[300px]"
+                  } flex -translate-y-9 z-[60] translate-x-[500px] transition-all duration-250  group-hover:translate-x-0 `}
+                >
                   <Input control={control} name="search">
                     <IconSearch></IconSearch>
                   </Input>
@@ -118,7 +132,30 @@ const Header = () => {
               </div>
               <IconTym></IconTym>
               <IconBag></IconBag>
-              <IconUser></IconUser>
+
+              {user && (
+                <div className="relative">
+                  <div
+                    title={user.name}
+                    className="w-8 h-8  border-2  rounded-full overflow-hidden cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
+                      setShow(!show);
+                    }}
+                  >
+                    <img
+                      src="https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg"
+                      className=" w-full h-full object-cover"
+                      alt=""
+                    />
+                  </div>
+                  {show && (
+                    <div ref={nodeRef}>
+                      <PopupMe></PopupMe>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

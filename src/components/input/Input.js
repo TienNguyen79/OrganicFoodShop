@@ -32,7 +32,7 @@ const Input = (props) => {
           id={name}
           className={`py-3 px-4 w-full border font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2 ${className} dark:text-white text-text1 ${
             error
-              ? "border-error "
+              ? "border-danger "
               : "border-strock dark: dark:border-darkStroke"
           } ${
             children && kind === "eye"
@@ -60,7 +60,7 @@ const Input = (props) => {
       </div>
 
       {error.length > 0 && (
-        <span className=" block mt-4 text-[14px] font-medium text-error top-2/4 left-6 -translate-y-2/4 pointer-events-none error-input ">
+        <span className=" block mt-4 text-[14px] font-medium text-danger top-2/4 left-6 -translate-y-2/4 pointer-events-none error-input ">
           {error}
         </span>
       )}
