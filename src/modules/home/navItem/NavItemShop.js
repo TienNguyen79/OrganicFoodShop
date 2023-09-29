@@ -50,7 +50,7 @@ const fakeCategory = [
 
 const NavItemShop = () => {
   return (
-    <div className="absolute top-12 left-[-92px]  translate-y-8 invisible  transition-all opacity-0 duration-300 bg-white shadow-lg w-[73vw] group-hover:translate-y-0 group-hover:opacity-100  group-hover:visible">
+    <div className="absolute top-12 left-[-92px] z-30  translate-y-8 invisible  transition-all opacity-0 duration-300 bg-white shadow-lg w-[73vw] group-hover:translate-y-0 group-hover:opacity-100  group-hover:visible">
       <div className="grid grid-cols-4 py-4 px-2">
         {fakeCategory.length > 0 &&
           fakeCategory.slice(0, 4).map((item, index) => (

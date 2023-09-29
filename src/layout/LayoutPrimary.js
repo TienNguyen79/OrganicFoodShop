@@ -10,10 +10,7 @@ const LayoutPrimary = () => {
       <div className="">
         <Header></Header>
       </div>
-      <div>
-        <SliderBanner></SliderBanner>
-      </div>
-      <div className="px-[238px] pb-[80px] flex-grow">
+      <div className="pb-[80px] flex-grow">
         <Outlet></Outlet>
       </div>
       <div className="mt-auto">
