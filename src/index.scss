@@ -40,3 +40,27 @@
   text-align: center; /* Căn giữa các ký tự trong ô vuông */
   padding: 5px; /* Kích thước của mỗi ô vuông */
 }
+
+//custom slider
+button.slick-arrow.slick-next {
+  display: block;
+  margin-right: 80px;
+}
+
+button.slick-arrow.slick-prev {
+  display: block;
+  margin-left: 80px;
+  z-index: 10;
+}
+ul.slick-dots {
+  margin-bottom: 48px;
+}
+
+.slick-dots li.slick-active button:before,
+.slick-dots li button:before {
+  color: #00b207 !important;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-size: 29px !important;
+}
