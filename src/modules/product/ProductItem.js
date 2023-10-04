@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProImage from "./parts/ProImage";
 import ProTitle from "./parts/ProTitle";
 import ProPrice from "./parts/ProPrice";
@@ -6,6 +6,8 @@ import IconStarYellow from "../../components/Icons/IconStarYellow";
 import IconStarGray from "../../components/Icons/IconStarGray";
 import IconBagPro from "../../components/Icons/IconBagPro";
 import ProSale from "./parts/ProSale";
+import IconHeart from "../../components/Icons/IconHeart";
+import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 
 const ProductItem = ({ data = "1" }) => {
   //   let temp = [];
@@ -73,11 +75,16 @@ const ProductItem = ({ data = "1" }) => {
   //   ));
   //   // Đánh dấu các sao sau starCount bằng màu xám
   //   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
-
+  const [isGroupHovered, setIsGroupHovered] = useState(false);
   return (
-    <div className="shadow-lg bg-white rounded-lg h-[360px] relative">
+    <div
+      className="border  border-gray-200 bg-white rounded-lg h-[407px] cursor-pointer flex flex-col relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
+      //phục vụ mỗi việc đổi màu icon Bag :<
+      onMouseEnter={() => setIsGroupHovered(true)}
+      onMouseLeave={() => setIsGroupHovered(false)}
+    >
       <ProImage></ProImage>
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-between items-center p-4 mt-auto">
         <div>
           <ProTitle></ProTitle>
           <ProPrice></ProPrice>
@@ -94,12 +101,26 @@ const ProductItem = ({ data = "1" }) => {
           </div>
         </div>
         <div>
-          <div className="bg-gray-100 p-2 rounded-full">
-            <IconBagPro></IconBagPro>
+          <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary ">
+            <IconBagPro
+              color={`${isGroupHovered ? "#FFF" : "#1A1A1A"}`}
+            ></IconBagPro>
           </div>
         </div>
       </div>
       <ProSale></ProSale>
+      <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
+        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  ">
+          <span className="flex justify-center items-center">
+            <IconHeart></IconHeart>
+          </span>
+        </div>
+        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer   ">
+          <span className="flex justify-center items-center">
+            <IconEyeOpen></IconEyeOpen>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

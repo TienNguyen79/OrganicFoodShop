@@ -38,17 +38,23 @@ export default function* handleAuthRegister(action) {
       "🚀 ~ file: auth-handlers.js:34 ~ function*handleAuthRegister ~ error:",
       error
     );
-    if (error.response.status === 422) {
-      toast.error(error?.response?.data?.message);
-      return;
-    } else if (error.response.status === 500) {
-      toast.error("Phone number already exists");
-      return;
-    }
 
-    // console.error(error.response);
+    // if (error.response.status === 422) {
+    //   toast.error(error?.response?.data?.errors.email[0]);
+    //   // toast.error(error?.response?.data?.errors.phone_number[0]);
+    //   yield put(setLoading(false));
+    //   return;
+    // }
+    if (error?.response?.data?.errors.email) {
+      toast.error(error?.response?.data?.errors.email[0]);
+      yield put(setLoading(false));
+    }
+    if (error?.response?.data?.errors.phone_number) {
+      toast.error(error?.response?.data?.errors.phone_number[0]);
+      yield put(setLoading(false));
+    }
+    yield put(setLoading(false));
   }
-  yield 1;
 }
 //xử lý đăng nhập
 function* handleAuthLogin(action) {
@@ -69,19 +75,19 @@ function* handleAuthLogin(action) {
 
     if (response.status === 200) {
       toast.success("Login successfully!");
-      yield put(setLoading(true));
+      yield put(setLoading(false));
       window.location.href = "/";
     }
   } catch (error) {
     console.log(
-      "🚀 ~ file: auth-handlers.js:56 ~ function*handleAuthLogin ~ error:",
+      "🚀 ~ file: auth-handlers.js:82 ~ function*handleAuthLogin ~ error:",
       error
     );
-    if (error.response.status === 401) {
-      toast.error("Email or Password incorrect!");
-      return;
+    if (error.response.data.errors) {
+      toast.error(error.response.data.errors);
     }
-    toast.error(error);
+    yield put(setLoading(false));
+    // toast.error("Email or Password incorrect!");
   }
 }
 

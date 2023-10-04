@@ -16,7 +16,10 @@ import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/auth";
 
 const schema = yup.object({
-  name: yup.string().required("Name is required"),
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(5, "Please enter at least 5 characters"),
   phone_number: yup
     .string()
     .required("Phone Number is required")
