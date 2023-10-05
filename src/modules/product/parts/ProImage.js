@@ -5,9 +5,12 @@ import {
   defaultImage3,
 } from "../../../constants/global";
 
-const ProImage = ({ linkUrl = defaultImage3 }) => {
+const ProImage = ({
+  linkUrl = defaultImage3,
+  className = "h-[260px] w-full",
+}) => {
   return (
-    <div className="h-[260px] w-full p-1  mx-auto  overflow-hidden ">
+    <div className={`${className} p-1  mx-auto  overflow-hidden`}>
       <img
         src={linkUrl}
         className="w-full h-full object-cover rounded "

@@ -101,7 +101,7 @@ const ProductItem = ({ data = "1" }) => {
           </div>
         </div>
         <div>
-          <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary ">
+          <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary hover:scale-110 shadowgreen transition-all ">
             <IconBagPro
               color={`${isGroupHovered ? "#FFF" : "#1A1A1A"}`}
             ></IconBagPro>
@@ -110,12 +110,12 @@ const ProductItem = ({ data = "1" }) => {
       </div>
       <ProSale></ProSale>
       <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
-        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  ">
-          <span className="flex justify-center items-center">
+        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all  ">
+          <span className="flex justify-center items-center ">
             <IconHeart></IconHeart>
           </span>
         </div>
-        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer   ">
+        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  hover:scale-110 shadowgreen transition-all  ">
           <span className="flex justify-center items-center">
             <IconEyeOpen></IconEyeOpen>
           </span>

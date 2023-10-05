@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { defaultImage2 } from "../../../constants/global";
 import BannerHeading from "./parts/BannerHeading";
 import BannerTitle from "./parts/BannerTitle";
@@ -8,6 +8,51 @@ import Button from "../../../components/button/Button";
 import IconAR2 from "../../../components/Icons/IconAR2";
 
 const BannerItem = () => {
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  // Ngày hết hạn mục tiêu đếm ngược đến
+  const targetDate = new Date("2023-10-09T23:09:00").getTime();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const currentDate = new Date().getTime();
+      const timeRemaining = targetDate - currentDate;
+      // console.log(
+      //   "🚀 ~ file: BannerItem.js:25 ~ intervalId ~ timeRemaining:",
+      //   timeRemaining
+      // );
+
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24)); //1000 * 60 * 60 * 24 đại diện  cho số mili giây trong một ngày
+      const hours = Math.floor(
+        (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      setCountdown({ days, hours, minutes, seconds });
+
+      if (timeRemaining <= 0) {
+        clearInterval(intervalId);
+        // Ở đây bạn có thể thực hiện các hành động khi thời gian kết thúc.
+        setCountdown({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="flex items-center gap-x-6">
       <div className="relative">
@@ -55,28 +100,28 @@ const BannerItem = () => {
           ></BannerTitle>
           <div className="flex items-center gap-x-3">
             <div className="flex flex-col justify-center items-center">
-              <BannerNumber number="00"></BannerNumber>
+              <BannerNumber number={countdown.days}></BannerNumber>
               <BannerText
                 className="text-sm font-normal opacity-80"
                 text="Days"
               ></BannerText>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <BannerNumber number="00"></BannerNumber>
+              <BannerNumber number={countdown.hours}></BannerNumber>
               <BannerText
                 className="text-sm font-normal opacity-80"
                 text="Hours"
               ></BannerText>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <BannerNumber number="00"></BannerNumber>
+              <BannerNumber number={countdown.minutes}></BannerNumber>
               <BannerText
                 className="text-sm font-normal opacity-80"
                 text="Mins"
               ></BannerText>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <BannerNumber number="00"></BannerNumber>
+              <BannerNumber number={countdown.seconds}></BannerNumber>
               <BannerText
                 className="text-sm font-normal opacity-80"
                 text="Secs"

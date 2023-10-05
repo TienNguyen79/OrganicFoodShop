@@ -87,3 +87,24 @@ ul.slick-dots {
   margin-right: 0px;
   padding-bottom: 88px;
 }
+
+//custom ở Testimonial
+
+.Testimonial button.slick-arrow.slick-prev {
+  margin-left: 0px;
+  padding-bottom: 88px;
+}
+
+.Testimonial button.slick-arrow.slick-next {
+  margin-right: 0px;
+  padding-bottom: 88px;
+}
+
+.Testimonial .slick-prev:before,
+.slick-next:before {
+  color: #00b207;
+}
+
+.Testimonial .slick-next:before {
+  color: #00b207;
+}
