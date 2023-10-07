@@ -3,14 +3,14 @@ import Label from "../label/Label";
 import Button from "../button/Button";
 import IconAR2 from "../Icons/IconAR2";
 
-const SliderItem = () => {
+const SliderItem = ({ data }) => {
   return (
     <div>
       <div className="px-[238px] py-[70px] grid grid-cols-2 gap-x-[38px] ">
         <div>
           <img
-            src="/ProductImg.png"
-            className="w-full h-full object-cover"
+            src={data?.image || "/ProductImg.png"}
+            className="w-full h-full object-cover rounded-lg"
             alt=""
           />
         </div>
@@ -18,8 +18,8 @@ const SliderItem = () => {
           <h3 className="text-sm text-primary font-medium uppercase ">
             Welcome to shopery
           </h3>
-          <Label className="text-[50px] leading-[1.2] ">
-            Fresh & Healthy Organic Food
+          <Label className="text-[50px] leading-[1.2] capitalize mt-2">
+            {data?.name}
           </Label>
           <div className="flex items-center gap-x-2 text-[27px] mt-[16px]">
             <h2 className="font-normal">Sale up to </h2>

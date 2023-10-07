@@ -31,3 +31,14 @@ export const requestAuthFetchMe = (token) => {
     },
   });
 };
+
+export const requestAuthLogOut = (token) => {
+  const decodedToken = atob(token); //giải mã base64
+  if (!decodedToken) return;
+  return axios.delete("/api/logout", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  });
+};

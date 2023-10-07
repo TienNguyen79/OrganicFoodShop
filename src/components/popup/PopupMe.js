@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { defaultImage } from "../../constants/global";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogOut } from "../../store/auth/auth-slice";
+import { getToken } from "../../utils/auth";
 
 const PopupMe = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const PopupMe = () => {
         </span>
         <span
           className="text-[#666] cursor-pointer text-sm pt-1 pb-[10px] block hover:text-primary"
-          onClick={() => dispatch(authLogOut())}
+          onClick={() => dispatch(authLogOut(getToken()))}
         >
           Đăng Xuất
         </span>

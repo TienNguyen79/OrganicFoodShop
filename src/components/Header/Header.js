@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import HomeNavigate from "../../modules/home/HomeNavigate";
 import IconPhone from "../Icons/IconPhone";
 import IconSearch from "../Icons/IconSearch";
@@ -8,13 +8,20 @@ import IconUser from "../Icons/IconUser";
 import Input from "../input/Input";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PopupMe from "../popup/PopupMe";
 import useClickOutSide from "../../hooks/useClickOutSide";
+import { cateGetdataAll } from "../../store/category/cate-slice";
 
 const Header = () => {
   const { control } = useForm();
   const { user, accessToken } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(cateGetdataAll());
+  }, []);
+  const { dataCate } = useSelector((state) => state.category);
 
   const { show, setShow, nodeRef } = useClickOutSide();
   return (

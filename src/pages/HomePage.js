@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SliderBanner from "../components/slider/SliderBanner";
 import UtilsFeautureItem from "../modules/home/feature/UtilsFeautureItem";
 import Label from "../components/label/Label";
@@ -19,6 +19,15 @@ import BannerItem from "../modules/home/banner/BannerItem";
 import TopProductItem from "../modules/product/TopProductItem";
 import BlogItem from "../modules/blog/BlogItem";
 import TestimonialItem from "../modules/user/TestimonialItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  proGetBestSeller,
+  proGetFeauture,
+  proGetHotDeal,
+  proGetTopRated,
+} from "../store/product/pro-slice";
+import axios from "../api/axios";
+import { cateGetdataAll } from "../store/category/cate-slice";
 
 const dataUtil = [
   {
@@ -70,9 +79,64 @@ const HomePage = () => {
     autoplaySpeed: 5000, //5s trượt 1 lần
     cssEase: "ease-in-out",
   };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(proGetBestSeller());
+    dispatch(proGetHotDeal());
+    dispatch(proGetTopRated());
+    dispatch(proGetFeauture());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  // }, [dispatch]);
+  // useEffect(() => {
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(cateGetdataAll());
+  // }, []);
+
+  const { dataBestSeller, dataHotDeal, dataTopRated, dataFeauture } =
+    useSelector((state) => state.product);
+
+  // const { dataCate } = useSelector((state) => state.category);
+  // console.log("🚀 ~ file: HomePage.js:107 ~ HomePage ~ dataCate:", dataCate);
+
+  // console.log(
+  //   "🚀 ~ file: HomePage.js:83 ~ HomePage ~ dataHotDeal:",
+  //   dataHotDeal
+  // );
+  // console.log(
+  //   "🚀 ~ file: HomePage.js:82 ~ HomePage ~ dataBestSeller:",
+  //   dataBestSeller
+  // );
+  // useEffect(() => {
+  //   async function fetch() {
+  //     const tt = await axios.get("/api/bestSellerProducts");
+  //     console.log("🚀 ~ file: HomePage.js:98 ~ fetch ~ tt:", tt);
+  //   }
+  //   fetch();
+  // }, []);
+
   return (
     <div>
       <SliderBanner></SliderBanner>
+      {/* <div>
+        {dataHotDeal?.length > 0 &&
+          dataHotDeal.map((item) => <h1 key={item.id}>{item?.name}</h1>)}
+      </div>
+      <div>
+        {dataBestSeller?.length > 0 &&
+          dataBestSeller.map((item) => (
+            <h1 className="bg-red-600" key={item.id}>
+              {item?.discount}
+            </h1>
+          ))}
+      </div> */}
 
       <div className="px-[238px]  grid grid-cols-4 gap-x-6 relative ">
         {dataUtil.length > 0 &&
@@ -89,10 +153,10 @@ const HomePage = () => {
         </Gap>
 
         <div className="grid grid-cols-4  gap-x-6">
-          <ProductItem></ProductItem>
-          <ProductItem></ProductItem>
-          <ProductItem></ProductItem>
-          <ProductItem></ProductItem>
+          {dataFeauture.length > 0 &&
+            dataFeauture.map((item) => (
+              <ProductItem key={item.id} data={item}></ProductItem>
+            ))}
         </div>
       </div>
       <div className="ShopbyTopCategories px-[238px]  bg-[#F3F5F3]">
@@ -149,33 +213,43 @@ const HomePage = () => {
             </GroupJusBeween>
           </Gap>
           <div className="grid grid-cols-5 gap-x-5">
-            <ProductItem></ProductItem>
-            <ProductItem></ProductItem>
-            <ProductItem></ProductItem>
-            <ProductItem></ProductItem>
-            <ProductItem></ProductItem>
+            {dataBestSeller.length > 0 &&
+              dataBestSeller
+                .slice(0, 5)
+                .map((item) => (
+                  <ProductItem key={item.id} data={item}></ProductItem>
+                ))}
           </div>
 
           <div className="grid grid-cols-3 gap-x-6 mt-10">
             <div className="flex flex-col gap-y-4">
               <Label className="!font-medium text-[20px] mb-4">Hot Deals</Label>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
+              {dataHotDeal.length > 0 &&
+                dataHotDeal
+                  .slice(0, 3)
+                  .map((item) => (
+                    <TopProductItem key={item.id} data={item}></TopProductItem>
+                  ))}
             </div>
             <div className="flex flex-col gap-y-4">
               <Label className="!font-medium text-[20px] mb-4">
                 Best Seller
               </Label>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
+              {dataBestSeller.length > 0 &&
+                dataBestSeller
+                  .slice(6, 9)
+                  .map((item) => (
+                    <TopProductItem key={item.id} data={item}></TopProductItem>
+                  ))}
             </div>
             <div className="flex flex-col gap-y-4">
               <Label className="!font-medium text-[20px] mb-4">Top Rated</Label>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
-              <TopProductItem></TopProductItem>
+              {dataTopRated.length > 0 &&
+                dataTopRated
+                  .slice(0, 3)
+                  .map((item) => (
+                    <TopProductItem data={item} key={item.id}></TopProductItem>
+                  ))}
             </div>
           </div>
         </div>

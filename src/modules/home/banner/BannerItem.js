@@ -56,7 +56,7 @@ const BannerItem = () => {
   return (
     <div className="flex items-center gap-x-6">
       <div className="relative">
-        <div className="w-[570px] h-[360px]  ">
+        <div className="w-[full] h-[360px]  ">
           <img
             src="/banner1.png"
             className="w-full h-full object-cover rounded-lg"
@@ -85,7 +85,7 @@ const BannerItem = () => {
         </div>
       </div>
       <div className="relative">
-        <div className="w-[570px] h-[360px]  ">
+        <div className="w-[full] h-[360px]  ">
           <img
             src="/banner2.png"
             className="w-full h-full object-cover rounded-lg"

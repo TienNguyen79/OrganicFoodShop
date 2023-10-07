@@ -12,9 +12,14 @@ const ProPrice = ({
         <span>{unit}</span>
         {currentPrice}
       </span>
-      <span className="block text-gray4 font-normal text-[16px] line-through ml-[2px]">
+      <span className=" flex text-gray4 font-normal text-[16px] line-through ml-[2px]">
         <span>{unit}</span>
-        {priceOld}
+        <span
+          title={priceOld}
+          className="block whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[60px]"
+        >
+          {priceOld}
+        </span>
       </span>
     </div>
   );

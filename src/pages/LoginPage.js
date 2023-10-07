@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LayoutAuth from "../layout/LayoutAuth";
 import { useForm } from "react-hook-form";
 import useToggleValue from "../hooks/useToggleValue";
@@ -14,7 +14,7 @@ import {
   authGetStatus,
   authLogin,
 } from "../store/auth/auth-slice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object({
@@ -49,6 +49,8 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const slug = useParams();
+  // console.log("🚀 ~ file: LoginPage.js:53 ~ LoginPage ~ slug:", slug);
 
   const handlelogin = async (values) => {
     console.log("🚀 ~ file: LoginPage.js:28 ~ handlelogin ~ values:", values);
@@ -59,6 +61,7 @@ const LoginPage = () => {
       console.log("🚀 ~ file: LoginPage.js:38 ~ handlelogin ~ error:", error);
     }
   };
+
   return (
     <LayoutAuth heading="Login" navName="Register" navLink="/register">
       <form action="" onSubmit={handleSubmit(handlelogin)}>

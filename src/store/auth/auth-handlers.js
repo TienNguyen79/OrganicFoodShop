@@ -1,6 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import {
   requestAuthFetchMe,
+  requestAuthLogOut,
   requestAuthLogin,
   requestAuthRegister,
 } from "./auth-requests";
@@ -128,9 +129,26 @@ function* handlecheckToken() {
 }
 //xử lý logout
 
-function* handleLogOut() {
-  yield put(authUpdateUser({}));
-  logOut();
+function* handleLogOut(action) {
+  // yield put(authUpdateUser({}));
+  // logOut();
+  const { payload, type } = action;
+
+  try {
+    const response = yield call(requestAuthLogOut, payload);
+
+    if (response.status === 200) {
+      yield put(authUpdateUser({}));
+      logOut();
+      // window.location.href = "/";
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: auth-handlers.js:139 ~ function*handleLogOut ~ error:",
+      error
+    );
+  }
+  yield 1;
 }
 
 export { handleAuthLogin, handleAuthFetchMe, handlecheckToken, handleLogOut };

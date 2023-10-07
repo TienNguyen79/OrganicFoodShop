@@ -9,16 +9,16 @@ import IconBagPro from "../../components/Icons/IconBagPro";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 
-const TopProductItem = () => {
-  //Cách 2 render star
-  //   const starCount = parseInt(data); // Chuyển data thành số nguyên
-  //   const maxStars = 5; // Số sao tối đa
-  //   // Tạo mảng chứa số lượng sao tương ứng
-  //   const stars = Array.from({ length: maxStars }, (_, index) => (
-  //     <IconStarYellow key={index}></IconStarYellow>
-  //   ));
-  //   // Đánh dấu các sao sau starCount bằng màu xám
-  //   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
+const TopProductItem = ({ data }) => {
+  // Cách 2 render star
+  const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
+  const maxStars = 5; // Số sao tối đa
+  // Tạo mảng chứa số lượng sao tương ứng
+  const stars = Array.from({ length: maxStars }, (_, index) => (
+    <IconStarYellow key={index}></IconStarYellow>
+  ));
+  // Đánh dấu các sao sau starCount bằng màu xám
+  stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
   const [isGroupHovered, setIsGroupHovered] = useState(false);
 
   return (
@@ -28,24 +28,28 @@ const TopProductItem = () => {
         onMouseEnter={() => setIsGroupHovered(true)}
         onMouseLeave={() => setIsGroupHovered(false)}
       >
-        <ProImage className="h-[102px] w-[102px]"></ProImage>
+        <ProImage
+          className="h-[102px] w-[102px]"
+          linkUrl={data?.imageUrl}
+        ></ProImage>
         <div className="flex flex-col pr-3 flex-1">
           <ProTitle
-            title="Green Apple"
+            title={data?.name}
             className="group-hover:text-primary"
           ></ProTitle>
-          <ProPrice hover="group-hover:invisible "></ProPrice>
+          <ProPrice
+            hover="group-hover:invisible "
+            priceOld={data?.price}
+            currentPrice={(
+              data?.price *
+              (parseFloat(100 - data?.discount) / 100)
+            ).toFixed(2)}
+          ></ProPrice>
 
           <ProStart className="group-hover:invisible ">
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarGray></IconStarGray>
-
-            {/* {temp.map((item, index) => (
+            {stars.map((item, index) => (
               <div key={index}>{item}</div>
-            ))} */}
+            ))}
           </ProStart>
         </div>
 

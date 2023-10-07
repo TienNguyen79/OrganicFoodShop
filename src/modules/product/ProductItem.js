@@ -9,7 +9,7 @@ import ProSale from "./parts/ProSale";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 
-const ProductItem = ({ data = "1" }) => {
+const ProductItem = ({ data }) => {
   //   let temp = [];
   //   switch (data) {
   //     case "1":
@@ -67,14 +67,14 @@ const ProductItem = ({ data = "1" }) => {
   //   }
 
   //Cách 2 render star
-  //   const starCount = parseInt(data); // Chuyển data thành số nguyên
-  //   const maxStars = 5; // Số sao tối đa
-  //   // Tạo mảng chứa số lượng sao tương ứng
-  //   const stars = Array.from({ length: maxStars }, (_, index) => (
-  //     <IconStarYellow key={index}></IconStarYellow>
-  //   ));
-  //   // Đánh dấu các sao sau starCount bằng màu xám
-  //   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
+  const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
+  const maxStars = 5; // Số sao tối đa
+  // Tạo mảng chứa số lượng sao tương ứng
+  const stars = Array.from({ length: maxStars }, (_, index) => (
+    <IconStarYellow key={index}></IconStarYellow>
+  ));
+  // Đánh dấu các sao sau starCount bằng màu xám
+  stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
   const [isGroupHovered, setIsGroupHovered] = useState(false);
   return (
     <div
@@ -83,21 +83,21 @@ const ProductItem = ({ data = "1" }) => {
       onMouseEnter={() => setIsGroupHovered(true)}
       onMouseLeave={() => setIsGroupHovered(false)}
     >
-      <ProImage></ProImage>
+      <ProImage linkUrl={data?.imageUrl}></ProImage>
       <div className="flex justify-between items-center p-4 mt-auto">
         <div>
-          <ProTitle></ProTitle>
-          <ProPrice></ProPrice>
+          <ProTitle title={data?.name}></ProTitle>
+          <ProPrice
+            priceOld={data?.price}
+            currentPrice={(
+              data?.price *
+              (parseFloat(100 - data?.discount) / 100)
+            ).toFixed(2)}
+          ></ProPrice>
           <div className="flex items-center gap-x-[2px] mt-[6px]">
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarYellow></IconStarYellow>
-            <IconStarGray></IconStarGray>
-
-            {/* {temp.map((item, index) => (
+            {stars.map((item, index) => (
               <div key={index}>{item}</div>
-            ))} */}
+            ))}
           </div>
         </div>
         <div>
@@ -108,7 +108,9 @@ const ProductItem = ({ data = "1" }) => {
           </div>
         </div>
       </div>
-      <ProSale></ProSale>
+      {data.discount && data.discount !== 0 && (
+        <ProSale discount={data?.discount}></ProSale>
+      )}
       <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
         <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all  ">
           <span className="flex justify-center items-center ">
