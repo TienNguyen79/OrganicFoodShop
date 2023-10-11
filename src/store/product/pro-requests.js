@@ -19,3 +19,22 @@ export const requestProHotDeal = () => {
 export const requestProTopRated = () => {
   return axios.get("/api/topRated");
 };
+
+export const requestProWithFilter = (data) => {
+  console.log(
+    "🚀 ~ file: pro-requests.js:24 ~ requestProWithFilter ~ data:",
+    data
+  );
+  const { category, rate, minPrice, maxPrice, nextPage } = data;
+  let categoryI = category;
+  let rateI = parseInt(rate);
+  let minPriceI = parseInt(minPrice);
+  let maxPriceI = parseInt(maxPrice);
+  return axios.get(
+    `/api/filterProducts?category=${
+      categoryI || ""
+    }&price[]=${minPriceI}&price[]=${maxPriceI}&rating=${
+      rateI || ""
+    }&page=${nextPage}`
+  );
+};

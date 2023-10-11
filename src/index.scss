@@ -108,3 +108,64 @@ ul.slick-dots {
 .Testimonial .slick-next:before {
   color: #00b207;
 }
+
+//custome input-range
+
+.input-range {
+  height: 8px;
+  background-color: #f2f2f2;
+  appearance: none;
+  border-radius: 6px;
+}
+.input-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid #00b207;
+}
+
+.input-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+//pagination - phân trang
+
+.pagination {
+  display: flex;
+  font-size: 18px;
+  gap: 16px;
+  @apply text-gray6 font-normal;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pagination .next,
+.pagination .previous {
+  border: 1px solid #e6e6e6;
+  padding: 6px;
+  border-radius: 100%;
+}
+
+.pagination .next:hover,
+.pagination .previous:hover {
+  background-color: #f2f2f2;
+}
+
+.pagination .selected {
+  padding: 5px 14px;
+  border-radius: 20px;
+  background-color: #00b207;
+  color: white;
+}
+
+.pagination li:hover {
+  opacity: 70%;
+}

@@ -8,6 +8,7 @@ import ProStart from "./parts/ProStart";
 import IconBagPro from "../../components/Icons/IconBagPro";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
+import { defaultImage3 } from "../../constants/global";
 
 const TopProductItem = ({ data }) => {
   // Cách 2 render star
@@ -30,7 +31,7 @@ const TopProductItem = ({ data }) => {
       >
         <ProImage
           className="h-[102px] w-[102px]"
-          linkUrl={data?.imageUrl}
+          linkUrl={data?.imageUrl || defaultImage3}
         ></ProImage>
         <div className="flex flex-col pr-3 flex-1">
           <ProTitle

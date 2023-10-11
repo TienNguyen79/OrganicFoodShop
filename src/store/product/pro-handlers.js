@@ -5,8 +5,15 @@ import {
   requestProFeauture,
   requestProHotDeal,
   requestProTopRated,
+  requestProWithFilter,
 } from "./pro-requests";
-import { proGetBestSeller, updateData, updateData2 } from "./pro-slice";
+import {
+  proGetBestSeller,
+  setLoading,
+  updateData,
+  updateData2,
+} from "./pro-slice";
+import { toast } from "react-toastify";
 
 export default function* handleGetProBestSeller(action) {
   const { payload, type } = action;
@@ -114,9 +121,40 @@ function* handleGetProAll() {
   }
 }
 
+function* handleGetProWithFilter(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: pro-handlers.js:120 ~ function*handleGetProWithFilter ~ payload:",
+    payload
+  );
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestProWithFilter, payload);
+    console.log(
+      "🚀 ~ file: pro-handlers.js:126 ~ function*handleGetProWithFilter ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProWithFilter: response.data.products }));
+      yield put(setLoading(false));
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
+    yield put(updateData({ resultProWithFilter: [] }));
+    yield put(setLoading(false));
+    console.log(
+      "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
+      error
+    );
+  }
+  yield 1;
+}
+
 export {
   handleGetHotDeal,
   handleGetProTopRated,
   handleGetProFeature,
   handleGetProAll,
+  handleGetProWithFilter,
 };

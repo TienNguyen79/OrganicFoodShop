@@ -6,8 +6,14 @@ import {
 } from "../../../store/category/cate-slice";
 import axios from "../../../api/axios";
 import { proGetAll } from "../../../store/product/pro-slice";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const NavItemShop = () => {
+  const { setValue } = useForm({
+    mode: "onChange",
+  });
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(cateGetdataAll());
@@ -16,17 +22,22 @@ const NavItemShop = () => {
   const { dataCate } = useSelector((state) => state.category);
   const { dataPro } = useSelector((state) => state.product);
 
+  const navigate = useNavigate();
+
   return (
-    <div className="absolute top-12 left-[-92px] z-30  translate-y-8 invisible  transition-all opacity-0 duration-300 bg-white shadow-lg w-[73vw] group-hover:translate-y-0 group-hover:opacity-100  group-hover:visible">
+    <div className="absolute top-12 left-[-92px] z-50  translate-y-8 invisible  transition-all opacity-0 duration-300 bg-white shadow-lg w-[73vw] group-hover:translate-y-0 group-hover:opacity-100  group-hover:visible">
       <div className="grid grid-cols-4 py-4 px-2">
         {dataCate.length > 0 &&
           dataCate.map((item, index) => {
             return (
               <div className="pl-[15px]" key={item.id}>
                 <h1
-                  className="text-[16px] font-semibold text-gray-600 mb-3"
+                  className="text-[16px] font-semibold text-gray-600 mb-3 cursor-pointer hover:text-primary transition-all duration-200"
                   onClick={() => {
+                    navigate(`/shop/${item.id || item.slug}`);
+                    // setValue("cate", parseInt(item.id));
                     console.log(item.id);
+                    // window.location.href = `/shop/${item.id || item.slug}`; //nếu để điều hướng như cái trên có 1 số lỗi ở shop
                   }}
                 >
                   {item.name}
@@ -36,7 +47,7 @@ const NavItemShop = () => {
                     if (pro.category_id === item.id) {
                       return (
                         <span
-                          className="text-sm font-normal text-[#232323]"
+                          className="text-sm font-normal text-[#232323] hover:text-primary transition-all duration-200 cursor-pointer"
                           key={pro?.id}
                           onClick={() => {
                             console.log(pro.id);

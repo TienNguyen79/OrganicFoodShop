@@ -86,10 +86,12 @@ const HomePage = () => {
     dispatch(proGetHotDeal());
     dispatch(proGetTopRated());
     dispatch(proGetFeauture());
-  }, [dispatch]);
+  }, []);
 
   // useEffect(() => {
-  // }, [dispatch]);
+  // }, []);
+  // useEffect(() => {
+  // }, []);
 
   // useEffect(() => {
   // }, [dispatch]);
@@ -296,7 +298,7 @@ const HomePage = () => {
         </div> */}
       </div>
 
-      <div className="px-[238px] bg-white flex items-center gap-x-20 pt-[80px]">
+      <div className="px-[238px] bg-white flex items-center justify-center gap-x-20 pt-[80px]">
         <img src="/imgFoot/img1.png" alt="" />
         <img src="/imgFoot/img2.png" alt="" />
         <img src="/imgFoot/img3.png" alt="" />

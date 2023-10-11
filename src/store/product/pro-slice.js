@@ -8,6 +8,8 @@ const productSlice = createSlice({
     dataHotDeal: [],
     dataTopRated: [],
     dataFeauture: [],
+    dataProWithFilter: [],
+    loading: false,
   },
   reducers: {
     proGetAll: () => {},
@@ -15,6 +17,8 @@ const productSlice = createSlice({
     proGetHotDeal: () => {},
     proGetTopRated: () => {},
     proGetFeauture: () => {},
+    proGetWithFilter: () => {},
+
     updateData: (state, action) => ({
       ...state,
       dataBestSeller: action.payload.resultBestSellers || state.dataBestSeller,
@@ -22,6 +26,12 @@ const productSlice = createSlice({
       dataTopRated: action.payload.resultTopRated || state.dataTopRated,
       dataFeauture: action.payload.resultFeauture || state.dataFeauture,
       dataPro: action.payload.resultProAll || state.dataPro,
+      dataProWithFilter:
+        action.payload.resultProWithFilter || state.dataProWithFilter,
+    }),
+    setLoading: (state, action) => ({
+      ...state,
+      loading: action.payload,
     }),
     // updateData2: (state, action) => ({
     //   ...state,
@@ -38,6 +48,8 @@ export const {
   proGetFeauture,
   updateData2,
   proGetAll,
+  proGetWithFilter,
+  setLoading,
 } = productSlice.actions;
 
 export default productSlice.reducer;

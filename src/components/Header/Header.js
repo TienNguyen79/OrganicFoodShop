@@ -106,13 +106,15 @@ const Header = () => {
       </div>
       <div className="shadow-lg  py-5 flex items-center justify-around px-[151px]">
         <HomeNavigate></HomeNavigate>
-        <div className="h-[38px]">
-          <img
-            src="/LogoEco.png"
-            alt="eco"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <Link to="/">
+          <div className="h-[38px]">
+            <img
+              src="/LogoEco.png"
+              alt="eco"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </Link>
         <div>
           <div className="flex items-center gap-x-5 ">
             <div className="flex items-center gap-x-2">

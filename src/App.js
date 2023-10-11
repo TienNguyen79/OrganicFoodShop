@@ -12,6 +12,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
+const ShopPage = lazy(() => import("./pages/ShopPage"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -27,6 +28,12 @@ function App() {
         <Route element={<LayoutPrimary></LayoutPrimary>}>
           <Route path="/" element={<HomePage></HomePage>}></Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
+        </Route>
+
+        <Route element={<LayoutDetail></LayoutDetail>}>
+          <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
+
+          <Route path="/shop/:slug" element={<ShopPage></ShopPage>}></Route>
         </Route>
 
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>

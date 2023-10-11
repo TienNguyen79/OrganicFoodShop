@@ -8,6 +8,7 @@ import IconBagPro from "../../components/Icons/IconBagPro";
 import ProSale from "./parts/ProSale";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
+import { defaultImage2, defaultImage3 } from "../../constants/global";
 
 const ProductItem = ({ data }) => {
   //   let temp = [];
@@ -83,7 +84,7 @@ const ProductItem = ({ data }) => {
       onMouseEnter={() => setIsGroupHovered(true)}
       onMouseLeave={() => setIsGroupHovered(false)}
     >
-      <ProImage linkUrl={data?.imageUrl}></ProImage>
+      <ProImage linkUrl={data?.imageUrl || defaultImage3}></ProImage>
       <div className="flex justify-between items-center p-4 mt-auto">
         <div>
           <ProTitle title={data?.name}></ProTitle>
@@ -108,7 +109,7 @@ const ProductItem = ({ data }) => {
           </div>
         </div>
       </div>
-      {data.discount && data.discount !== 0 && (
+      {data?.discount && data?.discount !== 0 && (
         <ProSale discount={data?.discount}></ProSale>
       )}
       <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
