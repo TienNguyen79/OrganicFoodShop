@@ -45,6 +45,7 @@ const ShopPage = () => {
 
   //Phân trang
   const [pageCount, setPageCount] = useState(0);
+  console.log("🚀 ~ file: ShopPage.js:48 ~ ShopPage ~ pageCount:", pageCount);
   const [itemOffset, setItemOffset] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   console.log("🚀 ~ file: ShopPage.js:46 ~ ShopPage ~ nextPage:", nextPage);
@@ -70,6 +71,7 @@ const ShopPage = () => {
   useEffect(() => {
     dispatch(cateGetdataAll());
     dispatch(proGetBestSeller());
+    dispatch(proGetAll());
   }, []);
 
   //thông tin lấy được đưa vào dispatch và sẽ trả ra kết quả filter mong muốn
@@ -79,9 +81,10 @@ const ShopPage = () => {
 
   //lấy được data đã trả về
   const { dataCate } = useSelector((state) => state.category);
-  const { dataProWithFilter, dataBestSeller } = useSelector(
+  const { dataProWithFilter, dataBestSeller, dataPro } = useSelector(
     (state) => state.product
   );
+  console.log("🚀 ~ file: ShopPage.js:85 ~ ShopPage ~ dataPro:", dataPro);
   const { loading } = useSelector((state) => state.product);
   console.log("🚀 ~ file: ShopPage.js:86 ~ ShopPage ~ loading:", loading);
   console.log(
@@ -109,24 +112,44 @@ const ShopPage = () => {
   //   setLinkFilter(linkt);
   // }, [watchCate, watchRate, rangeValue]);
 
-  //mục đích để validate cho filter giá hợp lý
+  // Tạo một phiên bản debounced của hàm handleRangeChange
+  const debouncedHandleRangeChange = debounce((newRangeValue) => {
+    setRangeValue(newRangeValue);
+  }, 300); // Đặt thời gian debounce (milliseconds) ở đây
+
   const handleRangeChange = (e) => {
     const { name, value } = e.target;
+    const intValue = parseInt(value);
 
     if (name === "min") {
-      if (parseInt(value) <= rangeValue.max) {
-        setRangeValue({ ...rangeValue, min: parseInt(value) });
-      } else {
-        setRangeValue({ ...rangeValue, min: rangeValue.max - 1 });
-      }
+      const newMinValue =
+        intValue <= rangeValue.max ? intValue : rangeValue.min;
+      debouncedHandleRangeChange({ ...rangeValue, min: newMinValue });
     } else if (name === "max") {
-      if (parseInt(value) >= rangeValue.min) {
-        setRangeValue({ ...rangeValue, max: parseInt(value) });
-      } else {
-        setRangeValue({ ...rangeValue, max: rangeValue.min + 1 });
-      }
+      const newMaxValue =
+        intValue >= rangeValue.min ? intValue : rangeValue.max;
+      debouncedHandleRangeChange({ ...rangeValue, max: newMaxValue });
     }
   };
+
+  //mục đích để validate cho filter giá hợp lý
+  // const handleRangeChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   if (name === "min") {
+  //     if (parseInt(value) <= rangeValue.max) {
+  //       setRangeValue({ ...rangeValue, min: parseInt(value) });
+  //     } else {
+  //       setRangeValue({ ...rangeValue, min: rangeValue.max - 1 });
+  //     }
+  //   } else if (name === "max") {
+  //     if (parseInt(value) >= rangeValue.min) {
+  //       setRangeValue({ ...rangeValue, max: parseInt(value) });
+  //     } else {
+  //       setRangeValue({ ...rangeValue, max: rangeValue.min + 1 });
+  //     }
+  //   }
+  // };
 
   // const linkt = `?category=&price[]=0&price[]=10000&rating=`;
 
@@ -162,6 +185,10 @@ const ShopPage = () => {
       navigate(query);
       setRangeValue({ min: 0, max: 1000 });
       setValue("rate", "");
+      //khi thay đổi category sẽ set về trang đầu tiên
+      setNextPage(1);
+      setPageCount(0);
+      setItemOffset(0);
       // setValue("cate", slug);
     }
   }, [slug, watchCate, navigate, setValue]);
@@ -190,14 +217,29 @@ const ShopPage = () => {
   //xử lí phân trang
   useEffect(() => {
     if (!dataProWithFilter.data || !dataProWithFilter.total) return;
-    setPageCount(Math.ceil(dataProWithFilter.total) / itemsPerPage); //tổng count làm tròn lên
-  }, [dataProWithFilter.data, dataProWithFilter.total, itemOffset]);
+    setPageCount(Math.ceil(dataProWithFilter.total / itemsPerPage)); //tổng count-(tổng số trang) làm tròn lên
+  }, [dataProWithFilter.data, itemOffset]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % dataProWithFilter.total; //khoảng bao nhiêu thì có dấu ...
     setItemOffset(newOffset);
     setNextPage(event.selected + 1);
   };
+
+  //lấy tất cả số lượng category tương ứng
+  const uniqueIds = [...new Set(dataPro.map((product) => product.category_id))]; //trả ra 1 mảng các category_id không trùng nhau
+  // Sắp xếp mảng uniqueIds theo thứ tự của dataCate
+  uniqueIds.sort((a, b) => {
+    const indexA = dataCate.findIndex((item) => item.id === a);
+    const indexB = dataCate.findIndex((item) => item.id === b);
+    return indexA - indexB;
+  });
+
+  const groupedProducts = uniqueIds.map((category_id) =>
+    dataPro.filter((product) => product.category_id === category_id)
+  );
+
+  // const [dataii, setDataii] = useState([]);
 
   return (
     <div className="grid grid-cols-4 gap-x-6 mt-8 mb-[80px]">
@@ -213,7 +255,7 @@ const ShopPage = () => {
             <Select placeholder="All Categories"></Select>
             <List>
               {dataCate.length > 0 &&
-                dataCate.map((item) => (
+                dataCate.map((item, index) => (
                   <Options key={item.id}>
                     <div className="flex items-center gap-y-2">
                       <Radio
@@ -227,8 +269,9 @@ const ShopPage = () => {
                             className="text-[14px] font-normal group-hover:text-primary"
                             title={item?.name}
                           ></CateTitle>
+
                           <span className="ml-1 inline-block text-gray5 text-[14px] font-normal group-hover:text-primary">
-                            (20)
+                            ({groupedProducts[index]?.length})
                           </span>
                         </div>
                       </Radio>
@@ -367,20 +410,19 @@ const ShopPage = () => {
           </div>
         )}
 
-        {!loading && (
-          <div className="mt-16 flex justify-center items-center">
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel={<IconPagiNext></IconPagiNext>}
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
-              pageCount={pageCount}
-              previousLabel={<IconPagiPrev></IconPagiPrev>}
-              renderOnZeroPageCount={null}
-              className="pagination"
-            />
-          </div>
-        )}
+        <div className="mt-16 flex justify-center items-center">
+          <ReactPaginate
+            key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination"
+          />
+        </div>
       </div>
     </div>
   );
