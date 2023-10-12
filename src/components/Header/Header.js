@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import HomeNavigate from "../../modules/home/HomeNavigate";
 import IconPhone from "../Icons/IconPhone";
 import IconSearch from "../Icons/IconSearch";
@@ -12,21 +12,37 @@ import { useDispatch, useSelector } from "react-redux";
 import PopupMe from "../popup/PopupMe";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import { cateGetdataAll } from "../../store/category/cate-slice";
-
+import PopupSearch from "../popup/PopupSearch";
+import { proGetSearch } from "../../store/product/pro-slice";
+import lodash, { debounce } from "lodash";
 const Header = () => {
-  const { control } = useForm();
+  const { control, getValues } = useForm();
   const { user, accessToken } = useSelector((state) => state.auth);
-
+  const [getTextSearch, setGetTextSearch] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(cateGetdataAll());
-  }, []);
-  const { dataCate } = useSelector((state) => state.category);
+
+  const { dataProSearch, loading } = useSelector((state) => state.product);
 
   const { show, setShow, nodeRef } = useClickOutSide();
+  const {
+    show: show2,
+    setShow: setShow2,
+    nodeRef: nodeRef2,
+  } = useClickOutSide();
+
+  //xử lý tìm kiếm theo tên
+  const handleFilterChangeDebounced = debounce((searchTerm) => {
+    dispatch(proGetSearch(searchTerm));
+  }, 500); // tối ưu việc tìm kiếm
+
+  const handleFilterChange = (e) => {
+    const searchTerm = e.target.value;
+    handleFilterChangeDebounced(searchTerm);
+    setGetTextSearch(searchTerm);
+  };
   return (
     <div className="w-full ">
-      <div className="h-[42px] bg-gray8 flex  justify-around  ">
+      <div className="h-[42px] bg-gray8 text-gray3 border-b-[1px] flex  justify-around  ">
         <div className="flex  items-center gap-x-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,8 +120,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      <div className="shadow-lg  py-5 flex items-center justify-around px-[151px]">
-        <HomeNavigate></HomeNavigate>
+      <div className="  py-5 flex items-center justify-between px-[275px] border-b-[1px]">
         <Link to="/">
           <div className="h-[38px]">
             <img
@@ -115,32 +130,42 @@ const Header = () => {
             />
           </div>
         </Link>
+
+        <div className="relative">
+          <div className="flex justify-center group">
+            <span className="absolute top-2/4 left-4 -translate-y-2/4 select-none cursor-pointer ">
+              <IconSearch></IconSearch>
+            </span>
+            <input
+              placeholder="Search for product..."
+              className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
+              onChange={handleFilterChange}
+              onClick={(e) => {
+                e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
+                setShow2(!show);
+              }}
+            ></input>
+            {/* <button className="bg-primary py-[14px] px-[24px] text-white text-xs font-semibold rounded-tr-md rounded-br-md">
+              Search
+            </button> */}
+          </div>
+          {show2 && (
+            <div ref={nodeRef2} className="">
+              <PopupSearch
+                data={dataProSearch}
+                loading={loading}
+                text={getTextSearch}
+              ></PopupSearch>
+            </div>
+          )}
+        </div>
         <div>
           <div className="flex items-center gap-x-5 ">
-            <div className="flex items-center gap-x-2">
-              <IconPhone></IconPhone>
-              <span className="text-[14px] text-gray9 font-medium">
-                (219) 555-0114
-              </span>
-            </div>
             <div className="flex items-center gap-x-5">
-              <div className="relative group ">
-                <IconSearch></IconSearch>
-                <div
-                  className={`absolute ${
-                    user ? "w-[350px] " : "w-[300px]"
-                  } flex -translate-y-9 z-[60] translate-x-[500px] transition-all duration-250  group-hover:translate-x-0 `}
-                >
-                  <Input control={control} name="search">
-                    <IconSearch></IconSearch>
-                  </Input>
-                  <button className="bg-primary py-[14px] px-[24px] text-white text-xs font-semibold rounded-tr-md rounded-br-md">
-                    Search
-                  </button>
-                </div>
-              </div>
               <IconTym></IconTym>
               <IconBag></IconBag>
+
+              {!user && <span>Hello You</span>}
 
               {user && (
                 <div className="relative">
@@ -167,6 +192,16 @@ const Header = () => {
               )}
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="shadow-lg bg-white text-gray6  py-3 flex items-center justify-between px-[275px]">
+        <HomeNavigate></HomeNavigate>
+        <div className="flex items-center gap-x-2">
+          <IconPhone></IconPhone>
+          <span className="text-[14px] text-gray5 font-medium">
+            (219) 555-0114
+          </span>
         </div>
       </div>
     </div>

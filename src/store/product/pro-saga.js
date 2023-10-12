@@ -4,6 +4,7 @@ import {
   proGetBestSeller,
   proGetFeauture,
   proGetHotDeal,
+  proGetSearch,
   proGetTopRated,
   proGetWithFilter,
 } from "./pro-slice";
@@ -11,6 +12,7 @@ import handleGetProBestSeller, {
   handleGetHotDeal,
   handleGetProAll,
   handleGetProFeature,
+  handleGetProSearch,
   handleGetProTopRated,
   handleGetProWithFilter,
 } from "./pro-handlers";
@@ -22,4 +24,5 @@ export default function* proSaga() {
   yield takeLatest(proGetFeauture.type, handleGetProFeature);
   yield takeLatest(proGetAll.type, handleGetProAll);
   yield takeLatest(proGetWithFilter.type, handleGetProWithFilter);
+  yield takeLatest(proGetSearch.type, handleGetProSearch);
 }

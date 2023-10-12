@@ -4,11 +4,13 @@ import {
   requestProBestSeller,
   requestProFeauture,
   requestProHotDeal,
+  requestProSearch,
   requestProTopRated,
   requestProWithFilter,
 } from "./pro-requests";
 import {
   proGetBestSeller,
+  proGetSearch,
   setLoading,
   updateData,
   updateData2,
@@ -19,21 +21,15 @@ export default function* handleGetProBestSeller(action) {
   const { payload, type } = action;
 
   try {
+    yield put(setLoading(true));
     const response = yield call(requestProBestSeller);
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:10 ~ function*handleGetProBestSeller ~ response:",
-    //   response
-    // );
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:9 ~ function*handleGetProBestSeller ~ response:",
-    //   response.data.bestSellers
-    // );
 
     if (response.status === 200) {
       yield put(updateData({ resultBestSellers: response.data.bestSellers }));
-      console.log("ok");
+      yield put(setLoading(false));
     }
   } catch (error) {
+    yield put(setLoading(false));
     console.log(
       "🚀 ~ file: pro-handlers.js:14 ~ function*handleGetProBestSeller ~ error:",
       error
@@ -44,16 +40,15 @@ export default function* handleGetProBestSeller(action) {
 
 function* handleGetHotDeal() {
   try {
+    yield put(setLoading(true));
     const response = yield call(requestProHotDeal);
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:35 ~ function*handleGetHotDeal ~ response:",
-    //   response
-    // );
+
     if (response.status === 200) {
       yield put(updateData({ resultHotDeal: response.data.products }));
-      console.log("ok");
+      yield put(setLoading(false));
     }
   } catch (error) {
+    yield put(setLoading(false));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -63,17 +58,15 @@ function* handleGetHotDeal() {
 
 function* handleGetProTopRated() {
   try {
+    yield put(setLoading(true));
     const response = yield call(requestProTopRated);
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:58 ~ function*handleGetProTopRated ~ response:",
-    //   response
-    // );
 
     if (response.status === 200) {
       yield put(updateData({ resultTopRated: response.data.products }));
-      console.log("ok");
+      yield put(setLoading(false));
     }
   } catch (error) {
+    yield put(setLoading(false));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -83,17 +76,15 @@ function* handleGetProTopRated() {
 
 function* handleGetProFeature() {
   try {
+    yield put(setLoading(true));
     const response = yield call(requestProFeauture);
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:79 ~ function*handleGetProFeature ~ response:",
-    //   response
-    // );
 
     if (response.status === 200) {
       yield put(updateData({ resultFeauture: response.data.products }));
-      console.log("ok");
+      yield put(setLoading(false));
     }
   } catch (error) {
+    yield put(setLoading(false));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -103,17 +94,15 @@ function* handleGetProFeature() {
 
 function* handleGetProAll() {
   try {
+    yield put(setLoading(true));
     const response = yield call(requestProAll);
-    // console.log(
-    //   "🚀 ~ file: pro-handlers.js:79 ~ function*handleGetProAll ~ response:",
-    //   response
-    // );
 
     if (response.status === 200) {
       yield put(updateData({ resultProAll: response.data.products }));
-      console.log("ok");
+      yield put(setLoading(false));
     }
   } catch (error) {
+    yield put(setLoading(false));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -151,10 +140,33 @@ function* handleGetProWithFilter(action) {
   yield 1;
 }
 
+function* handleGetProSearch(action) {
+  const { payload } = action;
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestProSearch, payload);
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProSearch: response.data.products }));
+      yield put(setLoading(false));
+    }
+  } catch (error) {
+    yield put(updateData({ resultProSearch: {} }));
+    yield put(setLoading(false));
+    console.log(
+      "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
+      error
+    );
+  }
+  yield 1;
+}
+
 export {
   handleGetHotDeal,
   handleGetProTopRated,
   handleGetProFeature,
   handleGetProAll,
   handleGetProWithFilter,
+  handleGetProSearch,
 };

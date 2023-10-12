@@ -20,7 +20,7 @@ const Input = (props) => {
     control,
     name,
     defaultValue: "",
-    mode: "onSubmit",
+    mode: "onChange",
   });
   // console.log(error);
 

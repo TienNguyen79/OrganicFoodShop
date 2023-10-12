@@ -38,3 +38,7 @@ export const requestProWithFilter = (data) => {
     }&page=${nextPage}`
   );
 };
+
+export const requestProSearch = (name) => {
+  return axios.get(`/api/searchProduct?name=${name}`);
+};

@@ -391,7 +391,7 @@ const ShopPage = () => {
         {loading ? (
           <div className="h-[100vh] flex justify-center items-center">
             <img
-              src="/Spin-1s-200px.svg"
+              src="/loading2.svg"
               className="loadingsvg h-[60px] mx-auto"
               alt="loading"
             />

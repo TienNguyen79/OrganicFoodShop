@@ -30,7 +30,7 @@ const SliderBanner = () => {
     dataCate
   );
   return (
-    <div className="bg-greenGray1">
+    <div className="bg-greenGray1 ">
       <Slider {...settings}>
         {dataCate.length > 0 &&
           dataCate.map((item) => (

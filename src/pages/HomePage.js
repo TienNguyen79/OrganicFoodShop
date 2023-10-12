@@ -102,7 +102,7 @@ const HomePage = () => {
   //   dispatch(cateGetdataAll());
   // }, []);
 
-  const { dataBestSeller, dataHotDeal, dataTopRated, dataFeauture } =
+  const { dataBestSeller, dataHotDeal, dataTopRated, dataFeauture, loading } =
     useSelector((state) => state.product);
 
   // const { dataCate } = useSelector((state) => state.category);
@@ -126,6 +126,15 @@ const HomePage = () => {
 
   return (
     <div>
+      {/* {loading && (
+        <div className="fixed h-full flex items-center inset-0 bg-opacity-90  bg-white z-[999] ">
+          <img
+            src="/loading3.svg"
+            className="loadingsvg  h-[100px] mx-auto"
+            alt="loading"
+          />
+        </div>
+      )} */}
       <SliderBanner></SliderBanner>
       {/* <div>
         {dataHotDeal?.length > 0 &&
