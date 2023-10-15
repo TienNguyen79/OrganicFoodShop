@@ -15,7 +15,7 @@ const navLinks = [
   {
     icon: <IconArrowDown></IconArrowDown>,
     title: "Page",
-    url: "/#",
+    url: "/page",
     navItem: <NavItemPage></NavItemPage>,
   },
   { icon: "", title: "Blog", url: "/blog" },
@@ -35,6 +35,9 @@ const HomeNavigate = () => {
                 key={link.title}
                 to={link.url}
                 className="flex items-center gap-x-1 text-[14px] font-medium text-gray5 "
+                onClick={() =>
+                  link.title === "Shop" && localStorage.setItem("nameShop", "")
+                }
               >
                 <span>{link.title}</span>
                 <span>{link.icon}</span>

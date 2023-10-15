@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const NavItemShop = () => {
-  const { setValue } = useForm({
+  const { setValue, watch } = useForm({
     mode: "onChange",
   });
 
@@ -34,10 +34,12 @@ const NavItemShop = () => {
                 <h1
                   className="text-[16px] font-semibold text-gray-600 mb-3 cursor-pointer hover:text-primary transition-all duration-200"
                   onClick={() => {
-                    navigate(`/shop/${item.id || item.slug}`);
+                    // navigate(`/shop/${item.id || item.slug}`);
+
                     // setValue("cate", parseInt(item.id));
-                    console.log(item.id);
-                    // window.location.href = `/shop/${item.id || item.slug}`; //nếu để điều hướng như cái trên có 1 số lỗi ở shop
+                    // localStorage.setItem("idCate", item.id);
+                    window.location.href = `/shop/${item.id || item.slug}`; //nếu để điều hướng như cái trên có 1 số lỗi ở shop
+                    localStorage.removeItem("nameShop");
                   }}
                 >
                   {item.name}
