@@ -9,8 +9,9 @@ import ProSale from "./parts/ProSale";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 import { defaultImage2, defaultImage3 } from "../../constants/global";
+import ProQuickView from "./ProQuickView";
 
-const ProductItem = ({ data }) => {
+const ProductItem = ({ data, openModal }) => {
   //   let temp = [];
   //   switch (data) {
   //     case "1":
@@ -77,10 +78,17 @@ const ProductItem = ({ data }) => {
   // Đánh dấu các sao sau starCount bằng màu xám
   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
   const [isGroupHovered, setIsGroupHovered] = useState(false);
+
+  const handleOpenModal = (id) => {
+    console.log("🚀 ~ file: ProductItem.js:83 ~ handleOpenModal ~ id:", id);
+    openModal();
+    //dispatch
+  };
+
   return (
     <div
       className="border  border-gray-200 bg-white rounded-lg h-[407px] cursor-pointer flex flex-col relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
-      //phục vụ mỗi việc đổi màu icon Bag :<
+      //phục vụ mỗi việc đổi màu icon Bag :<ProImage
       onMouseEnter={() => setIsGroupHovered(true)}
       onMouseLeave={() => setIsGroupHovered(false)}
     >
@@ -118,8 +126,11 @@ const ProductItem = ({ data }) => {
             <IconHeart></IconHeart>
           </span>
         </div>
-        <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  hover:scale-110 shadowgreen transition-all  ">
-          <span className="flex justify-center items-center">
+        <div
+          className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  hover:scale-110 shadowgreen transition-all  "
+          onClick={() => handleOpenModal(data.id)}
+        >
+          <span className=" flex justify-center items-center">
             <IconEyeOpen></IconEyeOpen>
           </span>
         </div>

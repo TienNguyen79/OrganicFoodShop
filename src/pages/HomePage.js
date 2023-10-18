@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SliderBanner from "../components/slider/SliderBanner";
 import UtilsFeautureItem from "../modules/home/feature/UtilsFeautureItem";
 import Label from "../components/label/Label";
@@ -28,6 +28,7 @@ import {
 } from "../store/product/pro-slice";
 import axios from "../api/axios";
 import { cateGetdataAll } from "../store/category/cate-slice";
+import ProQuickView from "../modules/product/ProQuickView";
 
 const dataUtil = [
   {
@@ -130,6 +131,18 @@ const HomePage = () => {
   //   fetch();
   // }, []);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  // const datafake = { id: 1, name: "hi" };
+
   return (
     <div>
       {loading && dataProSearch.length <= 0 && (
@@ -141,6 +154,11 @@ const HomePage = () => {
           />
         </div>
       )}
+      <ProQuickView
+        open={isModalOpen ? "visible" : "invisible"}
+        onClose={closeModal}
+        // data={datafake}
+      />
       <SliderBanner></SliderBanner>
       {/* <div>
         {dataHotDeal?.length > 0 &&
@@ -172,7 +190,11 @@ const HomePage = () => {
         <div className="grid grid-cols-4  gap-x-6">
           {dataFeauture.length > 0 &&
             dataFeauture.map((item) => (
-              <ProductItem key={item.id} data={item}></ProductItem>
+              <ProductItem
+                key={item.id}
+                data={item}
+                openModal={openModal}
+              ></ProductItem>
             ))}
         </div>
       </div>
@@ -234,7 +256,11 @@ const HomePage = () => {
               dataBestSeller
                 .slice(0, 5)
                 .map((item) => (
-                  <ProductItem key={item.id} data={item}></ProductItem>
+                  <ProductItem
+                    key={item.id}
+                    data={item}
+                    openModal={openModal}
+                  ></ProductItem>
                 ))}
           </div>
 
