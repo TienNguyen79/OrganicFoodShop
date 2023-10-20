@@ -13,7 +13,9 @@ const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
-
+const FeautureProPage = lazy(() => import("./pages/FeautureProPage"));
+const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
+const TopProductPage = lazy(() => import("./pages/TopProductPage"));
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
   console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
@@ -32,8 +34,19 @@ function App() {
 
         <Route element={<LayoutDetail></LayoutDetail>}>
           <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
-
           <Route path="/shop/:slug" element={<ShopPage></ShopPage>}></Route>
+          <Route
+            path="/productDetails/:slug"
+            element={<ProductDetailPage></ProductDetailPage>}
+          ></Route>
+          <Route
+            path="/featureProducts"
+            element={<FeautureProPage></FeautureProPage>}
+          ></Route>
+          <Route
+            path="/topProducts"
+            element={<TopProductPage></TopProductPage>}
+          ></Route>
         </Route>
 
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>

@@ -29,8 +29,12 @@ const SliderItem = ({ data }) => {
             Free shipping on all your order. we deliver, you enjoy
           </p>
 
-          <div className="mt-[30px] ">
-            <Button kind="primary" className="!px-[40px]">
+          <div className="mt-[30px]">
+            <Button
+              kind="primary"
+              className="!px-[40px] w-[195px]"
+              href={`/shop/${data.id}`}
+            >
               Shop Now
               <span className="block ml-4">
                 <IconAR2></IconAR2>

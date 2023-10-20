@@ -11,8 +11,8 @@ const AboutItem = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2  gap-x-10 pt-[40px] pb-[60px]">
       <div className="flex  items-center flex-1 gap-x-6">
-        <AboutImage w="200px" h="400px"></AboutImage>
-        <AboutImage w="300px" h="457px"></AboutImage>
+        <AboutImage w="100%" h="100%"></AboutImage>
+        <AboutImage w="100%" h="100%"></AboutImage>
       </div>
       <div className="flex-1 ">
         <AboutHeading></AboutHeading>

@@ -21,6 +21,7 @@ import BlogItem from "../modules/blog/BlogItem";
 import TestimonialItem from "../modules/user/TestimonialItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  proGetAll,
   proGetBestSeller,
   proGetFeauture,
   proGetHotDeal,
@@ -29,6 +30,7 @@ import {
 import axios from "../api/axios";
 import { cateGetdataAll } from "../store/category/cate-slice";
 import ProQuickView from "../modules/product/ProQuickView";
+import CartPopup from "../modules/cart/CartPopup";
 
 const dataUtil = [
   {
@@ -87,6 +89,8 @@ const HomePage = () => {
     dispatch(proGetHotDeal());
     dispatch(proGetTopRated());
     dispatch(proGetFeauture());
+    dispatch(cateGetdataAll());
+    dispatch(proGetAll());
   }, []);
 
   // useEffect(() => {
@@ -110,9 +114,10 @@ const HomePage = () => {
     dataFeauture,
     loading,
     dataProSearch,
+    dataPro,
   } = useSelector((state) => state.product);
 
-  // const { dataCate } = useSelector((state) => state.category);
+  const { dataCate } = useSelector((state) => state.category);
   // console.log("🚀 ~ file: HomePage.js:107 ~ HomePage ~ dataCate:", dataCate);
 
   // console.log(
@@ -130,22 +135,41 @@ const HomePage = () => {
   //   }
   //   fetch();
   // }, []);
+  const { dataQuickview } = useSelector((state) => state.product);
 
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const [isClickClose, setIsClickClose] = useState(false);
   const openModal = () => {
     setModalOpen(true);
   };
-
   const closeModal = () => {
     setModalOpen(false);
+    setIsClickClose(true);
   };
+  //--------------
 
-  // const datafake = { id: 1, name: "hi" };
+  //xử lý chèn số lượng sản phẩm với categoryId tương ứng ở Shop by Top Categories
+  const [datatLength, setDatatLength] = useState([]);
+
+  useEffect(() => {
+    const arr = [];
+    const arrLength = [];
+    dataCate.map((item) => {
+      arr.push(item.id);
+    });
+
+    arr.map((id) => {
+      const productsInCategory = dataPro.filter(
+        (product) => product.category_id === id
+      );
+      arrLength.push(productsInCategory.length);
+    });
+    setDatatLength(arrLength);
+  }, [dataCate, dataPro]);
 
   return (
     <div>
-      {loading && dataProSearch.length <= 0 && (
+      {loading && dataProSearch.length <= 0 && dataQuickview.length <= 0 && (
         <div className="fixed h-full flex items-center inset-0 bg-opacity-90  bg-white z-[999] ">
           <img
             src="/loading3.svg"
@@ -157,8 +181,15 @@ const HomePage = () => {
       <ProQuickView
         open={isModalOpen ? "visible" : "invisible"}
         onClose={closeModal}
+        isClickClose={isClickClose}
         // data={datafake}
       />
+
+      {/* <CartPopup
+        openCart={isModalOpenCart ? "visible" : "invisible"}
+        onClose={closeModalCart}
+        isClickClose={isClickCloseCart}
+      ></CartPopup> */}
       <SliderBanner></SliderBanner>
       {/* <div>
         {dataHotDeal?.length > 0 &&
@@ -183,7 +214,10 @@ const HomePage = () => {
         <Gap>
           <GroupJusBeween>
             <Label className="text-[35px]">Featured Products</Label>
-            <LabelRedirect title="View All"></LabelRedirect>
+            <LabelRedirect
+              url="/featureProducts"
+              title="View All"
+            ></LabelRedirect>
           </GroupJusBeween>
         </Gap>
 
@@ -202,15 +236,23 @@ const HomePage = () => {
         <Gap>
           <GroupJusBeween>
             <Label className="text-[35px]">Shop by Top Categories</Label>
-            <LabelRedirect title="View All"></LabelRedirect>
+            <LabelRedirect url="/shop" title="View All"></LabelRedirect>
           </GroupJusBeween>
         </Gap>
 
         <div className="cateSlider  ">
           <Slider {...settings}>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
+            {dataCate.length > 0 &&
+              dataCate.map((item, index) => {
+                return (
+                  <div className="px-3" key={item.id}>
+                    <CategoryItem
+                      data={item}
+                      datatLength={datatLength[index]}
+                    ></CategoryItem>
+                  </div>
+                );
+              })}
             <div className="px-3">
               <CategoryItem></CategoryItem>
             </div>
@@ -248,7 +290,10 @@ const HomePage = () => {
           <Gap>
             <GroupJusBeween>
               <Label className="text-[35px]">Best Seller Products</Label>
-              <LabelRedirect title="View All"></LabelRedirect>
+              <LabelRedirect
+                url="/topProducts"
+                title="View All"
+              ></LabelRedirect>
             </GroupJusBeween>
           </Gap>
           <div className="grid grid-cols-5 gap-x-5">
@@ -271,7 +316,11 @@ const HomePage = () => {
                 dataHotDeal
                   .slice(0, 3)
                   .map((item) => (
-                    <TopProductItem key={item.id} data={item}></TopProductItem>
+                    <TopProductItem
+                      key={item.id}
+                      data={item}
+                      openModal={openModal}
+                    ></TopProductItem>
                   ))}
             </div>
             <div className="flex flex-col gap-y-4">
@@ -282,7 +331,11 @@ const HomePage = () => {
                 dataBestSeller
                   .slice(6, 9)
                   .map((item) => (
-                    <TopProductItem key={item.id} data={item}></TopProductItem>
+                    <TopProductItem
+                      key={item.id}
+                      data={item}
+                      openModal={openModal}
+                    ></TopProductItem>
                   ))}
             </div>
             <div className="flex flex-col gap-y-4">
@@ -291,7 +344,11 @@ const HomePage = () => {
                 dataTopRated
                   .slice(0, 3)
                   .map((item) => (
-                    <TopProductItem data={item} key={item.id}></TopProductItem>
+                    <TopProductItem
+                      data={item}
+                      key={item.id}
+                      openModal={openModal}
+                    ></TopProductItem>
                   ))}
             </div>
           </div>

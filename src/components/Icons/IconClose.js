@@ -1,6 +1,6 @@
 import React from "react";
 
-const IconClose = () => {
+const IconClose = ({ color = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,14 +11,14 @@ const IconClose = () => {
     >
       <path
         d="M18.75 6.25L6.25 18.75"
-        stroke="white"
+        stroke={color || "white"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6.25 6.25L18.75 18.75"
-        stroke="white"
+        stroke={color || "white"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -10,6 +10,8 @@ const productSlice = createSlice({
     dataFeauture: [],
     dataProWithFilter: [],
     dataProSearch: [],
+    dataQuickview: [],
+    dataProDetails: [],
     loading: false,
   },
   reducers: {
@@ -20,7 +22,8 @@ const productSlice = createSlice({
     proGetFeauture: () => {},
     proGetWithFilter: () => {},
     proGetSearch: () => {},
-
+    proGetQuickview: () => {},
+    proGetDetails: () => {},
     updateData: (state, action) => ({
       ...state,
       dataBestSeller: action.payload.resultBestSellers || state.dataBestSeller,
@@ -31,6 +34,8 @@ const productSlice = createSlice({
       dataProWithFilter:
         action.payload.resultProWithFilter || state.dataProWithFilter,
       dataProSearch: action.payload.resultProSearch || state.dataProSearch,
+      dataQuickview: action.payload.resultProQuickView || state.dataQuickview,
+      dataProDetails: action.payload.resultProDetails || state.dataProDetails,
     }),
     setLoading: (state, action) => ({
       ...state,
@@ -53,6 +58,8 @@ export const {
   proGetAll,
   proGetWithFilter,
   proGetSearch,
+  proGetQuickview,
+  proGetDetails,
   setLoading,
 } = productSlice.actions;
 

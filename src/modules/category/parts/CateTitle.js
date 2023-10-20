@@ -6,7 +6,8 @@ const CateTitle = ({
 }) => {
   return (
     <span
-      className={`inline-block text-gray9 ${className} group-hover:text-primary whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[200px] `}
+      title={title}
+      className={`inline-block text-gray9 ${className} group-hover:text-primary whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[150px] `}
     >
       {title}
     </span>

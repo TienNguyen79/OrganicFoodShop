@@ -25,10 +25,7 @@ const SliderBanner = () => {
     dispatch(cateGetdataAll());
   }, []);
   const { dataCate } = useSelector((state) => state.category);
-  console.log(
-    "🚀 ~ file: SliderBanner.js:24 ~ SliderBanner ~ dataCate:",
-    dataCate
-  );
+
   return (
     <div className="bg-greenGray1 ">
       <Slider {...settings}>

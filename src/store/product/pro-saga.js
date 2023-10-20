@@ -2,8 +2,10 @@ import { takeLatest } from "redux-saga/effects";
 import {
   proGetAll,
   proGetBestSeller,
+  proGetDetails,
   proGetFeauture,
   proGetHotDeal,
+  proGetQuickview,
   proGetSearch,
   proGetTopRated,
   proGetWithFilter,
@@ -11,7 +13,9 @@ import {
 import handleGetProBestSeller, {
   handleGetHotDeal,
   handleGetProAll,
+  handleGetProDetails,
   handleGetProFeature,
+  handleGetProQuickView,
   handleGetProSearch,
   handleGetProTopRated,
   handleGetProWithFilter,
@@ -25,4 +29,6 @@ export default function* proSaga() {
   yield takeLatest(proGetAll.type, handleGetProAll);
   yield takeLatest(proGetWithFilter.type, handleGetProWithFilter);
   yield takeLatest(proGetSearch.type, handleGetProSearch);
+  yield takeLatest(proGetQuickview.type, handleGetProQuickView);
+  yield takeLatest(proGetDetails.type, handleGetProDetails);
 }

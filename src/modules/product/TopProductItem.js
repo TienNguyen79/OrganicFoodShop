@@ -9,8 +9,11 @@ import IconBagPro from "../../components/Icons/IconBagPro";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 import { defaultImage3 } from "../../constants/global";
+import { useDispatch } from "react-redux";
+import { proGetQuickview } from "../../store/product/pro-slice";
+import { Link } from "react-router-dom";
 
-const TopProductItem = ({ data }) => {
+const TopProductItem = ({ data, openModal }) => {
   // Cách 2 render star
   const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
   const maxStars = 5; // Số sao tối đa
@@ -21,6 +24,13 @@ const TopProductItem = ({ data }) => {
   // Đánh dấu các sao sau starCount bằng màu xám
   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
   const [isGroupHovered, setIsGroupHovered] = useState(false);
+  const dispatch = useDispatch();
+  const handleOpenModal = (id) => {
+    console.log("🚀 ~ file: ProductItem.js:83 ~ handleOpenModal ~ id:", id);
+    openModal();
+    //dispatch
+    dispatch(proGetQuickview(id));
+  };
 
   return (
     <div>
@@ -32,12 +42,15 @@ const TopProductItem = ({ data }) => {
         <ProImage
           className="h-[102px] w-[102px]"
           linkUrl={data?.imageUrl || defaultImage3}
+          href={`/productDetails/${data?.id}`}
         ></ProImage>
         <div className="flex flex-col pr-3 flex-1">
-          <ProTitle
-            title={data?.name}
-            className="group-hover:text-primary"
-          ></ProTitle>
+          <Link to={`/productDetails/${data?.id}`}>
+            <ProTitle
+              title={data?.name}
+              className="group-hover:text-primary"
+            ></ProTitle>
+          </Link>
           <ProPrice
             hover="group-hover:invisible "
             priceOld={data?.price}
@@ -66,7 +79,10 @@ const TopProductItem = ({ data }) => {
                 <IconHeart></IconHeart>
               </span>
             </div>
-            <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all   ">
+            <div
+              className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all   "
+              onClick={() => handleOpenModal(data.id)}
+            >
               <span className="flex justify-center items-center">
                 <IconEyeOpen></IconEyeOpen>
               </span>

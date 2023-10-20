@@ -2,8 +2,10 @@ import { call, put } from "redux-saga/effects";
 import {
   requestProAll,
   requestProBestSeller,
+  requestProDetails,
   requestProFeauture,
   requestProHotDeal,
+  requestProQuickview,
   requestProSearch,
   requestProTopRated,
   requestProWithFilter,
@@ -162,6 +164,48 @@ function* handleGetProSearch(action) {
   yield 1;
 }
 
+function* handleGetProQuickView(action) {
+  const { payload, type } = action;
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestProQuickview, payload);
+    console.log(
+      "🚀 ~ file: pro-handlers.js:172 ~ function*handleGetProQuickView ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProQuickView: response.data.product }));
+      yield put(setLoading(false));
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
+    yield put(setLoading(false));
+  }
+}
+
+function* handleGetProDetails(action) {
+  const { payload, type } = action;
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestProDetails, payload);
+    console.log(
+      "🚀 ~ file: pro-handlers.js:194 ~ function*handleGetProDetails ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProDetails: response.data }));
+      yield put(setLoading(false));
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
+    yield put(setLoading(false));
+  }
+}
+
 export {
   handleGetHotDeal,
   handleGetProTopRated,
@@ -169,4 +213,6 @@ export {
   handleGetProAll,
   handleGetProWithFilter,
   handleGetProSearch,
+  handleGetProQuickView,
+  handleGetProDetails,
 };

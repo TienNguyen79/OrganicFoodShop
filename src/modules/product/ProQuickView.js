@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import Overlay from "../../components/common/Overlay";
 import IconClose from "../../components/Icons/IconClose";
 import ProDetailItem from "./ProDetailItem";
+import { useSelector } from "react-redux";
 
-const ProQuickView = ({ open = "invisible", data, onClose = () => {} }) => {
+const ProQuickView = ({
+  open = "invisible",
+  isClickClose,
+  onClose = () => {},
+}) => {
+  const { dataQuickview } = useSelector((state) => state.product);
+
   return (
     <div
       className={`relative w-full h-full top-[200px]  flex justify-center items-center  ${open} `}
@@ -22,7 +29,10 @@ const ProQuickView = ({ open = "invisible", data, onClose = () => {} }) => {
           <IconClose></IconClose>
         </span>
         <div>
-          <ProDetailItem></ProDetailItem>
+          <ProDetailItem
+            data={dataQuickview}
+            isClickClose={isClickClose}
+          ></ProDetailItem>
         </div>
       </div>
     </div>

@@ -10,6 +10,9 @@ import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 import { defaultImage2, defaultImage3 } from "../../constants/global";
 import ProQuickView from "./ProQuickView";
+import { useDispatch } from "react-redux";
+import { proGetQuickview } from "../../store/product/pro-slice";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductItem = ({ data, openModal }) => {
   //   let temp = [];
@@ -68,6 +71,7 @@ const ProductItem = ({ data, openModal }) => {
   //       break;
   //   }
 
+  const navigate = useNavigate();
   //Cách 2 render star
   const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
   const maxStars = 5; // Số sao tối đa
@@ -77,12 +81,14 @@ const ProductItem = ({ data, openModal }) => {
   ));
   // Đánh dấu các sao sau starCount bằng màu xám
   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
+
   const [isGroupHovered, setIsGroupHovered] = useState(false);
 
+  const dispatch = useDispatch();
   const handleOpenModal = (id) => {
     console.log("🚀 ~ file: ProductItem.js:83 ~ handleOpenModal ~ id:", id);
     openModal();
-    //dispatch
+    dispatch(proGetQuickview(id));
   };
 
   return (
@@ -92,9 +98,12 @@ const ProductItem = ({ data, openModal }) => {
       onMouseEnter={() => setIsGroupHovered(true)}
       onMouseLeave={() => setIsGroupHovered(false)}
     >
-      <ProImage linkUrl={data?.imageUrl || defaultImage3}></ProImage>
+      <ProImage
+        href={`/productDetails/${data?.id}`}
+        linkUrl={data?.imageUrl || defaultImage3}
+      ></ProImage>
       <div className="flex justify-between items-center p-4 mt-auto">
-        <div>
+        <Link to={`/productDetails/${data?.id}`}>
           <ProTitle title={data?.name}></ProTitle>
           <ProPrice
             priceOld={data?.price}
@@ -108,7 +117,7 @@ const ProductItem = ({ data, openModal }) => {
               <div key={index}>{item}</div>
             ))}
           </div>
-        </div>
+        </Link>
         <div>
           <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary hover:scale-110 shadowgreen transition-all ">
             <IconBagPro
@@ -127,7 +136,7 @@ const ProductItem = ({ data, openModal }) => {
           </span>
         </div>
         <div
-          className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer  hover:scale-110 shadowgreen transition-all  "
+          className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer z-50  hover:scale-110 shadowgreen transition-all  "
           onClick={() => handleOpenModal(data.id)}
         >
           <span className=" flex justify-center items-center">

@@ -2,22 +2,28 @@ import React from "react";
 import IconMinus from "../../../components/Icons/IconMinus";
 import IconPlus from "../../../components/Icons/IconPlus";
 import Input from "../../../components/input/Input";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { useState } from "react";
 
-const ProHandleQuantity = () => {
-  const [quantity, setQuantity] = useState(0);
-  console.log(
-    "🚀 ~ file: ProHandleQuantity.js:14 ~ ProHandleQuantity ~ quantity:",
-    quantity
-  );
-
+const ProHandleQuantity = ({ control, name }) => {
+  const { field } = useController({
+    control,
+    name,
+    defaultValue: 0,
+  });
   const handleIncrease = () => {
-    setQuantity(quantity + 1);
+    // Lấy giá trị hiện tại của trường nhập liệu thông qua field
+    const currentQuantity = field.value;
+    const newQuantity = parseInt(currentQuantity, 10) + 1;
+    field.onChange(newQuantity);
   };
+
   const handleDecrease = () => {
-    if (quantity <= 0) return;
-    setQuantity(quantity - 1);
+    const currentQuantity = field.value;
+    if (currentQuantity > 0) {
+      const newQuantity = parseInt(currentQuantity, 10) - 1;
+      field.onChange(newQuantity);
+    }
   };
 
   return (
@@ -29,12 +35,10 @@ const ProHandleQuantity = () => {
         <IconMinus></IconMinus>
       </span>
       <input
-        value={quantity}
+        value={field.value}
         className="w-[40px] text-center"
-        onChange={(e) => {
-          const newValue = parseInt(e.target.value, 10) || "";
-          setQuantity(newValue);
-        }}
+        onChange={field.onChange}
+        {...field}
       ></input>
       <span
         className="block bg-gray-200 rounded-full p-[10px] cursor-pointer"

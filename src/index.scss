@@ -101,12 +101,39 @@ ul.slick-dots {
 }
 
 .Testimonial .slick-prev:before,
-.slick-next:before {
+.Testimonial .slick-next:before {
   color: #00b207;
 }
 
 .Testimonial .slick-next:before {
   color: #00b207;
+}
+
+//custom Thumbs QuickView
+
+.thumbslider .slick-next:before {
+  color: #84d187;
+}
+.thumbslider .slick-prev:before {
+  color: #84d187;
+}
+
+.thumbslider button.slick-arrow.slick-next {
+  margin-right: 95px;
+  position: absolute;
+  top: -31px;
+  transform: rotateZ(270deg);
+}
+.thumbslider button.slick-arrow.slick-prev {
+  margin-left: 41px;
+  position: absolute;
+  top: 360px;
+  transform: rotateZ(-88deg);
+  z-index: 10;
+}
+
+.thumbslider .slick-list {
+  overflow: hidden;
 }
 
 //custome input-range
@@ -193,4 +220,13 @@ ul.slick-dots {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #00b207;
   cursor: pointer;
+}
+
+//chỉ ẩn scroll mà mình muốn nhưng vẫn hoạt động scroll được
+.scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
 }

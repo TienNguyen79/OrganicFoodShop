@@ -35,6 +35,8 @@ import IconHome from "../components/Icons/IconHome";
 import IconArrowRight from "../components/Icons/IconArrowRight";
 import IconPagiNext from "../components/Icons/IconPagiNext";
 import IconPagiPrev from "../components/Icons/IconPagiPrev";
+import ProDetailItem from "../modules/product/ProDetailItem";
+import ProQuickView from "../modules/product/ProQuickView";
 
 const itemsPerPage = 9;
 
@@ -207,7 +209,18 @@ const ShopPage = () => {
     dataPro.filter((product) => product.category_id === category_id)
   );
 
-  // const [dataii, setDataii] = useState([]);
+  //....
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isClickClose, setIsClickClose] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setIsClickClose(true);
+  };
 
   return (
     <Fragment>
@@ -220,6 +233,13 @@ const ShopPage = () => {
           />
         </div>
       )}
+
+      <ProQuickView
+        open={isModalOpen ? "visible" : "invisible"}
+        onClose={closeModal}
+        isClickClose={isClickClose}
+        // data={datafake}
+      />
 
       <div className="grid grid-cols-4 gap-x-6 mt-8 mb-[80px]">
         <div className="col-span-1">
@@ -384,7 +404,11 @@ const ShopPage = () => {
                 dataProWithFilter?.data
                   .slice(0, 9)
                   .map((item) => (
-                    <ProductItem key={item.id} data={item}></ProductItem>
+                    <ProductItem
+                      openModal={openModal}
+                      key={item.id}
+                      data={item}
+                    ></ProductItem>
                   ))
               ) : (
                 <h1 className="text-danger text-[20px]">Product Not Found</h1>
