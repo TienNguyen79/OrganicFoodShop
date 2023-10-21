@@ -9,7 +9,6 @@ const ProThumb = ({
   selectedThumb,
   setSelectedThumb,
 }) => {
-  console.log("🚀 ~ file: ProThumb.js:9 ~ click:", click);
   return (
     <div
       className={`${className}  ${

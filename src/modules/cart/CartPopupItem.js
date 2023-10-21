@@ -5,16 +5,19 @@ import ProQuantity from "../product/partsCartAndTym/ProQuantity";
 import ProPrice from "../product/partsCartAndTym/ProPrice";
 import IconClose2 from "../../components/Icons/IconClose2";
 
-const CartPopupItem = () => {
+const CartPopupItem = ({ data }) => {
   return (
     <div className="flex items-center justify-between mt-6">
       <div className="flex items-center gap-x-2">
-        <ProImage className="w-[80px] h-[80px]"></ProImage>
+        <ProImage
+          className="w-[80px] h-[80px]"
+          linkUrl={data?.imageUrl}
+        ></ProImage>
         <div>
-          <ProName className="text-sm"></ProName>
+          <ProName name={data?.name} className="text-sm"></ProName>
           <div className="flex items-baseline gap-x-1">
-            <ProPrice></ProPrice>
-            <ProQuantity></ProQuantity>
+            <ProPrice price={(data?.current_price).toFixed(2)}></ProPrice>
+            <ProQuantity quantity={data?.pivot?.quantity}></ProQuantity>
           </div>
         </div>
       </div>

@@ -59,7 +59,7 @@ const Header = () => {
         onClose={closeModalCart}
         isClickClose={isClickCloseCart}
       ></CartPopup>
-      <div className="w-full ">
+      <div className="w-full fixed z-[30] bg-white ">
         <div className="h-[42px] bg-gray8 text-gray3 border-b-[1px] flex  justify-around  ">
           <div className="flex  items-center gap-x-2">
             <svg

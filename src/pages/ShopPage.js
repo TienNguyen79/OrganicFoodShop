@@ -242,7 +242,7 @@ const ShopPage = () => {
       />
 
       <div className="grid grid-cols-4 gap-x-6 mt-8 mb-[80px]">
-        <div className="col-span-1">
+        <div className="col-span-1 z-10">
           <Button className="!py-[10px] mb-6" kind="primary">
             Filter
             <span className="inline-block ml-2">

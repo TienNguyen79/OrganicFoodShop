@@ -19,9 +19,11 @@ import IconRedTym from "../../components/Icons/IconRedTym";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { cartAddNew } from "../../store/cart/cart-slice";
+import { getToken } from "../../utils/auth";
 const ProDetailItem = ({ data, isClickClose }) => {
   const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
     mode: "onChange",
@@ -57,33 +59,34 @@ const ProDetailItem = ({ data, isClickClose }) => {
   const [linkImage, setLinkImage] = useState(data?.imageUrl);
   const [selectedThumb, setSelectedThumb] = useState(1);
   const { loading } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  // const [formData, setFormData] = useState({
+  //   product_id: 1,
+  //   quantity: 1,
+  //   // Thêm các trường nhập liệu khác ở đây
+  // });
+  // console.log(
+  //   "🚀 ~ file: ProDetailItem.js:66 ~ ProDetailItem ~ formData:",
+  //   formData
+  // );
 
-  const [formData, setFormData] = useState({
-    imgPro: "",
-    namePro: "",
-    quantityPro: 1,
-    pricePro: 100,
-    // Thêm các trường nhập liệu khác ở đây
-  });
-  console.log(
-    "🚀 ~ file: ProDetailItem.js:78 ~ ProDetailItem ~ formData:",
-    formData
-  );
-
-  const HandleProDetails = (values) => {
-    setFormData({
-      ...formData,
-      quantityPro: values.quantityPro,
-      pricePro: (
-        ((100 - parseInt(data?.discount)) / 100) *
-        parseInt(data?.price)
-      ).toFixed(2),
-      imgPro: linkImage,
-      namePro: data?.name,
-    });
+  const HandleProDetails = async (values) => {
+    // setFormData({
+    //   ...formData,
+    //   product_id: data?.id,
+    //   quantity: values.quantity,
+    // });
+    dispatch(
+      cartAddNew({
+        product_id: data?.id,
+        quantity: values.quantity,
+        token: getToken(),
+      })
+    );
+    console.log({ product_id: data?.id, quantity: values.quantity });
 
     //khi submit xong set số lượng về 0
-    setValue("quantityPro", 0);
+    setValue("quantity", 0);
   };
 
   useEffect(() => {
@@ -106,7 +109,7 @@ const ProDetailItem = ({ data, isClickClose }) => {
         </div>
       ) : (
         <form onSubmit={handleSubmit(HandleProDetails)}>
-          <div className="grid grid-cols-2 gap-x-6">
+          <div className="grid grid-cols-2 gap-x-6 ">
             <div className="grid grid-cols-5">
               <div className="thumbslider col-span-1 flex flex-col  pt-[40px] ">
                 {data?.thumbnails?.length >= 5 ? (
@@ -219,7 +222,7 @@ const ProDetailItem = ({ data, isClickClose }) => {
               <div className="py-[18px] border-b-2 flex items-center gap-x-3">
                 <ProHandleQuantity
                   control={control}
-                  name="quantityPro"
+                  name="quantity"
                 ></ProHandleQuantity>
 
                 <Button kind="primary" type="submit">

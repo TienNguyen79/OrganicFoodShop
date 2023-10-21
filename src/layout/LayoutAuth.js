@@ -17,7 +17,7 @@ const LayoutAuth = ({
         <Header></Header>
       </div>
       <BannerNav></BannerNav>
-      <div className="px-[238px] pb-[80px] flex-grow">
+      <div className="px-[238px] pb-[80px] pt-[80px] flex-grow">
         <div className="w-full max-w-[520px] my-[80px] px-6 pt-6 pb-[32px] bg-white shadow-lg mx-auto">
           <h1 className="text-[32px] font-semibold text-gray9 mb-5 text-center">
             {heading}
