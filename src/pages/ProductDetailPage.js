@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { proGetDetails } from "../store/product/pro-slice";
 import Label from "../components/label/Label";
 import ProductItem from "../modules/product/ProductItem";
+import ProQuickView from "../modules/product/ProQuickView";
 const tabs = [
   {
     id: 1,
@@ -37,8 +38,24 @@ const ProductDetailPage = () => {
 
   const { dataProDetails } = useSelector((state) => state.product);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isClickClose, setIsClickClose] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setIsClickClose(true);
+  };
+
   return (
     <Fragment>
+      <ProQuickView
+        open={isModalOpen ? "visible" : "invisible"}
+        onClose={closeModal}
+        isClickClose={isClickClose}
+        // data={datafake}
+      />
       <div className="pt-[60px] ">
         <ProDetailItem data={dataProDetails?.product}></ProDetailItem>
       </div>
@@ -86,7 +103,7 @@ const ProductDetailPage = () => {
           {dataProDetails?.sameProducts?.length > 0 &&
             dataProDetails.sameProducts.slice(0, 4).map((item, index) => (
               <div key={index}>
-                <ProductItem data={item}></ProductItem>
+                <ProductItem openModal={openModal} data={item}></ProductItem>
               </div>
             ))}
         </div>

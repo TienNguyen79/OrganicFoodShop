@@ -13,7 +13,7 @@ const ProQuickView = ({
 
   return (
     <div
-      className={`relative w-full h-full top-[200px]  flex justify-center items-center  ${open} `}
+      className={`relative w-full h-full top-[130px]  flex justify-center items-center  ${open} `}
     >
       <Overlay open={open} onClick={onClose}></Overlay>
 
@@ -32,6 +32,7 @@ const ProQuickView = ({
           <ProDetailItem
             data={dataQuickview}
             isClickClose={isClickClose}
+            onClose={onClose}
           ></ProDetailItem>
         </div>
       </div>

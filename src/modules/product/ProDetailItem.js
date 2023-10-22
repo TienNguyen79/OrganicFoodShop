@@ -24,8 +24,8 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { cartAddNew } from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
-const ProDetailItem = ({ data, isClickClose }) => {
-  const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
+const ProDetailItem = ({ data, isClickClose, onClose }) => {
+  const { control, setValue, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {},
   });
@@ -59,6 +59,11 @@ const ProDetailItem = ({ data, isClickClose }) => {
   const [linkImage, setLinkImage] = useState(data?.imageUrl);
   const [selectedThumb, setSelectedThumb] = useState(1);
   const { loading } = useSelector((state) => state.product);
+  const { loadingCart } = useSelector((state) => state.cart);
+  console.log(
+    "🚀 ~ file: ProDetailItem.js:63 ~ ProDetailItem ~ loadingCart:",
+    loadingCart
+  );
   const dispatch = useDispatch();
   // const [formData, setFormData] = useState({
   //   product_id: 1,
@@ -76,6 +81,7 @@ const ProDetailItem = ({ data, isClickClose }) => {
     //   product_id: data?.id,
     //   quantity: values.quantity,
     // });
+
     dispatch(
       cartAddNew({
         product_id: data?.id,
@@ -90,9 +96,10 @@ const ProDetailItem = ({ data, isClickClose }) => {
   };
 
   useEffect(() => {
-    //khi có click đóng phải set về hình ảnh chính vì nếu không làm thế khi hover vào thumb nó sẽ giữ linkImg của thumb lại
+    //khi có click đóng phải set về hình ảnh chính vì nếu không làm thế khi hover vào thumb nó sẽ giữ linkImg của thumb lại,set số lượng về 0 luôn
     if (isClickClose) {
       setLinkImage(data?.imageUrl);
+      setValue("quantity", 0);
       // setIsClickTym(false);//để tạm chưa hợp lý
     }
   }, [data?.imageUrl, isClickClose]);
@@ -225,7 +232,12 @@ const ProDetailItem = ({ data, isClickClose }) => {
                   name="quantity"
                 ></ProHandleQuantity>
 
-                <Button kind="primary" type="submit">
+                <Button
+                  kind="primary"
+                  type="submit"
+                  className="w-[183px]"
+                  isLoading={loadingCart}
+                >
                   <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
                     <span>Add to Cart </span>
                     <IconBagProDetail></IconBagProDetail>

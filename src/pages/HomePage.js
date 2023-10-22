@@ -178,12 +178,14 @@ const HomePage = () => {
           />
         </div>
       )}
-      <ProQuickView
-        open={isModalOpen ? "visible" : "invisible"}
-        onClose={closeModal}
-        isClickClose={isClickClose}
-        // data={datafake}
-      />
+      <div className="pt-[80px]">
+        <ProQuickView
+          open={isModalOpen ? "visible" : "invisible"}
+          onClose={closeModal}
+          isClickClose={isClickClose}
+          // data={datafake}
+        />
+      </div>
 
       {/* <CartPopup
         openCart={isModalOpenCart ? "visible" : "invisible"}

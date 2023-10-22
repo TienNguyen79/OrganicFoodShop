@@ -14,12 +14,12 @@ const CartPopup = ({
   onClose = () => {},
 }) => {
   const dispatch = useDispatch();
+  const { dataCartAll } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(cartGetAll(getToken()));
   }, []);
 
-  const { dataCartAll } = useSelector((state) => state.cart);
   console.log("🚀 ~ file: CartPopup.js:23 ~ dataCartAll:", dataCartAll);
 
   const [totalPrice, setTotalPrice] = useState(0);

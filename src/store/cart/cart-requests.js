@@ -1,4 +1,5 @@
 import axios from "../../api/axios";
+import { getToken } from "../../utils/auth";
 
 export const requestCartAll = (token) => {
   const decodedToken = atob(token); //giải mã base64
@@ -23,4 +24,18 @@ export const requestCartAddnew = (data) => {
   };
 
   return axios.post("/api/cartItem", data, config);
+};
+
+export const requestCartDelete = (id) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.delete(`/api/cartItem/${id}`, config);
 };

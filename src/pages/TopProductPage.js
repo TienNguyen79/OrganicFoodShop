@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../store/product/pro-slice";
 import ProductItem from "../modules/product/ProductItem";
 import Label from "../components/label/Label";
+import ProQuickView from "../modules/product/ProQuickView";
 const tabs = [
   {
     id: 1,
@@ -37,60 +38,90 @@ const TopProductPage = () => {
   );
   const { slug } = useParams();
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isClickClose, setIsClickClose] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setIsClickClose(true);
+  };
+
   return (
-    <div className="mt-[80px]">
-      <div className="text-center">
-        <Label className="text-[35px]">Top Products</Label>
-      </div>
-      <div className="flex justify-center items-center mt-[40px] border-b-2 relative ">
-        {tabs.map((item) => (
-          <span
-            key={item.id}
-            className={`text-gray5 text-center w-[220px] text-[16px] font-medium p-4 after:absolute  after:top-full after:flex after:hover:bg-primary after:hover:h-[2px] after:content-[''] after:w-[180px] after:h-[1px] 
+    <Fragment>
+      <ProQuickView
+        open={isModalOpen ? "visible" : "invisible"}
+        onClose={closeModal}
+        isClickClose={isClickClose}
+        // data={datafake}
+      />
+
+      <div className="mt-[80px]">
+        <div className="text-center">
+          <Label className="text-[35px]">Top Products</Label>
+        </div>
+        <div className="flex justify-center items-center mt-[40px] border-b-2 relative ">
+          {tabs.map((item) => (
+            <span
+              key={item.id}
+              className={`text-gray5 text-center w-[220px] text-[16px] font-medium p-4 after:absolute  after:top-full after:flex after:hover:bg-primary after:hover:h-[2px] after:content-[''] after:w-[180px] after:h-[1px] 
              cursor-pointer ${
                item.id === tabClicked ? "after:bg-primary after:h-[2px]" : ""
              } `}
-            onClick={() => {
-              setTabClicked(item.id);
-            }}
+              onClick={() => {
+                setTabClicked(item.id);
+              }}
+            >
+              {item.title}
+            </span>
+          ))}
+        </div>
+        <div className="mt-[80px]">
+          <div
+            className={`BestSeller ${tabClicked === 1 ? "block" : "hidden"} `}
           >
-            {item.title}
-          </span>
-        ))}
+            <div className=" grid grid-cols-4 gap-6 ">
+              {dataBestSeller.length > 0 &&
+                dataBestSeller.map((item) => (
+                  <div>
+                    <ProductItem
+                      openModal={openModal}
+                      data={item}
+                    ></ProductItem>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className={`HotDeal ${tabClicked === 2 ? "block" : "hidden"} `}>
+            <div className=" grid grid-cols-4 gap-6 ">
+              {dataHotDeal.length > 0 &&
+                dataHotDeal.map((item) => (
+                  <div>
+                    <ProductItem
+                      openModal={openModal}
+                      data={item}
+                    ></ProductItem>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className={`TopRated ${tabClicked === 3 ? "block" : "hidden"} `}>
+            <div className=" grid grid-cols-4 gap-6 ">
+              {dataTopRated.length > 0 &&
+                dataTopRated.map((item) => (
+                  <div>
+                    <ProductItem
+                      openModal={openModal}
+                      data={item}
+                    ></ProductItem>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mt-[80px]">
-        <div className={`BestSeller ${tabClicked === 1 ? "block" : "hidden"} `}>
-          <div className=" grid grid-cols-4 gap-6 ">
-            {dataBestSeller.length > 0 &&
-              dataBestSeller.map((item) => (
-                <div>
-                  <ProductItem data={item}></ProductItem>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div className={`HotDeal ${tabClicked === 2 ? "block" : "hidden"} `}>
-          <div className=" grid grid-cols-4 gap-6 ">
-            {dataHotDeal.length > 0 &&
-              dataHotDeal.map((item) => (
-                <div>
-                  <ProductItem data={item}></ProductItem>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div className={`TopRated ${tabClicked === 3 ? "block" : "hidden"} `}>
-          <div className=" grid grid-cols-4 gap-6 ">
-            {dataTopRated.length > 0 &&
-              dataTopRated.map((item) => (
-                <div>
-                  <ProductItem data={item}></ProductItem>
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 
