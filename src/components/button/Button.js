@@ -38,6 +38,10 @@ const Button = ({
       defaultClassName =
         defaultClassName + "bg-primary text-[#FFF] rounded-[6px]";
       break;
+    case "cart":
+      defaultClassName =
+        defaultClassName + "bg-gray5_1 text-gray7  rounded-[43px]";
+      break;
     default:
       break;
   }
@@ -67,7 +71,7 @@ Button.propTypes = {
   children: PropTypes.node,
   isLoading: PropTypes.bool,
   href: PropTypes.string,
-  kind: PropTypes.oneOf(["primary", "secondary", "disable", "ghost"]),
+  kind: PropTypes.oneOf(["primary", "secondary", "disable", "ghost", "cart"]),
 };
 
 export default Button;

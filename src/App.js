@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { authCheckToken } from "./store/auth/auth-slice";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
 
 const LayoutPrimary = lazy(() => import("./layout/LayoutPrimary"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -46,6 +47,10 @@ function App() {
           <Route
             path="/topProducts"
             element={<TopProductPage></TopProductPage>}
+          ></Route>
+          <Route
+            path="/shoppingCart"
+            element={<ShoppingCartPage></ShoppingCartPage>}
           ></Route>
         </Route>
 

@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     dispatch(proGetDetails(slug));
-  }, []);
+  }, [slug]);
 
   const { dataProDetails } = useSelector((state) => state.product);
 

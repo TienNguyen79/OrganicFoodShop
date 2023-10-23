@@ -27,7 +27,7 @@ const ProHandleQuantity = ({ control, name }) => {
   };
 
   return (
-    <div className="flex items-center gap-x-2 rounded-[170px] p-2 border-[2px]">
+    <div className="inline-flex items-center gap-x-2 rounded-[170px] p-2 border-[2px]">
       <span
         className="block bg-gray-200 rounded-full p-[10px] cursor-pointer"
         onClick={handleDecrease}

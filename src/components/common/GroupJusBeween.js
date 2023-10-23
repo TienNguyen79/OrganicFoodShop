@@ -1,7 +1,11 @@
 import React from "react";
 
-const GroupJusBeween = ({ children }) => {
-  return <div className="flex items-center justify-between">{children}</div>;
+const GroupJusBeween = ({ children, className }) => {
+  return (
+    <div className={`flex items-center justify-between ${className}`}>
+      {children}
+    </div>
+  );
 };
 
 export default GroupJusBeween;

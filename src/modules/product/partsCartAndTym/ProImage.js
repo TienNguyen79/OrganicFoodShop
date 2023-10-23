@@ -6,7 +6,7 @@ const ProImage = ({
   className = "h-[100px] w-full",
 }) => {
   return (
-    <div className={`${className} p-1  mx-auto  overflow-hidden`}>
+    <div className={`${className} p-1   overflow-hidden`}>
       <img
         src={linkUrl}
         className="w-full h-full object-cover rounded "
