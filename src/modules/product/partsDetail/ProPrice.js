@@ -4,9 +4,10 @@ const ProPrice = ({
   priceOld = "20.99",
   currentPrice = "14.99",
   unit = "$",
+  className = "",
 }) => {
   return (
-    <div className={`flex items-center  gap-x-1 mt-4`}>
+    <div className={`flex items-center  gap-x-1 mt-4 ${className}`}>
       <span className=" flex text-gray4 font-normal text-[20px] line-through ml-[2px]">
         <span>{unit}</span>
         <span

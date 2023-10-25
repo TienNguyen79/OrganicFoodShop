@@ -3,8 +3,16 @@ import {
   requestCartAddnew,
   requestCartAll,
   requestCartDelete,
+  requestWishListAddnew,
+  requestWishListAll,
+  requestwishListDelete,
 } from "./cart-requests";
-import { cartGetAll, setLoading, updateDataCart } from "./cart-slice";
+import {
+  cartGetAll,
+  setLoading,
+  updateDataCart,
+  updateDataWishList,
+} from "./cart-slice";
 import { toast } from "react-toastify";
 import { getToken } from "../../utils/auth";
 
@@ -86,4 +94,98 @@ function* handleCartDelete(action) {
   }
 }
 
-export { handleCartAddNew, handleCartDelete };
+function* handleGetWishListAll() {
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestWishListAll);
+    console.log(
+      "🚀 ~ file: cart-handler.js:96 ~ function*handleGetWishListAll ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(
+        updateDataWishList({ resultWishListAll: response.data.wishList })
+      );
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: cart-handler.js:104 ~ function*handleGetWishListAll ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleWishListAddNew(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: cart-handler.js:123 ~ function*handleWishListAddNew ~ payload:",
+    payload
+  );
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestWishListAddnew, payload);
+
+    if (response.status === 200) {
+      //khi thành công update luôn wishList
+      const wishListResponse = yield call(requestWishListAll);
+      yield put(
+        updateDataWishList({
+          resultWishListAll: wishListResponse.data.wishList,
+        })
+      );
+      yield put(setLoading(false));
+      toast.success("Add wishList successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: cart-handler.js:142 ~ function*handleWishListAddNew ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
+function* handlewishListDelete(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: cart-handler.js:156 ~ function*handlewishListDelete ~ payload:",
+    payload
+  );
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestwishListDelete, payload);
+    if (response.status === 200) {
+      //khi thành công update luôn wishList
+      const wishListResponse = yield call(requestWishListAll);
+      yield put(
+        updateDataWishList({
+          resultWishListAll: wishListResponse.data.wishList,
+        })
+      );
+      yield put(setLoading(false));
+      toast.success("Delete wishList successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: cart-handler.js:77 ~ function*handleCartDelete ~ error:",
+      error
+    );
+    //   yield put(setLoading(false));
+  }
+  yield 1;
+}
+
+export {
+  handleCartAddNew,
+  handleCartDelete,
+  handleGetWishListAll,
+  handleWishListAddNew,
+  handlewishListDelete,
+};

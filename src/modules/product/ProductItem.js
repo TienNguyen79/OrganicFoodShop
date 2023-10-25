@@ -10,9 +10,17 @@ import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 import { defaultImage2, defaultImage3 } from "../../constants/global";
 import ProQuickView from "./ProQuickView";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { proGetQuickview } from "../../store/product/pro-slice";
 import { Link, useNavigate } from "react-router-dom";
+import IconClose from "../../components/Icons/IconClose";
+import IconClose2 from "../../components/Icons/IconClose2";
+import {
+  wishListAddNew,
+  wishListDelete,
+  wishListGetAll,
+} from "../../store/cart/cart-slice";
+import { useEffect } from "react";
 
 const ProductItem = ({ data, openModal }) => {
   //   let temp = [];
@@ -90,7 +98,19 @@ const ProductItem = ({ data, openModal }) => {
     openModal();
     dispatch(proGetQuickview(id));
   };
+  useEffect(() => {
+    dispatch(wishListGetAll());
+  }, []);
 
+  const { dataWishListAll } = useSelector((state) => state.cart);
+
+  const [wishList, setWishList] = useState([]);
+
+  useEffect(() => {
+    var arr = [];
+    dataWishListAll.map((item) => arr.push(item.pivot.product_id));
+    setWishList(arr);
+  }, [dataWishListAll]);
   return (
     <div
       className="border  border-gray-200 bg-white rounded-lg h-[407px] cursor-pointer flex flex-col relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
@@ -131,8 +151,31 @@ const ProductItem = ({ data, openModal }) => {
       )}
       <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
         <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all  ">
-          <span className="flex justify-center items-center ">
-            <IconHeart></IconHeart>
+          <span
+            className="flex justify-center items-center "
+            // onClick={() => {
+            //   setIsClickTym(!isClickTym);
+            //   dispatch(wishListAddNew({ product_id: data?.id }));
+            // }}
+          >
+            {/* {isClickTym ? <IconClose2></IconClose2> : <IconHeart></IconHeart>} */}
+            {wishList.includes(data?.id) ? (
+              <div
+                onClick={() => {
+                  dispatch(wishListDelete(data?.id));
+                }}
+              >
+                <IconClose2></IconClose2>
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  dispatch(wishListAddNew({ product_id: data?.id }));
+                }}
+              >
+                <IconHeart></IconHeart>
+              </div>
+            )}
           </span>
         </div>
         <div

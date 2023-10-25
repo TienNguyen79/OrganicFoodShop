@@ -96,10 +96,10 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
   };
 
   useEffect(() => {
-    //khi có click đóng phải set về hình ảnh chính vì nếu không làm thế khi hover vào thumb nó sẽ giữ linkImg của thumb lại,set số lượng về 0 luôn
+    //khi có click đóng phải set về hình ảnh chính vì nếu không làm thế khi hover vào thumb nó sẽ giữ linkImg của thumb lại,set số lượng về 1 luôn
     if (isClickClose) {
       setLinkImage(data?.imageUrl);
-      setValue("quantity", 0);
+      setValue("quantity", 1);
       // setIsClickTym(false);//để tạm chưa hợp lý
     }
   }, [data?.imageUrl, isClickClose]);

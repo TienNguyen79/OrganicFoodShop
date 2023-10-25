@@ -5,11 +5,11 @@ import Input from "../../../components/input/Input";
 import { useController, useForm } from "react-hook-form";
 import { useState } from "react";
 
-const ProHandleQuantity = ({ control, name }) => {
+const ProHandleQuantity = ({ control, name, quantity = 1 }) => {
   const { field } = useController({
     control,
     name,
-    defaultValue: 0,
+    defaultValue: quantity,
   });
   const handleIncrease = () => {
     // Lấy giá trị hiện tại của trường nhập liệu thông qua field
@@ -20,7 +20,7 @@ const ProHandleQuantity = ({ control, name }) => {
 
   const handleDecrease = () => {
     const currentQuantity = field.value;
-    if (currentQuantity > 0) {
+    if (currentQuantity > 1) {
       const newQuantity = parseInt(currentQuantity, 10) - 1;
       field.onChange(newQuantity);
     }

@@ -72,7 +72,9 @@ const CartPopup = ({
           </div>
           <div className="flex flex-col gap-y-3">
             <Button kind="primary">CheckOut</Button>
-            <Button kind="secondary">Go to Cart</Button>
+            <Button kind="secondary" href="/shoppingCart">
+              Go to Cart
+            </Button>
           </div>
         </div>
       </div>

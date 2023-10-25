@@ -16,12 +16,21 @@ import PopupSearch from "../popup/PopupSearch";
 import { proGetSearch } from "../../store/product/pro-slice";
 import lodash, { debounce } from "lodash";
 import CartPopup from "../../modules/cart/CartPopup";
+import { cartGetAll, wishListGetAll } from "../../store/cart/cart-slice";
+import { getToken } from "../../utils/auth";
 const Header = () => {
   const { control, getValues } = useForm();
   const { user, accessToken } = useSelector((state) => state.auth);
   const [getTextSearch, setGetTextSearch] = useState("");
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(cartGetAll(getToken()));
+  }, []);
+  useEffect(() => {
+    dispatch(wishListGetAll());
+  }, []);
 
+  const { dataCartAll, dataWishListAll } = useSelector((state) => state.cart);
   const { dataProSearch, loading } = useSelector((state) => state.product);
 
   const { show, setShow, nodeRef } = useClickOutSide();
@@ -180,9 +189,28 @@ const Header = () => {
           <div>
             <div className="flex items-center gap-x-5 ">
               <div className="flex items-center gap-x-5">
-                <IconTym></IconTym>
-                <div onClick={openModalCart} className="cursor-pointer">
+                <div className="relative">
+                  <Link to="/wishList">
+                    <IconTym></IconTym>
+                    {dataWishListAll.length > 0 && (
+                      <div className="absolute top-[-8px] right-[-5px] font-medium bg-darkPrimary w-[20px] h-[20px] text-center leading-[20px] text-[10px] rounded-full text-[#FFF]">
+                        {dataWishListAll.length >= 100
+                          ? "99+"
+                          : dataWishListAll.length}
+                      </div>
+                    )}
+                  </Link>
+                </div>
+                <div
+                  onClick={openModalCart}
+                  className="cursor-pointer relative"
+                >
                   <IconBag></IconBag>
+                  {dataCartAll.length > 0 && (
+                    <div className="absolute top-[-8px] right-[-5px] font-medium bg-darkPrimary w-[20px] h-[20px] text-center leading-[20px] text-[10px] rounded-full text-[#FFF]">
+                      {dataCartAll.length >= 100 ? "99+" : dataCartAll.length}
+                    </div>
+                  )}
                 </div>
 
                 {!user && <span>Hello You</span>}

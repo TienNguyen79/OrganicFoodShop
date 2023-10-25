@@ -1,8 +1,8 @@
 import React from "react";
 
-const IconClose2 = () => {
+const IconClose2 = ({ onClick = () => {} }) => {
   return (
-    <span>
+    <span onClick={onClick} className="cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={24}

@@ -4,10 +4,12 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     dataCartAll: [],
+    dataWishListAll: [],
     loadingCart: false,
   },
   reducers: {
     cartGetAll: () => {},
+    wishListGetAll: () => {},
     cartAddNew: (state, action) => ({
       ...state,
       ...action.payload,
@@ -19,6 +21,19 @@ const cartSlice = createSlice({
     updateDataCart: (state, action) => ({
       ...state,
       dataCartAll: action.payload.resultCartAll || state.dataCartAll,
+    }),
+    wishListDelete: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    wishListAddNew: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    updateDataWishList: (state, action) => ({
+      ...state,
+      dataWishListAll:
+        action.payload.resultWishListAll || state.dataWishListAll,
     }),
     setLoading: (state, action) => ({
       ...state,
@@ -32,6 +47,10 @@ export const {
   cartAddNew,
   cartDelete,
   updateDataCart,
+  updateDataWishList,
+  wishListGetAll,
+  wishListAddNew,
+  wishListDelete,
   setLoading,
 } = cartSlice.actions;
 
