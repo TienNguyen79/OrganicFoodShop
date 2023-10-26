@@ -3,6 +3,7 @@ import {
   requestCartAddnew,
   requestCartAll,
   requestCartDelete,
+  requestCartUpdate,
   requestWishListAddnew,
   requestWishListAll,
   requestwishListDelete,
@@ -93,6 +94,37 @@ function* handleCartDelete(action) {
     //   yield put(setLoading(false));
   }
 }
+
+//cart update
+
+function* handleCartUpdate(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: cart-handler.js:32 ~ function*handleCartAddNew ~ payload:",
+    payload
+  );
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestCartUpdate, payload);
+
+    if (response.status === 200) {
+      //khi thành công update luôn giỏ hàng
+      const cartResponse = yield call(requestCartAll, getToken());
+      yield put(updateDataCart({ resultCartAll: cartResponse.data.cart }));
+      yield put(setLoading(false));
+      toast.success("Update to cart successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: cart-handler.js:54 ~ function*handleCartAddNew ~ error:",
+      error
+    );
+    yield put(setLoading(false));
+  }
+}
+
+//wishList
 
 function* handleGetWishListAll() {
   try {
@@ -185,6 +217,7 @@ function* handlewishListDelete(action) {
 export {
   handleCartAddNew,
   handleCartDelete,
+  handleCartUpdate,
   handleGetWishListAll,
   handleWishListAddNew,
   handlewishListDelete,

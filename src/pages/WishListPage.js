@@ -9,7 +9,13 @@ import Button from "../components/button/Button";
 import IconClose2 from "../components/Icons/IconClose2";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { wishListDelete, wishListGetAll } from "../store/cart/cart-slice";
+import {
+  cartAddNew,
+  wishListAddNew,
+  wishListDelete,
+  wishListGetAll,
+} from "../store/cart/cart-slice";
+import { getToken } from "../utils/auth";
 
 const WishListPage = () => {
   const dispatch = useDispatch();
@@ -41,7 +47,7 @@ const WishListPage = () => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{ maxHeight: "200px", overflowY: "auto" }}>
               {dataWishListAll.length > 0 &&
                 dataWishListAll.map((item) => (
                   <tr key={item?.id}>
@@ -65,14 +71,25 @@ const WishListPage = () => {
                       ></ProPrice>
                     </td>
                     <td>
-                      <ProLabel className="inline-block"></ProLabel>
+                      <ProLabel
+                        className="inline-block"
+                        kind={item?.quantity > 0 ? "Instock" : "Out of Stock"}
+                        label={item?.quantity > 0 ? "Instock" : "Out of Stock"}
+                      ></ProLabel>
                     </td>
                     <td>
                       <Button
                         onClick={() => {
-                          console.log(item?.pivot?.product_id);
+                          dispatch(
+                            cartAddNew({
+                              product_id: item?.pivot?.product_id,
+                              quantity: 1,
+                              token: getToken(),
+                            })
+                          );
                         }}
                         kind="primary"
+                        className="transition-all  hover:opacity-80 hover:scale-110"
                       >
                         Add to Cart
                       </Button>

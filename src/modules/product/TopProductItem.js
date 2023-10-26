@@ -9,9 +9,18 @@ import IconBagPro from "../../components/Icons/IconBagPro";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconEyeOpen from "../../components/Icons/IconEyeOpen";
 import { defaultImage3 } from "../../constants/global";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { proGetQuickview } from "../../store/product/pro-slice";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  wishListAddNew,
+  wishListDelete,
+  wishListGetAll,
+} from "../../store/cart/cart-slice";
+import IconClose2 from "../../components/Icons/IconClose2";
+import IconRedTym from "../../components/Icons/IconRedTym";
+import IconRedHeart from "../../components/Icons/IconRedHeart";
 
 const TopProductItem = ({ data, openModal }) => {
   // Cách 2 render star
@@ -31,6 +40,21 @@ const TopProductItem = ({ data, openModal }) => {
     //dispatch
     dispatch(proGetQuickview(id));
   };
+
+  //phục vụ cho wishList
+  const [wishList, setWishList] = useState([]);
+
+  useEffect(() => {
+    dispatch(wishListGetAll());
+  }, []);
+
+  const { dataWishListAll } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    var arr = [];
+    dataWishListAll.map((item) => arr.push(item.pivot.product_id));
+    setWishList(arr);
+  }, [dataWishListAll]);
 
   return (
     <div>
@@ -76,7 +100,23 @@ const TopProductItem = ({ data, openModal }) => {
             </div>
             <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all ">
               <span className="flex justify-center items-center ">
-                <IconHeart></IconHeart>
+                {wishList.includes(data?.id) ? (
+                  <div
+                    onClick={() => {
+                      dispatch(wishListDelete(data?.id));
+                    }}
+                  >
+                    <IconRedHeart></IconRedHeart>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      dispatch(wishListAddNew({ product_id: data?.id }));
+                    }}
+                  >
+                    <IconHeart></IconHeart>
+                  </div>
+                )}
               </span>
             </div>
             <div

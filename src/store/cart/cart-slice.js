@@ -18,6 +18,10 @@ const cartSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    cartUpdate: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateDataCart: (state, action) => ({
       ...state,
       dataCartAll: action.payload.resultCartAll || state.dataCartAll,
@@ -46,6 +50,7 @@ export const {
   cartGetAll,
   cartAddNew,
   cartDelete,
+  cartUpdate,
   updateDataCart,
   updateDataWishList,
   wishListGetAll,

@@ -71,10 +71,24 @@ const CartPopup = ({
             </span>
           </div>
           <div className="flex flex-col gap-y-3">
-            <Button kind="primary">CheckOut</Button>
-            <Button kind="secondary" href="/shoppingCart">
-              Go to Cart
-            </Button>
+            <div onClick={onClose}>
+              <Button
+                kind="primary"
+                href="/checkout"
+                className="hover:opacity-80 hover:scale-110 transition-all"
+              >
+                CheckOut
+              </Button>
+            </div>
+            <div onClick={onClose}>
+              <Button
+                kind="secondary"
+                href="/shoppingCart"
+                className="hover:opacity-80 hover:scale-110  transition-all"
+              >
+                Go to Cart
+              </Button>
+            </div>
           </div>
         </div>
       </div>

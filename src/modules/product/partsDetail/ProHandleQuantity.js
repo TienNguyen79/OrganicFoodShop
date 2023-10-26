@@ -4,18 +4,29 @@ import IconPlus from "../../../components/Icons/IconPlus";
 import Input from "../../../components/input/Input";
 import { useController, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { cartUpdate } from "../../../store/cart/cart-slice";
 
-const ProHandleQuantity = ({ control, name, quantity = 1 }) => {
+const ProHandleQuantity = ({
+  control,
+  name,
+  quantity = 1,
+  id,
+  allow = false,
+}) => {
   const { field } = useController({
     control,
     name,
     defaultValue: quantity,
   });
+
+  const dispatch = useDispatch();
   const handleIncrease = () => {
     // Lấy giá trị hiện tại của trường nhập liệu thông qua field
     const currentQuantity = field.value;
     const newQuantity = parseInt(currentQuantity, 10) + 1;
     field.onChange(newQuantity);
+    allow && dispatch(cartUpdate({ id: id, quantity: newQuantity }));
   };
 
   const handleDecrease = () => {
@@ -23,6 +34,7 @@ const ProHandleQuantity = ({ control, name, quantity = 1 }) => {
     if (currentQuantity > 1) {
       const newQuantity = parseInt(currentQuantity, 10) - 1;
       field.onChange(newQuantity);
+      allow && dispatch(cartUpdate({ id: id, quantity: newQuantity }));
     }
   };
 

@@ -22,8 +22,16 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { cartAddNew } from "../../store/cart/cart-slice";
+import {
+  cartAddNew,
+  wishListAddNew,
+  wishListDelete,
+  wishListGetAll,
+} from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
+import IconClose2 from "../../components/Icons/IconClose2";
+import IconHeart from "../../components/Icons/IconHeart";
+import IconRedHeart from "../../components/Icons/IconRedHeart";
 const ProDetailItem = ({ data, isClickClose, onClose }) => {
   const { control, setValue, handleSubmit } = useForm({
     mode: "onChange",
@@ -103,6 +111,20 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
       // setIsClickTym(false);//để tạm chưa hợp lý
     }
   }, [data?.imageUrl, isClickClose]);
+
+  const [wishList, setWishList] = useState([]);
+
+  useEffect(() => {
+    dispatch(wishListGetAll());
+  }, []);
+
+  const { dataWishListAll } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    var arr = [];
+    dataWishListAll.map((item) => arr.push(item.pivot.product_id));
+    setWishList(arr);
+  }, [dataWishListAll]);
 
   return (
     <Fragment>
@@ -208,18 +230,23 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                     </div>
                   </div>
 
-                  <span
-                    className="block   cursor-pointer transition-all hover:scale-125"
-                    onClick={() => setIsClickTym(!isClickTym)}
-                  >
-                    {isClickTym ? (
-                      <span className="block bg-red-300 p-2 rounded-full">
-                        <IconRedTym></IconRedTym>
-                      </span>
+                  <span className="block   cursor-pointer transition-all hover:scale-125">
+                    {wishList.includes(data?.id) ? (
+                      <div
+                        onClick={() => {
+                          dispatch(wishListDelete(data?.id));
+                        }}
+                      >
+                        <IconRedHeart></IconRedHeart>
+                      </div>
                     ) : (
-                      <span className="block bg-[#E9F8E9] p-2 rounded-full">
-                        <Icontym2></Icontym2>
-                      </span>
+                      <div
+                        onClick={() => {
+                          dispatch(wishListAddNew({ product_id: data?.id }));
+                        }}
+                      >
+                        <IconHeart></IconHeart>
+                      </div>
                     )}
                   </span>
                 </div>

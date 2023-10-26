@@ -14,12 +14,12 @@ import GroupJusBeween from "../components/common/GroupJusBeween";
 import BillLabel from "../modules/cart/parts/BillLabel";
 import Input from "../components/input/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { cartDelete, cartGetAll } from "../store/cart/cart-slice";
+import { cartDelete, cartGetAll, cartUpdate } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
 import { handleCartDelete } from "../store/cart/cart-handler";
 
 const ShoppingCartPage = () => {
-  const { control, setValue, handleSubmit } = useForm();
+  const { control, setValue, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -101,6 +101,8 @@ const ShoppingCartPage = () => {
                             control={control}
                             name={`quantity_${item?.id}`} // Sử dụng name có sự khác biệt cho mỗi sản phẩm
                             quantity={item?.pivot?.quantity}
+                            id={item?.id}
+                            allow={true}
                           ></ProHandleQuantity>
                           {/* <input type="text" value={item?.pivot?.quantity} /> */}
                         </td>
@@ -122,10 +124,12 @@ const ShoppingCartPage = () => {
                 </tbody>
               </table>
               <div className="footTable">
-                <Button kind="cart">Return to shop</Button>
-                <Button kind="cart" type="submit">
-                  Update Cart
+                <Button href="/shop" kind="cart">
+                  Return to shop
                 </Button>
+                {/* <Button kind="cart" type="submit">
+                  Update Cart
+                </Button> */}
               </div>
             </Table>
 
@@ -174,7 +178,12 @@ const ShoppingCartPage = () => {
               </GroupJusBeween>
             </div>
             <div>
-              <Button kind="primary" type="submit" className="w-full">
+              <Button
+                kind="primary"
+                type="submit"
+                className="w-full hover:opacity-80 hover:scale-110 transition-all"
+                href="/checkout"
+              >
                 Proceed to checkout
               </Button>
             </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 const IconClose2 = ({ onClick = () => {} }) => {
   return (
-    <span onClick={onClick} className="cursor-pointer">
+    <span onClick={onClick} className="cursor-pointer hover:opacity-75">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={24}

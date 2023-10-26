@@ -11,7 +11,7 @@ export const requestCartAll = (token) => {
     },
   });
 };
-
+//thêm
 export const requestCartAddnew = (data) => {
   const decodedToken = atob(data.token); //giải mã base64
   if (!decodedToken) return;
@@ -25,7 +25,7 @@ export const requestCartAddnew = (data) => {
 
   return axios.post("/api/cartItem", data, config);
 };
-
+//xóa
 export const requestCartDelete = (id) => {
   const decodedToken = atob(getToken()); //giải mã base64
   if (!decodedToken) return;
@@ -38,6 +38,20 @@ export const requestCartDelete = (id) => {
   };
 
   return axios.delete(`/api/cartItem/${id}`, config);
+};
+//sửa
+export const requestCartUpdate = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.put(`/api/cartItem/${data.id}`, data, config);
 };
 
 //wishList

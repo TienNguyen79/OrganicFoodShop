@@ -21,6 +21,7 @@ import {
   wishListGetAll,
 } from "../../store/cart/cart-slice";
 import { useEffect } from "react";
+import IconRedHeart from "../../components/Icons/IconRedHeart";
 
 const ProductItem = ({ data, openModal }) => {
   //   let temp = [];
@@ -165,7 +166,7 @@ const ProductItem = ({ data, openModal }) => {
                   dispatch(wishListDelete(data?.id));
                 }}
               >
-                <IconClose2></IconClose2>
+                <IconRedHeart></IconRedHeart>
               </div>
             ) : (
               <div

@@ -2,8 +2,6 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { authCheckToken } from "./store/auth/auth-slice";
-import ShoppingCartPage from "./pages/ShoppingCartPage";
-import WishListPage from "./pages/WishListPage";
 
 const LayoutPrimary = lazy(() => import("./layout/LayoutPrimary"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -18,6 +16,10 @@ const ShopPage = lazy(() => import("./pages/ShopPage"));
 const FeautureProPage = lazy(() => import("./pages/FeautureProPage"));
 const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
 const TopProductPage = lazy(() => import("./pages/TopProductPage"));
+const WishListPage = lazy(() => import("./pages/WishListPage"));
+const ShoppingCartPage = lazy(() => import("./pages/ShoppingCartPage"));
+const CheckOutPage = lazy(() => import("./pages/CheckOutPage"));
+
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
   console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
@@ -56,6 +58,10 @@ function App() {
           <Route
             path="/wishList"
             element={<WishListPage></WishListPage>}
+          ></Route>
+          <Route
+            path="/checkout"
+            element={<CheckOutPage></CheckOutPage>}
           ></Route>
         </Route>
 
