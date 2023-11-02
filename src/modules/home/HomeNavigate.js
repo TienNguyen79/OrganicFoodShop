@@ -20,6 +20,7 @@ const navLinks = [
   },
   { icon: "", title: "Blog", url: "/blog" },
   { icon: "", title: "About Us", url: "/about" },
+  { icon: "", title: "Contact Us", url: "/contact" },
 ];
 
 const HomeNavigate = () => {

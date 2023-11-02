@@ -19,6 +19,10 @@ const TopProductPage = lazy(() => import("./pages/TopProductPage"));
 const WishListPage = lazy(() => import("./pages/WishListPage"));
 const ShoppingCartPage = lazy(() => import("./pages/ShoppingCartPage"));
 const CheckOutPage = lazy(() => import("./pages/CheckOutPage"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -63,6 +67,13 @@ function App() {
             path="/checkout"
             element={<CheckOutPage></CheckOutPage>}
           ></Route>
+          <Route path="/blog" element={<BlogPage></BlogPage>}></Route>
+          <Route
+            path="/blog/:slug"
+            element={<BlogDetailPage></BlogDetailPage>}
+          ></Route>
+          <Route path="/about" element={<AboutPage></AboutPage>}></Route>
+          <Route path="/contact" element={<ContactPage></ContactPage>}></Route>
         </Route>
 
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>

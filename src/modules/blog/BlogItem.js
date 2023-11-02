@@ -5,11 +5,33 @@ import BlogIcon from "./parts/BlogIcon";
 import BlogDesc from "./parts/BlogDesc";
 import LabelRedirect from "../../components/label/LabelRedirect";
 import BlogDate from "./parts/BlogDate";
+import { defaultImage3 } from "../../constants/global";
+import { format, parseISO } from "date-fns";
+import parse from "html-react-parser";
+const BlogItem = ({ className = "", data }) => {
+  // const dateTimeString = data?.created_at;
+  // console.log(
+  //   "🚀 ~ file: BlogItem.js:12 ~ BlogItem ~ dateTimeString:",
+  //   dateTimeString
+  // );
 
-const BlogItem = () => {
+  // // Chuyển đổi chuỗi thời gian thành đối tượng Date
+  // const date = parseISO(dateTimeString);
+  // // console.log("🚀 ~ file: BlogItem.js:20 ~ BlogItem ~ date:", date);
+
+  // // Định dạng ngày theo "ngày"
+  // const formattedDate = format(date, "dd");
+  // const formattedMonth = format(date, "MMMM");
+  // console.log(
+  //   "🚀 ~ file: BlogItem.js:24 ~ BlogItem ~ formattedDate:",
+  //   formattedDate
+  // );
+
   return (
-    <div className="relative">
-      <BlogImage></BlogImage>
+    <div className={`relative ${className}`}>
+      <BlogImage
+        linkUrl={data?.image !== "" ? data?.image : defaultImage3}
+      ></BlogImage>
       <div className="p-4 bg-white rounded-b-lg">
         <div className="flex gap-x-3 mb-1 ">
           <div className="flex gap-x-1">
@@ -37,7 +59,13 @@ const BlogItem = () => {
                 />
               </svg>
             </BlogIcon>
-            <BlogLabel label="Food" className="text-gray7"></BlogLabel>
+            <div title={data?.category?.name}>
+              <BlogLabel
+                label={data?.category?.name}
+                className="text-gray7  whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[60px]
+"
+              ></BlogLabel>
+            </div>
           </div>
           <div className="flex gap-x-1">
             <BlogIcon>
@@ -86,24 +114,28 @@ const BlogItem = () => {
             </BlogIcon>
             <BlogLabel
               number="65"
-              label="comment"
+              label="cmt"
               className="text-gray6"
             ></BlogLabel>
           </div>
         </div>
 
-        <BlogDesc>
-          Curabitur porttitor orci eget neque accumsan venenatis. Nunc
-          fermentum.
+        <BlogDesc className=" text-[14px] mb-4 multiline-ellipsis">
+          {parse(data?.content || "")}
         </BlogDesc>
 
         <LabelRedirect
           className="text-[14px] font-semibold"
           title="Read More"
+          url={`/blog/${data?.id}`}
         ></LabelRedirect>
       </div>
 
-      <BlogDate className="bottom-16 -translate-y-20 left-4"></BlogDate>
+      <BlogDate
+        // day={formattedDate || " "}
+        // mon={formattedMonth.slice(0, 3) || " "}
+        className="bottom-16 -translate-y-20 left-4"
+      ></BlogDate>
     </div>
   );
 };
