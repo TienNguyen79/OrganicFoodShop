@@ -8,24 +8,17 @@ import BlogDate from "./parts/BlogDate";
 import { defaultImage3 } from "../../constants/global";
 import { format, parseISO } from "date-fns";
 import parse from "html-react-parser";
+import { useEffect } from "react";
 const BlogItem = ({ className = "", data }) => {
-  // const dateTimeString = data?.created_at;
-  // console.log(
-  //   "🚀 ~ file: BlogItem.js:12 ~ BlogItem ~ dateTimeString:",
-  //   dateTimeString
-  // );
-
-  // // Chuyển đổi chuỗi thời gian thành đối tượng Date
-  // const date = parseISO(dateTimeString);
-  // // console.log("🚀 ~ file: BlogItem.js:20 ~ BlogItem ~ date:", date);
-
-  // // Định dạng ngày theo "ngày"
-  // const formattedDate = format(date, "dd");
-  // const formattedMonth = format(date, "MMMM");
-  // console.log(
-  //   "🚀 ~ file: BlogItem.js:24 ~ BlogItem ~ formattedDate:",
-  //   formattedDate
-  // );
+  const dateTimeString = data?.created_at;
+  const date = new Date(dateTimeString);
+  // Định dạng ngày và tháng
+  // const options = { year: "numeric", month: "long", day: "numeric" };
+  // const formattedDate = date.toLocaleDateString("en-US", options);
+  const options = { month: "long" }; // Chỉ xác định thuộc tính "month"
+  const options2 = { day: "numeric" };
+  const formattedMonth = date.toLocaleDateString("en-US", options);
+  const formattedDay = date.toLocaleDateString("en-US", options2);
 
   return (
     <div className={`relative ${className}`}>
@@ -132,8 +125,8 @@ const BlogItem = ({ className = "", data }) => {
       </div>
 
       <BlogDate
-        // day={formattedDate || " "}
-        // mon={formattedMonth.slice(0, 3) || " "}
+        day={formattedDay}
+        mon={formattedMonth.slice(0, 3)}
         className="bottom-16 -translate-y-20 left-4"
       ></BlogDate>
     </div>

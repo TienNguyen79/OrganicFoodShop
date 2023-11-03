@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  blogAddNew,
+  blogAddCmtNew,
   blogComment,
   blogGetAll,
   blogGetWithParam,
@@ -51,6 +51,10 @@ const BlogDetailPage = () => {
   const { dataBlogWithParam, dataBlogAll, dataCommentBlog, loading } =
     useSelector((state) => state.blog);
   console.log(
+    "🚀 ~ file: BlogDetailPage.js:52 ~ BlogDetailPage ~ dataBlogWithParam:",
+    dataBlogWithParam
+  );
+  console.log(
     "🚀 ~ file: BlogDetailPage.js:37 ~ BlogDetailPage ~ dataCommentBlog:",
     dataCommentBlog
   );
@@ -66,14 +70,15 @@ const BlogDetailPage = () => {
       "🚀 ~ file: BlogDetailPage.js:52 ~ handleCommentBlog ~ values:",
       values
     );
-    dispatch(blogAddNew({ blog_id: slug, content: values.message }));
+    dispatch(blogAddCmtNew({ blog_id: slug, content: values.message }));
     reset({});
   };
 
   //thực hiện validate khi chưa nhập cmt
   const [getCommentBlog, setCommentBlog] = useState("");
   //------------
-
+  // const { user } = useSelector((state) => state.auth);
+  // console.log("🚀 ~ file: BlogDetailPage.js:81 ~ BlogDetailPage ~ user:", user);
   return (
     <div className="grid grid-cols-3 gap-x-6">
       <div className="col-span-2 mt-8">
@@ -172,9 +177,9 @@ const BlogDetailPage = () => {
 
           <div className="flex items-center justify-between pr-3 py-8 border-b-[1px]">
             <div className="flex items-center gap-x-2">
-              <UserAvatar></UserAvatar>
+              <UserAvatar linkUrl="https://w7.pngwing.com/pngs/1019/187/png-transparent-computer-icons-avatar-encapsulated-postscript-avatar-heroes-hand-computer-thumbnail.png"></UserAvatar>
               <div>
-                <UserName></UserName>
+                <UserName name="ADMIN"></UserName>
                 <BlogDate2 date={formattedDate}></BlogDate2>
               </div>
             </div>

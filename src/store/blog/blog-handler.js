@@ -4,6 +4,7 @@ import {
   requestBlogAll,
   requestBlogWithParam,
   requestCommentBlog,
+  requestDeleteCommentBlog,
 } from "./blog-requests";
 import { setLoading, updateDataBlog } from "./blog-slice";
 import { toast } from "react-toastify";
@@ -83,7 +84,7 @@ function* handleGetCommentBlog(action) {
   }
 }
 
-function* handleBlogAddNew(action) {
+function* handleBlogAddCmtNew(action) {
   const { payload, type } = action;
   console.log(
     "🚀 ~ file: blog-handler.js:87 ~ function*handleBlogAddNew ~ payload:",
@@ -111,4 +112,33 @@ function* handleBlogAddNew(action) {
   }
 }
 
-export { handleGetBlogWithParam, handleGetCommentBlog, handleBlogAddNew };
+function* handleBlogDeleteCmt(action) {
+  const { payload, type } = action;
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestDeleteCommentBlog, payload);
+
+    if (response.status === 200) {
+      //khi thành công update comment blog
+      const BlogResponse = yield call(requestCommentBlog, payload.idBlog);
+      yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
+      yield put(setLoading(false));
+      // toast.success("Add comment successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:132 ~ function*handleBlogDeleteCmt ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
+export {
+  handleGetBlogWithParam,
+  handleGetCommentBlog,
+  handleBlogAddCmtNew,
+  handleBlogDeleteCmt,
+};

@@ -1,12 +1,14 @@
 import { takeLatest } from "redux-saga/effects";
 import {
-  blogAddNew,
+  blogAddCmtNew,
   blogComment,
+  blogDeleteCmt,
   blogGetAll,
   blogGetWithParam,
 } from "./blog-slice";
 import handleGetBlogAll, {
-  handleBlogAddNew,
+  handleBlogAddCmtNew,
+  handleBlogDeleteCmt,
   handleGetBlogWithParam,
   handleGetCommentBlog,
 } from "./blog-handler";
@@ -15,5 +17,6 @@ export default function* blogSaga() {
   yield takeLatest(blogGetAll.type, handleGetBlogAll);
   yield takeLatest(blogGetWithParam.type, handleGetBlogWithParam);
   yield takeLatest(blogComment.type, handleGetCommentBlog);
-  yield takeLatest(blogAddNew.type, handleBlogAddNew);
+  yield takeLatest(blogAddCmtNew.type, handleBlogAddCmtNew);
+  yield takeLatest(blogDeleteCmt.type, handleBlogDeleteCmt);
 }

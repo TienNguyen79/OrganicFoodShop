@@ -53,3 +53,17 @@ export const requestAddCommentBlog = (data) => {
 
   return axios.post(`/api/comment`, data, config);
 };
+
+export const requestDeleteCommentBlog = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.delete(`/api/comment/${data.idCmt}`, config);
+};
