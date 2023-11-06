@@ -41,36 +41,57 @@ const BlogDetailPage = () => {
   } = useForm();
   const dispatch = useDispatch();
   const { slug } = useParams();
+  const [limit, setLimit] = useState(5);
+  console.log(
+    "🚀 ~ file: BlogDetailPage.js:45 ~ BlogDetailPage ~ limit:",
+    limit
+  );
 
   useEffect(() => {
     dispatch(blogGetWithParam(slug));
     dispatch(blogGetAll());
-    dispatch(blogComment(slug));
   }, [dispatch, slug]);
+
+  useEffect(() => {
+    dispatch(blogComment({ blog_id: slug, limit: limit }));
+  }, [dispatch, limit, slug]);
 
   const { dataBlogWithParam, dataBlogAll, dataCommentBlog, loading } =
     useSelector((state) => state.blog);
   console.log(
-    "🚀 ~ file: BlogDetailPage.js:52 ~ BlogDetailPage ~ dataBlogWithParam:",
-    dataBlogWithParam
-  );
-  console.log(
-    "🚀 ~ file: BlogDetailPage.js:37 ~ BlogDetailPage ~ dataCommentBlog:",
+    "🚀 ~ file: BlogDetailPage.js:56 ~ BlogDetailPage ~ dataCommentBlog:",
     dataCommentBlog
   );
 
+  const [dataCMT, setDataCmt] = useState([]);
+  console.log(
+    "🚀 ~ file: BlogDetailPage.js:63 ~ BlogDetailPage ~ dataCMT:",
+    dataCMT
+  );
+  // const [dataCMT2, setDataCmt2] = useState([]);
+  const [isLoadMore, setIsLoadMore] = useState(false);
+
+  // Định dạng ngày và tháng
   const dateTimeString = dataBlogWithParam?.created_at;
   const date = new Date(dateTimeString);
-  // Định dạng ngày và tháng
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
 
+  //XỬ LÝ THÊM CMT
   const handleCommentBlog = async (values) => {
     console.log(
       "🚀 ~ file: BlogDetailPage.js:52 ~ handleCommentBlog ~ values:",
       values
     );
-    dispatch(blogAddCmtNew({ blog_id: slug, content: values.message }));
+    setIsLoadMore(false);
+    // setDataCmt([...dataCMT]); // làm mới lại data xong mới thêm vào
+    dispatch(
+      blogAddCmtNew({
+        blog_id: slug,
+        content: values.message,
+        limit: limit + 1,
+      })
+    );
     reset({});
   };
 
@@ -79,6 +100,12 @@ const BlogDetailPage = () => {
   //------------
   // const { user } = useSelector((state) => state.auth);
   // console.log("🚀 ~ file: BlogDetailPage.js:81 ~ BlogDetailPage ~ user:", user);
+
+  // lúc mới vào khởi tao lại data cho đỡ trùng
+  useEffect(() => {
+    setLimit(5);
+  }, []);
+
   return (
     <div className="grid grid-cols-3 gap-x-6">
       <div className="col-span-2 mt-8">
@@ -297,16 +324,45 @@ const BlogDetailPage = () => {
         <div className="my-10">
           <h1 className="text-gray9 text-[20px] font-medium py-4">Comments</h1>
           <div>
-            {dataCommentBlog?.length > 0 ? (
-              dataCommentBlog.map((item, index) => (
-                <UserCmtItem key={index} data={item}></UserCmtItem>
+            {dataCommentBlog?.comment?.length > 0 ? (
+              dataCommentBlog?.comment?.map((item, index) => (
+                <UserCmtItem
+                  key={index}
+                  data={item}
+                  limit={limit}
+                  loading={loading}
+                ></UserCmtItem>
               ))
             ) : (
               <span>Be the first to comment on this blog...</span>
             )}
           </div>
         </div>
-        <Button kind="secondary">Load More</Button>
+        {dataCommentBlog?.comment?.length > 4 &&
+        dataCommentBlog?.comment?.length < dataCommentBlog?.count ? (
+          <Button
+            kind="secondary"
+            onClick={() => {
+              setIsLoadMore(true);
+              setLimit(() => limit + 3);
+            }}
+          >
+            Load More
+          </Button>
+        ) : (
+          dataCommentBlog?.comment?.length > 5 &&
+          dataCommentBlog?.comment?.length === dataCommentBlog?.count && (
+            <Button
+              kind="secondary"
+              className="!text-white !bg-[#2388FF]"
+              onClick={() => {
+                setLimit(5);
+              }}
+            >
+              Load Less
+            </Button>
+          )
+        )}
       </div>
       <div className="col-span-1 mt-8">
         <BlogFilterItem result={dataBlogAll}></BlogFilterItem>

@@ -191,17 +191,18 @@ function* handlewishListDelete(action) {
   );
 
   try {
-    //   yield put(setLoading(true));
+    // yield put(setLoading(true));
     const response = yield call(requestwishListDelete, payload);
     if (response.status === 200) {
       //khi thành công update luôn wishList
       const wishListResponse = yield call(requestWishListAll);
+      console.log("CÓ VÀO");
       yield put(
         updateDataWishList({
           resultWishListAll: wishListResponse.data.wishList,
         })
       );
-      yield put(setLoading(false));
+      // yield put(setLoading(false));
       toast.success("Delete wishList successfully!");
     }
   } catch (error) {
@@ -211,7 +212,6 @@ function* handlewishListDelete(action) {
     );
     //   yield put(setLoading(false));
   }
-  yield 1;
 }
 
 export {

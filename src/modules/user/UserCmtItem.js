@@ -6,17 +6,19 @@ import BlogDesc from "../blog/parts/BlogDesc";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import BoxOption from "../blog/parts/BoxOption";
 import { useDispatch, useSelector } from "react-redux";
-import { blogDeleteCmt } from "../../store/blog/blog-slice";
+import { blogDeleteCmt, blogUpdateCmt } from "../../store/blog/blog-slice";
 import Input from "../../components/input/Input";
 import { useForm } from "react-hook-form";
 import Button from "../../components/button/Button";
 import { useState } from "react";
 import TextArea from "../../components/input/TextArea";
 
-const UserCmtItem = ({ data }) => {
-  const { control, setValue, handleSubmit } = useForm();
+const UserCmtItem = ({ data, limit, loading }) => {
+  // console.log("🚀 ~ file: UserCmtItem.js:17 ~ UserCmtItem ~ loading:", loading);
+  // console.log("🚀 ~ file: UserCmtItem.js:17 ~ UserCmtItem ~ page:", page);
+  const { control, setValue, handleSubmit, watch } = useForm();
   // console.log("🚀 ~ file: UserCmtItem.js:12 ~ UserCmtItem ~ data:", data);
-  const dateTimeString = data?.created_at;
+  const dateTimeString = data?.updated_at;
   const date = new Date(dateTimeString);
   // Định dạng ngày và tháng
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -24,20 +26,33 @@ const UserCmtItem = ({ data }) => {
 
   const { show, setShow, nodeRef } = useClickOutSide();
   const [showEditCmt, setShowEditCmt] = useState(false);
+
   const { user, accessToken } = useSelector((state) => state.auth);
 
   //khi bật edit cmt lên cmt trc đó hiện lên input
   const dispatch = useDispatch();
   useEffect(() => {
-    setValue("cmt", data?.pivot?.content);
-  }, [data?.pivot?.content, setValue]);
+    setValue("cmt", data?.content);
+  }, [data?.content, setValue]);
 
-  const handleUpdateCmt = (values) => {
+  const handleUpdateCmt = async (values) => {
     console.log(
       "🚀 ~ file: UserCmtItem.js:35 ~ handleUpdateCmt ~ values:",
       values
     );
+
+    dispatch(
+      blogUpdateCmt({
+        blog_id: data?.pivot?.blog_id,
+        idCmt: data?.comment_id,
+        content: values.cmt,
+        limit: limit,
+      })
+    );
+
+    setShowEditCmt(false);
   };
+
   return (
     <div>
       <div className="flex items-center justify-between group">
@@ -49,17 +64,19 @@ const UserCmtItem = ({ data }) => {
               <div className="w-[2px] h-[2px] p-[2px] bg-gray9 rounded-full font-semibold "></div>{" "}
               <BlogDate2 date={formattedDate}></BlogDate2>
             </div>
-            <p className="text-gray6 text-sm font-normal">
-              {data?.pivot?.content}
+            <p className="text-gray6 text-sm font-normal text-left w-[550px]">
+              {data?.content}
             </p>
           </div>
         </div>
         <div className="relative">
           <span
-            className="cursor-pointer hidden group-hover:block  "
+            className={`cursor-pointer hidden  group-hover:block 
+            }`}
             onClick={(e) => {
               e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
               setShow(!show);
+              console.log(data?.comment_id);
             }}
           >
             <svg
@@ -85,14 +102,17 @@ const UserCmtItem = ({ data }) => {
                   <div className="hover:bg-slate-100 transition-all w-full">
                     <span
                       className="block py-2 px-3  w-full border-b-[1px] text-sm text-gray-500 font-medium"
-                      onClick={() =>
+                      onClick={() => {
+                        // setDataCmt([]);
                         dispatch(
                           blogDeleteCmt({
-                            idBlog: data?.pivot?.blog_id,
-                            idCmt: data?.pivot?.id,
+                            blog_id: data?.pivot?.blog_id,
+                            idCmt: data?.comment_id,
+                            limit: limit,
                           })
-                        )
-                      }
+                        );
+                        setShow(false);
+                      }}
                     >
                       Delete Comment
                     </span>
@@ -133,9 +153,8 @@ const UserCmtItem = ({ data }) => {
                 className="!bg-white"
                 onClick={() => {
                   setShowEditCmt(false);
-                  setValue("cmt", data?.pivot?.content);
+                  setValue("cmt", data?.content);
                 }}
-                type="submit"
               >
                 Cancel
               </Button>

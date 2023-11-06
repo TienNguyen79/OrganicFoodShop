@@ -89,7 +89,7 @@ const BlogFilterItem = ({ result }) => {
                   <BlogImage
                     key={item.id}
                     linkUrl={item.image}
-                    className="w-[80px] h-[80px] rounded-lg"
+                    className="w-[70px] h-[70px] rounded-lg"
                   ></BlogImage>
                 ))}
           </div>

@@ -55,12 +55,12 @@ const BlogItem = ({ className = "", data }) => {
             <div title={data?.category?.name}>
               <BlogLabel
                 label={data?.category?.name}
-                className="text-gray7  whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[60px]
+                className="text-gray7  whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80px]
 "
               ></BlogLabel>
             </div>
           </div>
-          <div className="flex gap-x-1">
+          {/* <div className="flex gap-x-1">
             <BlogIcon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ const BlogItem = ({ className = "", data }) => {
               kind="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[50px]"
               className="text-gray5"
             ></BlogLabel>
-          </div>
+          </div> */}
           <div className="flex gap-x-1">
             <BlogIcon>
               <svg
@@ -107,8 +107,8 @@ const BlogItem = ({ className = "", data }) => {
             </BlogIcon>
             <BlogLabel
               number="65"
-              label="cmt"
-              className="text-gray6"
+              label="comment"
+              className="text-gray6 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[90px]"
             ></BlogLabel>
           </div>
         </div>

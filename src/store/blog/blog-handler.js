@@ -5,14 +5,16 @@ import {
   requestBlogWithParam,
   requestCommentBlog,
   requestDeleteCommentBlog,
+  requestUpdateCommentBlog,
 } from "./blog-requests";
-import { setLoading, updateDataBlog } from "./blog-slice";
+import { setDataCMT, setLoading, updateDataBlog } from "./blog-slice";
 import { toast } from "react-toastify";
 
 export default function* handleGetBlogAll(action) {
+  const { payload, type } = action;
   try {
     //   yield put(setLoading(true));
-    const response = yield call(requestBlogAll);
+    const response = yield call(requestBlogAll, payload);
     console.log(
       "🚀 ~ file: blog-handler.js:9 ~ function*handleGetBlogAll ~ response:",
       response
@@ -60,6 +62,10 @@ function* handleGetBlogWithParam(action) {
 
 function* handleGetCommentBlog(action) {
   const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: blog-handler.js:63 ~ function*handleGetCommentBlog ~ payload:",
+    payload
+  );
 
   try {
     //   yield put(setLoading(true));
@@ -82,6 +88,7 @@ function* handleGetCommentBlog(action) {
 
     //   yield put(setLoading(false));
   }
+  yield 1;
 }
 
 function* handleBlogAddCmtNew(action) {
@@ -94,13 +101,22 @@ function* handleBlogAddCmtNew(action) {
   try {
     yield put(setLoading(true));
     const response = yield call(requestAddCommentBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:97 ~ function*handleBlogAddCmtNew ~ response:",
+      response
+    );
 
     if (response.status === 200) {
       //khi thành công update comment blog
-      const BlogResponse = yield call(requestCommentBlog, payload.blog_id);
+      const BlogResponse = yield call(requestCommentBlog, {
+        blog_id: payload.blog_id,
+        limit: payload.limit,
+      });
+
       yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
+
       yield put(setLoading(false));
-      // toast.success("Add comment successfully!");
+      toast.success("Add comment successfully!");
     }
   } catch (error) {
     console.log(
@@ -118,17 +134,60 @@ function* handleBlogDeleteCmt(action) {
   try {
     yield put(setLoading(true));
     const response = yield call(requestDeleteCommentBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:134 ~ function*handleBlogDeleteCmt ~ response:",
+      response
+    );
 
     if (response.status === 200) {
       //khi thành công update comment blog
-      const BlogResponse = yield call(requestCommentBlog, payload.idBlog);
+      const BlogResponse = yield call(requestCommentBlog, {
+        blog_id: payload.blog_id,
+        limit: payload.limit,
+      });
+      console.log(
+        "🚀 ~ file: blog-handler.js:145 ~ function*handleBlogDeleteCmt ~ BlogResponse:",
+        BlogResponse
+      );
       yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
       yield put(setLoading(false));
-      // toast.success("Add comment successfully!");
+      toast.success("Delete comment successfully!");
     }
   } catch (error) {
     console.log(
       "🚀 ~ file: blog-handler.js:132 ~ function*handleBlogDeleteCmt ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
+function* handleBlogUpdateCmt(action) {
+  const { payload, type } = action;
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestUpdateCommentBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:173 ~ function*handleBlogUpdateCmt ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      //khi thành công update comment blog
+      const BlogResponse = yield call(requestCommentBlog, {
+        blog_id: payload.blog_id,
+        limit: payload.limit,
+      });
+
+      yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
+      yield put(setLoading(false));
+      toast.success("Update comment successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:188 ~ function*handleBlogUpdateCmt ~ error:",
       error
     );
 
@@ -141,4 +200,5 @@ export {
   handleGetCommentBlog,
   handleBlogAddCmtNew,
   handleBlogDeleteCmt,
+  handleBlogUpdateCmt,
 };

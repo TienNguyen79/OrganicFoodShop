@@ -31,6 +31,7 @@ import axios from "../api/axios";
 import { cateGetdataAll } from "../store/category/cate-slice";
 import ProQuickView from "../modules/product/ProQuickView";
 import CartPopup from "../modules/cart/CartPopup";
+import { blogGetAll } from "../store/blog/blog-slice";
 
 const dataUtil = [
   {
@@ -91,6 +92,7 @@ const HomePage = () => {
     dispatch(proGetFeauture());
     dispatch(cateGetdataAll());
     dispatch(proGetAll());
+    dispatch(blogGetAll(1));
   }, []);
 
   // useEffect(() => {
@@ -118,24 +120,8 @@ const HomePage = () => {
   } = useSelector((state) => state.product);
 
   const { dataCate } = useSelector((state) => state.category);
-  // console.log("🚀 ~ file: HomePage.js:107 ~ HomePage ~ dataCate:", dataCate);
-
-  // console.log(
-  //   "🚀 ~ file: HomePage.js:83 ~ HomePage ~ dataHotDeal:",
-  //   dataHotDeal
-  // );
-  // console.log(
-  //   "🚀 ~ file: HomePage.js:82 ~ HomePage ~ dataBestSeller:",
-  //   dataBestSeller
-  // );
-  // useEffect(() => {
-  //   async function fetch() {
-  //     const tt = await axios.get("/api/bestSellerProducts");
-  //     console.log("🚀 ~ file: HomePage.js:98 ~ fetch ~ tt:", tt);
-  //   }
-  //   fetch();
-  // }, []);
   const { dataQuickview } = useSelector((state) => state.product);
+  const { dataBlogAll } = useSelector((state) => state.blog);
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClickClose, setIsClickClose] = useState(false);
@@ -362,9 +348,10 @@ const HomePage = () => {
           <Label className="text-[35px] pt-[80px] pb-10">Latest News</Label>
         </div>
         <div className="pb-[80px] grid grid-cols-3 gap-x-6">
-          <BlogItem></BlogItem>
-          <BlogItem></BlogItem>
-          <BlogItem></BlogItem>
+          {dataBlogAll?.data?.length > 0 &&
+            dataBlogAll?.data
+              ?.slice(0, 3)
+              .map((item) => <BlogItem key={item.id} data={item}></BlogItem>)}
         </div>
       </div>
 
