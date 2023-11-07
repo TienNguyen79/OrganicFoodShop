@@ -32,6 +32,7 @@ import { cateGetdataAll } from "../store/category/cate-slice";
 import ProQuickView from "../modules/product/ProQuickView";
 import CartPopup from "../modules/cart/CartPopup";
 import { blogGetAll } from "../store/blog/blog-slice";
+import { Link } from "react-router-dom";
 
 const dataUtil = [
   {
@@ -205,6 +206,7 @@ const HomePage = () => {
             <LabelRedirect
               url="/featureProducts"
               title="View All"
+              className="font-medium hover:opacity-75"
             ></LabelRedirect>
           </GroupJusBeween>
         </Gap>
@@ -224,7 +226,11 @@ const HomePage = () => {
         <Gap>
           <GroupJusBeween>
             <Label className="text-[35px]">Shop by Top Categories</Label>
-            <LabelRedirect url="/shop" title="View All"></LabelRedirect>
+            <LabelRedirect
+              url="/shop"
+              title="View All"
+              className="font-medium hover:opacity-75"
+            ></LabelRedirect>
           </GroupJusBeween>
         </Gap>
 
@@ -233,12 +239,12 @@ const HomePage = () => {
             {dataCate.length > 0 &&
               dataCate.map((item, index) => {
                 return (
-                  <div className="px-3" key={item.id}>
+                  <Link className="px-3" key={item.id} to={`/shop/${item.id}`}>
                     <CategoryItem
                       data={item}
                       datatLength={datatLength[index]}
                     ></CategoryItem>
-                  </div>
+                  </Link>
                 );
               })}
             <div className="px-3">
@@ -272,7 +278,7 @@ const HomePage = () => {
       </div>
 
       <div className=" px-[238px] py-[80px] bg-white">
-        <BannerItem></BannerItem>
+        <BannerItem data={dataCate}></BannerItem>
 
         <div className="BestSellerProducts">
           <Gap>
@@ -281,6 +287,7 @@ const HomePage = () => {
               <LabelRedirect
                 url="/topProducts"
                 title="View All"
+                className="font-medium hover:opacity-75"
               ></LabelRedirect>
             </GroupJusBeween>
           </Gap>

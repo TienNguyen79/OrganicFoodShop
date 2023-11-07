@@ -63,11 +63,6 @@ const BlogDetailPage = () => {
     dataCommentBlog
   );
 
-  const [dataCMT, setDataCmt] = useState([]);
-  console.log(
-    "🚀 ~ file: BlogDetailPage.js:63 ~ BlogDetailPage ~ dataCMT:",
-    dataCMT
-  );
   // const [dataCMT2, setDataCmt2] = useState([]);
   const [isLoadMore, setIsLoadMore] = useState(false);
 

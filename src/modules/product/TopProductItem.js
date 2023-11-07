@@ -22,7 +22,12 @@ import IconClose2 from "../../components/Icons/IconClose2";
 import IconRedTym from "../../components/Icons/IconRedTym";
 import IconRedHeart from "../../components/Icons/IconRedHeart";
 
-const TopProductItem = ({ data, openModal }) => {
+const TopProductItem = ({
+  data,
+  openModal,
+  widthText = "",
+  responsive = "",
+}) => {
   // Cách 2 render star
   const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
   const maxStars = 5; // Số sao tối đa
@@ -59,20 +64,21 @@ const TopProductItem = ({ data, openModal }) => {
   return (
     <div>
       <div
-        className="flex items-center gap-x-6 border  border-gray-200 bg-white rounded-lg cursor-pointer relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
+        className={`flex items-center gap-x-6 border  border-gray-200 bg-white rounded-lg cursor-pointer relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105 ${responsive}  shadowgreen`}
         onMouseEnter={() => setIsGroupHovered(true)}
         onMouseLeave={() => setIsGroupHovered(false)}
       >
         <ProImage
-          className="h-[102px] w-[102px]"
+          className="h-[102px] w-[102px] "
           linkUrl={data?.imageUrl || defaultImage3}
           href={`/productDetails/${data?.id}`}
         ></ProImage>
-        <div className="flex flex-col pr-3 flex-1">
-          <Link to={`/productDetails/${data?.id}`}>
+        <div className="flex flex-col pr-3 flex-1 ">
+          <Link title={data?.name} to={`/productDetails/${data?.id}`}>
             <ProTitle
               title={data?.name}
               className="group-hover:text-primary"
+              widthText={widthText}
             ></ProTitle>
           </Link>
           <ProPrice
@@ -91,7 +97,7 @@ const TopProductItem = ({ data, openModal }) => {
           </ProStart>
         </div>
 
-        <div className="absolute top-[45px] left-[125px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible">
+        <div className="absolute top-[45px] left-[125px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible  ">
           <div className="flex items-center gap-x-3">
             <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary hover:scale-110 shadowgreen transition-all ">
               <IconBagPro

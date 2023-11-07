@@ -32,7 +32,7 @@ const SliderItem = ({ data }) => {
           <div className="mt-[30px]">
             <Button
               kind="primary"
-              className="!px-[40px] w-[195px]"
+              className="!px-[40px] w-[195px] transition-all hover:scale-105"
               href={`/shop/${data.id}`}
             >
               Shop Now

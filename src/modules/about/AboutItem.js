@@ -11,8 +11,16 @@ const AboutItem = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2  gap-x-10 pt-[40px] pb-[60px]">
       <div className="flex  items-center flex-1 gap-x-6">
-        <AboutImage w="100%" h="100%"></AboutImage>
-        <AboutImage w="100%" h="100%"></AboutImage>
+        <AboutImage
+          w="100%"
+          h="100%"
+          linkUrl="https://images.unsplash.com/photo-1610492219815-f76905e3f084?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ></AboutImage>
+        <AboutImage
+          w="100%"
+          h="100%"
+          linkUrl="https://images.unsplash.com/photo-1610415958681-7aabb05711f5?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ></AboutImage>
       </div>
       <div className="flex-1 ">
         <AboutHeading></AboutHeading>
@@ -78,12 +86,12 @@ const AboutItem = () => {
             </div>
           </div>
         </div>
-        <Button kind="primary" className="mt-[26px] !px-[40px]">
+        {/* <Button kind="primary" className="mt-[26px] !px-[40px]">
           Shop Now
           <span className="block ml-[4px]">
             <IconAR2></IconAR2>
           </span>
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

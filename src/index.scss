@@ -10,6 +10,12 @@
     @apply outline-none;
   }
 }
+//active navigate
+.active {
+  color: #00b207;
+  font-weight: 600;
+  font-size: 16px;
+}
 
 .connectNav::before {
   content: "";

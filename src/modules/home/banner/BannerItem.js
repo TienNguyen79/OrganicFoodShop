@@ -7,7 +7,7 @@ import BannerNumber from "./parts/BannerNumber";
 import Button from "../../../components/button/Button";
 import IconAR2 from "../../../components/Icons/IconAR2";
 
-const BannerItem = () => {
+const BannerItem = ({ data }) => {
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -16,7 +16,7 @@ const BannerItem = () => {
   });
 
   // Ngày hết hạn mục tiêu đếm ngược đến
-  const targetDate = new Date("2023-10-09T23:09:00").getTime();
+  const targetDate = new Date("2023-11-20T23:09:00").getTime();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -65,18 +65,26 @@ const BannerItem = () => {
         </div>
         <div className="absolute top-[80px] left-10">
           <BannerHeading></BannerHeading>
-          <BannerTitle className="text-[36px] pt-2 pb-5"></BannerTitle>
+          <BannerTitle
+            className="text-[36px] pt-2 pb-5"
+            title={data[0]?.name}
+          ></BannerTitle>
           <div className="flex items-center gap-x-2">
             <BannerText text="Starting at: "></BannerText>
             <div className="flex items-center">
               <BannerNumber
                 unit="$"
                 className="bg-warning py-1 px-3 rounded-md text-[16px] font-normal "
+                number="8.88"
               ></BannerNumber>
             </div>
           </div>
 
-          <Button className="mt-[24px]" kind="primary">
+          <Button
+            className="mt-[24px] w-[200px] hover:scale-105 transition-all"
+            kind="primary"
+            href={`/shop/${data[0]?.id}`}
+          >
             Shop Now
             <span className="block ml-2">
               <IconAR2></IconAR2>
@@ -129,7 +137,11 @@ const BannerItem = () => {
             </div>
           </div>
 
-          <Button className="mt-[24px]" kind="primary">
+          <Button
+            className="mt-[24px] hover:scale-105 transition-all w-[200px]"
+            kind="primary"
+            href="/shop"
+          >
             Shop Now
             <span className="block ml-2">
               <IconAR2></IconAR2>

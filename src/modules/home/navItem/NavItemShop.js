@@ -6,7 +6,7 @@ import {
 } from "../../../store/category/cate-slice";
 import axios from "../../../api/axios";
 import { proGetAll } from "../../../store/product/pro-slice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const NavItemShop = () => {
@@ -48,15 +48,16 @@ const NavItemShop = () => {
                   {dataPro.slice(0, 20).map((pro) => {
                     if (pro.category_id === item.id) {
                       return (
-                        <span
+                        <Link
                           className="text-[15px] font-normal  text-gray5 hover:text-primary transition-all duration-200 cursor-pointer"
                           key={pro?.id}
                           onClick={() => {
                             console.log(pro.id);
                           }}
+                          to={`/productDetails/${pro.id}`}
                         >
                           {pro?.name}
-                        </span>
+                        </Link>
                       );
                     }
                   })}

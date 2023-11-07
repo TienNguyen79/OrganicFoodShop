@@ -10,7 +10,10 @@ const ContactPage = () => {
   return (
     <div className="py-[80px] grid grid-cols-4 gap-x-6">
       <div className="col-span-1 bg-white shadow-2xl rounded-md">
-        <BoxContact content="2715 Ash Dr. San Jose, South Dakota 83475">
+        <BoxContact
+          content="2715 Ash Dr. San Jose, South Dakota 83475"
+          className="px-3"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width={52}

@@ -106,7 +106,7 @@ const BlogItem = ({ className = "", data }) => {
               </svg>
             </BlogIcon>
             <BlogLabel
-              number="65"
+              number={data?.CmtNumber}
               label="comment"
               className="text-gray6 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[90px]"
             ></BlogLabel>

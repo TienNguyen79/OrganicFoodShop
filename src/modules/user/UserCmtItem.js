@@ -18,7 +18,7 @@ const UserCmtItem = ({ data, limit, loading }) => {
   // console.log("🚀 ~ file: UserCmtItem.js:17 ~ UserCmtItem ~ page:", page);
   const { control, setValue, handleSubmit, watch } = useForm();
   // console.log("🚀 ~ file: UserCmtItem.js:12 ~ UserCmtItem ~ data:", data);
-  const dateTimeString = data?.updated_at;
+  const dateTimeString = data?.created_at;
   const date = new Date(dateTimeString);
   // Định dạng ngày và tháng
   const options = { year: "numeric", month: "long", day: "numeric" };

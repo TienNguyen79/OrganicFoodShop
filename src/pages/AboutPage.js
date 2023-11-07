@@ -38,12 +38,20 @@ const AboutPage = () => {
           </AboutDesc>
         </div>
         <div className="flex-1">
-          <AboutImage w="100%" h="400px"></AboutImage>
+          <AboutImage
+            w="100%"
+            h="400px"
+            linkUrl="https://plus.unsplash.com/premium_photo-1686285540844-b0e626ffaba4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          ></AboutImage>
         </div>
       </div>
       <div className="flex items-center my-[80px] gap-x-[50px]">
         <div className="flex-1">
-          <AboutImage w="100%" h="400px"></AboutImage>
+          <AboutImage
+            w="100%"
+            h="400px"
+            linkUrl="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1884&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          ></AboutImage>
         </div>
         <div className="flex-1 ">
           <AboutHeading className="text-[40px] mb-8"></AboutHeading>
@@ -159,7 +167,11 @@ const AboutPage = () => {
           </div>
         </div>
         <div className="flex-1">
-          <AboutImage w="100%" h="400px"></AboutImage>
+          <AboutImage
+            w="100%"
+            h="400px"
+            linkUrl="https://plus.unsplash.com/premium_photo-1682144120790-1461fd602bc9?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          ></AboutImage>
         </div>
       </div>
 
@@ -177,10 +189,13 @@ const AboutPage = () => {
             <AboutImage
               w="280px"
               h="260px"
-              className="rounded-t-md"
+              className=""
+              linkUrl="https://o.remove.bg/downloads/9d1af7a3-9b77-4a57-8714-6eb6de06a920/image-removebg-preview.png"
             ></AboutImage>
-            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full rounded-b-md">
-              <h1 className="text-gray9 text-[18px] font-medium">Tiến Criss</h1>
+            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
+              <h1 className="text-gray9 text-[18px] font-medium">
+                Nguyen Manh Tien
+              </h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
                 Ceo & Founder
@@ -191,10 +206,13 @@ const AboutPage = () => {
             <AboutImage
               w="280px"
               h="260px"
-              className="rounded-t-md"
+              className=""
+              linkUrl="https://o.remove.bg/downloads/9d1af7a3-9b77-4a57-8714-6eb6de06a920/image-removebg-preview.png"
             ></AboutImage>
-            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full rounded-b-md">
-              <h1 className="text-gray9 text-[18px] font-medium">Tiến Criss</h1>
+            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
+              <h1 className="text-gray9 text-[18px] font-medium">
+                Bui Duc Thang
+              </h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
                 Ceo & Founder
@@ -205,13 +223,14 @@ const AboutPage = () => {
             <AboutImage
               w="280px"
               h="260px"
-              className="rounded-t-md"
+              className=""
+              linkUrl="https://cdn4.iconfinder.com/data/icons/essential-app-2/16/user-avatar-human-admin-login-512.png"
             ></AboutImage>
-            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full rounded-b-md">
-              <h1 className="text-gray9 text-[18px] font-medium">Tiến Criss</h1>
+            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
+              <h1 className="text-gray9 text-[18px] font-medium">John</h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
-                Ceo & Founder
+                Employee
               </span>
             </div>
           </div>
@@ -219,13 +238,14 @@ const AboutPage = () => {
             <AboutImage
               w="280px"
               h="260px"
-              className="rounded-t-md"
+              className=""
+              linkUrl="https://o.remove.bg/downloads/b074dfe0-81c2-4b3e-91f3-f6948ea64241/1142-removebg-preview.png"
             ></AboutImage>
-            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full rounded-b-md">
-              <h1 className="text-gray9 text-[18px] font-medium">Tiến Criss</h1>
+            <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
+              <h1 className="text-gray9 text-[18px] font-medium">Liza</h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
-                Ceo & Founder
+                Employee
               </span>
             </div>
           </div>

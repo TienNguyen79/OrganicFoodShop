@@ -354,15 +354,18 @@ const ShopPage = () => {
                     .slice(0, 3)
                     .map((item) => (
                       <TopProductItem
+                        openModal={openModal}
                         key={item.id}
                         data={item}
+                        widthText="max-w-[100px]"
+                        responsive="w-[260px] hover:w-[300px]"
                       ></TopProductItem>
                     ))}
               </div>
             </div>
           </div>
         </div>
-        <div className="col-span-3">
+        <div className="col-span-3 ml-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-x-2 ">
               <span className="inline-block text-gray5 text-[16px] font-normal w-full ">
@@ -399,20 +402,22 @@ const ShopPage = () => {
               />
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-6 ">
-              {dataProWithFilter?.data?.length > 0 ? (
-                dataProWithFilter?.data
-                  .slice(0, 9)
-                  .map((item) => (
-                    <ProductItem
-                      openModal={openModal}
-                      key={item.id}
-                      data={item}
-                    ></ProductItem>
-                  ))
-              ) : (
-                <h1 className="text-danger text-[20px]">Product Not Found</h1>
-              )}
+            <div>
+              <div className="grid grid-cols-3 gap-4 ">
+                {dataProWithFilter?.data?.length > 0 ? (
+                  dataProWithFilter?.data
+                    .slice(0, 9)
+                    .map((item) => (
+                      <ProductItem
+                        openModal={openModal}
+                        key={item.id}
+                        data={item}
+                      ></ProductItem>
+                    ))
+                ) : (
+                  <h1 className="text-danger text-[20px]">Product Not Found</h1>
+                )}
+              </div>
             </div>
           )}
 
