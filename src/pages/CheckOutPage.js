@@ -138,7 +138,7 @@ const CheckOutPage = () => {
       <form action="" onSubmit={handleSubmit(handleBill)}>
         <div className="grid grid-cols-3 gap-x-6">
           <div className="col-span-2">
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between gap-x-3 ">
               <FieldBill>
                 <BillLabel
                   className="text-gray9 font-normal"
@@ -177,7 +177,7 @@ const CheckOutPage = () => {
             </div>
 
             <div className="mt-4 ">
-              <div className="flex items-baseline  gap-x-8">
+              <div className="flex items-baseline justify-between  ">
                 <FieldBill>
                   <BillLabel
                     className="text-gray9 font-normal"
@@ -185,6 +185,7 @@ const CheckOutPage = () => {
                   ></BillLabel>
                   <DropdownInit>
                     <SelectInit
+                      className="w-[190px]"
                       placeholder={labelCity || "Select"}
                     ></SelectInit>
                     <ListInit>
@@ -224,7 +225,7 @@ const CheckOutPage = () => {
                   <DropdownInit>
                     <SelectInit
                       placeholder={labelDistric || "Select"}
-                      className={`${
+                      className={`w-[190px] ${
                         labelCity !== "" ? "" : "pointer-events-none opacity-50"
                       }`}
                     ></SelectInit>
@@ -266,7 +267,7 @@ const CheckOutPage = () => {
                   <DropdownInit>
                     <SelectInit
                       placeholder={labelvillage || "Select"}
-                      className={`${
+                      className={`w-[190px] ${
                         labelDistric !== ""
                           ? ""
                           : "pointer-events-none opacity-50"

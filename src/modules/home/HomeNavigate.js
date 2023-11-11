@@ -35,7 +35,7 @@ const HomeNavigate = () => {
               <NavLink
                 key={link.title}
                 to={link.url}
-                className="flex items-center gap-x-1 text-[14px] font-medium text-gray5 menu-item hover:text-primary"
+                className="flex items-center gap-x-1 text-[14px] font-medium text-gray5 menu-item hover:text-primary first-link"
                 onClick={() =>
                   link.title === "Shop" && localStorage.setItem("nameShop", "")
                 }

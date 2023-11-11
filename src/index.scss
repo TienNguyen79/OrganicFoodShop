@@ -11,12 +11,16 @@
   }
 }
 //active navigate
-.active {
+.first-link.active {
   color: #00b207;
   font-weight: 600;
   font-size: 16px;
 }
 
+.second-link.active {
+  background-color: #edf2ee;
+  color: black;
+}
 .connectNav::before {
   content: "";
   position: absolute;

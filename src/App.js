@@ -23,6 +23,10 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const LayoutUser = lazy(() => import("./layout/LayoutUser"));
+const OrderHistoryPage = lazy(() => import("./pages/OrderHistoryPage"));
+const UserDashBoardPage = lazy(() => import("./pages/UserDashBoardPage"));
+const OrderDetailsPage = lazy(() => import("./pages/OrderDetailsPage"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -74,6 +78,21 @@ function App() {
           ></Route>
           <Route path="/about" element={<AboutPage></AboutPage>}></Route>
           <Route path="/contact" element={<ContactPage></ContactPage>}></Route>
+        </Route>
+
+        <Route element={<LayoutUser></LayoutUser>}>
+          <Route
+            path="/user_dashboard"
+            element={<UserDashBoardPage></UserDashBoardPage>}
+          ></Route>
+          <Route
+            path="/order_history"
+            element={<OrderHistoryPage></OrderHistoryPage>}
+          ></Route>
+          <Route
+            path="/order_details/:slug"
+            element={<OrderDetailsPage></OrderDetailsPage>}
+          ></Route>
         </Route>
 
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>

@@ -16,8 +16,6 @@ import UserCmtItem from "../modules/user/UserCmtItem";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   blogAddCmtNew,
   blogComment,
@@ -25,11 +23,6 @@ import {
   blogGetWithParam,
 } from "../store/blog/blog-slice";
 import parse from "html-react-parser";
-import useClickOutSide from "../hooks/useClickOutSide";
-
-const schema = yup.object({
-  message: yup.string().required("Messgae is required"),
-});
 
 const BlogDetailPage = () => {
   const {
@@ -58,10 +51,6 @@ const BlogDetailPage = () => {
 
   const { dataBlogWithParam, dataBlogAll, dataCommentBlog, loading } =
     useSelector((state) => state.blog);
-  console.log(
-    "🚀 ~ file: BlogDetailPage.js:56 ~ BlogDetailPage ~ dataCommentBlog:",
-    dataCommentBlog
-  );
 
   // const [dataCMT2, setDataCmt2] = useState([]);
   const [isLoadMore, setIsLoadMore] = useState(false);
@@ -186,7 +175,7 @@ const BlogDetailPage = () => {
                 </svg>
               </BlogIcon>
               <BlogLabel
-                number="65"
+                number={dataBlogWithParam?.CmtNumber}
                 label="comment"
                 className="text-gray6"
               ></BlogLabel>

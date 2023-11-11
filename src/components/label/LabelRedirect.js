@@ -7,14 +7,13 @@ const LabelRedirect = ({
   title = "",
   className = "font-medium",
   url = "/#",
+  icon = <IconAR2 color="#00B207" width={15}></IconAR2>,
 }) => {
   return (
     <Link to={url}>
       <div className="flex items-center gap-x-3 text-primary">
         <span className={className}>{title}</span>
-        <span className="text-primary">
-          <IconAR2 color="#00B207" width={15}></IconAR2>
-        </span>
+        <span className="text-primary">{icon}</span>
       </div>
     </Link>
   );

@@ -28,9 +28,12 @@ const PopupMe = () => {
       </div>
 
       <div className="border-b-[1px] ">
-        <span className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary">
-          Trang Cá Nhân
-        </span>
+        <Link
+          to="/user_dashboard"
+          className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary"
+        >
+          DashBoard
+        </Link>
       </div>
 
       <div className="border-b-[1px] ">
