@@ -33,7 +33,7 @@ import IconClose2 from "../../components/Icons/IconClose2";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconRedHeart from "../../components/Icons/IconRedHeart";
 const ProDetailItem = ({ data, isClickClose, onClose }) => {
-  const { control, setValue, handleSubmit } = useForm({
+  const { control, setValue, getValues, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {},
   });
@@ -253,7 +253,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                 <ProDesc>{data?.description}</ProDesc>
               </div>
 
-              <div className="py-[18px] border-b-2 flex items-center gap-x-3">
+              <div className="py-[18px] border-b-2 flex items-center gap-x-2">
                 <ProHandleQuantity
                   control={control}
                   name="quantity"
@@ -262,20 +262,38 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                 <Button
                   kind="primary"
                   type="submit"
-                  className="w-[183px]"
+                  // className="w-[160px]"
                   isLoading={loadingCart}
                 >
                   <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                    <span>Add to Cart </span>
+                    <span className="block w-full text-sm">Add to Cart </span>
                     <IconBagProDetail></IconBagProDetail>
                   </div>
                 </Button>
-                <Button kind="secondary">
-                  <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                    <span>Buy it Now </span>
-                    <IconAR2 color="#00B207"></IconAR2>
-                  </div>
-                </Button>
+                <div
+                  onClick={() => {
+                    var arrayJSON = JSON.stringify({
+                      products_order: [data],
+                      quantity: getValues("quantity"),
+                      total_price:
+                        ((100 - parseInt(data?.discount)) / 100) *
+                        parseInt(data?.price) *
+                        getValues("quantity"),
+                    });
+                    localStorage.setItem("orderData", arrayJSON);
+                  }}
+                >
+                  <Button
+                    kind="secondary"
+                    href="/checkout"
+                    // className="w-[160px]"
+                  >
+                    <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
+                      <span className="block w-full text-sm">Buy it Now </span>
+                      <IconAR2 color="#00B207"></IconAR2>
+                    </div>
+                  </Button>
+                </div>
               </div>
 
               <div className="py-6">

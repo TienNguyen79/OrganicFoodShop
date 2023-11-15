@@ -6,24 +6,32 @@ import ProPrice from "../product/partsCartAndTym/ProPrice";
 import IconClose2 from "../../components/Icons/IconClose2";
 import { useDispatch } from "react-redux";
 import { cartDelete } from "../../store/cart/cart-slice";
+import { Link } from "react-router-dom";
 
-const CartPopupItem = ({ data }) => {
+const CartPopupItem = ({ data, onClose = () => {} }) => {
   const dispatch = useDispatch();
   return (
     <div className="flex items-center justify-between mt-6">
-      <div className="flex items-center gap-x-2">
+      <Link
+        className="flex items-center gap-x-2"
+        to={`/productDetails/${data?.id}`}
+        onClick={onClose}
+      >
         <ProImage
           className="w-[80px] h-[80px]"
           linkUrl={data?.imageUrl}
         ></ProImage>
         <div>
-          <ProName name={data?.name} className="text-sm"></ProName>
+          <ProName
+            name={data?.name}
+            className="text-sm hover:text-primary"
+          ></ProName>
           <div className="flex items-baseline gap-x-1">
             <ProPrice price={(data?.current_price).toFixed(2)}></ProPrice>
             <ProQuantity quantity={data?.pivot?.quantity}></ProQuantity>
           </div>
         </div>
-      </div>
+      </Link>
       <div
         className="cursor-pointer"
         onClick={() => {

@@ -24,8 +24,8 @@ import axios from "axios";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
 const schema = yup.object({
-  firstName: yup.string().required("FirstName is required"),
-  lastName: yup.string().required("LastName is required"),
+  // firstName: yup.string().required("FirstName is required"),
+  name: yup.string().required("Your Name is required"),
   detailsAddress: yup
     .string()
     .required("detailsAddress is required")
@@ -52,14 +52,41 @@ const CheckOutPage = () => {
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+
+  const [dataOrder, setDataOrder] = useState([]);
+  console.log(
+    "🚀 ~ file: CheckOutPage.js:57 ~ CheckOutPage ~ dataOrder:",
+    dataOrder
+  );
   const handleBill = (values) => {
     try {
       if (labelCity === "" || labelDistric === "" || labelvillage === "") {
         toast.error("Address must be complete");
       } else {
+        let ordered = {
+          products_order: dataOrder.products_order.map((item) => ({
+            id: item.id,
+            name: item.name,
+            quantity: item?.pivot?.quantity || dataOrder.quantity, //dataOrder.quantity đối với mua chỉ 1 đơn hàng à giá dưới sau có discount cũng thế,
+            price:
+              item?.current_price ||
+              ((100 - parseInt(item?.discount)) / 100) * parseInt(item?.price),
+          })),
+          total_price: dataOrder.total_price,
+          address_shipping:
+            values.detailsAddress +
+            ", " +
+            labelvillage +
+            ", " +
+            labelDistric +
+            ", " +
+            labelCity,
+          payment_method: "cash",
+          note: values.additionalInfo,
+        };
         console.log(
-          "🚀 ~ file: CheckOutPage.js:56 ~ handleBill ~ values:",
-          values
+          "🚀 ~ file: CheckOutPage.js:73 ~ handleBill ~ ordered:",
+          ordered
         );
       }
     } catch (error) {
@@ -71,6 +98,10 @@ const CheckOutPage = () => {
   const [city, setCity] = useState([]);
   const [queryCity, setQueryCity] = useState("Hà Nội");
   const [labelCity, setLabelCity] = useState("");
+  console.log(
+    "🚀 ~ file: CheckOutPage.js:87 ~ CheckOutPage ~ labelCity:",
+    labelCity
+  );
   const [codeCity, setCodeCity] = useState("");
   useEffect(() => {
     async function fetchData() {
@@ -130,6 +161,11 @@ const CheckOutPage = () => {
     setQueryVillage(value);
   }, 300); // 300 milliseconds là khoảng thời gian debounce
 
+  useEffect(() => {
+    var storedArrayJSON = localStorage.getItem("orderData");
+    var storedArray = JSON.parse(storedArrayJSON);
+    setDataOrder(storedArray);
+  }, []);
   return (
     <div className="mt-10 mb-[80px]">
       <div className="mb-8">
@@ -138,8 +174,8 @@ const CheckOutPage = () => {
       <form action="" onSubmit={handleSubmit(handleBill)}>
         <div className="grid grid-cols-3 gap-x-6">
           <div className="col-span-2">
-            <div className="flex items-center justify-between gap-x-3 ">
-              <FieldBill>
+            <div className="flex items-center  gap-x-3 ">
+              {/* <FieldBill>
                 <BillLabel
                   className="text-gray9 font-normal"
                   label="First name*"
@@ -150,30 +186,34 @@ const CheckOutPage = () => {
                   placeholder="Your first name"
                   error={errors?.firstName?.message}
                 ></Input>
-              </FieldBill>
-              <FieldBill>
-                <BillLabel
-                  className="text-gray9 font-normal"
-                  label="Last name*"
-                ></BillLabel>
-                <Input
-                  control={control}
-                  name="lastName"
-                  placeholder="Your last name"
-                  error={errors?.lastName?.message}
-                ></Input>
-              </FieldBill>
-              <FieldBill>
-                <BillLabel
-                  className="text-gray9 font-normal"
-                  label="Company name"
-                ></BillLabel>
-                <Input
-                  control={control}
-                  name="companyName"
-                  placeholder="Company name"
-                ></Input>
-              </FieldBill>
+              </FieldBill> */}
+              <div className="flex-1">
+                <FieldBill>
+                  <BillLabel
+                    className="text-gray9 font-normal"
+                    label="Name*"
+                  ></BillLabel>
+                  <Input
+                    control={control}
+                    name="name"
+                    placeholder="Your Name"
+                    error={errors?.name?.message}
+                  ></Input>
+                </FieldBill>
+              </div>
+              <div className="flex-1">
+                <FieldBill>
+                  <BillLabel
+                    className="text-gray9 font-normal"
+                    label="Company name"
+                  ></BillLabel>
+                  <Input
+                    control={control}
+                    name="companyName"
+                    placeholder="Company name"
+                  ></Input>
+                </FieldBill>
+              </div>
             </div>
 
             <div className="mt-4 ">
@@ -395,23 +435,45 @@ const CheckOutPage = () => {
           <div className="col-span-1">
             <BoxBill>
               <Label className="text-[18px] !font-medium">Order Summery</Label>
-              <div className="my-5">
-                <GroupJusBeween className="my-2">
-                  <div className="flex items-center gap-x-2">
-                    <ProImage className="w-[60px] h-[60px]"></ProImage>
-                    <div>
-                      <ProName name="Green Capsicum"></ProName>
-                      <ProQuantity quantity={10}></ProQuantity>
-                    </div>
-                  </div>
-                  <ProPrice className="font-medium" price={50}></ProPrice>
-                </GroupJusBeween>
+              <div className="my-5 max-h-[220px] overflow-y-auto scroll-hidden">
+                {dataOrder?.products_order?.length > 0 &&
+                  dataOrder?.products_order?.map((item) => (
+                    <GroupJusBeween key={item.id} className="my-2">
+                      <div className="flex items-center gap-x-2">
+                        <ProImage
+                          linkUrl={item?.imageUrl}
+                          className="w-[60px] h-[60px]"
+                        ></ProImage>
+                        <div>
+                          <ProName name={item?.name}></ProName>
+                          <ProQuantity
+                            quantity={
+                              item?.pivot?.quantity || dataOrder?.quantity
+                            }
+                          ></ProQuantity>
+                        </div>
+                      </div>
+                      <ProPrice
+                        className="font-medium"
+                        price={
+                          item?.current_price?.toFixed(2) ||
+                          (
+                            ((100 - parseInt(item?.discount)) / 100) *
+                            parseInt(item?.price)
+                          ).toFixed(2)
+                        }
+                      ></ProPrice>
+                    </GroupJusBeween>
+                  ))}
               </div>
 
               <div className="mt-6">
                 <GroupJusBeween className="border-b-[1px] py-2 ">
                   <BillLabel label="Subtotal:"></BillLabel>
-                  <ProPrice className="font-semibold" price={20}></ProPrice>
+                  <ProPrice
+                    className="font-semibold"
+                    price={dataOrder?.total_price?.toFixed(2)}
+                  ></ProPrice>
                 </GroupJusBeween>
 
                 <GroupJusBeween className="border-b-[1px] py-2 ">
@@ -424,7 +486,10 @@ const CheckOutPage = () => {
 
                 <GroupJusBeween className="border-b-[1px] py-2 ">
                   <BillLabel label="Total:"></BillLabel>
-                  <ProPrice className="font-semibold" price={20}></ProPrice>
+                  <ProPrice
+                    className="font-semibold"
+                    price={dataOrder?.total_price?.toFixed(2)}
+                  ></ProPrice>
                 </GroupJusBeween>
               </div>
 

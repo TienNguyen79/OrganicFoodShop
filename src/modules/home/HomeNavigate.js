@@ -12,12 +12,6 @@ const navLinks = [
     url: "/shop",
     navItem: <NavItemShop></NavItemShop>,
   },
-  {
-    icon: <IconArrowDown></IconArrowDown>,
-    title: "Page",
-    url: "/page",
-    navItem: <NavItemPage></NavItemPage>,
-  },
   { icon: "", title: "Blog", url: "/blog" },
   { icon: "", title: "About Us", url: "/about" },
   { icon: "", title: "Contact Us", url: "/contact" },

@@ -57,7 +57,11 @@ const CartPopup = ({
         <div className="flex-1 overflow-y-auto scroll-hidden ">
           {dataCartAll.length > 0 &&
             dataCartAll.map((item) => (
-              <CartPopupItem key={item.id} data={item}></CartPopupItem>
+              <CartPopupItem
+                key={item.id}
+                data={item}
+                onClose={onClose}
+              ></CartPopupItem>
             ))}
         </div>
 
@@ -71,7 +75,17 @@ const CartPopup = ({
             </span>
           </div>
           <div className="flex flex-col gap-y-3">
-            <div onClick={onClose}>
+            <div
+              onClick={() => {
+                let data = {
+                  products_order: [...dataCartAll],
+                  total_price: totalPrice,
+                };
+                var arrayJSON = JSON.stringify(data);
+                localStorage.setItem("orderData", arrayJSON);
+                onClose(); //sau khi chuyển hướng sẽ đóng popup
+              }}
+            >
               <Button
                 kind="primary"
                 href="/checkout"

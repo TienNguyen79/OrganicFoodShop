@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartDelete, cartGetAll, cartUpdate } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
 import { handleCartDelete } from "../store/cart/cart-handler";
+import { Link } from "react-router-dom";
 
 const ShoppingCartPage = () => {
   const { control, setValue, handleSubmit, watch } = useForm();
@@ -54,15 +55,16 @@ const ShoppingCartPage = () => {
       values
     );
   };
+
   return (
     <div className="mt-10 mb-[80px]">
       <div className="text-center mb-8">
         <Label className="text-[35px]">My Shopping Cart</Label>
       </div>
 
-      <div className="grid grid-cols-3 gap-x-6">
-        <div className="col-span-2 flex flex-col">
-          <form onSubmit={handleSubmit(handleCart)}>
+      <form onSubmit={handleSubmit(handleCart)}>
+        <div className="grid grid-cols-4 gap-x-6">
+          <div className="col-span-3 flex flex-col">
             <Table>
               <table>
                 <thead>
@@ -79,17 +81,20 @@ const ShoppingCartPage = () => {
                     dataCartAll.map((item) => (
                       <tr key={item?.id}>
                         <td>
-                          <div className="inline-flex items-center gap-x-[6px]">
+                          <Link
+                            className="inline-flex items-center gap-x-[6px]"
+                            to={`/productDetails/${item?.id}`}
+                          >
                             <ProImage
                               className="w-[100px] h-[100px]"
                               linkUrl={item?.imageUrl}
                             ></ProImage>
                             <ProName
                               name={item?.name}
-                              className="inline-block"
-                              maxW="300px"
+                              className="block hover:text-primary cursor-pointer"
+                              maxW="max-w-[120px] "
                             ></ProName>
-                          </div>
+                          </Link>
                         </td>
                         <td>
                           <ProPrice
@@ -127,9 +132,6 @@ const ShoppingCartPage = () => {
                 <Button href="/shop" kind="cart">
                   Return to shop
                 </Button>
-                {/* <Button kind="cart" type="submit">
-                  Update Cart
-                </Button> */}
               </div>
             </Table>
 
@@ -147,49 +149,62 @@ const ShoppingCartPage = () => {
                 </div>
               </BoxBill>
             </div>
-          </form>
-        </div>
-        <div className="col-span-1">
-          <BoxBill>
-            <Label className="text-[18px] !font-medium">Cart Total</Label>
-            <div className="my-4">
-              <GroupJusBeween className="border-b-[1px] py-2 ">
-                <BillLabel label="Subtotal:"></BillLabel>
-                <ProPrice
-                  className="font-semibold"
-                  price={totalPrice.toFixed(2)}
-                ></ProPrice>
-              </GroupJusBeween>
+          </div>
+          <div className="col-span-1">
+            <BoxBill>
+              <Label className="text-[18px] !font-medium">Cart Total</Label>
+              <div className="my-4">
+                <GroupJusBeween className="border-b-[1px] py-2 ">
+                  <BillLabel label="Subtotal:"></BillLabel>
+                  <ProPrice
+                    className="font-semibold"
+                    price={totalPrice.toFixed(2)}
+                  ></ProPrice>
+                </GroupJusBeween>
 
-              <GroupJusBeween className="border-b-[1px] py-2 ">
-                <BillLabel label="Shipping::"></BillLabel>
-                <BillLabel
-                  label="Free"
-                  className="font-medium text-gray9"
-                ></BillLabel>
-              </GroupJusBeween>
+                <GroupJusBeween className="border-b-[1px] py-2 ">
+                  <BillLabel label="Shipping:"></BillLabel>
+                  <BillLabel
+                    label="Free"
+                    className="font-medium text-gray9"
+                  ></BillLabel>
+                </GroupJusBeween>
 
-              <GroupJusBeween className="border-b-[1px] py-2 ">
-                <BillLabel label="Total::"></BillLabel>
-                <ProPrice
-                  className="font-semibold"
-                  price={totalPrice.toFixed(2)}
-                ></ProPrice>
-              </GroupJusBeween>
-            </div>
-            <div>
-              <Button
-                kind="primary"
-                type="submit"
-                className="w-full hover:opacity-80 hover:scale-110 transition-all"
-                href="/checkout"
+                <GroupJusBeween className="border-b-[1px] py-2 ">
+                  <BillLabel label="Total:"></BillLabel>
+                  <ProPrice
+                    className="font-semibold"
+                    price={totalPrice.toFixed(2)}
+                  ></ProPrice>
+                </GroupJusBeween>
+              </div>
+              <div
+                onClick={() => {
+                  let data = {
+                    products_order: [...dataCartAll],
+                    total_price: totalPrice,
+                  };
+                  var arrayJSON = JSON.stringify(data);
+                  localStorage.setItem("orderData", arrayJSON);
+                  console.log(
+                    "🚀 ~ file: ShoppingCartPage.js:60 ~ handleCart ~ data:",
+                    data
+                  );
+                }}
               >
-                Proceed to checkout
-              </Button>
-            </div>
-          </BoxBill>
+                <Button
+                  kind="primary"
+                  type="submit"
+                  className="w-full hover:opacity-80 hover:scale-110 transition-all"
+                  href="/checkout"
+                >
+                  Checkout
+                </Button>
+              </div>
+            </BoxBill>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import {
   wishListGetAll,
 } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
+import { Link } from "react-router-dom";
 
 const WishListPage = () => {
   const dispatch = useDispatch();
@@ -52,17 +53,21 @@ const WishListPage = () => {
                 dataWishListAll.map((item) => (
                   <tr key={item?.id}>
                     <td>
-                      <div className="inline-flex items-center gap-x-[6px]">
+                      <Link
+                        className="inline-flex items-center gap-x-[6px] "
+                        to={`/productDetails/${item?.id}`}
+                      >
                         <ProImage
                           className="w-[100px] h-[100px]"
                           linkUrl={item?.imageUrl}
                         ></ProImage>
+
                         <ProName
                           name={item?.name}
-                          className="inline-block"
-                          maxW="300px"
+                          className="inline-block  hover:text-primary"
+                          maxW="max-w-[160px]"
                         ></ProName>
-                      </div>
+                      </Link>
                     </td>
                     <td>
                       <ProPrice
