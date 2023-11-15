@@ -27,6 +27,7 @@ const LayoutUser = lazy(() => import("./layout/LayoutUser"));
 const OrderHistoryPage = lazy(() => import("./pages/OrderHistoryPage"));
 const UserDashBoardPage = lazy(() => import("./pages/UserDashBoardPage"));
 const OrderDetailsPage = lazy(() => import("./pages/OrderDetailsPage"));
+const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -92,6 +93,10 @@ function App() {
           <Route
             path="/order_details/:slug"
             element={<OrderDetailsPage></OrderDetailsPage>}
+          ></Route>
+          <Route
+            path="/settings"
+            element={<SettingsPage></SettingsPage>}
           ></Route>
         </Route>
 

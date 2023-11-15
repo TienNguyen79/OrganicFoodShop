@@ -7,7 +7,8 @@ import Label from "../components/label/Label";
 import TestimonialItem from "../modules/user/TestimonialItem";
 import Gap from "../components/common/Gap";
 import Slider from "react-slick";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const AboutPage = () => {
   const settings2 = {
     // className: "center",
@@ -190,7 +191,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://o.remove.bg/downloads/9d1af7a3-9b77-4a57-8714-6eb6de06a920/image-removebg-preview.png"
+              linkUrl="https://e7.pngegg.com/pngimages/1019/187/png-clipart-computer-icons-avatar-encapsulated-postscript-avatar-heroes-hand.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">
@@ -207,7 +208,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://o.remove.bg/downloads/9d1af7a3-9b77-4a57-8714-6eb6de06a920/image-removebg-preview.png"
+              linkUrl="https://e7.pngegg.com/pngimages/1019/187/png-clipart-computer-icons-avatar-encapsulated-postscript-avatar-heroes-hand.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">
@@ -224,7 +225,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://cdn4.iconfinder.com/data/icons/essential-app-2/16/user-avatar-human-admin-login-512.png"
+              linkUrl="https://cdn1.iconfinder.com/data/icons/marketing-19/100/Profile-512.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">John</h1>
@@ -239,7 +240,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://o.remove.bg/downloads/b074dfe0-81c2-4b3e-91f3-f6948ea64241/1142-removebg-preview.png"
+              linkUrl="https://www.kindpng.com/picc/m/247-2472283_transparent-admin-png-marketing-girl-cartoon-png-png.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">Liza</h1>
@@ -251,45 +252,43 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className="">
-        <div className="Testimonial  ">
-          <Gap>
-            <Label className="text-[35px] ">Client Testimonail</Label>
-          </Gap>
+      <div className="Testimonial  ">
+        <Gap>
+          <Label className="text-[35px] ">What Our Customer Says</Label>
+        </Gap>
 
-          <Slider {...settings2}>
-            <div className="px-3">
-              <TestimonialItem></TestimonialItem>
-            </div>
-            <div className="px-3">
-              <TestimonialItem></TestimonialItem>
-            </div>
-            <div className="px-3">
-              <TestimonialItem></TestimonialItem>
-            </div>
-            <div className="px-3">
-              <TestimonialItem></TestimonialItem>
-            </div>
-            <div className="px-3">
-              <TestimonialItem></TestimonialItem>
-            </div>
-          </Slider>
+        <Slider {...settings2}>
+          <div className="px-3">
+            <TestimonialItem></TestimonialItem>
+          </div>
+          <div className="px-3">
+            <TestimonialItem></TestimonialItem>
+          </div>
+          <div className="px-3">
+            <TestimonialItem></TestimonialItem>
+          </div>
+          <div className="px-3">
+            <TestimonialItem></TestimonialItem>
+          </div>
+          <div className="px-3">
+            <TestimonialItem></TestimonialItem>
+          </div>
+        </Slider>
 
-          {/* <div className="grid grid-cols-3 gap-x-6">
+        {/* <div className="grid grid-cols-3 gap-x-6">
           <TestimonialItem></TestimonialItem>
           <TestimonialItem></TestimonialItem>
           <TestimonialItem></TestimonialItem>
         </div> */}
-        </div>
+      </div>
 
-        <div className="px-[238px] bg-white flex items-center justify-center gap-x-20 pt-[80px]">
-          <img src="/imgFoot/img1.png" alt="" />
-          <img src="/imgFoot/img2.png" alt="" />
-          <img src="/imgFoot/img3.png" alt="" />
-          <img src="/imgFoot/img4.png" alt="" />
-          <img src="/imgFoot/img5.png" alt="" />
-          <img src="/imgFoot/img7.png" alt="" />
-        </div>
+      <div className="px-[238px] bg-white flex items-center justify-center gap-x-20 pt-[80px]">
+        <img src="/imgFoot/img1.png" alt="" />
+        <img src="/imgFoot/img2.png" alt="" />
+        <img src="/imgFoot/img3.png" alt="" />
+        <img src="/imgFoot/img4.png" alt="" />
+        <img src="/imgFoot/img5.png" alt="" />
+        <img src="/imgFoot/img7.png" alt="" />
       </div>
     </div>
   );

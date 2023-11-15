@@ -26,7 +26,7 @@ const navLink = [
     id: 3,
     icon: <Setting></Setting>,
     name: "Settings",
-    to: "/setting",
+    to: "/settings",
   },
   {
     id: 4,

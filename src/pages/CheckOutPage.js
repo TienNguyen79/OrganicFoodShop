@@ -177,60 +177,65 @@ const CheckOutPage = () => {
             </div>
 
             <div className="mt-4 ">
-              <div className="flex items-baseline justify-between  ">
-                <FieldBill>
-                  <BillLabel
-                    className="text-gray9 font-normal"
-                    label="City / Province*"
-                  ></BillLabel>
-                  <DropdownInit>
-                    <SelectInit
-                      className="w-[190px]"
-                      placeholder={labelCity || "Select"}
-                    ></SelectInit>
-                    <ListInit>
-                      <div className="bg-white p-4 ">
-                        <input
-                          control={control}
-                          name="city"
-                          placeholder="Search..."
-                          className="py-3 px-4 w-full border  font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2  dark:text-white text-text1"
-                          onChange={(e) =>
-                            handleCityChangeDebounced(e.target.value)
-                          }
-                        ></input>
-                      </div>
-                      <div className="max-h-[230px] overflow-y-auto">
-                        {city.length > 0 &&
-                          city.map((item, index) => (
-                            <OptionsInit
-                              key={index}
-                              onClick={() => {
-                                setLabelCity(item.name);
-                                setCodeCity(item.code);
-                              }}
-                            >
-                              {item.name}
-                            </OptionsInit>
-                          ))}
-                      </div>
-                    </ListInit>
-                  </DropdownInit>
-                </FieldBill>
-                <FieldBill>
-                  <BillLabel
-                    className="text-gray9 font-normal "
-                    label="District*"
-                  ></BillLabel>
-                  <DropdownInit>
-                    <SelectInit
-                      placeholder={labelDistric || "Select"}
-                      className={`w-[190px] ${
-                        labelCity !== "" ? "" : "pointer-events-none opacity-50"
-                      }`}
-                    ></SelectInit>
-                    <ListInit>
-                      {/* <div className="bg-white p-4 ">
+              <div className="flex items-baseline gap-x-3  ">
+                <div className="flex-1">
+                  <FieldBill>
+                    <BillLabel
+                      className="text-gray9 font-normal"
+                      label="City / Province*"
+                    ></BillLabel>
+                    <DropdownInit>
+                      <SelectInit
+                        className="w-full"
+                        placeholder={labelCity || "Select"}
+                      ></SelectInit>
+                      <ListInit>
+                        <div className="bg-white p-4 ">
+                          <input
+                            control={control}
+                            name="city"
+                            placeholder="Search..."
+                            className="py-3 px-4 w-full border  font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2  dark:text-white text-text1"
+                            onChange={(e) =>
+                              handleCityChangeDebounced(e.target.value)
+                            }
+                          ></input>
+                        </div>
+                        <div className="max-h-[230px] overflow-y-auto">
+                          {city.length > 0 &&
+                            city.map((item, index) => (
+                              <OptionsInit
+                                key={index}
+                                onClick={() => {
+                                  setLabelCity(item.name);
+                                  setCodeCity(item.code);
+                                }}
+                              >
+                                {item.name}
+                              </OptionsInit>
+                            ))}
+                        </div>
+                      </ListInit>
+                    </DropdownInit>
+                  </FieldBill>
+                </div>
+                <div className="flex-1">
+                  <FieldBill>
+                    <BillLabel
+                      className="text-gray9 font-normal "
+                      label="District*"
+                    ></BillLabel>
+                    <DropdownInit>
+                      <SelectInit
+                        placeholder={labelDistric || "Select"}
+                        className={`w-full ${
+                          labelCity !== ""
+                            ? ""
+                            : "pointer-events-none opacity-50"
+                        }`}
+                      ></SelectInit>
+                      <ListInit>
+                        {/* <div className="bg-white p-4 ">
                         <input
                           control={control}
                           name="district"
@@ -241,40 +246,41 @@ const CheckOutPage = () => {
                           }
                         ></input>
                       </div> */}
-                      <div className="max-h-[230px] overflow-y-auto">
-                        {distric?.districts?.length > 0 &&
-                          distric.districts.map((item, index) => (
-                            <OptionsInit
-                              key={index}
-                              onClick={() => {
-                                setLabelDistric(item.name);
-                                setCodeDistrict(item.code);
-                              }}
-                            >
-                              {item.name}
-                            </OptionsInit>
-                          ))}
-                      </div>
-                    </ListInit>
-                  </DropdownInit>
-                </FieldBill>
-
-                <FieldBill>
-                  <BillLabel
-                    className="text-gray9 font-normal"
-                    label="Village*"
-                  ></BillLabel>
-                  <DropdownInit>
-                    <SelectInit
-                      placeholder={labelvillage || "Select"}
-                      className={`w-[190px] ${
-                        labelDistric !== ""
-                          ? ""
-                          : "pointer-events-none opacity-50"
-                      }`}
-                    ></SelectInit>
-                    <ListInit>
-                      {/* <div className="bg-white p-4 ">
+                        <div className="max-h-[230px] overflow-y-auto">
+                          {distric?.districts?.length > 0 &&
+                            distric.districts.map((item, index) => (
+                              <OptionsInit
+                                key={index}
+                                onClick={() => {
+                                  setLabelDistric(item.name);
+                                  setCodeDistrict(item.code);
+                                }}
+                              >
+                                {item.name}
+                              </OptionsInit>
+                            ))}
+                        </div>
+                      </ListInit>
+                    </DropdownInit>
+                  </FieldBill>
+                </div>
+                <div className="flex-1">
+                  <FieldBill>
+                    <BillLabel
+                      className="text-gray9 font-normal"
+                      label="Village*"
+                    ></BillLabel>
+                    <DropdownInit>
+                      <SelectInit
+                        placeholder={labelvillage || "Select"}
+                        className={`w-full ${
+                          labelDistric !== ""
+                            ? ""
+                            : "pointer-events-none opacity-50"
+                        }`}
+                      ></SelectInit>
+                      <ListInit>
+                        {/* <div className="bg-white p-4 ">
                         <input
                           control={control}
                           name="village"
@@ -285,20 +291,21 @@ const CheckOutPage = () => {
                           }
                         ></input>
                       </div> */}
-                      <div className="max-h-[230px] overflow-y-auto">
-                        {village?.wards?.length > 0 &&
-                          village?.wards.map((item, index) => (
-                            <OptionsInit
-                              key={index}
-                              onClick={() => setLabelvillage(item.name)}
-                            >
-                              {item.name}
-                            </OptionsInit>
-                          ))}
-                      </div>
-                    </ListInit>
-                  </DropdownInit>
-                </FieldBill>
+                        <div className="max-h-[230px] overflow-y-auto">
+                          {village?.wards?.length > 0 &&
+                            village?.wards.map((item, index) => (
+                              <OptionsInit
+                                key={index}
+                                onClick={() => setLabelvillage(item.name)}
+                              >
+                                {item.name}
+                              </OptionsInit>
+                            ))}
+                        </div>
+                      </ListInit>
+                    </DropdownInit>
+                  </FieldBill>
+                </div>
 
                 {/* <div className="flex-1 justify-center">
                   <FieldBill>
@@ -408,7 +415,7 @@ const CheckOutPage = () => {
                 </GroupJusBeween>
 
                 <GroupJusBeween className="border-b-[1px] py-2 ">
-                  <BillLabel label="Shipping::"></BillLabel>
+                  <BillLabel label="Shipping:"></BillLabel>
                   <BillLabel
                     label="Free"
                     className="font-medium text-gray9"
@@ -416,7 +423,7 @@ const CheckOutPage = () => {
                 </GroupJusBeween>
 
                 <GroupJusBeween className="border-b-[1px] py-2 ">
-                  <BillLabel label="Total::"></BillLabel>
+                  <BillLabel label="Total:"></BillLabel>
                   <ProPrice className="font-semibold" price={20}></ProPrice>
                 </GroupJusBeween>
               </div>

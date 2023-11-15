@@ -13,6 +13,7 @@ const Input = (props) => {
     children,
     className,
     kind = "search",
+    cssEye = "",
     ...rest
   } = props;
 
@@ -47,7 +48,9 @@ const Input = (props) => {
         />
 
         {children && kind === "eye" && (
-          <span className="absolute top-2/4 right-6 -translate-y-3/4  select-none cursor-pointer ">
+          <span
+            className={`absolute top-2/4 right-6 -translate-y-3/4   select-none cursor-pointer ${cssEye}`}
+          >
             {children}
           </span>
         )}
