@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserAvatar from "../modules/user/parts/UserAvatar";
 import UserName from "../modules/user/parts/UserName";
 import UserRole from "../modules/user/parts/UserRole";
 import LabelRedirect from "../components/label/LabelRedirect";
 import Table from "../components/table/Table";
 import Label from "../components/label/Label";
+import { useDispatch, useSelector } from "react-redux";
+import { orderGetDataAll } from "../store/order/order-slice";
+import { convertDate, convertStatus } from "../constants/global";
+import { authCheckToken } from "../store/auth/auth-slice";
 
 const UserDashBoardPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(orderGetDataAll());
+  }, []);
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, []);
+  const { user, accessToken } = useSelector((state) => state.auth);
+  const { dataOrderAll } = useSelector((state) => state.order);
+  console.log(
+    "🚀 ~ file: UserDashBoardPage.js:19 ~ UserDashBoardPage ~ dataOrderAll:",
+    dataOrderAll
+  );
+
   return (
     <div>
       <div className="flex items-center gap-x-6">
@@ -24,14 +43,14 @@ const UserDashBoardPage = () => {
           <h1 className="text-[#999] text-sm font-medium uppercase">
             Billing Address
           </h1>
-          <h1 className="text-gray9 font-medium text-[18px]">Dainne Russell</h1>
+          <h1 className="text-gray9 font-medium text-[18px]">{user?.name}</h1>
           <p className="text-gray6 text-sm font-normal">
-            4140 Parker Rd. Allentown, New Mexico 31134
+            {localStorage.getItem("shippingAddress")}
           </p>
-          <p className="text-gray9 text-[16px] font-normal">
-            dainne.ressell@gmail.com
+          <p className="text-gray9 text-[16px] font-normal">{user?.email}</p>
+          <p className="text-gray9 text-[16px] font-medium">
+            {user?.phone_number}
           </p>
-          <p className="text-gray9 text-[16px] font-medium">0918866336</p>
           <LabelRedirect
             icon=""
             className="mt-3 font-medium"
@@ -64,97 +83,30 @@ const UserDashBoardPage = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="text-gray8 text-sm">#738</td>
-                <td>8 Sep, 2020</td>
-                <td>
-                  <span className="text-gray8 text-sm font-semibold">
-                    $135.00
-                  </span>{" "}
-                  (5 Products)
-                </td>
-                <td>Processing</td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="View Details"
-                    url="/order_details/1"
-                  ></LabelRedirect>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-gray8 text-sm">#738</td>
-                <td>8 Sep, 2020</td>
-                <td>
-                  <span className="text-gray8 text-sm font-semibold">
-                    $135.00
-                  </span>{" "}
-                  (5 Products)
-                </td>
-                <td>Processing</td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="View Details"
-                  ></LabelRedirect>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-gray8 text-sm">#738</td>
-                <td>8 Sep, 2020</td>
-                <td>
-                  <span className="text-gray8 text-sm font-semibold">
-                    $135.00
-                  </span>{" "}
-                  (5 Products)
-                </td>
-                <td>Processing</td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="View Details"
-                  ></LabelRedirect>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-gray8 text-sm">#738</td>
-                <td>8 Sep, 2020</td>
-                <td>
-                  <span className="text-gray8 text-sm font-semibold">
-                    $135.00
-                  </span>{" "}
-                  (5 Products)
-                </td>
-                <td>Processing</td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="View Details"
-                  ></LabelRedirect>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-gray8 text-sm">#738</td>
-                <td>8 Sep, 2020</td>
-                <td>
-                  <span className="text-gray8 text-sm font-semibold">
-                    $135.00
-                  </span>{" "}
-                  (5 Products)
-                </td>
-                <td>Processing</td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="View Details"
-                  ></LabelRedirect>
-                </td>
-              </tr>
+              {dataOrderAll?.data?.length > 0 &&
+                dataOrderAll?.data?.slice(0, 5).map((item) => (
+                  <tr key={item.id}>
+                    <td className="text-gray8 text-sm">#{item?.id}</td>
+                    <td>{convertDate(item?.created_at)}</td>
+                    <td className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[185px]">
+                      <span className="text-gray8 text-[16px] font-semibold">
+                        ${item?.total_price}
+                      </span>{" "}
+                      <span className="text-gray8 text-sm font-medium ">
+                        ({item?.products_order?.length} Product)
+                      </span>
+                    </td>
+                    <td>{convertStatus(item?.approval_status)}</td>
+                    <td>
+                      <LabelRedirect
+                        icon=""
+                        className="text-sm  font-medium"
+                        title="View Details"
+                        url={`/order_details/${item?.id}`}
+                      ></LabelRedirect>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </Table>

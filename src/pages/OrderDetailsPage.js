@@ -10,8 +10,268 @@ import Table from "../components/table/Table";
 import ProImage from "../modules/product/partsCartAndTym/ProImage";
 import ProName from "../modules/product/partsCartAndTym/ProName";
 import ProQuantity from "../modules/product/partsCartAndTym/ProQuantity";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { orderDetails } from "../store/order/order-slice";
+import { authCheckToken } from "../store/auth/auth-slice";
+import { convertDate } from "../constants/global";
 
 const OrderDetailsPage = () => {
+  const dispatch = useDispatch();
+  const { slug } = useParams();
+
+  useEffect(() => {
+    dispatch(orderDetails(slug));
+  }, []);
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, []);
+
+  const { dataOrderDetails } = useSelector((state) => state.order);
+  console.log(
+    "🚀 ~ file: OrderDetailsPage.js:32 ~ OrderDetailsPage ~ dataOrderDetails:",
+    dataOrderDetails
+  );
+
+  const { user, accessToken } = useSelector((state) => state.auth);
+  console.log(
+    "🚀 ~ file: OrderDetailsPage.js:38 ~ OrderDetailsPage ~ user:",
+    user
+  );
+
+  const processOrder = (data) => {
+    switch (data) {
+      case "0":
+        return (
+          <div className="mt-10 flex items-center ml-10">
+            <div className="relative">
+              <ProgressStep className="bg-[#F2F2F2] !text-gray-500"></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[70px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[90px]">
+              <ProgressStep
+                NameStep="Processing"
+                text="02"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[56px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+
+            <div className="relative left-[200px]">
+              <ProgressStep
+                NameStep="On the way"
+                text="03"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[57px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[300px]">
+              <ProgressStep
+                NameStep="Delivered"
+                text="04"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+            </div>
+          </div>
+        );
+      case "1":
+        return (
+          <div className="mt-10 flex items-center ml-10">
+            <div className="relative">
+              <ProgressStep cssName="text-primary font-medium"></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[70px] "
+                width="w-[50%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[90px]">
+              <ProgressStep
+                NameStep="Processing"
+                text="02"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[56px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+
+            <div className="relative left-[200px]">
+              <ProgressStep
+                NameStep="On the way"
+                text="03"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[57px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[300px]">
+              <ProgressStep
+                NameStep="Delivered"
+                text="04"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+            </div>
+          </div>
+        );
+      case "2":
+        return (
+          <div className="mt-10 flex items-center ml-10">
+            <div className="relative">
+              <ProgressStep cssName="text-primary font-medium"></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[70px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[90px]">
+              <ProgressStep
+                NameStep="Processing"
+                text="02"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[56px] "
+                width="w-[50%]"
+              ></ProgressBar>
+            </div>
+
+            <div className="relative left-[200px]">
+              <ProgressStep
+                NameStep="On the way"
+                text="03"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[57px] "
+                width="w-[0%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[300px]">
+              <ProgressStep
+                NameStep="Delivered"
+                text="04"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+            </div>
+          </div>
+        );
+      case "3":
+        return (
+          <div className="mt-10 flex items-center ml-10">
+            <div className="relative">
+              <ProgressStep cssName="text-primary font-medium"></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[70px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[90px]">
+              <ProgressStep
+                NameStep="Processing"
+                text="02"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[56px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+
+            <div className="relative left-[200px]">
+              <ProgressStep
+                NameStep="On the way"
+                text="03"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[59px] "
+                width="w-[50%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[300px]">
+              <ProgressStep
+                NameStep="Delivered"
+                text="04"
+                className="bg-[#F2F2F2] !text-gray-500"
+              ></ProgressStep>
+            </div>
+          </div>
+        );
+      case "4":
+        return (
+          <div className="mt-10 flex items-center ml-10">
+            <div className="relative">
+              <ProgressStep cssName="text-primary font-medium"></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[70px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[90px]">
+              <ProgressStep
+                NameStep="Processing"
+                text="02"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[56px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+
+            <div className="relative left-[200px]">
+              <ProgressStep
+                NameStep="On the way"
+                text="03"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+
+              <ProgressBar
+                className="top-[16px] left-[59px] "
+                width="w-[100%]"
+              ></ProgressBar>
+            </div>
+            <div className="relative left-[300px]">
+              <ProgressStep
+                NameStep="Delivered"
+                text="🥳"
+                cssName="text-primary font-medium"
+              ></ProgressStep>
+            </div>
+          </div>
+        );
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between py-4 px-3 ">
@@ -23,10 +283,14 @@ const OrderDetailsPage = () => {
 
           <div className="h-[4px] w-[4px] rounded-full bg-gray7 "></div>
 
-          <span className="text-gray7 text-sm font-normal">April 24, 2021</span>
+          <span className="text-gray7 text-sm font-normal">
+            {convertDate(dataOrderDetails?.created_at)}
+          </span>
           <div className="h-[4px] w-[4px] rounded-full bg-gray7 "></div>
 
-          <span className="text-gray7 text-sm font-normal">3 Product</span>
+          <span className="text-gray7 text-sm font-normal">
+            {dataOrderDetails?.products_order?.length} Product
+          </span>
         </div>
 
         <LabelRedirect
@@ -48,7 +312,8 @@ const OrderDetailsPage = () => {
                 Dainne Russell
               </h1>
               <p className="text-gray6 text-sm font-normal mt-2">
-                4140 Parker Rd. Allentown, New Mexico 31134
+                Xóm BABA thôn BA bốn, Phường Đồng Xuân, Quận Hoàn Đao, Thành phố
+                Hà Nội
               </p>
 
               <div className="mt-9">
@@ -62,11 +327,11 @@ const OrderDetailsPage = () => {
               </div>
               <div className="mt-4">
                 <h1 className="text-[#999] text-[12px] font-medium uppercase">
-                  Email
+                  Phone
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  dainne.ressell@gmail.com
+                  0833755093
                 </span>
               </div>
             </div>
@@ -77,10 +342,10 @@ const OrderDetailsPage = () => {
             </h1>
             <div>
               <h1 className="text-gray9 font-medium text-[18px] mt-3">
-                Dainne Russell
+                {user?.name}
               </h1>
               <p className="text-gray6 text-sm font-normal mt-2">
-                4140 Parker Rd. Allentown, New Mexico 31134
+                {dataOrderDetails?.address_shipping}
               </p>
 
               <div className="mt-9">
@@ -89,19 +354,25 @@ const OrderDetailsPage = () => {
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  dainne.ressell@gmail.com
+                  {user?.email}
                 </span>
               </div>
               <div className="mt-4">
                 <h1 className="text-[#999] text-[12px] font-medium uppercase">
-                  Email
+                  Phone
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  dainne.ressell@gmail.com
+                  {user?.phone_number}
                 </span>
               </div>
             </div>
+            {dataOrderDetails?.note != null && (
+              <p className="text-gray6 font-medium text-sm mt-2">
+                <span className="text-primary">Note: </span>
+                {dataOrderDetails?.note}
+              </p>
+            )}
           </div>
         </div>
         <div className="col-span-1 pl-[20px]  pr-[10px]  border-2 rounded-lg">
@@ -111,26 +382,33 @@ const OrderDetailsPage = () => {
                 Order ID
               </h1>
 
-              <span className="text-gray9 text-sm font-normal">#4152</span>
+              <span className="text-gray9 text-sm font-normal">
+                ${dataOrderDetails?.id}
+              </span>
             </div>
             <div className=" flex flex-col">
               <h1 className="text-[#999] text-[12px] font-medium uppercase">
                 Pay Method
               </h1>
 
-              <span className="text-gray9 text-sm font-normal">Cash</span>
+              <span className="text-gray9 text-sm font-normal uppercase">
+                {dataOrderDetails?.payment_method}
+              </span>
             </div>
           </div>
 
           <div className="pt-3">
             <GroupJusBeween className="border-b-[1px] py-2 ">
               <BillLabel label="Subtotal:"></BillLabel>
-              <ProPrice className="font-medium" price={500.44}></ProPrice>
+              <ProPrice
+                className="font-medium"
+                price={dataOrderDetails?.total_price}
+              ></ProPrice>
             </GroupJusBeween>
             <GroupJusBeween className="border-b-[1px] py-2 ">
               <BillLabel label="Discount:"></BillLabel>
               <span className="inline-block px-[10px] py-1 rounded-2xl  font-medium">
-                50%
+                0%
               </span>
             </GroupJusBeween>
             <GroupJusBeween className="border-b-[1px] py-2 ">
@@ -144,14 +422,14 @@ const OrderDetailsPage = () => {
               <BillLabel label="Total:"></BillLabel>
               <ProPrice
                 className="font-semibold !text-darkPrimary"
-                price={500.55}
+                price={dataOrderDetails?.total_price}
               ></ProPrice>
             </GroupJusBeween>
           </div>
         </div>
       </div>
 
-      <div className="mt-10 flex items-center">
+      {/* <div className="mt-10 flex items-center">
         <div className="relative">
           <ProgressStep></ProgressStep>
 
@@ -168,7 +446,9 @@ const OrderDetailsPage = () => {
             width="w-[60%]"
           ></ProgressBar>
         </div>
-      </div>
+      </div> */}
+      {/* thanh tiến trình */}
+      {processOrder(dataOrderDetails?.approval_status)}
 
       <div className="mt-10">
         <Table>
@@ -179,120 +459,51 @@ const OrderDetailsPage = () => {
                 <th>price</th>
                 <th>quantity</th>
                 <th>Subtotal</th>
-                <th>Evaluate</th>
+                {dataOrderDetails?.approval_status === "4" && <th>Evaluate</th>}
 
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div className="inline-flex items-center gap-x-[6px]">
-                    <ProImage
-                      className="w-[70px] h-[70px]"
-                      //   linkUrl={item?.imageUrl}
-                    ></ProImage>
-                    <ProName
-                      //   name={item?.name}
-                      className="inline-block"
-                      maxW="300px"
-                    ></ProName>
-                  </div>
-                </td>
-                <td>
-                  {" "}
-                  <ProPrice price={400}></ProPrice>
-                </td>
-                <td className="text-center">
-                  <ProQuantity quantity={5}></ProQuantity>
-                </td>
-                <td>
-                  <ProPrice price={500.44}></ProPrice>
-                </td>
-                <td>
-                  <LabelRedirect
-                    icon=""
-                    className="text-sm  font-medium"
-                    title="Đánh giá"
-                  ></LabelRedirect>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="inline-flex items-center gap-x-[6px]">
-                    <ProImage
-                      className="w-[70px] h-[70px]"
-                      //   linkUrl={item?.imageUrl}
-                    ></ProImage>
-                    <ProName
-                      //   name={item?.name}
-                      className="inline-block"
-                      maxW="300px"
-                    ></ProName>
-                  </div>
-                </td>
-                <td>
-                  {" "}
-                  <ProPrice price={400}></ProPrice>
-                </td>
-                <td className="text-center">
-                  <ProQuantity quantity={5}></ProQuantity>
-                </td>
-                <td>
-                  <ProPrice price={500.44}></ProPrice>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div className="inline-flex items-center gap-x-[6px]">
-                    <ProImage
-                      className="w-[70px] h-[70px]"
-                      //   linkUrl={item?.imageUrl}
-                    ></ProImage>
-                    <ProName
-                      //   name={item?.name}
-                      className="inline-block"
-                      maxW="300px"
-                    ></ProName>
-                  </div>
-                </td>
-                <td>
-                  {" "}
-                  <ProPrice price={400}></ProPrice>
-                </td>
-                <td className="text-center">
-                  <ProQuantity quantity={5}></ProQuantity>
-                </td>
-                <td>
-                  <ProPrice price={500.44}></ProPrice>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="inline-flex items-center gap-x-[6px]">
-                    <ProImage
-                      className="w-[70px] h-[70px]"
-                      //   linkUrl={item?.imageUrl}
-                    ></ProImage>
-                    <ProName
-                      //   name={item?.name}
-                      className="inline-block"
-                      maxW="300px"
-                    ></ProName>
-                  </div>
-                </td>
-                <td>
-                  {" "}
-                  <ProPrice price={400}></ProPrice>
-                </td>
-                <td className="text-center">
-                  <ProQuantity quantity={5}></ProQuantity>
-                </td>
-                <td>
-                  <ProPrice price={500.44}></ProPrice>
-                </td>
-              </tr>
+              {dataOrderDetails?.products_order?.length > 0 &&
+                dataOrderDetails?.products_order?.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <div className="inline-flex items-center gap-x-[6px]">
+                        <ProImage
+                          className="w-[70px] h-[70px]"
+                          linkUrl={item?.image}
+                        ></ProImage>
+                        <ProName
+                          name={item?.name}
+                          className="inline-block"
+                          maxW="300px"
+                        ></ProName>
+                      </div>
+                    </td>
+                    <td>
+                      {" "}
+                      <ProPrice price={item?.price.toFixed(2)}></ProPrice>
+                    </td>
+                    <td className="text-center">
+                      <ProQuantity quantity={item?.quantity}></ProQuantity>
+                    </td>
+                    <td>
+                      <ProPrice
+                        price={(item?.price * item?.quantity).toFixed(2)}
+                      ></ProPrice>
+                    </td>
+                    {dataOrderDetails?.approval_status === "4" && (
+                      <td>
+                        <LabelRedirect
+                          icon=""
+                          className="text-sm  font-medium"
+                          title="Evaluate"
+                        ></LabelRedirect>
+                      </td>
+                    )}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </Table>

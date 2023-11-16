@@ -12,11 +12,13 @@ const PopupMe = () => {
   return (
     <div className="absolute top-full mt-2 right-0 w-[250px] bg-white pt-[18px] px-6 pb-[8px] shadow-2xl rounded-[10px] flex flex-col z-50  ">
       <div className="flex items-center border-b-[1px] py-[10px] mb-2">
-        <img
-          src={defaultImage}
-          className="w-full h-full max-w-[40px] max-h-[40px] rounded-full object-cover"
-          alt=""
-        />
+        <div className="w-[40px] h-[40px]  rounded-md  overflow-hidden">
+          <img
+            src={user?.avata}
+            className="w-full h-full  object-cover"
+            alt=""
+          />
+        </div>
         <div className="w-full ml-[10px]">
           <h2 className="font-semibold  text-gray8 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[170px]">
             {user?.name}

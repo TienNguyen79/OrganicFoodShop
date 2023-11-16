@@ -62,3 +62,57 @@ export const dataRating = [
     ],
   },
 ];
+//convertDate
+export const convertDate = (data) => {
+  const dateTimeString = data;
+  const date = new Date(dateTimeString);
+  const options = { year: "numeric" };
+  const options2 = { month: "long" };
+  const options3 = { day: "numeric" };
+  return (
+    date.toLocaleDateString("en-US", options3) +
+    " " +
+    date.toLocaleDateString("en-US", options2).slice(0, 3) +
+    ", " +
+    date.toLocaleDateString("en-US", options)
+  );
+};
+
+//convertStatus
+export const convertStatus = (data) => {
+  switch (data) {
+    case "0":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#fff4d9] text-[#ffb400]">
+          Wait for confirm
+        </span>
+      );
+    case "1":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#eee6ff] text-[#9055fd]">
+          Processing
+        </span>
+      );
+    case "2":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#dcf3ff] text-[#16b1ff]">
+          On the way
+        </span>
+      );
+    case "3":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#e6f7d9] text-[#56ca00]">
+          Delivered
+        </span>
+      );
+
+    case "4":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#ffe4e5] text-[#ff4c51]">
+          Canceled
+        </span>
+      );
+    default:
+      break;
+  }
+};

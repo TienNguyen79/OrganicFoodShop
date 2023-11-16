@@ -24,7 +24,7 @@ export const requestAuthLogin = (data) => {
 export const requestAuthFetchMe = (token) => {
   const decodedToken = atob(token); //giải mã base64
   if (!decodedToken) return;
-  return axios.get("/api/user", {
+  return axios.get("/api/getCurrentUser", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${decodedToken}`,

@@ -16,6 +16,8 @@ import { debounce } from "lodash";
 import useToggleValue from "../hooks/useToggleValue";
 import IconEyeToggle from "../components/Icons/IconEyeToggle";
 import ImageUpload from "../components/image/ImageUpload";
+import { useDispatch } from "react-redux";
+import { UserUpdate } from "../store/user/user-slice";
 
 const SettingsPage = () => {
   const {
@@ -101,12 +103,9 @@ const SettingsPage = () => {
     useToggleValue();
   const { value: showEye3, handleToggleValue: handleToggleEye3 } =
     useToggleValue();
-
+  const dispatch = useDispatch();
   const handleAccoutSetting = async (values) => {
-    console.log(
-      "🚀 ~ file: SettingsPage.js:90 ~ handleAccoutSetting ~ values:",
-      values
-    );
+    dispatch(UserUpdate(values));
   };
   const handleBillAddress = async (values) => {
     console.log(
@@ -127,20 +126,11 @@ const SettingsPage = () => {
           <div className="flex items-center gap-x-10">
             <div className="flex flex-col flex-1 gap-y-4">
               <BoxField>
-                <LabelField label="First Name"></LabelField>
+                <LabelField label="Name"></LabelField>
                 <Input
                   control={control1}
-                  name="firstName"
-                  placeholder="Enter your firstName..."
-                  className="placeholder:opacity-80 placeholder:text-[14px]"
-                ></Input>
-              </BoxField>
-              <BoxField>
-                <LabelField label="Last Name"></LabelField>
-                <Input
-                  control={control1}
-                  name="lastName"
-                  placeholder="Enter your LastName..."
+                  name="name"
+                  placeholder="Enter your Name..."
                   className="placeholder:opacity-80 placeholder:text-[14px]"
                 ></Input>
               </BoxField>
@@ -157,7 +147,7 @@ const SettingsPage = () => {
                 <LabelField label="Phone"></LabelField>
                 <Input
                   control={control1}
-                  name="phoneNumber"
+                  name="phone_number"
                   placeholder="Enter your PhoneNumber..."
                   className="placeholder:opacity-80 placeholder:text-[14px]"
                 ></Input>
@@ -174,8 +164,9 @@ const SettingsPage = () => {
             <div className="flex flex-1 justify-center">
               {/* <Input control={control} type="file" name="image"></Input> */}
               <ImageUpload
-                name="image"
-                onChange={(name, data) => setValue1("image", data.url)}
+                name="avata"
+                onChange={(name, data) => setValue1("avata", data.url)}
+                setValue1={setValue1}
               ></ImageUpload>
             </div>
           </div>

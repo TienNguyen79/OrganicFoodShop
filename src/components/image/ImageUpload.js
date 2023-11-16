@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { imgbbAPI } from "../../config/config";
 
-const ImageUpload = ({ onChange = () => {}, name = "" }) => {
+const ImageUpload = ({ onChange = () => {}, name = "", setValue1 }) => {
   const [showImage, setShowImage] = useState("");
   const handleUploadImage = async (e) => {
     const file = e.target.files;
@@ -47,6 +47,7 @@ const ImageUpload = ({ onChange = () => {}, name = "" }) => {
 
   const handleDeleteImage = async () => {
     setShowImage("");
+    setValue1("avata", "");
   };
   return (
     <div className="flex">

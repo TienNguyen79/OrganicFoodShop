@@ -23,6 +23,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { orderPost } from "../store/order/order-slice";
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Your Name is required"),
@@ -58,6 +60,7 @@ const CheckOutPage = () => {
     "🚀 ~ file: CheckOutPage.js:57 ~ CheckOutPage ~ dataOrder:",
     dataOrder
   );
+  const dispatch = useDispatch();
   const handleBill = (values) => {
     try {
       if (labelCity === "" || labelDistric === "" || labelvillage === "") {
@@ -67,6 +70,7 @@ const CheckOutPage = () => {
           products_order: dataOrder.products_order.map((item) => ({
             id: item.id,
             name: item.name,
+            image: item.imageUrl,
             quantity: item?.pivot?.quantity || dataOrder.quantity, //dataOrder.quantity đối với mua chỉ 1 đơn hàng à giá dưới sau có discount cũng thế,
             price:
               item?.current_price ||
@@ -84,6 +88,9 @@ const CheckOutPage = () => {
           payment_method: "cash",
           note: values.additionalInfo,
         };
+        dispatch(orderPost(ordered));
+
+        localStorage.setItem("shippingAddress", ordered.address_shipping);
         console.log(
           "🚀 ~ file: CheckOutPage.js:73 ~ handleBill ~ ordered:",
           ordered
@@ -161,6 +168,7 @@ const CheckOutPage = () => {
     setQueryVillage(value);
   }, 300); // 300 milliseconds là khoảng thời gian debounce
 
+  //để truyền những product định đặt hiện lên order summary in checkout
   useEffect(() => {
     var storedArrayJSON = localStorage.getItem("orderData");
     var storedArray = JSON.parse(storedArrayJSON);
