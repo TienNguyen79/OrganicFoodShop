@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { cartGetAll } from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
+import { Fragment } from "react";
 
 const CartPopup = ({
   openCart = "invisible",
@@ -54,57 +55,77 @@ const CartPopup = ({
             <IconClose color="black"></IconClose>
           </span>
         </div>
-        <div className="flex-1 overflow-y-auto scroll-hidden ">
-          {dataCartAll.length > 0 &&
-            dataCartAll.map((item) => (
-              <CartPopupItem
-                key={item.id}
-                data={item}
-                onClose={onClose}
-              ></CartPopupItem>
-            ))}
-        </div>
+        {dataCartAll.length > 0 ? (
+          <Fragment>
+            <div className="flex-1 overflow-y-auto scroll-hidden ">
+              {dataCartAll.length > 0 &&
+                dataCartAll.map((item) => (
+                  <CartPopupItem
+                    key={item.id}
+                    data={item}
+                    onClose={onClose}
+                  ></CartPopupItem>
+                ))}
+            </div>
 
-        <div>
-          <div className="flex items-center justify-between py-6">
-            <span className="text-gray9 text-[16px] font-normal">
-              {dataCartAll?.length} Product
-            </span>
-            <span className="text-gray9 text-[16px] font-semibold">
-              {totalPrice.toFixed(2)} $
-            </span>
-          </div>
-          <div className="flex flex-col gap-y-3">
-            <div
-              onClick={() => {
-                let data = {
-                  products_order: [...dataCartAll],
-                  total_price: totalPrice,
-                };
-                var arrayJSON = JSON.stringify(data);
-                localStorage.setItem("orderData", arrayJSON);
-                onClose(); //sau khi chuyển hướng sẽ đóng popup
-              }}
-            >
-              <Button
-                kind="primary"
-                href="/checkout"
-                className="hover:opacity-80 hover:scale-110 transition-all"
-              >
-                CheckOut
-              </Button>
+            <div>
+              <div className="flex items-center justify-between py-6">
+                <span className="text-gray9 text-[16px] font-normal">
+                  {dataCartAll?.length} Product
+                </span>
+                <span className="text-gray9 text-[16px] font-semibold">
+                  {totalPrice.toFixed(2)} $
+                </span>
+              </div>
+              <div className="flex flex-col gap-y-3">
+                <div
+                  onClick={() => {
+                    let data = {
+                      products_order: [...dataCartAll],
+                      total_price: totalPrice,
+                    };
+                    var arrayJSON = JSON.stringify(data);
+                    localStorage.setItem("orderData", arrayJSON);
+                    onClose(); //sau khi chuyển hướng sẽ đóng popup
+                  }}
+                >
+                  <Button
+                    kind="primary"
+                    href="/checkout"
+                    className="hover:opacity-80 hover:scale-110 transition-all"
+                  >
+                    CheckOut
+                  </Button>
+                </div>
+                <div onClick={onClose}>
+                  <Button
+                    kind="secondary"
+                    href="/shoppingCart"
+                    className="hover:opacity-80 hover:scale-110  transition-all"
+                  >
+                    Go to Cart
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div onClick={onClose}>
-              <Button
-                kind="secondary"
-                href="/shoppingCart"
-                className="hover:opacity-80 hover:scale-110  transition-all"
-              >
-                Go to Cart
-              </Button>
+          </Fragment>
+        ) : (
+          <div>
+            <div className="p-10   mx-auto ">
+              <img
+                src="https://web.nvnstatic.net/tp/T0199/img/empty_cart.png?v=3"
+                alt=""
+                className=" object-contain"
+              />
             </div>
+            <h1 className="text-gray-700 py-5 text-[25px] text-center font-medium">
+              N0 ITEMS IN CART
+            </h1>
+            <Button href="/shop" kind="cart" className="w-[200px] mx-auto">
+              Return to shop
+            </Button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

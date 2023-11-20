@@ -65,7 +65,15 @@ const OrderHistoryPage = () => {
                 <tr key={item.id}>
                   <td className="text-gray8 text-sm">#{item?.id}</td>
                   <td>{convertDate(item?.created_at)}</td>
-                  <td className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[185px]">
+                  <td
+                    className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[170px]"
+                    title={
+                      item?.total_price +
+                      " (" +
+                      item?.products_order?.length +
+                      ") Product"
+                    }
+                  >
                     <span className="text-gray8 text-[16px] font-semibold">
                       ${item?.total_price}
                     </span>{" "}

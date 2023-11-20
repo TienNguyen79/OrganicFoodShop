@@ -35,96 +35,120 @@ const WishListPage = () => {
       <div className="text-center mb-8">
         <Label className="text-[35px]">My Wishlist</Label>
       </div>
-
-      <div>
-        <Table>
-          <table>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>price</th>
-                <th>Stock Status</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody style={{ maxHeight: "200px", overflowY: "auto" }}>
-              {dataWishListAll.length > 0 &&
-                dataWishListAll.map((item) => (
-                  <tr key={item?.id}>
-                    <td>
-                      <Link
-                        className="inline-flex items-center gap-x-[6px] "
-                        to={`/productDetails/${item?.id}`}
-                      >
-                        <ProImage
-                          className="w-[100px] h-[100px]"
-                          linkUrl={item?.imageUrl}
-                        ></ProImage>
-
-                        <ProName
-                          name={item?.name}
-                          className="inline-block  hover:text-primary"
-                          maxW="max-w-[160px]"
-                        ></ProName>
-                      </Link>
-                    </td>
-                    <td>
-                      <ProPrice
-                        priceOld={item?.price.toFixed(2)}
-                        currentPrice={item?.current_price.toFixed(2)}
-                      ></ProPrice>
-                    </td>
-                    <td>
-                      <ProLabel
-                        className="inline-block"
-                        kind={item?.quantity > 0 ? "Instock" : "Out of Stock"}
-                        label={item?.quantity > 0 ? "Instock" : "Out of Stock"}
-                      ></ProLabel>
-                    </td>
-                    <td>
-                      <Button
-                        onClick={() => {
-                          dispatch(
-                            cartAddNew({
-                              product_id: item?.pivot?.product_id,
-                              quantity: 1,
-                              token: getToken(),
-                            })
-                          );
-                        }}
-                        kind="primary"
-                        className="transition-all  hover:opacity-80 hover:scale-110"
-                      >
-                        Add to Cart
-                      </Button>
-                    </td>
-                    <td>
-                      <IconClose2
-                        onClick={() => {
-                          dispatch(wishListDelete(item?.pivot?.product_id));
-                        }}
-                      ></IconClose2>
-                    </td>
+      {dataWishListAll.length > 0 ? (
+        <div>
+          <Table>
+            <div className="w-full">
+              <table className="table-fixed w-full">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>price</th>
+                    <th>Stock Status</th>
+                    <th>Actions</th>
+                    {/* <th></th> */}
                   </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+              </table>
+            </div>
+            <div className="h-[400px] overflow-x-auto">
+              <table className="table-auto w-full">
+                <tbody className="">
+                  {dataWishListAll.map((item) => (
+                    <tr key={item?.id}>
+                      <td>
+                        <Link
+                          className="inline-flex items-center gap-x-[6px] "
+                          to={`/productDetails/${item?.id}`}
+                        >
+                          <ProImage
+                            className="w-[100px] h-[100px]"
+                            linkUrl={item?.imageUrl}
+                          ></ProImage>
 
-          <div className="footTable">
-            {" "}
-            <div className="flex gap-x-2 items-center">
-              <span className="text-gray9 text-sm font-normal">Payment: </span>
+                          <ProName
+                            name={item?.name}
+                            className="inline-block  hover:text-primary"
+                            maxW="max-w-[160px]"
+                          ></ProName>
+                        </Link>
+                      </td>
+                      <td>
+                        <ProPrice
+                          priceOld={item?.price.toFixed(2)}
+                          currentPrice={item?.current_price.toFixed(2)}
+                        ></ProPrice>
+                      </td>
+                      <td>
+                        <ProLabel
+                          className="inline-block"
+                          kind={item?.quantity > 0 ? "Instock" : "Out of Stock"}
+                          label={
+                            item?.quantity > 0 ? "Instock" : "Out of Stock"
+                          }
+                        ></ProLabel>
+                      </td>
+                      <td>
+                        <Button
+                          onClick={() => {
+                            dispatch(
+                              cartAddNew({
+                                product_id: item?.pivot?.product_id,
+                                quantity: 1,
+                                token: getToken(),
+                              })
+                            );
+                          }}
+                          kind="primary"
+                          className="transition-all  hover:opacity-80 hover:scale-110"
+                        >
+                          Add to Cart
+                        </Button>
+                      </td>
+                      <td>
+                        <IconClose2
+                          onClick={() => {
+                            dispatch(wishListDelete(item?.pivot?.product_id));
+                          }}
+                        ></IconClose2>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="footTable">
+              {" "}
               <div className="flex gap-x-2 items-center">
-                <img src="/ApplePay.png" alt="" />
-                <img src="/Visa.png" alt="" />
-                <img src="/Discover.png" alt="" />
-                <img src="/Mastercard.png" alt="" />
+                <span className="text-gray9 text-sm font-normal">
+                  Payment:{" "}
+                </span>
+                <div className="flex gap-x-2 items-center">
+                  <img src="/ApplePay.png" alt="" />
+                  <img src="/Visa.png" alt="" />
+                  <img src="/Discover.png" alt="" />
+                  <img src="/Mastercard.png" alt="" />
+                </div>
               </div>
             </div>
+          </Table>
+        </div>
+      ) : (
+        <div>
+          <div className="p-10 w-[500px]  mx-auto ">
+            <img
+              src="https://www.shopperswarehouse.com/assets/e_website/assets/site_image/empty_wishlist.png"
+              alt=""
+              className=" object-contain"
+            />
           </div>
-        </Table>
-      </div>
+
+          <Button href="/shop" kind="cart" className="w-[200px] mx-auto">
+            Return to shop
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

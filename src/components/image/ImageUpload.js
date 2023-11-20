@@ -2,8 +2,14 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { imgbbAPI } from "../../config/config";
+import { useEffect } from "react";
 
-const ImageUpload = ({ onChange = () => {}, name = "", setValue1 }) => {
+const ImageUpload = ({
+  onChange = () => {},
+  name = "",
+  setValue1,
+  getValues1,
+}) => {
   const [showImage, setShowImage] = useState("");
   const handleUploadImage = async (e) => {
     const file = e.target.files;
@@ -38,12 +44,15 @@ const ImageUpload = ({ onChange = () => {}, name = "", setValue1 }) => {
     onChange(name, imageObj);
 
     setShowImage(imageObj.url);
-
     // console.log(imageObj.url);
 
     // console.log(e.target.files[0]);
     // Lưu deleteHash của hình ảnh để sử dụng khi xoá
   };
+
+  useEffect(() => {
+    setShowImage(getValues1); //khi mới đầu vào cho nó load ảnh lên
+  }, [getValues1]);
 
   const handleDeleteImage = async () => {
     setShowImage("");

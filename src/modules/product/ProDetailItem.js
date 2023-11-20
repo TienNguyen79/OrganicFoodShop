@@ -99,8 +99,8 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
     );
     console.log({ product_id: data?.id, quantity: values.quantity });
 
-    //khi submit xong set số lượng về 0
-    setValue("quantity", 0);
+    //khi submit xong set số lượng về 1
+    setValue("quantity", 1);
   };
 
   useEffect(() => {

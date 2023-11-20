@@ -36,7 +36,7 @@
     "slick-carousel": "^1.8.1",
     "slugify": "^1.6.5",
     "styled-components": "^6.1.0",
-    "sweetalert2": "^11.4.17",
+    "sweetalert2": "^11.10.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

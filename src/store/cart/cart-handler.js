@@ -82,7 +82,9 @@ function* handleCartDelete(action) {
     if (response.status === 200) {
       //khi thành công update luôn giỏ hàng
       const cartResponse = yield call(requestCartAll, getToken());
-      yield put(updateDataCart({ resultCartAll: cartResponse.data.cart }));
+      yield put(
+        updateDataCart({ resultCartAll: cartResponse.data.cart || [] })
+      );
       toast.success("Delete Product successfully!");
       // yield put(setLoading(false));
     }
@@ -193,13 +195,17 @@ function* handlewishListDelete(action) {
   try {
     // yield put(setLoading(true));
     const response = yield call(requestwishListDelete, payload);
+    console.log(
+      "🚀 ~ file: cart-handler.js:196 ~ function*handlewishListDelete ~ response:",
+      response
+    );
     if (response.status === 200) {
       //khi thành công update luôn wishList
       const wishListResponse = yield call(requestWishListAll);
       console.log("CÓ VÀO");
       yield put(
         updateDataWishList({
-          resultWishListAll: wishListResponse.data.wishList,
+          resultWishListAll: wishListResponse.data.wishList || [],
         })
       );
       // yield put(setLoading(false));

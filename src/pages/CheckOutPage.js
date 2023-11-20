@@ -23,8 +23,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { orderPost } from "../store/order/order-slice";
+import { useNavigate } from "react-router-dom";
+import { authCheckToken } from "../store/auth/auth-slice";
+
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Your Name is required"),
@@ -32,7 +35,7 @@ const schema = yup.object({
     .string()
     .required("detailsAddress is required")
     .min(5, "Please enter at least 5 characters"),
-  phonenumber: yup
+  phone_number: yup
     .string()
     .required("Phone Number is required")
     .matches(/^\d+$/, "This field only enters numbers")
@@ -50,18 +53,18 @@ const CheckOutPage = () => {
     control,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
-
+  const navigate = useNavigate();
   const [dataOrder, setDataOrder] = useState([]);
-  console.log(
-    "🚀 ~ file: CheckOutPage.js:57 ~ CheckOutPage ~ dataOrder:",
-    dataOrder
-  );
+  const { loadingOrder } = useSelector((state) => state.order);
+
   const dispatch = useDispatch();
-  const handleBill = (values) => {
+  const handleBill = async (values) => {
+    console.log("🚀 ~ file: CheckOutPage.js:74 ~ handleBill ~ values:", values);
     try {
       if (labelCity === "" || labelDistric === "" || labelvillage === "") {
         toast.error("Address must be complete");
@@ -86,15 +89,21 @@ const CheckOutPage = () => {
             ", " +
             labelCity,
           payment_method: "cash",
+          name: values?.name,
+          email: values?.email,
+          phone_number: values?.phone_number,
           note: values.additionalInfo,
         };
         dispatch(orderPost(ordered));
-
-        localStorage.setItem("shippingAddress", ordered.address_shipping);
-        console.log(
-          "🚀 ~ file: CheckOutPage.js:73 ~ handleBill ~ ordered:",
-          ordered
-        );
+        // localStorage.setItem("shippingAddress", ordered.address_shipping);
+        let DataInfoShip = JSON.stringify({
+          shippingAddress: ordered.address_shipping,
+          name: values.name,
+          email: values.email,
+          phone_number: values.phone_number,
+          companyName: values.companyName,
+        });
+        localStorage.setItem("DataInfoShip", DataInfoShip);
       }
     } catch (error) {
       console.log("🚀 ~ file: CheckOutPage.js:53 ~ handleBill ~ error:", error);
@@ -174,6 +183,26 @@ const CheckOutPage = () => {
     var storedArray = JSON.parse(storedArrayJSON);
     setDataOrder(storedArray);
   }, []);
+
+  const { user, accessToken } = useSelector((state) => state.auth);
+  console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
+
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, []);
+
+  //khi ấn vào checkout nó sẽ hiện các thông tin này lên luôn mà không phải nhập
+  useEffect(() => {
+    var storedArrayJSON = localStorage.getItem("DataInfoShip");
+    var storedArray = JSON.parse(storedArrayJSON);
+    setValue("name", storedArray?.name);
+    setValue("email", storedArray?.email);
+    setValue("phone_number", storedArray?.phone_number);
+    setValue("detailsAddress", storedArray?.shippingAddress?.split(",")[0]);
+    setLabelCity(storedArray?.shippingAddress?.split(",")[3]);
+    setLabelDistric(storedArray?.shippingAddress?.split(",")[2]);
+    setLabelvillage(storedArray?.shippingAddress?.split(",")[1]);
+  }, [setValue]);
   return (
     <div className="mt-10 mb-[80px]">
       <div className="mb-8">
@@ -241,7 +270,6 @@ const CheckOutPage = () => {
                         <div className="bg-white p-4 ">
                           <input
                             control={control}
-                            name="city"
                             placeholder="Search..."
                             className="py-3 px-4 w-full border  font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2  dark:text-white text-text1"
                             onChange={(e) =>
@@ -410,9 +438,9 @@ const CheckOutPage = () => {
                     ></BillLabel>
                     <Input
                       control={control}
-                      name="phonenumber"
+                      name="phone_number"
                       placeholder="Your Phone Number"
-                      error={errors?.phonenumber?.message}
+                      error={errors?.phone_number?.message}
                     ></Input>
                   </FieldBill>
                 </div>
@@ -525,6 +553,7 @@ const CheckOutPage = () => {
                 type="submit"
                 kind="primary"
                 className="mt-6 w-full hover:opacity-80 hover:scale-110 transition-all"
+                isLoading={loadingOrder}
               >
                 Place Order
               </Button>

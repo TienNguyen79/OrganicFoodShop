@@ -4,7 +4,7 @@ import styled from "styled-components";
 const TableStyle = styled.div`
   background-color: #fff;
   padding: 0 10px;
-  overflow-x: auto;
+  /* overflow-y: auto; */
   border-radius: 10px;
   table {
     width: 100%;
@@ -14,7 +14,6 @@ const TableStyle = styled.div`
     color: red;
     padding: 16px 20px;
     border-bottom: 1px solid #e6e6e6;
-    text-align: left;
     color: #808080;
     font-size: 14px;
     font-weight: 500;
@@ -23,6 +22,7 @@ const TableStyle = styled.div`
   tbody tr td {
     padding: 12px 20px;
     border-bottom: 1px solid #e6e6e6;
+    text-align: left;
   }
   .footTable {
     display: flex;

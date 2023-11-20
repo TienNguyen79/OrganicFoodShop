@@ -16,27 +16,97 @@ import { debounce } from "lodash";
 import useToggleValue from "../hooks/useToggleValue";
 import IconEyeToggle from "../components/Icons/IconEyeToggle";
 import ImageUpload from "../components/image/ImageUpload";
-import { useDispatch } from "react-redux";
-import { UserUpdate } from "../store/user/user-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { UserChangePassword, UserUpdate } from "../store/user/user-slice";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { authCheckToken } from "../store/auth/auth-slice";
 
+const schema3 = yup.object({
+  current_password: yup
+    .string()
+    .required("Current Password is required")
+    .min(8, "Current Password must be at least  8 character "),
+  new_password: yup
+    .string()
+    .required("New Password is required")
+    .min(8, "New password must be at least 8 characters "),
+  confirm_password: yup
+    .string()
+    .required("Confirm Password is required")
+    .min(8, "Confirm Password must be at least 8 characters "),
+});
+
+const schema1 = yup.object({
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(5, "Please enter at least 5 characters"),
+  phone_number: yup
+    .string()
+    .required("Phone Number is required")
+    .matches(/^\d+$/, "This field only enters numbers")
+    .matches(/^[0-9]{10}$/, "The phone number must be exactly 10 digits"),
+  email: yup
+    .string()
+    .required("E-mail is required")
+    .email("Field should contain a valid e-mail"),
+});
+
+const schema2 = yup.object({
+  // firstName: yup.string().required("FirstName is required"),
+  billName: yup.string().required("Your Name is required"),
+  billStreetAddress: yup
+    .string()
+    .required("Street Address is required")
+    .min(5, "Please enter at least 5 characters"),
+  billPhoneNumber: yup
+    .string()
+    .required("Phone Number is required")
+    .matches(/^\d+$/, "This field only enters numbers")
+    .matches(/^[0-9]{10}$/, "The phone number must be exactly 10 digits"),
+  billEmail: yup
+    .string()
+    .required("E-mail is required")
+    .email("Field should contain a valid e-mail"),
+
+  // term: yup.boolean().required("Please accpect the terms and condition"),
+});
 const SettingsPage = () => {
   const {
     control: control1,
     setValue: setValue1,
+    getValues: getValues1,
     handleSubmit: handleSubmit1,
-  } = useForm();
+    formState: { errors: errors1 },
+  } = useForm({
+    resolver: yupResolver(schema1),
+    mode: "onChange",
+  });
 
   const {
     control: control2,
     setValue: setValue2,
+    getValues: getValues2,
     handleSubmit: handleSubmit2,
-  } = useForm();
+    formState: { errors: errors2 },
+  } = useForm({
+    resolver: yupResolver(schema2),
+    mode: "onChange",
+  });
 
   const {
     control: control3,
     setValue: setValue3,
     handleSubmit: handleSubmit3,
-  } = useForm();
+    formState: { errors: errors3 },
+    reset: reset3,
+  } = useForm({
+    resolver: yupResolver(schema3),
+    mode: "onChange",
+  });
   //city
   const [city, setCity] = useState([]);
   const [queryCity, setQueryCity] = useState("Hà Nội");
@@ -107,18 +177,65 @@ const SettingsPage = () => {
   const handleAccoutSetting = async (values) => {
     dispatch(UserUpdate(values));
   };
+  const navigate = useNavigate();
   const handleBillAddress = async (values) => {
-    console.log(
-      "🚀 ~ file: SettingsPage.js:111 ~ handleBillAddress ~ values:",
-      values
-    );
+    if (labelCity === "" || labelDistric === "" || labelvillage === "") {
+      toast.error("Address must be complete");
+    } else {
+      let DataInfoShip = JSON.stringify({
+        shippingAddress:
+          values.billStreetAddress +
+          ", " +
+          labelvillage +
+          ", " +
+          labelDistric +
+          ", " +
+          labelCity,
+        name: values.billName,
+        email: values.billEmail,
+        phone_number: values.billPhoneNumber,
+        companyName: values.billCompanyName,
+      });
+      localStorage.setItem("DataInfoShip", DataInfoShip);
+      toast.success("update Address successfully!");
+    }
   };
   const handleChangePassword = async (values) => {
-    console.log(
-      "🚀 ~ file: SettingsPage.js:117 ~ handleChangePassword ~ values:",
-      values
-    );
+    if (values.confirm_password !== values.new_password) {
+      toast.error("Confirm Password must match New Password");
+      return;
+    }
+    dispatch(UserChangePassword(values));
+    reset3({});
+    // navigate("/");
   };
+
+  const { user, accessToken } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, []);
+
+  //khi vào settting các thông tin mặc định sẽ hiện lên
+  useEffect(() => {
+    setValue1("name", user?.name);
+    setValue1("email", user?.email);
+    setValue1("phone_number", user?.phone_number);
+    setValue1("avata", user?.avata);
+  }, [setValue1, user?.avata, user?.email, user?.name, user?.phone_number]);
+
+  useEffect(() => {
+    var storedArrayJSON = localStorage.getItem("DataInfoShip");
+    var storedArray = JSON.parse(storedArrayJSON);
+    setValue2("billName", storedArray?.name);
+    setValue2("billCompanyName", storedArray?.companyName);
+    setValue2("billStreetAddress", storedArray?.shippingAddress?.split(",")[0]);
+    setLabelCity(storedArray?.shippingAddress?.split(",")[3]);
+    setLabelDistric(storedArray?.shippingAddress?.split(",")[2]);
+    setLabelvillage(storedArray?.shippingAddress?.split(",")[1]);
+    setValue2("billEmail", storedArray?.email);
+    setValue2("billPhoneNumber", storedArray?.phone_number);
+  }, []);
   return (
     <div>
       <BoxSettings label="Account Settings">
@@ -132,6 +249,7 @@ const SettingsPage = () => {
                   name="name"
                   placeholder="Enter your Name..."
                   className="placeholder:opacity-80 placeholder:text-[14px]"
+                  error={errors1?.name?.message}
                 ></Input>
               </BoxField>
               <BoxField>
@@ -141,6 +259,7 @@ const SettingsPage = () => {
                   name="email"
                   placeholder="Enter your Email..."
                   className="placeholder:opacity-80 placeholder:text-[14px]"
+                  error={errors1?.email?.message}
                 ></Input>
               </BoxField>
               <BoxField>
@@ -150,6 +269,7 @@ const SettingsPage = () => {
                   name="phone_number"
                   placeholder="Enter your PhoneNumber..."
                   className="placeholder:opacity-80 placeholder:text-[14px]"
+                  error={errors1?.phone_number?.message}
                 ></Input>
               </BoxField>
 
@@ -167,42 +287,39 @@ const SettingsPage = () => {
                 name="avata"
                 onChange={(name, data) => setValue1("avata", data.url)}
                 setValue1={setValue1}
+                getValues1={getValues1("avata")}
               ></ImageUpload>
             </div>
           </div>
         </form>
       </BoxSettings>
-      <BoxSettings label="Billing Address" className="mt-[26px]">
+      <BoxSettings label="Shipping Address" className="mt-[26px]">
         <form action="" onSubmit={handleSubmit2(handleBillAddress)}>
           <div className="flex flex-col gap-y-4">
             <div className="flex items-center gap-x-2">
-              <BoxField>
-                <LabelField label="First Name"></LabelField>
-                <Input
-                  control={control2}
-                  name="billFirstName"
-                  placeholder="Enter your firstName..."
-                  className="placeholder:opacity-80 placeholder:text-[14px]"
-                ></Input>
-              </BoxField>
-              <BoxField>
-                <LabelField label="Last Name"></LabelField>
-                <Input
-                  control={control2}
-                  name="billLastName"
-                  placeholder="Enter your LastName..."
-                  className="placeholder:opacity-80 placeholder:text-[14px]"
-                ></Input>
-              </BoxField>
-              <BoxField>
-                <LabelField label="Company Name (optional)"></LabelField>
-                <Input
-                  control={control2}
-                  name="billCompanyName"
-                  placeholder="Enter your CompanyName..."
-                  className="placeholder:opacity-80 placeholder:text-[14px]"
-                ></Input>
-              </BoxField>
+              <div className="flex-1">
+                <BoxField>
+                  <LabelField label=" Name"></LabelField>
+                  <Input
+                    control={control2}
+                    name="billName"
+                    placeholder="Enter your Name..."
+                    className="placeholder:opacity-80 placeholder:text-[14px]"
+                    error={errors2?.billName?.message}
+                  ></Input>
+                </BoxField>
+              </div>
+              <div className="flex-1">
+                <BoxField>
+                  <LabelField label="Company Name (optional)"></LabelField>
+                  <Input
+                    control={control2}
+                    name="billCompanyName"
+                    placeholder="Enter your CompanyName..."
+                    className="placeholder:opacity-80 placeholder:text-[14px]"
+                  ></Input>
+                </BoxField>
+              </div>
             </div>
             <BoxField>
               <LabelField label="Street Address"></LabelField>
@@ -211,6 +328,7 @@ const SettingsPage = () => {
                 name="billStreetAddress"
                 placeholder="Enter your Street Address..."
                 className="placeholder:opacity-80 placeholder:text-[14px]"
+                error={errors2?.billStreetAddress?.message}
               ></Input>
             </BoxField>
 
@@ -334,6 +452,7 @@ const SettingsPage = () => {
                     name="billEmail"
                     placeholder="Enter your Email..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
+                    error={errors2?.billEmail?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -345,6 +464,7 @@ const SettingsPage = () => {
                     name="billPhoneNumber"
                     placeholder="Enter your PhoneNumber..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
+                    error={errors2?.billPhoneNumber?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -364,11 +484,12 @@ const SettingsPage = () => {
               <Input
                 control={control3}
                 kind="eye"
-                name="currentPassword"
+                name="current_password"
                 type={`${showEye ? "text" : "password"}`}
                 placeholder="Enter your Current Password..."
                 className="placeholder:opacity-80 placeholder:text-[14px]"
                 cssEye="mt-[5px]"
+                error={errors3?.current_password?.message}
               >
                 <IconEyeToggle
                   open={showEye}
@@ -384,11 +505,12 @@ const SettingsPage = () => {
                   <Input
                     control={control3}
                     kind="eye"
-                    name="newPassword"
+                    name="new_password"
                     type={`${showEye2 ? "text" : "password"}`}
                     placeholder="Enter your New Password..."
                     className="placeholder:opacity-80 placeholder:text-[14px] "
                     cssEye="mt-[5px]"
+                    error={errors3?.new_password?.message}
                   >
                     <IconEyeToggle
                       open={showEye2}
@@ -403,11 +525,12 @@ const SettingsPage = () => {
                   <Input
                     control={control3}
                     kind="eye"
-                    name="confirmPassword"
+                    name="confirm_password"
                     type={`${showEye3 ? "text" : "password"}`}
                     placeholder="Enter your Confirm Password..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
                     cssEye="mt-[5px]"
+                    error={errors3?.confirm_password?.message}
                   >
                     <IconEyeToggle
                       open={showEye3}

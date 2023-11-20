@@ -61,150 +61,174 @@ const ShoppingCartPage = () => {
       <div className="text-center mb-8">
         <Label className="text-[35px]">My Shopping Cart</Label>
       </div>
-
-      <form onSubmit={handleSubmit(handleCart)}>
-        <div className="grid grid-cols-4 gap-x-6">
-          <div className="col-span-3 flex flex-col">
-            <Table>
-              <table>
-                <thead>
-                  <tr>
-                    <th>product</th>
-                    <th>price</th>
-                    <th>quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataCartAll.length > 0 &&
-                    dataCartAll.map((item) => (
-                      <tr key={item?.id}>
-                        <td>
-                          <Link
-                            className="inline-flex items-center gap-x-[6px]"
-                            to={`/productDetails/${item?.id}`}
-                          >
-                            <ProImage
-                              className="w-[100px] h-[100px]"
-                              linkUrl={item?.imageUrl}
-                            ></ProImage>
-                            <ProName
-                              name={item?.name}
-                              className="block hover:text-primary cursor-pointer"
-                              maxW="max-w-[120px] "
-                            ></ProName>
-                          </Link>
-                        </td>
-                        <td>
-                          <ProPrice
-                            price={item?.current_price.toFixed(2)}
-                          ></ProPrice>
-                        </td>
-                        <td>
-                          <ProHandleQuantity
-                            control={control}
-                            name={`quantity_${item?.id}`} // Sử dụng name có sự khác biệt cho mỗi sản phẩm
-                            quantity={item?.pivot?.quantity}
-                            id={item?.id}
-                            allow={true}
-                          ></ProHandleQuantity>
-                          {/* <input type="text" value={item?.pivot?.quantity} /> */}
-                        </td>
-                        <td className="text-gray9 font-medium text-[16px]">
-                          {(
-                            item?.current_price * item?.pivot?.quantity
-                          ).toFixed(2)}{" "}
-                          $
-                        </td>
-                        <td>
-                          <IconClose2
-                            onClick={() => {
-                              dispatch(cartDelete(item?.id));
-                            }}
-                          ></IconClose2>
-                        </td>
+      {dataCartAll.length > 0 ? (
+        <form onSubmit={handleSubmit(handleCart)}>
+          <div className="grid grid-cols-4 gap-x-6">
+            <div className="col-span-3 flex flex-col">
+              <Table>
+                <div>
+                  <table className="table-fixed w-full">
+                    <thead>
+                      <tr>
+                        <th>product</th>
+                        <th>price</th>
+                        <th>quantity</th>
+                        <th>Subtotal</th>
+                        {/* <th></th> */}
                       </tr>
-                    ))}
-                </tbody>
-              </table>
-              <div className="footTable">
-                <Button href="/shop" kind="cart">
-                  Return to shop
-                </Button>
-              </div>
-            </Table>
+                    </thead>
+                  </table>
+                </div>
+                <div className="h-[400px] overflow-x-auto">
+                  <table className="table-auto w-full">
+                    <tbody>
+                      {dataCartAll.length > 0 &&
+                        dataCartAll.map((item) => (
+                          <tr key={item?.id}>
+                            <td>
+                              <Link
+                                className="inline-flex items-center gap-x-[6px]"
+                                to={`/productDetails/${item?.id}`}
+                              >
+                                <ProImage
+                                  className="w-[100px] h-[100px]"
+                                  linkUrl={item?.imageUrl}
+                                ></ProImage>
+                                <ProName
+                                  name={item?.name}
+                                  className="block hover:text-primary cursor-pointer"
+                                  maxW="max-w-[100px] "
+                                ></ProName>
+                              </Link>
+                            </td>
+                            <td>
+                              <ProPrice
+                                price={item?.current_price.toFixed(2)}
+                              ></ProPrice>
+                            </td>
+                            <td>
+                              <ProHandleQuantity
+                                control={control}
+                                name={`quantity_${item?.id}`} // Sử dụng name có sự khác biệt cho mỗi sản phẩm
+                                quantity={item?.pivot?.quantity}
+                                id={item?.id}
+                                allow={true}
+                              ></ProHandleQuantity>
+                              {/* <input type="text" value={item?.pivot?.quantity} /> */}
+                            </td>
+                            <td className="text-gray9 font-medium text-[16px]">
+                              {(
+                                item?.current_price * item?.pivot?.quantity
+                              ).toFixed(2)}{" "}
+                              $
+                            </td>
+                            <td>
+                              <IconClose2
+                                onClick={() => {
+                                  dispatch(cartDelete(item?.id));
+                                }}
+                              ></IconClose2>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
 
-            <div className="mt-6">
-              <BoxBill className="flex items-center  ">
-                <Label className="text-[18px] ">Coupon Code</Label>
-                <div className="flex items-center mx-auto gap-x-4">
-                  <Input
-                    placeholder="Enter code..."
-                    control={control}
-                    name="coupon"
-                    className="w-[320px] !rounded-[43px]"
-                  ></Input>
-                  <Button kind="secondary">Apply Coupon</Button>
+                <div className="footTable">
+                  <Button href="/shop" kind="cart">
+                    Return to shop
+                  </Button>
+                </div>
+              </Table>
+
+              <div className="mt-6">
+                <BoxBill className="flex items-center  ">
+                  <Label className="text-[18px] ">Coupon Code</Label>
+                  <div className="flex items-center mx-auto gap-x-4">
+                    <Input
+                      placeholder="Enter code..."
+                      control={control}
+                      name="coupon"
+                      className="w-[320px] !rounded-[43px]"
+                    ></Input>
+                    <Button kind="secondary">Apply Coupon</Button>
+                  </div>
+                </BoxBill>
+              </div>
+            </div>
+            <div className="col-span-1">
+              <BoxBill>
+                <Label className="text-[18px] !font-medium">Cart Total</Label>
+                <div className="my-4">
+                  <GroupJusBeween className="border-b-[1px] py-2 ">
+                    <BillLabel label="Subtotal:"></BillLabel>
+                    <ProPrice
+                      className="font-semibold"
+                      price={totalPrice.toFixed(2)}
+                    ></ProPrice>
+                  </GroupJusBeween>
+
+                  <GroupJusBeween className="border-b-[1px] py-2 ">
+                    <BillLabel label="Shipping:"></BillLabel>
+                    <BillLabel
+                      label="Free"
+                      className="font-medium text-gray9"
+                    ></BillLabel>
+                  </GroupJusBeween>
+
+                  <GroupJusBeween className="border-b-[1px] py-2 ">
+                    <BillLabel label="Total:"></BillLabel>
+                    <ProPrice
+                      className="font-semibold"
+                      price={totalPrice.toFixed(2)}
+                    ></ProPrice>
+                  </GroupJusBeween>
+                </div>
+                <div
+                  onClick={() => {
+                    let data = {
+                      products_order: [...dataCartAll],
+                      total_price: totalPrice,
+                    };
+                    var arrayJSON = JSON.stringify(data);
+                    localStorage.setItem("orderData", arrayJSON);
+                    console.log(
+                      "🚀 ~ file: ShoppingCartPage.js:60 ~ handleCart ~ data:",
+                      data
+                    );
+                  }}
+                >
+                  <Button
+                    kind="primary"
+                    type="submit"
+                    className="w-full hover:opacity-80 hover:scale-110 transition-all"
+                    href="/checkout"
+                  >
+                    Checkout
+                  </Button>
                 </div>
               </BoxBill>
             </div>
           </div>
-          <div className="col-span-1">
-            <BoxBill>
-              <Label className="text-[18px] !font-medium">Cart Total</Label>
-              <div className="my-4">
-                <GroupJusBeween className="border-b-[1px] py-2 ">
-                  <BillLabel label="Subtotal:"></BillLabel>
-                  <ProPrice
-                    className="font-semibold"
-                    price={totalPrice.toFixed(2)}
-                  ></ProPrice>
-                </GroupJusBeween>
-
-                <GroupJusBeween className="border-b-[1px] py-2 ">
-                  <BillLabel label="Shipping:"></BillLabel>
-                  <BillLabel
-                    label="Free"
-                    className="font-medium text-gray9"
-                  ></BillLabel>
-                </GroupJusBeween>
-
-                <GroupJusBeween className="border-b-[1px] py-2 ">
-                  <BillLabel label="Total:"></BillLabel>
-                  <ProPrice
-                    className="font-semibold"
-                    price={totalPrice.toFixed(2)}
-                  ></ProPrice>
-                </GroupJusBeween>
-              </div>
-              <div
-                onClick={() => {
-                  let data = {
-                    products_order: [...dataCartAll],
-                    total_price: totalPrice,
-                  };
-                  var arrayJSON = JSON.stringify(data);
-                  localStorage.setItem("orderData", arrayJSON);
-                  console.log(
-                    "🚀 ~ file: ShoppingCartPage.js:60 ~ handleCart ~ data:",
-                    data
-                  );
-                }}
-              >
-                <Button
-                  kind="primary"
-                  type="submit"
-                  className="w-full hover:opacity-80 hover:scale-110 transition-all"
-                  href="/checkout"
-                >
-                  Checkout
-                </Button>
-              </div>
-            </BoxBill>
+        </form>
+      ) : (
+        <div>
+          <div className="p-10 w-[500px]  mx-auto ">
+            <img
+              src="https://web.nvnstatic.net/tp/T0199/img/empty_cart.png?v=3"
+              alt=""
+              className=" object-contain"
+            />
           </div>
+          <h1 className="text-gray-700 py-5 text-[25px] text-center font-medium">
+            N0 ITEMS IN CART
+          </h1>
+          <Button href="/shop" kind="cart" className="w-[200px] mx-auto">
+            Return to shop
+          </Button>
         </div>
-      </form>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PopupSearch = ({ data, loading, text }) => {
   return (
@@ -23,9 +24,10 @@ const PopupSearch = ({ data, loading, text }) => {
       {!loading &&
         data?.length > 0 &&
         data.map((item) => (
-          <div
+          <Link
             key={item.id}
             className="flex items-center gap-x-3 py-2 px-3 cursor-pointer hover:bg-gray-100"
+            to={`productDetails/${item?.id}`}
           >
             <img
               src={item?.imageUrl || null}
@@ -35,7 +37,7 @@ const PopupSearch = ({ data, loading, text }) => {
             <span className="block text-gray8 font-normal text-[16px] whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[300px] ">
               {item?.name}
             </span>
-          </div>
+          </Link>
         ))}
     </div>
   );

@@ -14,3 +14,17 @@ export const requestUserUpdate = (data) => {
 
   return axios.put(`/api/user/update`, data, config);
 };
+
+export const requestUserChangePassword = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.put(`/api/user/change_password`, data, config);
+};

@@ -32,11 +32,11 @@ const schema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be 8 character "),
+    .min(8, "Password must be at least 8 character "),
   password_confirmation: yup
     .string()
     .required("confirmPass is required")
-    .min(8, "confirmPass must be 8 character "),
+    .min(8, "confirmPass must be at least 8 character "),
   // term: yup.boolean().required("Please accpect the terms and condition"),
 });
 

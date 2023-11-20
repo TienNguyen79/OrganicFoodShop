@@ -39,24 +39,30 @@ const PopupMe = () => {
       </div>
 
       <div className="border-b-[1px] ">
-        <span className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary">
-          Viết Blog
-        </span>
-        <span className="text-[#666] cursor-pointer text-sm pt-1 pb-[10px] block hover:text-primary">
+        <Link
+          to="/order_history"
+          className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary"
+        >
+          My Order
+        </Link>
+        {/* <span className="text-[#666] cursor-pointer text-sm pt-1 pb-[10px] block hover:text-primary">
           Bài Viết Của Tôi
-        </span>
+        </span> */}
       </div>
 
-      <div className="border-b-[1px] ">
+      {/* <div className="border-b-[1px] ">
         <span className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary">
           Bài Viết Đã Lưu
         </span>
-      </div>
+      </div> */}
 
       <div className=" ">
-        <span className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary">
-          Cài Đặt
-        </span>
+        <Link
+          to="/settings"
+          className="text-[#666] cursor-pointer text-sm py-[10px] block hover:text-primary"
+        >
+          Settings
+        </Link>
         <span
           className="text-[#666] cursor-pointer text-sm pt-1 pb-[10px] block hover:text-primary"
           onClick={() => dispatch(authLogOut(getToken()))}

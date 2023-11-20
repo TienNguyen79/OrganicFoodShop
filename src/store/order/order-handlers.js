@@ -4,9 +4,10 @@ import {
   requestGetOrderDetails,
   requestPostOrder,
 } from "./order-requests";
-import { updateDataOrder } from "./order-slice";
+import { setLoadingOrder, updateDataOrder } from "./order-slice";
 import { toast } from "react-toastify";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default function* handleGetOrderAll(action) {
   const { payload, type } = action;
 
@@ -36,7 +37,7 @@ function* handlePostOrder(action) {
   const { payload, type } = action;
 
   try {
-    //   yield put(setLoading(true));
+    yield put(setLoadingOrder(true));
     const response = yield call(requestPostOrder, payload);
     console.log(
       "🚀 ~ file: order-handlers.js:37 ~ function*handlePostOrder ~ response:",
@@ -44,9 +45,28 @@ function* handlePostOrder(action) {
     );
 
     if (response.status === 200) {
+      Swal.fire({
+        title: "Your order has been placed!",
+        text: "Thank you for your order 😍",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#FF8A00",
+        confirmButtonText: "Continue shopping",
+        cancelButtonText: "Back Home",
+        reverseButtons: true, // Đảo ngược vị trí của các nút
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          // Thực hiện hành động khi nhấn "Mua Tiếp"
+          window.location.href = "/shop";
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Thực hiện hành động khi nhấn "Về Trang Chủ"
+          window.location.href = "/";
+          // Redirect về trang chủ, bạn có thể sử dụng window.location.href = "url_trang_chu";
+        }
+      });
       yield put(updateDataOrder({ resultOrderAll: response.data }));
-      toast.success("Ordered successfully!");
-      // yield put(setLoading(false));
+      yield put(setLoadingOrder(false));
     }
   } catch (error) {
     console.log(
@@ -54,7 +74,7 @@ function* handlePostOrder(action) {
       error
     );
 
-    //   yield put(setLoading(false));
+    yield put(setLoadingOrder(false));
   }
 }
 

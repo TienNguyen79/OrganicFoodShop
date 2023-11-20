@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { orderGetDataAll } from "../store/order/order-slice";
 import { convertDate, convertStatus } from "../constants/global";
 import { authCheckToken } from "../store/auth/auth-slice";
+import { useState } from "react";
 
 const UserDashBoardPage = () => {
   const dispatch = useDispatch();
@@ -22,39 +23,62 @@ const UserDashBoardPage = () => {
   const { user, accessToken } = useSelector((state) => state.auth);
   const { dataOrderAll } = useSelector((state) => state.order);
   console.log(
-    "🚀 ~ file: UserDashBoardPage.js:19 ~ UserDashBoardPage ~ dataOrderAll:",
+    "🚀 ~ file: UserDashBoardPage.js:25 ~ UserDashBoardPage ~ dataOrderAll:",
     dataOrderAll
   );
+  const [dataInfoShip, setDataInfoShip] = useState([]);
+  console.log(
+    "🚀 ~ file: UserDashBoardPage.js:26 ~ UserDashBoardPage ~ dataInfoShip:",
+    dataInfoShip
+  );
+
+  useEffect(() => {
+    var storedArrayJSON = localStorage.getItem("DataInfoShip");
+    var storedArray = JSON.parse(storedArrayJSON);
+    setDataInfoShip(storedArray);
+  }, []);
 
   return (
     <div>
       <div className="flex items-center gap-x-6">
         <div className="py-6 flex-1 flex flex-col items-center justify-center border border-[#E6E6E6] rounded-lg">
-          <UserAvatar className="w-[120px] h-[120px]"></UserAvatar>
-          <UserName className="text-[18px] font-medium mt-2"></UserName>
+          <UserAvatar
+            className="w-[120px] h-[120px]"
+            linkUrl={user?.avata}
+          ></UserAvatar>
+          <UserName
+            className="text-[18px] font-medium mt-2 capitalize"
+            name={user?.name}
+          ></UserName>
           <UserRole></UserRole>
           <LabelRedirect
             icon=""
             className="mt-3 font-medium"
             title="Edit Profile"
+            url="/settings"
           ></LabelRedirect>
         </div>
         <div className="flex-1 py-6 pl-6 border border-[#E6E6E6] rounded-lg  flex flex-col gap-y-3">
           <h1 className="text-[#999] text-sm font-medium uppercase">
-            Billing Address
+            Shipping Address
           </h1>
-          <h1 className="text-gray9 font-medium text-[18px]">{user?.name}</h1>
+          <h1 className="text-gray9 font-medium text-[18px] capitalize">
+            {dataInfoShip?.name}
+          </h1>
           <p className="text-gray6 text-sm font-normal">
-            {localStorage.getItem("shippingAddress")}
+            {dataInfoShip?.shippingAddress}
           </p>
-          <p className="text-gray9 text-[16px] font-normal">{user?.email}</p>
+          <p className="text-gray9 text-[16px] font-normal">
+            {dataInfoShip?.email}
+          </p>
           <p className="text-gray9 text-[16px] font-medium">
-            {user?.phone_number}
+            {dataInfoShip?.phone_number}
           </p>
           <LabelRedirect
             icon=""
             className="mt-3 font-medium"
             title="Edit Address"
+            url="/settings"
           ></LabelRedirect>
         </div>
       </div>
@@ -88,7 +112,7 @@ const UserDashBoardPage = () => {
                   <tr key={item.id}>
                     <td className="text-gray8 text-sm">#{item?.id}</td>
                     <td>{convertDate(item?.created_at)}</td>
-                    <td className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[185px]">
+                    <td className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[170px]">
                       <span className="text-gray8 text-[16px] font-semibold">
                         ${item?.total_price}
                       </span>{" "}

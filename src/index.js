@@ -8,7 +8,7 @@ import { store } from "./store/configureStore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from "react-router-dom";
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>;
 const container = document.getElementById("root");
 const root = createRoot(container);
 

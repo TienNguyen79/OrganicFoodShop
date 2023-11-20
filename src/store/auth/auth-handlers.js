@@ -140,6 +140,8 @@ function* handleLogOut(action) {
     if (response.status === 200) {
       yield put(authUpdateUser({}));
       logOut();
+      // localStorage.removeItem("DataInfoShip");
+      // localStorage.removeItem("orderData");
       // window.location.href = "/";
     }
   } catch (error) {

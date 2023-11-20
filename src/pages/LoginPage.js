@@ -25,7 +25,7 @@ const schema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be 8 character "),
+    .min(8, "Password must be at least 8 character "),
 });
 
 const LoginPage = () => {

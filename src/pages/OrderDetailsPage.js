@@ -305,15 +305,12 @@ const OrderDetailsPage = () => {
         <div className="col-span-2 flex ">
           <div className=" pl-[20px] pb-[20px] pr-[10px]  border-2 rounded-tl-lg rounded-bl-lg">
             <h1 className="text-[#999] text-sm font-medium uppercase py-[18px] border-b-2">
-              Billing Address
+              Shop Address
             </h1>
             <div>
-              <h1 className="text-gray9 font-medium text-[18px] mt-3">
-                Dainne Russell
-              </h1>
+              <h1 className="text-gray9 font-medium text-[18px] mt-3">ADMIN</h1>
               <p className="text-gray6 text-sm font-normal mt-2">
-                Xóm BABA thôn BA bốn, Phường Đồng Xuân, Quận Hoàn Đao, Thành phố
-                Hà Nội
+                Thường Tín, Hà Nội
               </p>
 
               <div className="mt-9">
@@ -322,7 +319,7 @@ const OrderDetailsPage = () => {
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  dainne.ressell@gmail.com
+                  adminNMT@gmail.com
                 </span>
               </div>
               <div className="mt-4">
@@ -331,7 +328,7 @@ const OrderDetailsPage = () => {
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  0833755093
+                  0919945678
                 </span>
               </div>
             </div>
@@ -342,7 +339,7 @@ const OrderDetailsPage = () => {
             </h1>
             <div>
               <h1 className="text-gray9 font-medium text-[18px] mt-3">
-                {user?.name}
+                {dataOrderDetails?.name}
               </h1>
               <p className="text-gray6 text-sm font-normal mt-2">
                 {dataOrderDetails?.address_shipping}
@@ -354,7 +351,7 @@ const OrderDetailsPage = () => {
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  {user?.email}
+                  {dataOrderDetails?.email}
                 </span>
               </div>
               <div className="mt-4">
@@ -363,7 +360,7 @@ const OrderDetailsPage = () => {
                 </h1>
 
                 <span className="text-gray9 text-sm font-normal">
-                  {user?.phone_number}
+                  {dataOrderDetails?.phone_number}
                 </span>
               </div>
             </div>

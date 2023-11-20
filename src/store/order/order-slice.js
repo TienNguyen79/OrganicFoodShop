@@ -5,6 +5,7 @@ const orderSlice = createSlice({
   initialState: {
     dataOrderAll: [],
     dataOrderDetails: [],
+    loadingOrder: false,
   },
   reducers: {
     orderGetDataAll: () => {},
@@ -16,10 +17,19 @@ const orderSlice = createSlice({
       dataOrderDetails:
         action.payload.resultOrderDetails || state.dataOrderDetails,
     }),
+    setLoadingOrder: (state, action) => ({
+      ...state,
+      loadingOrder: action.payload,
+    }),
   },
 });
 
-export const { orderGetDataAll, updateDataOrder, orderPost, orderDetails } =
-  orderSlice.actions;
+export const {
+  orderGetDataAll,
+  updateDataOrder,
+  orderPost,
+  orderDetails,
+  setLoadingOrder,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;
