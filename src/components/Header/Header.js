@@ -18,6 +18,7 @@ import lodash, { debounce } from "lodash";
 import CartPopup from "../../modules/cart/CartPopup";
 import { cartGetAll, wishListGetAll } from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
+import Button from "../button/Button";
 const Header = () => {
   const { control, getValues } = useForm();
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -239,6 +240,9 @@ const Header = () => {
                   </div>
                 )}
               </div>
+              <Button kind="secondary" href="/admin/dashboard">
+                ADMIN
+              </Button>
             </div>
           </div>
         </div>

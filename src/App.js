@@ -2,6 +2,8 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { authCheckToken } from "./store/auth/auth-slice";
+import LayoutAdmin from "./layout/LayoutAdmin";
+import AdDashBoardPage from "./pages/admin/AdDashBoardPage";
 
 const LayoutPrimary = lazy(() => import("./layout/LayoutPrimary"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -97,6 +99,14 @@ function App() {
           <Route
             path="/settings"
             element={<SettingsPage></SettingsPage>}
+          ></Route>
+        </Route>
+
+        {/* ADMIN */}
+        <Route element={<LayoutAdmin></LayoutAdmin>}>
+          <Route
+            path="/admin/dashboard"
+            element={<AdDashBoardPage></AdDashBoardPage>}
           ></Route>
         </Route>
 
