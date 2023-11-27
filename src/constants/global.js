@@ -116,3 +116,36 @@ export const convertStatus = (data) => {
       break;
   }
 };
+
+// status user
+
+export const convertUserStatus = (status) => {
+  switch (status) {
+    case 0:
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#e6f7d9] text-[#56ca00]">
+          Active
+        </span>
+      );
+    case 1:
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#ffe4e5] text-[#ff4c51]">
+          Banned
+        </span>
+      );
+    default:
+      break;
+  }
+};
+
+//ROLE
+
+export const userRole = {
+  USER: 1,
+  ADMIN: 2,
+};
+
+export const userStatus = {
+  ACTIVE: 0,
+  BAN: 1,
+};

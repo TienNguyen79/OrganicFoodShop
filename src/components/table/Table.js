@@ -2,10 +2,19 @@ import React from "react";
 import styled from "styled-components";
 
 const TableStyle = styled.div`
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 0 10px;
-  /* overflow-y: auto; */
-  border-radius: 10px;
+  overflow-x: auto;
+  /* border-radius: 10px; */
+
+  @media (max-width: 640px) {
+    /* Mobile styles */
+    width: 330px;
+  }
+  /* Tablet styles (>=768px and <1024px) */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    width: 800px;
+  }
   table {
     width: 100%;
     border: 1px solid #e6e6e6;

@@ -17,7 +17,11 @@ import useToggleValue from "../hooks/useToggleValue";
 import IconEyeToggle from "../components/Icons/IconEyeToggle";
 import ImageUpload from "../components/image/ImageUpload";
 import { useDispatch, useSelector } from "react-redux";
-import { UserChangePassword, UserUpdate } from "../store/user/user-slice";
+import {
+  UserChangePassword,
+  UserUpdate,
+  UserUpdateAddress,
+} from "../store/user/user-slice";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -57,17 +61,18 @@ const schema1 = yup.object({
 
 const schema2 = yup.object({
   // firstName: yup.string().required("FirstName is required"),
-  billName: yup.string().required("Your Name is required"),
-  billStreetAddress: yup
+  FirstName: yup.string().required("First Name is required"),
+  LastName: yup.string().required("Last Name is required"),
+  Address: yup
     .string()
     .required("Street Address is required")
     .min(5, "Please enter at least 5 characters"),
-  billPhoneNumber: yup
+  Phone: yup
     .string()
     .required("Phone Number is required")
     .matches(/^\d+$/, "This field only enters numbers")
     .matches(/^[0-9]{10}$/, "The phone number must be exactly 10 digits"),
-  billEmail: yup
+  Email: yup
     .string()
     .required("E-mail is required")
     .email("Field should contain a valid e-mail"),
@@ -182,22 +187,23 @@ const SettingsPage = () => {
     if (labelCity === "" || labelDistric === "" || labelvillage === "") {
       toast.error("Address must be complete");
     } else {
-      let DataInfoShip = JSON.stringify({
-        shippingAddress:
-          values.billStreetAddress +
+      let DataInfoShip = {
+        Address:
+          values.Address +
           ", " +
           labelvillage +
           ", " +
           labelDistric +
           ", " +
           labelCity,
-        name: values.billName,
-        email: values.billEmail,
-        phone_number: values.billPhoneNumber,
+        FirstName: values.FirstName,
+        LastName: values.LastName,
+        Email: values.Email,
+        Phone: values.Phone,
         companyName: values.billCompanyName,
-      });
-      localStorage.setItem("DataInfoShip", DataInfoShip);
-      toast.success("update Address successfully!");
+      };
+      dispatch(UserUpdateAddress(DataInfoShip));
+      // localStorage.setItem("DataInfoShip", DataInfoShip);
     }
   };
   const handleChangePassword = async (values) => {
@@ -299,13 +305,25 @@ const SettingsPage = () => {
             <div className="flex items-center gap-x-2">
               <div className="flex-1">
                 <BoxField>
-                  <LabelField label=" Name"></LabelField>
+                  <LabelField label="First Name"></LabelField>
                   <Input
                     control={control2}
-                    name="billName"
-                    placeholder="Enter your Name..."
+                    name="FirstName"
+                    placeholder="Enter your FirstName..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.billName?.message}
+                    error={errors2?.FirstName?.message}
+                  ></Input>
+                </BoxField>
+              </div>
+              <div className="flex-1">
+                <BoxField>
+                  <LabelField label="Last Name"></LabelField>
+                  <Input
+                    control={control2}
+                    name="LastName"
+                    placeholder="Enter your Last Name..."
+                    className="placeholder:opacity-80 placeholder:text-[14px]"
+                    error={errors2?.LastName?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -325,10 +343,10 @@ const SettingsPage = () => {
               <LabelField label="Street Address"></LabelField>
               <Input
                 control={control2}
-                name="billStreetAddress"
+                name="Address"
                 placeholder="Enter your Street Address..."
                 className="placeholder:opacity-80 placeholder:text-[14px]"
-                error={errors2?.billStreetAddress?.message}
+                error={errors2?.Address?.message}
               ></Input>
             </BoxField>
 
@@ -449,10 +467,10 @@ const SettingsPage = () => {
                   <LabelField label="Email"></LabelField>
                   <Input
                     control={control2}
-                    name="billEmail"
+                    name="Email"
                     placeholder="Enter your Email..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.billEmail?.message}
+                    error={errors2?.Email?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -461,10 +479,10 @@ const SettingsPage = () => {
                   <LabelField label="Phone "></LabelField>
                   <Input
                     control={control2}
-                    name="billPhoneNumber"
+                    name="Phone"
                     placeholder="Enter your PhoneNumber..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.billPhoneNumber?.message}
+                    error={errors2?.Phone?.message}
                   ></Input>
                 </BoxField>
               </div>

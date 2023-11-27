@@ -240,7 +240,7 @@ const Header = () => {
                   </div>
                 )}
               </div>
-              <Button kind="secondary" href="/admin/dashboard">
+              <Button kind="secondary" href="/admin/dashboards">
                 ADMIN
               </Button>
             </div>

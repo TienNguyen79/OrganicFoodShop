@@ -30,6 +30,10 @@ const Button = ({
       defaultClassName =
         defaultClassName + "bg-greenGray1 text-primary rounded-[43px]";
       break;
+    case "secondary2":
+      defaultClassName =
+        defaultClassName + "bg-greenGray1 text-primary rounded-[6px]";
+      break;
     case "disable":
       defaultClassName =
         defaultClassName + "bg-gray5_1 text-gray3 rounded-[43px]";
@@ -41,6 +45,11 @@ const Button = ({
     case "cart":
       defaultClassName =
         defaultClassName + "bg-gray5_1 text-gray7  rounded-[43px]";
+      break;
+    case "discard":
+      defaultClassName =
+        defaultClassName +
+        "bg-transparent border border-danger text-danger  rounded-[6px]";
       break;
     default:
       break;
@@ -71,7 +80,15 @@ Button.propTypes = {
   children: PropTypes.node,
   isLoading: PropTypes.bool,
   href: PropTypes.string,
-  kind: PropTypes.oneOf(["primary", "secondary", "disable", "ghost", "cart"]),
+  kind: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "disable",
+    "ghost",
+    "cart",
+    "secondary2",
+    "discard",
+  ]),
 };
 
 export default Button;

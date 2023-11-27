@@ -3,20 +3,23 @@ import Input from "../../input/Input";
 import { useForm } from "react-hook-form";
 import IconSearch from "../../Icons/IconSearch";
 import IconBell from "../../Icons/IconBell";
-
-const Header = () => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+const Header = ({ scrollPosition }) => {
   const { control } = useForm();
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <Input
           control={control}
           name="search"
-          className="!w-[400px]"
+          className={`!w-[400px] ${
+            scrollPosition > 0 ? "border-none" : "bg-[#F4F5FA] border-none"
+          }`}
           placeholder="Enter for search...."
           kind="search"
         >
-          <IconSearch></IconSearch>
+          <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
         </Input>
         <div className="flex items-center gap-x-3 cursor-pointer">
           <span>

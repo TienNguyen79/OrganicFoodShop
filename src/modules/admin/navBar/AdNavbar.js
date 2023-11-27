@@ -154,9 +154,9 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
   return (
     <Fragment>
       <div
-        className={` absolute top-0  left-0   transition-all duration-500  ${
-          isHovered || isFixNav ? "w-[250px] " : "w-[100px]"
-        }   bg-[#F4F5FA] py-3 px-4`}
+        className={` fixed top-0   left-0 bottom-0  transition-all duration-500 z-30 ${
+          isHovered || isFixNav ? "w-[250px] " : "w-[100px] "
+        } ${isHovered && !isFixNav && "shadow-xl"}  bg-[#F4F5FA] py-3 px-4`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -171,7 +171,7 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
           <div className="block" onClick={() => setIsFixNav(!isFixNav)}>
             <span
               className={`block transition-all  ${
-                isFixNav ? "rotate-0" : "-rotate-90"
+                isFixNav ? "rotate-0 text-darkPrimary" : "-rotate-90"
               } ${isHovered || isFixNav ? "visible" : "invisible"}`}
             >
               <FontAwesomeIcon icon={faThumbTack} size="xl" />
@@ -182,30 +182,30 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
           navLink.map((item) => (
             <div key={item.id} className="pt-4 ">
               <div
-                className="flex justify-between items-center cursor-pointer z-10"
+                className="flex justify-between items-center cursor-pointer z-10 group"
                 onClick={() => {
                   toggleSubNav(item.id);
                 }}
               >
                 <NavLink
                   to={item.to}
-                  className={`flex items-center gap-x-4 py-2  ${
+                  className={`flex items-center gap-x-4 py-2 group-hover:text-primary  ${
                     isHovered ? "" : " "
                   }`}
                 >
                   <span className="block ml-4">{item.icon}</span>
                   <span
-                    className={` transition-all text-gray-600   text-[18px]  ${
+                    className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]  ${
                       isHovered || isFixNav
                         ? "opacity-100 translate-y-0 "
-                        : "opacity-0 -translate-y-10 "
-                    }`}
+                        : "opacity-0 -translate-y-10 hidden "
+                    }  `}
                   >
                     {item.name}
                   </span>
                 </NavLink>
                 <div
-                  className={` ${
+                  className={` group-hover:text-primary ${
                     isHovered || isFixNav
                       ? "opacity-100 visible"
                       : "opacity-0 invisible"
@@ -235,12 +235,14 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
                   item.navSub.length > 0 &&
                   item.navSub.map((navSub) => (
                     <NavLink
-                      className={`pl-3 py-1 flex items-center gap-x-2 `}
+                      className={`pl-3 py-1 flex items-center gap-x-2 group `}
                       key={navSub.id}
                       to={navSub.to}
                     >
-                      {navSub.icon}
-                      <span className="text-gray-600 text-[16px] ">
+                      <span className="block group-hover:text-primary">
+                        {navSub.icon}
+                      </span>
+                      <span className="text-gray-600 text-[16px] group-hover:text-primary ">
                         {navSub.name}
                       </span>
                     </NavLink>

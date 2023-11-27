@@ -2,8 +2,6 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { authCheckToken } from "./store/auth/auth-slice";
-import LayoutAdmin from "./layout/LayoutAdmin";
-import AdDashBoardPage from "./pages/admin/AdDashBoardPage";
 
 const LayoutPrimary = lazy(() => import("./layout/LayoutPrimary"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -30,6 +28,12 @@ const OrderHistoryPage = lazy(() => import("./pages/OrderHistoryPage"));
 const UserDashBoardPage = lazy(() => import("./pages/UserDashBoardPage"));
 const OrderDetailsPage = lazy(() => import("./pages/OrderDetailsPage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const LayoutAdmin = lazy(() => import("./layout/LayoutAdmin"));
+const AdCustomerPage = lazy(() => import("./pages/admin/AdCustomerPage"));
+const AdDashBoardPage = lazy(() => import("./pages/admin/AdDashBoardPage"));
+const AddCustomerPage = lazy(() => import("./pages/admin/AddCustomerPage"));
+const UpdateCustomer = lazy(() => import("./pages/admin/UpdateCustomer"));
+const AdCategoriesPage = lazy(() => import("./pages/admin/AdCategoriesPage"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -105,10 +109,27 @@ function App() {
         {/* ADMIN */}
         <Route element={<LayoutAdmin></LayoutAdmin>}>
           <Route
-            path="/admin/dashboard"
+            path="/admin/dashboards"
             element={<AdDashBoardPage></AdDashBoardPage>}
           ></Route>
         </Route>
+
+        <Route
+          path="/admin/customer"
+          element={<AdCustomerPage></AdCustomerPage>}
+        ></Route>
+        <Route
+          path="/admin/add_customer"
+          element={<AddCustomerPage></AddCustomerPage>}
+        ></Route>
+        <Route
+          path="/admin/update_customer"
+          element={<UpdateCustomer></UpdateCustomer>}
+        ></Route>
+        <Route
+          path="/admin/categories"
+          element={<AdCategoriesPage></AdCategoriesPage>}
+        ></Route>
 
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>
         <Route path="/login" element={<LoginPage></LoginPage>}></Route>
