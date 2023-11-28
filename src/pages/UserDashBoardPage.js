@@ -26,17 +26,6 @@ const UserDashBoardPage = () => {
     "🚀 ~ file: UserDashBoardPage.js:25 ~ UserDashBoardPage ~ dataOrderAll:",
     dataOrderAll
   );
-  const [dataInfoShip, setDataInfoShip] = useState([]);
-  console.log(
-    "🚀 ~ file: UserDashBoardPage.js:26 ~ UserDashBoardPage ~ dataInfoShip:",
-    dataInfoShip
-  );
-
-  useEffect(() => {
-    var storedArrayJSON = localStorage.getItem("DataInfoShip");
-    var storedArray = JSON.parse(storedArrayJSON);
-    setDataInfoShip(storedArray);
-  }, []);
 
   return (
     <div>
@@ -60,19 +49,19 @@ const UserDashBoardPage = () => {
         </div>
         <div className="flex-1 py-6 pl-6 border border-[#E6E6E6] rounded-lg  flex flex-col gap-y-3">
           <h1 className="text-[#999] text-sm font-medium uppercase">
-            Shipping Address
+            Billing Address
           </h1>
           <h1 className="text-gray9 font-medium text-[18px] capitalize">
-            {dataInfoShip?.name}
+            {user?.billing_address?.name}
           </h1>
           <p className="text-gray6 text-sm font-normal">
-            {dataInfoShip?.shippingAddress}
+            {user?.billing_address?.address}
           </p>
           <p className="text-gray9 text-[16px] font-normal">
-            {dataInfoShip?.email}
+            {user?.billing_address?.email}
           </p>
           <p className="text-gray9 text-[16px] font-medium">
-            {dataInfoShip?.phone_number}
+            {user?.billing_address?.phone}
           </p>
           <LabelRedirect
             icon=""

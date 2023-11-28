@@ -61,18 +61,17 @@ const schema1 = yup.object({
 
 const schema2 = yup.object({
   // firstName: yup.string().required("FirstName is required"),
-  FirstName: yup.string().required("First Name is required"),
-  LastName: yup.string().required("Last Name is required"),
-  Address: yup
+  name: yup.string().required("Name is required"),
+  address: yup
     .string()
     .required("Street Address is required")
     .min(5, "Please enter at least 5 characters"),
-  Phone: yup
+  phone: yup
     .string()
     .required("Phone Number is required")
     .matches(/^\d+$/, "This field only enters numbers")
     .matches(/^[0-9]{10}$/, "The phone number must be exactly 10 digits"),
-  Email: yup
+  email: yup
     .string()
     .required("E-mail is required")
     .email("Field should contain a valid e-mail"),
@@ -183,24 +182,24 @@ const SettingsPage = () => {
     dispatch(UserUpdate(values));
   };
   const navigate = useNavigate();
+
   const handleBillAddress = async (values) => {
     if (labelCity === "" || labelDistric === "" || labelvillage === "") {
       toast.error("Address must be complete");
     } else {
       let DataInfoShip = {
-        Address:
-          values.Address +
+        address:
+          values.address +
           ", " +
           labelvillage +
           ", " +
           labelDistric +
           ", " +
           labelCity,
-        FirstName: values.FirstName,
-        LastName: values.LastName,
-        Email: values.Email,
-        Phone: values.Phone,
-        companyName: values.billCompanyName,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        company_name: values.company_name,
       };
       dispatch(UserUpdateAddress(DataInfoShip));
       // localStorage.setItem("DataInfoShip", DataInfoShip);
@@ -217,6 +216,7 @@ const SettingsPage = () => {
   };
 
   const { user, accessToken } = useSelector((state) => state.auth);
+  console.log("🚀 ~ file: SettingsPage.js:220 ~ SettingsPage ~ user:", user);
 
   useEffect(() => {
     dispatch(authCheckToken());
@@ -231,17 +231,37 @@ const SettingsPage = () => {
   }, [setValue1, user?.avata, user?.email, user?.name, user?.phone_number]);
 
   useEffect(() => {
-    var storedArrayJSON = localStorage.getItem("DataInfoShip");
-    var storedArray = JSON.parse(storedArrayJSON);
-    setValue2("billName", storedArray?.name);
-    setValue2("billCompanyName", storedArray?.companyName);
-    setValue2("billStreetAddress", storedArray?.shippingAddress?.split(",")[0]);
-    setLabelCity(storedArray?.shippingAddress?.split(",")[3]);
-    setLabelDistric(storedArray?.shippingAddress?.split(",")[2]);
-    setLabelvillage(storedArray?.shippingAddress?.split(",")[1]);
-    setValue2("billEmail", storedArray?.email);
-    setValue2("billPhoneNumber", storedArray?.phone_number);
-  }, []);
+    setValue2("name", user?.billing_address?.name);
+    setValue2("email", user?.billing_address?.email);
+    setValue2("phone", user?.billing_address?.phone);
+    setValue2("phone", user?.billing_address?.phone);
+    setValue2("company_name", user?.billing_address?.company_name || "");
+    setValue2("address", user?.billing_address?.address.split(",")[0]);
+    setLabelvillage(user?.billing_address?.address.split(",")[1]);
+    setLabelDistric(user?.billing_address?.address.split(",")[2]);
+    setLabelCity(user?.billing_address?.address.split(",")[3]);
+  }, [
+    city,
+    setValue2,
+    user?.billing_address?.address,
+    user?.billing_address?.company_name,
+    user?.billing_address?.email,
+    user?.billing_address?.name,
+    user?.billing_address?.phone,
+  ]);
+  // useEffect(() => {
+  //   var storedArrayJSON = localStorage.getItem("DataInfoShip");
+  //   var storedArray = JSON.parse(storedArrayJSON);
+  //   setValue2("billName", storedArray?.name);
+  //   setValue2("billCompanyName", storedArray?.companyName);
+  //   setValue2("billStreetAddress", storedArray?.shippingAddress?.split(",")[0]);
+  //   setLabelCity(storedArray?.shippingAddress?.split(",")[3]);
+  //   setLabelDistric(storedArray?.shippingAddress?.split(",")[2]);
+  //   setLabelvillage(storedArray?.shippingAddress?.split(",")[1]);
+  //   setValue2("billEmail", storedArray?.email);
+  //   setValue2("billPhoneNumber", storedArray?.phone_number);
+  // }, []);
+
   return (
     <div>
       <BoxSettings label="Account Settings">
@@ -299,31 +319,19 @@ const SettingsPage = () => {
           </div>
         </form>
       </BoxSettings>
-      <BoxSettings label="Shipping Address" className="mt-[26px]">
+      <BoxSettings label="Billing Address" className="mt-[26px]">
         <form action="" onSubmit={handleSubmit2(handleBillAddress)}>
           <div className="flex flex-col gap-y-4">
             <div className="flex items-center gap-x-2">
               <div className="flex-1">
                 <BoxField>
-                  <LabelField label="First Name"></LabelField>
+                  <LabelField label="Name"></LabelField>
                   <Input
                     control={control2}
-                    name="FirstName"
-                    placeholder="Enter your FirstName..."
+                    name="name"
+                    placeholder="Enter your Name..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.FirstName?.message}
-                  ></Input>
-                </BoxField>
-              </div>
-              <div className="flex-1">
-                <BoxField>
-                  <LabelField label="Last Name"></LabelField>
-                  <Input
-                    control={control2}
-                    name="LastName"
-                    placeholder="Enter your Last Name..."
-                    className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.LastName?.message}
+                    error={errors2?.name?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -332,7 +340,7 @@ const SettingsPage = () => {
                   <LabelField label="Company Name (optional)"></LabelField>
                   <Input
                     control={control2}
-                    name="billCompanyName"
+                    name="company_name"
                     placeholder="Enter your CompanyName..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
                   ></Input>
@@ -340,13 +348,13 @@ const SettingsPage = () => {
               </div>
             </div>
             <BoxField>
-              <LabelField label="Street Address"></LabelField>
+              <LabelField label="Detail Address"></LabelField>
               <Input
                 control={control2}
-                name="Address"
+                name="address"
                 placeholder="Enter your Street Address..."
                 className="placeholder:opacity-80 placeholder:text-[14px]"
-                error={errors2?.Address?.message}
+                error={errors2?.address?.message}
               ></Input>
             </BoxField>
 
@@ -467,10 +475,10 @@ const SettingsPage = () => {
                   <LabelField label="Email"></LabelField>
                   <Input
                     control={control2}
-                    name="Email"
+                    name="email"
                     placeholder="Enter your Email..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.Email?.message}
+                    error={errors2?.email?.message}
                   ></Input>
                 </BoxField>
               </div>
@@ -479,10 +487,10 @@ const SettingsPage = () => {
                   <LabelField label="Phone "></LabelField>
                   <Input
                     control={control2}
-                    name="Phone"
+                    name="phone"
                     placeholder="Enter your PhoneNumber..."
                     className="placeholder:opacity-80 placeholder:text-[14px]"
-                    error={errors2?.Phone?.message}
+                    error={errors2?.phone?.message}
                   ></Input>
                 </BoxField>
               </div>

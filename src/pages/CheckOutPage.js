@@ -54,6 +54,7 @@ const CheckOutPage = () => {
     handleSubmit,
     formState: { errors, isValid },
     setValue,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -61,13 +62,15 @@ const CheckOutPage = () => {
   const navigate = useNavigate();
   const [dataOrder, setDataOrder] = useState([]);
   const { loadingOrder } = useSelector((state) => state.order);
-
+  const watchMethod = watch("method");
   const dispatch = useDispatch();
   const handleBill = async (values) => {
     console.log("🚀 ~ file: CheckOutPage.js:74 ~ handleBill ~ values:", values);
     try {
       if (labelCity === "" || labelDistric === "" || labelvillage === "") {
         toast.error("Address must be complete");
+      } else if (watchMethod === "bankking" || watchMethod === "paypal") {
+        toast.warning("Upcoming feature will be available soon");
       } else {
         let ordered = {
           products_order: dataOrder.products_order.map((item) => ({
@@ -88,22 +91,13 @@ const CheckOutPage = () => {
             labelDistric +
             ", " +
             labelCity,
-          payment_method: "cash",
+          payment_method: watchMethod,
           name: values?.name,
           email: values?.email,
           phone_number: values?.phone_number,
           note: values.additionalInfo,
         };
         dispatch(orderPost(ordered));
-        // localStorage.setItem("shippingAddress", ordered.address_shipping);
-        let DataInfoShip = JSON.stringify({
-          shippingAddress: ordered.address_shipping,
-          name: values.name,
-          email: values.email,
-          phone_number: values.phone_number,
-          companyName: values.companyName,
-        });
-        localStorage.setItem("DataInfoShip", DataInfoShip);
       }
     } catch (error) {
       console.log("🚀 ~ file: CheckOutPage.js:53 ~ handleBill ~ error:", error);
@@ -193,16 +187,27 @@ const CheckOutPage = () => {
 
   //khi ấn vào checkout nó sẽ hiện các thông tin này lên luôn mà không phải nhập
   useEffect(() => {
-    var storedArrayJSON = localStorage.getItem("DataInfoShip");
-    var storedArray = JSON.parse(storedArrayJSON);
-    setValue("name", storedArray?.name);
-    setValue("email", storedArray?.email);
-    setValue("phone_number", storedArray?.phone_number);
-    setValue("detailsAddress", storedArray?.shippingAddress?.split(",")[0]);
-    setLabelCity(storedArray?.shippingAddress?.split(",")[3]);
-    setLabelDistric(storedArray?.shippingAddress?.split(",")[2]);
-    setLabelvillage(storedArray?.shippingAddress?.split(",")[1]);
-  }, [setValue]);
+    setValue("name", user?.billing_address?.name);
+    setValue("email", user?.billing_address?.email);
+    setValue("phone_number", user?.billing_address?.phone);
+    setValue("companyName", user?.billing_address?.company_name);
+    setValue("detailsAddress", user?.billing_address?.address.split(",")[0]);
+    setLabelvillage(user?.billing_address?.address.split(",")[1]);
+    setLabelDistric(user?.billing_address?.address.split(",")[2]);
+    setLabelCity(user?.billing_address?.address.split(",")[3]);
+  }, [
+    city,
+    setValue,
+    user?.billing_address?.address,
+    user?.billing_address?.company_name,
+    user?.billing_address?.email,
+    user?.billing_address?.name,
+    user?.billing_address?.phone,
+  ]);
+
+  useEffect(() => {
+    setValue("method", "cash");
+  }, []);
   return (
     <div className="mt-10 mb-[80px]">
       <div className="mb-8">
@@ -536,14 +541,29 @@ const CheckOutPage = () => {
 
                 <div className="text-sm font-normal text-gray7 mt-5">
                   <FieldBill>
-                    <Radio control={control} name="payment">
+                    <Radio
+                      control={control}
+                      checked={watchMethod === "cash"}
+                      name="method"
+                      value="cash"
+                    >
                       Cash on Delivery
                     </Radio>
-                    <Radio control={control} name="payment">
+                    <Radio
+                      control={control}
+                      checked={watchMethod === "paypal"}
+                      name="method"
+                      value="paypal"
+                    >
                       Paypal
                     </Radio>
-                    <Radio control={control} name="payment">
-                      Amazon Pay
+                    <Radio
+                      control={control}
+                      checked={watchMethod === "bankking"}
+                      name="method"
+                      value="bankking"
+                    >
+                      Bankking
                     </Radio>
                   </FieldBill>
                 </div>

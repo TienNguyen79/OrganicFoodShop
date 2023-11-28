@@ -90,23 +90,28 @@ export const convertStatus = (data) => {
     case "1":
       return (
         <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#eee6ff] text-[#9055fd]">
-          Processing
+          Order received
         </span>
       );
     case "2":
       return (
         <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#dcf3ff] text-[#16b1ff]">
-          On the way
+          Processing
         </span>
       );
     case "3":
       return (
-        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#e6f7d9] text-[#56ca00]">
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#ecd9f7] text-[#ca0094]">
+          On the way
+        </span>
+      );
+    case "4":
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm  bg-[#e6f7d9] text-[#56ca00]">
           Delivered
         </span>
       );
-
-    case "4":
+    case "5":
       return (
         <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#ffe4e5] text-[#ff4c51]">
           Canceled
