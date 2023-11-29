@@ -28,7 +28,7 @@ const Header = () => {
     dispatch(cartGetAll(getToken()));
   }, []);
   useEffect(() => {
-    dispatch(wishListGetAll());
+    dispatch(wishListGetAll(getToken()));
   }, []);
 
   const { dataCartAll, dataWishListAll } = useSelector((state) => state.cart);

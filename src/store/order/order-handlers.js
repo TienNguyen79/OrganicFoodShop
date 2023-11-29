@@ -8,6 +8,7 @@ import { setLoadingOrder, updateDataOrder } from "./order-slice";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import History from "../../utils/history";
 export default function* handleGetOrderAll(action) {
   const { payload, type } = action;
 
@@ -36,14 +37,13 @@ export default function* handleGetOrderAll(action) {
 function* handlePostOrder(action) {
   const { payload, type } = action;
 
+  yield put(setLoadingOrder(true));
   try {
-    yield put(setLoadingOrder(true));
     const response = yield call(requestPostOrder, payload);
     console.log(
       "🚀 ~ file: order-handlers.js:37 ~ function*handlePostOrder ~ response:",
       response
     );
-
     if (response.status === 200) {
       Swal.fire({
         title: "Your order has been placed!",
@@ -58,10 +58,11 @@ function* handlePostOrder(action) {
       }).then(async (result) => {
         if (result.isConfirmed) {
           // Thực hiện hành động khi nhấn "Mua Tiếp"
-          window.location.href = "/shop";
+          History.push("/shop");
+          // payload.onSuccess();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Thực hiện hành động khi nhấn "Về Trang Chủ"
-          window.location.href = "/";
+          History.push("/");
           // Redirect về trang chủ, bạn có thể sử dụng window.location.href = "url_trang_chu";
         }
       });

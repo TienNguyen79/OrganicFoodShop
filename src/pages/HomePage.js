@@ -33,6 +33,8 @@ import ProQuickView from "../modules/product/ProQuickView";
 import CartPopup from "../modules/cart/CartPopup";
 import { blogGetAll } from "../store/blog/blog-slice";
 import { Link } from "react-router-dom";
+import { wishListGetAll } from "../store/cart/cart-slice";
+import { getToken } from "../utils/auth";
 
 const dataUtil = [
   {
@@ -156,7 +158,7 @@ const HomePage = () => {
 
   return (
     <div>
-      {loading && dataProSearch.length <= 0 && dataQuickview.length <= 0 && (
+      {/* {loading && dataProSearch.length <= 0 && dataQuickview.length <= 0 && (
         <div className="fixed h-full flex items-center inset-0 bg-opacity-90  bg-white z-[999] ">
           <img
             src="/loading3.svg"
@@ -164,7 +166,8 @@ const HomePage = () => {
             alt="loading"
           />
         </div>
-      )}
+      )} */}
+
       <div className="pt-[80px]">
         <ProQuickView
           open={isModalOpen ? "visible" : "invisible"}

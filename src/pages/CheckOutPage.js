@@ -62,6 +62,10 @@ const CheckOutPage = () => {
   const navigate = useNavigate();
   const [dataOrder, setDataOrder] = useState([]);
   const { loadingOrder } = useSelector((state) => state.order);
+  console.log(
+    "🚀 ~ file: CheckOutPage.js:65 ~ CheckOutPage ~ loadingOrder:",
+    loadingOrder
+  );
   const watchMethod = watch("method");
   const dispatch = useDispatch();
   const handleBill = async (values) => {
@@ -98,11 +102,24 @@ const CheckOutPage = () => {
           note: values.additionalInfo,
         };
         dispatch(orderPost(ordered));
+        // dispatch(
+        //   orderPost({
+        //     ...ordered,
+        //     onSuccess: () => navigate("/user_dashboard"),
+        //   })
+        // ); cách này dùng cũng được nhưng đang bị warning
       }
     } catch (error) {
       console.log("🚀 ~ file: CheckOutPage.js:53 ~ handleBill ~ error:", error);
     }
   };
+
+  // useEffect(() => {
+  //   if (loadingOrder) {
+  //     console.log("VÀO DÂY ĐI");
+  //     navigate("/user_dashboard");
+  //   }
+  // }, [loadingOrder, navigate]);
 
   //city
   const [city, setCity] = useState([]);

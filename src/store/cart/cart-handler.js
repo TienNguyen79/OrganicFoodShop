@@ -128,10 +128,12 @@ function* handleCartUpdate(action) {
 
 //wishList
 
-function* handleGetWishListAll() {
+function* handleGetWishListAll(action) {
+  const { payload, type } = action;
+
   try {
     //   yield put(setLoading(true));
-    const response = yield call(requestWishListAll);
+    const response = yield call(requestWishListAll, payload);
     console.log(
       "🚀 ~ file: cart-handler.js:96 ~ function*handleGetWishListAll ~ response:",
       response
@@ -166,7 +168,7 @@ function* handleWishListAddNew(action) {
 
     if (response.status === 200) {
       //khi thành công update luôn wishList
-      const wishListResponse = yield call(requestWishListAll);
+      const wishListResponse = yield call(requestWishListAll, getToken());
       yield put(
         updateDataWishList({
           resultWishListAll: wishListResponse.data.wishList,
@@ -201,7 +203,7 @@ function* handlewishListDelete(action) {
     );
     if (response.status === 200) {
       //khi thành công update luôn wishList
-      const wishListResponse = yield call(requestWishListAll);
+      const wishListResponse = yield call(requestWishListAll, getToken());
       console.log("CÓ VÀO");
       yield put(
         updateDataWishList({

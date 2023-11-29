@@ -224,7 +224,7 @@ const ShopPage = () => {
 
   return (
     <Fragment>
-      {loading && dataProWithFilter.length <= 0 && (
+      {/* {loading && dataProWithFilter.length <= 0 && (
         <div className="fixed h-full flex items-center inset-0 bg-opacity-90  bg-white z-[999] ">
           <img
             src="/loading3.svg"
@@ -232,7 +232,7 @@ const ShopPage = () => {
             alt="loading"
           />
         </div>
-      )}
+      )} */}
 
       <ProQuickView
         open={isModalOpen ? "visible" : "invisible"}

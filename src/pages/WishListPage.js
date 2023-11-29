@@ -21,8 +21,9 @@ import { Link } from "react-router-dom";
 const WishListPage = () => {
   const dispatch = useDispatch();
 
+  console.log("🚀 ~ file: WishListPage.js:19 ~ getToken:999", getToken());
   useEffect(() => {
-    dispatch(wishListGetAll());
+    dispatch(wishListGetAll(getToken()));
   }, []);
 
   const { dataWishListAll } = useSelector((state) => state.cart);
@@ -54,66 +55,69 @@ const WishListPage = () => {
             <div className="h-[400px] overflow-x-auto">
               <table className="table-auto w-full">
                 <tbody className="">
-                  {dataWishListAll.map((item) => (
-                    <tr key={item?.id}>
-                      <td>
-                        <Link
-                          className="inline-flex items-center gap-x-[6px] "
-                          to={`/productDetails/${item?.id}`}
-                        >
-                          <ProImage
-                            className="w-[100px] h-[100px]"
-                            linkUrl={item?.imageUrl}
-                          ></ProImage>
+                  {dataWishListAll.length > 0 &&
+                    dataWishListAll.map((item) => (
+                      <tr key={item?.id}>
+                        <td>
+                          <Link
+                            className="inline-flex items-center gap-x-[6px] "
+                            to={`/productDetails/${item?.id}`}
+                          >
+                            <ProImage
+                              className="w-[100px] h-[100px]"
+                              linkUrl={item?.imageUrl}
+                            ></ProImage>
 
-                          <ProName
-                            name={item?.name}
-                            className="inline-block  hover:text-primary"
-                            maxW="max-w-[160px]"
-                          ></ProName>
-                        </Link>
-                      </td>
-                      <td>
-                        <ProPrice
-                          priceOld={item?.price.toFixed(2)}
-                          currentPrice={item?.current_price.toFixed(2)}
-                        ></ProPrice>
-                      </td>
-                      <td>
-                        <ProLabel
-                          className="inline-block"
-                          kind={item?.quantity > 0 ? "Instock" : "Out of Stock"}
-                          label={
-                            item?.quantity > 0 ? "Instock" : "Out of Stock"
-                          }
-                        ></ProLabel>
-                      </td>
-                      <td>
-                        <Button
-                          onClick={() => {
-                            dispatch(
-                              cartAddNew({
-                                product_id: item?.pivot?.product_id,
-                                quantity: 1,
-                                token: getToken(),
-                              })
-                            );
-                          }}
-                          kind="primary"
-                          className="transition-all  hover:opacity-80 hover:scale-110"
-                        >
-                          Add to Cart
-                        </Button>
-                      </td>
-                      <td>
-                        <IconClose2
-                          onClick={() => {
-                            dispatch(wishListDelete(item?.pivot?.product_id));
-                          }}
-                        ></IconClose2>
-                      </td>
-                    </tr>
-                  ))}
+                            <ProName
+                              name={item?.name}
+                              className="inline-block  hover:text-primary"
+                              maxW="max-w-[160px]"
+                            ></ProName>
+                          </Link>
+                        </td>
+                        <td>
+                          <ProPrice
+                            priceOld={item?.price.toFixed(2)}
+                            currentPrice={item?.current_price.toFixed(2)}
+                          ></ProPrice>
+                        </td>
+                        <td>
+                          <ProLabel
+                            className="inline-block"
+                            kind={
+                              item?.quantity > 0 ? "Instock" : "Out of Stock"
+                            }
+                            label={
+                              item?.quantity > 0 ? "Instock" : "Out of Stock"
+                            }
+                          ></ProLabel>
+                        </td>
+                        <td>
+                          <Button
+                            onClick={() => {
+                              dispatch(
+                                cartAddNew({
+                                  product_id: item?.pivot?.product_id,
+                                  quantity: 1,
+                                  token: getToken(),
+                                })
+                              );
+                            }}
+                            kind="primary"
+                            className="transition-all  hover:opacity-80 hover:scale-110"
+                          >
+                            Add to Cart
+                          </Button>
+                        </td>
+                        <td>
+                          <IconClose2
+                            onClick={() => {
+                              dispatch(wishListDelete(item?.pivot?.product_id));
+                            }}
+                          ></IconClose2>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

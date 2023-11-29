@@ -8,6 +8,7 @@ import { store } from "./store/configureStore";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from "react-router-dom";
+import NavigateSetter from "./utils/NavigateSetter";
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>;
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -15,6 +16,7 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+      <NavigateSetter />
       <App />
       <ToastContainer></ToastContainer>
     </BrowserRouter>
