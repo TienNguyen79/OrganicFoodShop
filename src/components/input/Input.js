@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "../common/ErrorComponent";
+import { debounce } from "lodash";
 const Input = (props) => {
   const {
     control,
@@ -14,6 +15,8 @@ const Input = (props) => {
     className,
     kind = "search",
     cssEye = "",
+    setNameCustomer,
+    handleFilterChangeDebounced,
     ...rest
   } = props;
 
@@ -24,6 +27,18 @@ const Input = (props) => {
     mode: "onChange",
   });
   // console.log(error);
+
+  const debouncedSetNameCustomer = debounce((text) => {
+    setNameCustomer && setNameCustomer(text);
+  }, 300);
+
+  useEffect(() => {
+    const text = field.value;
+    debouncedSetNameCustomer(text);
+    return () => {
+      debouncedSetNameCustomer.cancel();
+    };
+  }, [field.value, debouncedSetNameCustomer]);
 
   return (
     <div>

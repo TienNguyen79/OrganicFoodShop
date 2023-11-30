@@ -54,6 +54,7 @@ const TopProductPage = () => {
         open={isModalOpen ? "visible" : "invisible"}
         onClose={closeModal}
         isClickClose={isClickClose}
+        className="top-[90px]"
         // data={datafake}
       />
 

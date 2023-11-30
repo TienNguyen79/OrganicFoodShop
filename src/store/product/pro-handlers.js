@@ -14,6 +14,8 @@ import {
   proGetBestSeller,
   proGetSearch,
   setLoading,
+  setLoadingSearchNamePro,
+  setLoadings,
   updateData,
   updateData2,
 } from "./pro-slice";
@@ -23,15 +25,15 @@ export default function* handleGetProBestSeller(action) {
   const { payload, type } = action;
 
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "bestSeller", value: true }));
     const response = yield call(requestProBestSeller);
 
     if (response.status === 200) {
       yield put(updateData({ resultBestSellers: response.data.bestSellers }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "bestSeller", value: false }));
     }
   } catch (error) {
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "bestSeller", value: false }));
     console.log(
       "🚀 ~ file: pro-handlers.js:14 ~ function*handleGetProBestSeller ~ error:",
       error
@@ -42,15 +44,15 @@ export default function* handleGetProBestSeller(action) {
 
 function* handleGetHotDeal() {
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "hotDeal", value: true }));
     const response = yield call(requestProHotDeal);
 
     if (response.status === 200) {
       yield put(updateData({ resultHotDeal: response.data.products }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "hotDeal", value: false }));
     }
   } catch (error) {
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "hotDeal", value: false }));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -60,15 +62,15 @@ function* handleGetHotDeal() {
 
 function* handleGetProTopRated() {
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "topRated", value: true }));
     const response = yield call(requestProTopRated);
 
     if (response.status === 200) {
       yield put(updateData({ resultTopRated: response.data.products }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "topRated", value: false }));
     }
   } catch (error) {
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "topRated", value: false }));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -78,15 +80,15 @@ function* handleGetProTopRated() {
 
 function* handleGetProFeature() {
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "feauture", value: true }));
     const response = yield call(requestProFeauture);
 
     if (response.status === 200) {
       yield put(updateData({ resultFeauture: response.data.products }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "feauture", value: false }));
     }
   } catch (error) {
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "feauture", value: false }));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -131,7 +133,6 @@ function* handleGetProWithFilter(action) {
       yield put(setLoading(false));
     }
   } catch (error) {
-    toast.error(error.response.data.message);
     yield put(updateData({ resultProWithFilter: [] }));
     yield put(setLoading(false));
     console.log(
@@ -146,16 +147,16 @@ function* handleGetProSearch(action) {
   const { payload } = action;
 
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "searchNamePro", value: true }));
     const response = yield call(requestProSearch, payload);
 
     if (response.status === 200) {
       yield put(updateData({ resultProSearch: response.data.products }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "searchNamePro", value: false }));
     }
   } catch (error) {
     yield put(updateData({ resultProSearch: {} }));
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "searchNamePro", value: false }));
     console.log(
       "🚀 ~ file: pro-handlers.js:36 ~ function*handleGetHotDeal ~ error:",
       error
@@ -168,7 +169,7 @@ function* handleGetProQuickView(action) {
   const { payload, type } = action;
 
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "quickview", value: true }));
     const response = yield call(requestProQuickview, payload);
     console.log(
       "🚀 ~ file: pro-handlers.js:172 ~ function*handleGetProQuickView ~ response:",
@@ -177,11 +178,11 @@ function* handleGetProQuickView(action) {
 
     if (response.status === 200) {
       yield put(updateData({ resultProQuickView: response.data.product }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "quickview", value: false }));
     }
   } catch (error) {
     toast.error(error.response.data.message);
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "quickview", value: false }));
   }
 }
 
@@ -189,7 +190,7 @@ function* handleGetProDetails(action) {
   const { payload, type } = action;
 
   try {
-    yield put(setLoading(true));
+    yield put(setLoadings({ component: "details", value: true }));
     const response = yield call(requestProDetails, payload);
     console.log(
       "🚀 ~ file: pro-handlers.js:194 ~ function*handleGetProDetails ~ response:",
@@ -198,11 +199,11 @@ function* handleGetProDetails(action) {
 
     if (response.status === 200) {
       yield put(updateData({ resultProDetails: response.data }));
-      yield put(setLoading(false));
+      yield put(setLoadings({ component: "details", value: false }));
     }
   } catch (error) {
     toast.error(error.response.data.message);
-    yield put(setLoading(false));
+    yield put(setLoadings({ component: "details", value: false }));
   }
 }
 

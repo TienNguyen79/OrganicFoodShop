@@ -19,6 +19,10 @@ import { getToken } from "../../utils/auth";
 
 export default function* handleGetCartAll(action) {
   const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: cart-handler.js:22 ~ function*handleGetCartAll ~ payload:",
+    payload
+  );
 
   try {
     //   yield put(setLoading(true));
@@ -146,11 +150,10 @@ function* handleGetWishListAll(action) {
       // yield put(setLoading(false));
     }
   } catch (error) {
-    console.log(
-      "🚀 ~ file: cart-handler.js:104 ~ function*handleGetWishListAll ~ error:",
-      error
-    );
-
+    // console.log(
+    //   "🚀 ~ file: cart-handler.js:104 ~ function*handleGetWishListAll ~ error:",
+    //   error
+    // );
     //   yield put(setLoading(false));
   }
 }

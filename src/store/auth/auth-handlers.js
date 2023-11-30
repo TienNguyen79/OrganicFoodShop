@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { getToken, logOut, saveToken } from "../../utils/auth";
 import { authFetchMe, authUpdateUser, setLoading } from "./auth-slice";
+import History from "../../utils/history";
 //xử lý đăng ký
 export default function* handleAuthRegister(action) {
   console.log(
@@ -31,7 +32,7 @@ export default function* handleAuthRegister(action) {
     if (response.status === 200) {
       toast.success("Create new Account successfully!");
       yield put(setLoading(false));
-      window.location.href = "/login";
+      History.push("/login");
       //đặt navigate vào đây
     }
   } catch (error) {
@@ -77,7 +78,7 @@ function* handleAuthLogin(action) {
     if (response.status === 200) {
       toast.success("Login successfully!");
       yield put(setLoading(false));
-      window.location.href = "/";
+      History.push("/");
     }
   } catch (error) {
     console.log(

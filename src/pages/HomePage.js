@@ -35,7 +35,9 @@ import { blogGetAll } from "../store/blog/blog-slice";
 import { Link } from "react-router-dom";
 import { wishListGetAll } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
-
+import ProductLoading from "../modules/product/ProductLoading";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const dataUtil = [
   {
     id: 1,
@@ -118,6 +120,7 @@ const HomePage = () => {
     dataTopRated,
     dataFeauture,
     loading,
+    loadings,
     dataProSearch,
     dataPro,
   } = useSelector((state) => state.product);
@@ -158,21 +161,27 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* {loading && dataProSearch.length <= 0 && dataQuickview.length <= 0 && (
-        <div className="fixed h-full flex items-center inset-0 bg-opacity-90  bg-white z-[999] ">
+      {loadings.bestSeller === true &&
+      loadings.hotDeal === true &&
+      loadings.topRated === true &&
+      loadings.feauture === true ? (
+        <div className="fixed h-full flex items-center inset-0  bg-white z-[999] ">
           <img
             src="/loading3.svg"
             className="loadingsvg  h-[150px] mx-auto"
             alt="loading"
           />
         </div>
-      )} */}
+      ) : (
+        ""
+      )}
 
-      <div className="pt-[80px]">
+      <div className="">
         <ProQuickView
           open={isModalOpen ? "visible" : "invisible"}
           onClose={closeModal}
           isClickClose={isClickClose}
+          className="top-[190px]"
           // data={datafake}
         />
       </div>
@@ -213,7 +222,11 @@ const HomePage = () => {
             ></LabelRedirect>
           </GroupJusBeween>
         </Gap>
-
+        {/* <ProductItem
+                key={item.id}
+                data={item}
+                openModal={openModal}
+              ></ProductItem> */}
         <div className="grid grid-cols-4  gap-x-6">
           {dataFeauture.length > 0 &&
             dataFeauture.map((item) => (

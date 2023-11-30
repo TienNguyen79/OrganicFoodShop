@@ -262,7 +262,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                 <Button
                   kind="primary"
                   type="submit"
-                  // className="w-[160px]"
+                  className="w-[160px] !px-[10px]"
                   isLoading={loadingCart}
                 >
                   <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
@@ -286,7 +286,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                   <Button
                     kind="secondary"
                     href="/checkout"
-                    // className="w-[160px]"
+                    className="w-[160px]"
                   >
                     <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
                       <span className="block w-full text-sm">Buy it Now </span>

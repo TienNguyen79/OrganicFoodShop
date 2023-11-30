@@ -10,6 +10,11 @@ const userSlice = createSlice({
     UserUpdateAddress: (state, action) => ({ ...state, ...action.payload }),
     UserChangePassword: (state, action) => ({ ...state, ...action.payload }),
     CustomerGetAll: () => {},
+    CustomerDelete: (state, action) => ({ ...state, ...action.payload }),
+    CustomerAdd: (state, action) => ({ ...state, ...action.payload }),
+    CustomerRole: (state, action) => ({ ...state, ...action.payload }),
+    CustomerSearch: (state, action) => ({ ...state, ...action.payload }),
+    CustomerStatus: (state, action) => ({ ...state, ...action.payload }),
     updateDataCustomer: (state, action) => ({
       ...state,
       dataAllCustomer:
@@ -24,5 +29,10 @@ export const {
   UserUpdateAddress,
   updateDataCustomer,
   CustomerGetAll,
+  CustomerDelete,
+  CustomerAdd,
+  CustomerRole,
+  CustomerStatus,
+  CustomerSearch,
 } = userSlice.actions;
 export default userSlice.reducer;

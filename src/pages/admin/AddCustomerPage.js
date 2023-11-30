@@ -14,6 +14,9 @@ import { userRole } from "../../constants/global";
 import Button from "../../components/button/Button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { CustomerAdd } from "../../store/user/user-slice";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
@@ -46,14 +49,18 @@ const AddCustomerPage = () => {
   const { value: showEye2, handleToggleValue: handleToggleEye2 } =
     useToggleValue();
 
-  const watchRole = watch("role");
-
+  const watchRole = watch("role_id");
+  const dispatch = useDispatch();
   const handleAddCustomer = (values) => {
     console.log(
       "🚀 ~ file: AddCustomerPage.js:51 ~ handleAddCustomer ~ values:",
       values
     );
+    dispatch(CustomerAdd(values));
   };
+  useEffect(() => {
+    setValue1("role_id", 1);
+  }, []);
   return (
     <LayoutAdminAct
       label="Add Customer"
@@ -62,10 +69,18 @@ const AddCustomerPage = () => {
     >
       <form action="" onSubmit={handleSubmit(handleAddCustomer)}>
         <div className="flex gap-x-4 justify-end py-5">
-          <Button kind="discard" href="/admin/customer">
+          <Button
+            kind="discard"
+            href="/admin/customer"
+            className="hover:bg-danger hover:text-white transition-all"
+          >
             Discard
           </Button>
-          <Button kind="ghost" type="submit">
+          <Button
+            kind="ghost"
+            type="submit"
+            className="hover:bg-greenGray1 hover:text-primary transition-all"
+          >
             PUBLISH CUSTOMER
           </Button>
         </div>
@@ -134,7 +149,7 @@ const AddCustomerPage = () => {
                   control={control}
                   checked={Number(watchRole) === userRole.USER}
                   value={userRole.USER}
-                  name="role"
+                  name="role_id"
                 >
                   <span className="block text-gray6">User</span>
                 </Radio>
@@ -142,7 +157,7 @@ const AddCustomerPage = () => {
                   control={control}
                   checked={Number(watchRole) === userRole.ADMIN}
                   value={userRole.ADMIN}
-                  name="role"
+                  name="role_id"
                 >
                   <span className="block text-gray6">Admin</span>
                 </Radio>

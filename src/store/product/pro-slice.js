@@ -13,6 +13,19 @@ const productSlice = createSlice({
     dataQuickview: [],
     dataProDetails: [],
     loading: false,
+    loadingSearchNamePro: false,
+    loadings: {
+      all: false,
+      bestSeller: false,
+      hotDeal: false,
+      topRated: false,
+      feauture: false,
+      withFilter: false,
+      search: false,
+      quickview: false,
+      details: false,
+      searchNamePro: false,
+    },
   },
   reducers: {
     proGetAll: () => {},
@@ -41,6 +54,18 @@ const productSlice = createSlice({
       ...state,
       loading: action.payload,
     }),
+    setLoadingSearchNamePro: (state, action) => ({
+      ...state,
+      loadingSearchNamePro: action.payload,
+    }),
+
+    setLoadings: (state, action) => ({
+      ...state,
+      loadings: {
+        ...state.loadings,
+        [action.payload.component]: action.payload.value,
+      },
+    }),
     // updateData2: (state, action) => ({
     //   ...state,
     //   dataHotDeal: action.payload.data2,
@@ -61,6 +86,8 @@ export const {
   proGetQuickview,
   proGetDetails,
   setLoading,
+  setLoadingSearchNamePro,
+  setLoadings,
 } = productSlice.actions;
 
 export default productSlice.reducer;

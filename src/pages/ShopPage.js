@@ -37,6 +37,7 @@ import IconPagiNext from "../components/Icons/IconPagiNext";
 import IconPagiPrev from "../components/Icons/IconPagiPrev";
 import ProDetailItem from "../modules/product/ProDetailItem";
 import ProQuickView from "../modules/product/ProQuickView";
+import ProductLoading from "../modules/product/ProductLoading";
 
 const itemsPerPage = 9;
 
@@ -238,6 +239,7 @@ const ShopPage = () => {
         open={isModalOpen ? "visible" : "invisible"}
         onClose={closeModal}
         isClickClose={isClickClose}
+        className="top-[90px]"
         // data={datafake}
       />
 
@@ -385,7 +387,7 @@ const ShopPage = () => {
             </div>
             <div className="flex items-center gap-x-2">
               <span className="block text-gray9 text-[16px] font-semibold">
-                {dataProWithFilter?.total}
+                {dataProWithFilter?.total || 0}
               </span>
               <span className="block text-gray6 text-[16px] font-normal ">
                 Results Found
@@ -394,12 +396,14 @@ const ShopPage = () => {
           </div>
 
           {loading ? (
-            <div className="h-[100vh] flex justify-center items-center">
-              <img
-                src="/loading2.svg"
-                className="loadingsvg h-[60px] mx-auto"
-                alt="loading"
-              />
+            <div className="grid grid-cols-3 gap-4">
+              {Array(9)
+                .fill(0)
+                .map((item, index) => (
+                  <div key={index}>
+                    <ProductLoading></ProductLoading>
+                  </div>
+                ))}
             </div>
           ) : (
             <div>
@@ -415,25 +419,31 @@ const ShopPage = () => {
                       ></ProductItem>
                     ))
                 ) : (
-                  <h1 className="text-danger text-[20px]">Product Not Found</h1>
+                  <div className="absolute">
+                    <h1 className="text-gray-700 py-5 text-[25px] text-center font-medium uppercase">
+                      No products found
+                    </h1>
+                  </div>
                 )}
               </div>
             </div>
           )}
 
-          <div className="mt-16 flex justify-center items-center">
-            <ReactPaginate
-              key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
-              breakLabel="..."
-              nextLabel={<IconPagiNext></IconPagiNext>}
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
-              pageCount={pageCount}
-              previousLabel={<IconPagiPrev></IconPagiPrev>}
-              renderOnZeroPageCount={null}
-              className="pagination"
-            />
-          </div>
+          {dataProWithFilter?.data?.length > 0 && (
+            <div className="mt-16 flex justify-center items-center">
+              <ReactPaginate
+                key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
+                breakLabel="..."
+                nextLabel={<IconPagiNext></IconPagiNext>}
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+                pageCount={pageCount}
+                previousLabel={<IconPagiPrev></IconPagiPrev>}
+                renderOnZeroPageCount={null}
+                className="pagination"
+              />
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

@@ -8,12 +8,13 @@ const ProQuickView = ({
   open = "invisible",
   isClickClose,
   onClose = () => {},
+  className = "top-[130px]",
 }) => {
   const { dataQuickview } = useSelector((state) => state.product);
 
   return (
     <div
-      className={`relative w-full h-full top-[130px]  flex justify-center items-center  ${open} `}
+      className={`relative w-full h-full   flex justify-center items-center  ${open} ${className} `}
     >
       <Overlay open={open} onClick={onClose}></Overlay>
 

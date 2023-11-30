@@ -26,13 +26,16 @@ const Header = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(cartGetAll(getToken()));
-  }, []);
-  useEffect(() => {
     dispatch(wishListGetAll(getToken()));
   }, []);
 
   const { dataCartAll, dataWishListAll } = useSelector((state) => state.cart);
-  const { dataProSearch, loading } = useSelector((state) => state.product);
+  const { dataProSearch, loading, loadingSearchNamePro, loadings } =
+    useSelector((state) => state.product);
+  console.log(
+    "🚀 ~ file: Header.js:34 ~ Header ~ loadings searchNamePro:",
+    loadings.searchNamePro
+  );
 
   const { show, setShow, nodeRef } = useClickOutSide();
   const {
@@ -181,7 +184,7 @@ const Header = () => {
               <div ref={nodeRef2} className="">
                 <PopupSearch
                   data={dataProSearch}
-                  loading={loading}
+                  loading={loadings.searchNamePro}
                   text={getTextSearch}
                 ></PopupSearch>
               </div>
