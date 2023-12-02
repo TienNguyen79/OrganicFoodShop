@@ -28,7 +28,7 @@ const navLink = [
   },
   {
     id: 2,
-    name: "Product",
+    name: "Products",
     icon: <FontAwesomeIcon icon={faBoxOpen} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
     to: "/admin/products",
@@ -75,7 +75,7 @@ const navLink = [
   },
   {
     id: 4,
-    name: "Order",
+    name: "Orders",
     icon: <FontAwesomeIcon icon={faCartShopping} size="lg" />,
     icondown: "",
     to: "/admin/order",
@@ -83,15 +83,15 @@ const navLink = [
   },
   {
     id: 5,
-    name: "Customer",
+    name: "Customers",
     icon: <FontAwesomeIcon icon={faUser} size="lg" />,
     icondown: "",
-    to: "/admin/customer",
+    to: "/admin/customers",
     navSub: [],
   },
   {
     id: 6,
-    name: "Blog",
+    name: "Blogs",
     icon: <FontAwesomeIcon icon={faBlog} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
     to: "/admin/products",

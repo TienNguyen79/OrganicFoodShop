@@ -12,6 +12,22 @@ const categorySlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    CateGetDetails: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    CateAdd: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    CateDelete: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    CateUpdate: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateData: (state, action) => ({
       ...state,
       dataCate: action.payload.resultCateAll || state.dataCate,
@@ -20,7 +36,14 @@ const categorySlice = createSlice({
   },
 });
 
-export const { cateGetdataAll, cateGetdataWithId, updateData } =
-  categorySlice.actions;
+export const {
+  cateGetdataAll,
+  cateGetdataWithId,
+  updateData,
+  CateAdd,
+  CateDelete,
+  CateUpdate,
+  CateGetDetails,
+} = categorySlice.actions;
 
 export default categorySlice.reducer;

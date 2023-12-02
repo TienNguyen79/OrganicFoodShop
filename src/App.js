@@ -34,6 +34,10 @@ const AdDashBoardPage = lazy(() => import("./pages/admin/AdDashBoardPage"));
 const AddCustomerPage = lazy(() => import("./pages/admin/AddCustomerPage"));
 const UpdateCustomer = lazy(() => import("./pages/admin/UpdateCustomer"));
 const AdCategoriesPage = lazy(() => import("./pages/admin/AdCategoriesPage"));
+const AddCategoryPage = lazy(() => import("./pages/admin/AddCategoryPage"));
+const UpdateCategoryPage = lazy(() =>
+  import("./pages/admin/UpdateCategoryPage")
+);
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -42,7 +46,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authCheckToken());
-  }, []);
+  }, [dispatch]);
   return (
     <Suspense>
       <Routes>
@@ -115,7 +119,7 @@ function App() {
         </Route>
 
         <Route
-          path="/admin/customer"
+          path="/admin/customers"
           element={<AdCustomerPage></AdCustomerPage>}
         ></Route>
         <Route
@@ -130,7 +134,16 @@ function App() {
           path="/admin/categories"
           element={<AdCategoriesPage></AdCategoriesPage>}
         ></Route>
+        <Route
+          path="/admin/add_category"
+          element={<AddCategoryPage></AddCategoryPage>}
+        ></Route>
+        <Route
+          path="/admin/update_category/:slug"
+          element={<UpdateCategoryPage></UpdateCategoryPage>}
+        ></Route>
 
+        {/* ADMIN */}
         <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>
         <Route path="/login" element={<LoginPage></LoginPage>}></Route>
         <Route

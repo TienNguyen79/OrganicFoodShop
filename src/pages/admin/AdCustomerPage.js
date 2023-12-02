@@ -72,7 +72,7 @@ const AdCustomerPage = () => {
   const handleUpdateRole = (item) => {
     if (item.permission === userRole.USER) {
       Swal.fire({
-        title: `Are you sure you want ${item?.name} as Admin?`,
+        title: `Are you sure you want <span class="capitalize font-semibold italic underline text-darkPrimary"> ${item?.name} </span> as Admin?`,
         text: "",
         icon: "info",
         showCancelButton: true,
@@ -91,7 +91,7 @@ const AdCustomerPage = () => {
       });
     } else if (item.permission === userRole.ADMIN) {
       Swal.fire({
-        title: `Are you sure you want ${item?.name} to be the User?`,
+        title: `Are you sure you want  <span class="capitalize font-semibold italic underline text-darkPrimary">${item?.name}</span> to be the User?`,
         text: "",
         icon: "info",
         showCancelButton: true,
@@ -114,7 +114,7 @@ const AdCustomerPage = () => {
   const handleUpdateStatus = (item) => {
     if (item.status === userStatus.ACTIVE) {
       Swal.fire({
-        title: `Are you sure you want Ban ${item?.name} ?`,
+        title: `Are you sure you want Ban <span class="capitalize font-semibold italic underline text-darkPrimary"> ${item?.name} </span> ?`,
         text: "",
         icon: "info",
         showCancelButton: true,
@@ -133,7 +133,7 @@ const AdCustomerPage = () => {
       });
     } else if (item.permission === userStatus.BAN) {
       Swal.fire({
-        title: `Are you sure you want UnBan ${item?.name} ?`,
+        title: `Are you sure you want UnBan <span class="capitalize font-semibold italic underline text-darkPrimary"> ${item?.name} </span>?`,
         text: "",
         icon: "info",
         showCancelButton: true,
@@ -246,7 +246,7 @@ const AdCustomerPage = () => {
                           className="border p-2 cursor-pointer"
                           onClick={() => {
                             Swal.fire({
-                              title: `Are you sure to delete ${item?.name}?`,
+                              title: `Are you sure to delete <span class="capitalize font-semibold italic underline text-darkPrimary"> ${item?.name} </span>?`,
                               text: "You won't be able to revert this!",
                               icon: "warning",
                               showCancelButton: true,

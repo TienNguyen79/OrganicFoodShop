@@ -71,15 +71,15 @@ const AddCustomerPage = () => {
         <div className="flex gap-x-4 justify-end py-5">
           <Button
             kind="discard"
-            href="/admin/customer"
-            className="hover:bg-danger hover:text-white transition-all"
+            href="/admin/customers"
+            className="hover:bg-danger hover:text-white uppercase transition-all"
           >
             Discard
           </Button>
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
           >
             PUBLISH CUSTOMER
           </Button>

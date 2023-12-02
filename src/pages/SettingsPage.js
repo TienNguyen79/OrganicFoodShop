@@ -89,6 +89,10 @@ const SettingsPage = () => {
     resolver: yupResolver(schema1),
     mode: "onChange",
   });
+  // console.log(
+  //   "🚀 ~ file: SettingsPage.js:86 ~ SettingsPage ~ getValues:",
+  //   getValues1("avata")
+  // );
 
   const {
     control: control2,

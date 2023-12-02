@@ -124,6 +124,7 @@ const HomePage = () => {
     dataProSearch,
     dataPro,
   } = useSelector((state) => state.product);
+  console.log("🚀 ~ file: HomePage.js:126 ~ HomePage ~ dataPro:", dataPro);
 
   const { dataCate } = useSelector((state) => state.category);
   const { dataQuickview } = useSelector((state) => state.product);
