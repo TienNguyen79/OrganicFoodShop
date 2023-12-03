@@ -3,6 +3,7 @@ import {
   CateAdd,
   CateDelete,
   CateGetDetails,
+  CateSearch,
   CateUpdate,
   cateGetdataAll,
   cateGetdataWithId,
@@ -12,6 +13,7 @@ import handleGetCate, {
   handleGetCateWithId,
   handleGetDetailCate,
   handlePostCategory,
+  handleSearchCategory,
   handleUpdateCategory,
 } from "./cate-handlers";
 
@@ -22,4 +24,5 @@ export default function* cateSaga() {
   yield takeLatest(CateDelete.type, handleDeleteCategory);
   yield takeLatest(CateUpdate.type, handleUpdateCategory);
   yield takeLatest(CateGetDetails.type, handleGetDetailCate);
+  yield takeLatest(CateSearch.type, handleSearchCategory);
 }

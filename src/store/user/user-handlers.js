@@ -1,6 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import {
   requestAdminAddCustomer,
+  requestAdminCustomerDetails,
   requestAdminDeleteCustomer,
   requestAdminGetAllCustomer,
   requestAdminRoleCustomer,
@@ -164,7 +165,7 @@ function* handleAddCustomer(action) {
       yield put(
         updateDataCustomer({ resultDataCustomerAll: customerAll.data })
       );
-      History.push("/admin/customer");
+      History.push("/admin/customers");
       toast.success("Add Customer successfully!");
     }
   } catch (error) {
@@ -264,6 +265,27 @@ function* handleSearchCustomer(action) {
   }
 }
 
+function* handleGetCustomerDetail(action) {
+  const { payload, type } = action;
+
+  try {
+    const response = yield call(requestAdminCustomerDetails, payload);
+    console.log(
+      "🚀 ~ file: user-handlers.js:275 ~ function*handleGetCustomerDetail ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataCustomer({ resultDataCustomerAll: response.data }));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: user-handlers.js:282 ~ function*handleGetCustomerDetail ~ error:",
+      error
+    );
+  }
+}
+
 export {
   handleChangePasswordUser,
   handleUpdateAddressUser,
@@ -273,4 +295,5 @@ export {
   handleRoleCustomer,
   handleStatusCustomer,
   handleSearchCustomer,
+  handleGetCustomerDetail,
 };

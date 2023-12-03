@@ -15,6 +15,7 @@ const userSlice = createSlice({
     CustomerRole: (state, action) => ({ ...state, ...action.payload }),
     CustomerSearch: (state, action) => ({ ...state, ...action.payload }),
     CustomerStatus: (state, action) => ({ ...state, ...action.payload }),
+    CustomerDetails: (state, action) => ({ ...state, ...action.payload }),
     updateDataCustomer: (state, action) => ({
       ...state,
       dataAllCustomer:
@@ -34,5 +35,6 @@ export const {
   CustomerRole,
   CustomerStatus,
   CustomerSearch,
+  CustomerDetails,
 } = userSlice.actions;
 export default userSlice.reducer;

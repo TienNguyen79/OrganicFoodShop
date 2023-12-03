@@ -8,7 +8,7 @@ const ImageUpload = ({
   onChange = () => {},
   name = "",
   setValue1,
-  getValues1,
+  getValues1 = "",
   className = "rounded-full",
 }) => {
   console.log("🚀 ~ file: ImageUpload.js:14 ~ getValues1:", getValues1);

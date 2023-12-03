@@ -126,5 +126,22 @@ export const requestAdminSearchCustomer = (name) => {
     },
   };
 
-  return axios.get(`api/admin/user/search_users?name=${name}`, config);
+  return axios.get(`/api/admin/user/search_users?name=${name}`, config);
+};
+
+export const requestAdminCustomerDetails = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.get(
+    `/api/admin/user/show_user/${data.id}?page=${data.page}`,
+    config
+  );
 };

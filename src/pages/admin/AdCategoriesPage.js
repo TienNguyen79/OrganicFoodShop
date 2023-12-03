@@ -15,36 +15,32 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import ProName from "../../modules/product/partsCartAndTym/ProName";
 import { useDispatch, useSelector } from "react-redux";
-import { CateDelete, cateGetdataAll } from "../../store/category/cate-slice";
+import {
+  CateDelete,
+  CateSearch,
+  cateGetdataAll,
+} from "../../store/category/cate-slice";
 import { proGetAll } from "../../store/product/pro-slice";
 import Swal from "sweetalert2";
 const AdCategoriesPage = () => {
   const { control } = useForm();
+  const [nameCate, setNameCate] = useState("");
+  console.log(
+    "🚀 ~ file: AdCategoriesPage.js:24 ~ AdCategoriesPage ~ nameCate:",
+    nameCate
+  );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CateSearch(nameCate));
+  }, [dispatch, nameCate]);
+
   useEffect(() => {
     dispatch(cateGetdataAll());
     dispatch(proGetAll());
-  }, []);
+  }, [dispatch]);
 
   const { dataCate } = useSelector((state) => state.category);
-  const { dataPro } = useSelector((state) => state.product);
-
-  const [datatLength, setDatatLength] = useState([]);
-  // useEffect(() => {
-  //   const arr = [];
-  //   const arrLength = [];
-  //   dataCate?.map((item) => {
-  //     arr.push(item.id);
-  //   });
-
-  //   arr?.map((id) => {
-  //     const productsInCategory = dataPro?.filter(
-  //       (product) => product.category_id === id
-  //     );
-  //     arrLength.push(productsInCategory.length);
-  //   });
-  //   setDatatLength(arrLength);
-  // }, [dataCate, dataPro]);
 
   const handleDeleteCate = (item) => {
     Swal.fire({
@@ -62,14 +58,16 @@ const AdCategoriesPage = () => {
     });
   };
   return (
-    <LayoutAdminAct label="Categories List" content="Manage My Categories">
+    <LayoutAdminAct label="Category List" content="Manage My Categories">
       <div>
         <div className="flex items-center justify-between my-5 px-3">
           <Input
             control={control}
             name="search"
             className="!w-[300px]"
+            type="text"
             placeholder="Search my Category..."
+            setNameCate={setNameCate}
           ></Input>
           <Button
             href="/admin/add_category"
@@ -80,67 +78,72 @@ const AdCategoriesPage = () => {
           </Button>
         </div>
         <Table>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Category</th>
-                <th>Total Product</th>
-                {/* <th>Quantity Ordered</th> */}
-                {/* <th>Total Spent</th> */}
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataCate.length > 0 &&
-                dataCate.map((item, index) => (
-                  <tr key={item.id} className="bg-white">
-                    <td className="!text-center">#{item.id}</td>
-                    <td className="!text-center">
-                      <div className="flex items-center  gap-x-3 ">
-                        <div className="w-[60px] h-[60px]">
-                          <img
-                            src={item?.image}
-                            className="w-full h-full object-cover"
-                            alt=""
-                          />
+          <div className="w-full">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Category</th>
+                  <th>Total Product</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div className="h-[500px] overflow-x-auto">
+            <table className="table-auto w-full">
+              <tbody>
+                {dataCate.length > 0 &&
+                  dataCate.map((item, index) => (
+                    <tr key={item.id} className="bg-white">
+                      <td className="!text-center">#{item.id}</td>
+                      <td className="!text-center">
+                        <div className="flex items-center  gap-x-3 ">
+                          <div className=" w-[60px] h-[60px]">
+                            <img
+                              src={item?.image}
+                              className="w-full h-full object-cover"
+                              alt=""
+                            />
+                          </div>
+                          <div className="flex flex-col justify-center items-start ">
+                            <ProName
+                              maxW="max-w-[500px]"
+                              name={item?.name}
+                              className="capitalize"
+                            ></ProName>
+                            <p className="text-sm font-normal text-gray4">
+                              {convertDate(item?.created_at)}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex flex-col justify-center items-start ">
-                          <ProName
-                            maxW="max-w-[500px]"
-                            name={item?.name}
-                            className="capitalize"
-                          ></ProName>
-                          <p className="text-sm font-normal text-gray4">
-                            {convertDate(item?.created_at)}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="!text-center">999</td>
-                    <td className="!text-center">
-                      <div className="flex items-center justify-center gap-x-4">
-                        {/* <Link className="border p-2">
+                      </td>
+                      <td className="w-[250px]">{item?.gross_product}</td>
+                      <td className="!text-center">
+                        <div className="flex items-center justify-center gap-x-4">
+                          {/* <Link className="border p-2">
                           <FontAwesomeIcon icon={faEye} size="lg" />
                         </Link> */}
-                        <Link
-                          className="border p-2"
-                          to={`/admin/update_category/${item.id}`}
-                        >
-                          <FontAwesomeIcon icon={faPenToSquare} size="lg" />
-                        </Link>
-                        <div
-                          className="border p-2 cursor-pointer"
-                          onClick={() => handleDeleteCate(item)}
-                        >
-                          <FontAwesomeIcon icon={faTrashCan} size="lg" />
+                          <Link
+                            className="border p-2"
+                            to={`/admin/update_category/${item.id}`}
+                          >
+                            <FontAwesomeIcon icon={faPenToSquare} size="lg" />
+                          </Link>
+                          <div
+                            className="border p-2 cursor-pointer"
+                            onClick={() => handleDeleteCate(item)}
+                          >
+                            <FontAwesomeIcon icon={faTrashCan} size="lg" />
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </Table>
       </div>
     </LayoutAdminAct>

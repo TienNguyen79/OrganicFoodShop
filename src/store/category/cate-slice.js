@@ -28,6 +28,10 @@ const categorySlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    CateSearch: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateData: (state, action) => ({
       ...state,
       dataCate: action.payload.resultCateAll || state.dataCate,
@@ -44,6 +48,7 @@ export const {
   CateDelete,
   CateUpdate,
   CateGetDetails,
+  CateSearch,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

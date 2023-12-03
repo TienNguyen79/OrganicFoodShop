@@ -142,23 +142,23 @@ const HomePage = () => {
   //--------------
 
   //xử lý chèn số lượng sản phẩm với categoryId tương ứng ở Shop by Top Categories
-  const [datatLength, setDatatLength] = useState([]);
+  // const [datatLength, setDatatLength] = useState([]);
 
-  useEffect(() => {
-    const arr = [];
-    const arrLength = [];
-    dataCate.map((item) => {
-      arr.push(item.id);
-    });
+  // useEffect(() => {
+  //   const arr = [];
+  //   const arrLength = [];
+  //   dataCate.map((item) => {
+  //     arr.push(item.id);
+  //   });
 
-    arr.map((id) => {
-      const productsInCategory = dataPro.filter(
-        (product) => product.category_id === id
-      );
-      arrLength.push(productsInCategory.length);
-    });
-    setDatatLength(arrLength);
-  }, [dataCate, dataPro]);
+  //   arr.map((id) => {
+  //     const productsInCategory = dataPro.filter(
+  //       (product) => product.category_id === id
+  //     );
+  //     arrLength.push(productsInCategory.length);
+  //   });
+  //   setDatatLength(arrLength);
+  // }, [dataCate, dataPro]);
 
   return (
     <div>
@@ -259,7 +259,7 @@ const HomePage = () => {
                   <Link className="px-3" key={item.id} to={`/shop/${item.id}`}>
                     <CategoryItem
                       data={item}
-                      datatLength={datatLength[index]}
+                      datatLength={item?.gross_product}
                     ></CategoryItem>
                   </Link>
                 );

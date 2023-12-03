@@ -31,8 +31,14 @@ const navLink = [
     name: "Products",
     icon: <FontAwesomeIcon icon={faBoxOpen} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
-    to: "/admin/products",
+    to: "#",
     navSub: [
+      {
+        id: 1,
+        name: "Product List",
+        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
+        to: "/admin/products/product_list",
+      },
       {
         id: 2,
         name: "Feauture Products",
@@ -94,10 +100,16 @@ const navLink = [
     name: "Blogs",
     icon: <FontAwesomeIcon icon={faBlog} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
-    to: "/admin/products",
+    to: "#",
     navSub: [
       {
         id: 1,
+        name: "Blog List",
+        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
+        to: "/admin/blog/blog_list",
+      },
+      {
+        id: 2,
         name: "Comment Blog",
         icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
         to: "/admin/commentBlog",
@@ -225,9 +237,9 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
               <div
                 className={`z-[1] transition-all flex flex-col gap-y-3 duration-500 -translate-x-full  ${
                   openSubNav === item.id && openSubNav === 2
-                    ? "h-[200px] !translate-x-0 "
+                    ? "h-[230px] !translate-x-0 "
                     : openSubNav === item.id && openSubNav === 6
-                    ? "h-[30px] !translate-x-0"
+                    ? "h-[60px] !translate-x-0"
                     : "h-[0px]   "
                 } `}
               >

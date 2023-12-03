@@ -86,6 +86,10 @@ const ShopPage = () => {
   const { dataProWithFilter, dataBestSeller, dataPro } = useSelector(
     (state) => state.product
   );
+  console.log(
+    "🚀 ~ file: ShopPage.js:87 ~ ShopPage ~ dataProWithFilter:",
+    dataProWithFilter
+  );
   const { loading } = useSelector((state) => state.product);
 
   //set các field đã được chọn or set lấy giá trị trên url
@@ -198,17 +202,17 @@ const ShopPage = () => {
   };
 
   //lấy tất cả số lượng category tương ứng
-  const uniqueIds = [...new Set(dataPro.map((product) => product.category_id))]; //trả ra 1 mảng các category_id không trùng nhau
-  // Sắp xếp mảng uniqueIds theo thứ tự của dataCate
-  uniqueIds.sort((a, b) => {
-    const indexA = dataCate.findIndex((item) => item.id === a);
-    const indexB = dataCate.findIndex((item) => item.id === b);
-    return indexA - indexB;
-  });
+  // const uniqueIds = [...new Set(dataPro.map((product) => product.category_id))]; //trả ra 1 mảng các category_id không trùng nhau
+  // // Sắp xếp mảng uniqueIds theo thứ tự của dataCate
+  // uniqueIds.sort((a, b) => {
+  //   const indexA = dataCate.findIndex((item) => item.id === a);
+  //   const indexB = dataCate.findIndex((item) => item.id === b);
+  //   return indexA - indexB;
+  // });
 
-  const groupedProducts = uniqueIds.map((category_id) =>
-    dataPro.filter((product) => product.category_id === category_id)
-  );
+  // const groupedProducts = uniqueIds.map((category_id) =>
+  //   dataPro.filter((product) => product.category_id === category_id)
+  // );
 
   //....
 
@@ -222,6 +226,18 @@ const ShopPage = () => {
     setModalOpen(false);
     setIsClickClose(true);
   };
+
+  //sắp xếp cate theo thứ tự giảm dần
+  const [sortedDataCate, setSortedDataCate] = useState([]);
+
+  useEffect(() => {
+    if (dataCate) {
+      const sortedData = [...dataCate].sort(
+        (a, b) => b.gross_product - a.gross_product
+      );
+      setSortedDataCate(sortedData);
+    }
+  }, [dataCate]);
 
   return (
     <Fragment>
@@ -255,8 +271,8 @@ const ShopPage = () => {
             <Dropdown>
               <Select placeholder="All Categories"></Select>
               <List>
-                {dataCate.length > 0 &&
-                  dataCate.map((item, index) => (
+                {sortedDataCate.length > 0 &&
+                  sortedDataCate.map((item, index) => (
                     <Options key={item.id}>
                       <div className="flex items-center gap-y-2">
                         <Radio
@@ -272,7 +288,7 @@ const ShopPage = () => {
                             ></CateTitle>
 
                             <span className="ml-1 inline-block text-gray5 text-[14px] font-normal group-hover:text-primary">
-                              ({groupedProducts[index]?.length})
+                              ({item?.gross_product})
                             </span>
                           </div>
                         </Radio>
@@ -429,21 +445,22 @@ const ShopPage = () => {
             </div>
           )}
 
-          {dataProWithFilter?.data?.length > 0 && (
-            <div className="mt-16 flex justify-center items-center">
-              <ReactPaginate
-                key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
-                breakLabel="..."
-                nextLabel={<IconPagiNext></IconPagiNext>}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
-                pageCount={pageCount}
-                previousLabel={<IconPagiPrev></IconPagiPrev>}
-                renderOnZeroPageCount={null}
-                className="pagination"
-              />
-            </div>
-          )}
+          {dataProWithFilter?.data?.length > 0 &&
+            dataProWithFilter.last_page > 1 && (
+              <div className="mt-16 flex justify-center items-center">
+                <ReactPaginate
+                  key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
+                  breakLabel="..."
+                  nextLabel={<IconPagiNext></IconPagiNext>}
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+                  pageCount={pageCount}
+                  previousLabel={<IconPagiPrev></IconPagiPrev>}
+                  renderOnZeroPageCount={null}
+                  className="pagination"
+                />
+              </div>
+            )}
         </div>
       </div>
     </Fragment>

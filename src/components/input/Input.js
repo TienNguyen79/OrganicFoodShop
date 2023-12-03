@@ -16,6 +16,7 @@ const Input = (props) => {
     kind = "search",
     cssEye = "",
     setNameCustomer,
+    setNameCate,
     handleFilterChangeDebounced,
     ...rest
   } = props;
@@ -28,17 +29,18 @@ const Input = (props) => {
   });
   // console.log(error);
 
-  const debouncedSetNameCustomer = debounce((text) => {
+  const debouncedSetName = debounce((text) => {
     setNameCustomer && setNameCustomer(text);
+    setNameCate && setNameCate(text);
   }, 300);
 
   useEffect(() => {
     const text = field.value;
-    debouncedSetNameCustomer(text);
+    debouncedSetName(text);
     return () => {
-      debouncedSetNameCustomer.cancel();
+      debouncedSetName.cancel();
     };
-  }, [field.value, debouncedSetNameCustomer]);
+  }, [field.value, debouncedSetName]);
 
   return (
     <div>

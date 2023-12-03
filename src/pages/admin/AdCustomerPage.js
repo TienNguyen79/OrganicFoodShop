@@ -233,7 +233,10 @@ const AdCustomerPage = () => {
                     </td>
                     <td className="!text-center">
                       <div className="flex items-center justify-center gap-x-4">
-                        <Link className="border p-2">
+                        <Link
+                          className="border p-2"
+                          to={`/admin/customers/${item.id}`}
+                        >
                           <FontAwesomeIcon icon={faEye} size="lg" />
                         </Link>
                         {/* <Link

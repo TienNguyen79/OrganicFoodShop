@@ -52,6 +52,10 @@ export const requestAdminDeleteCate = (data) => {
 };
 
 export const requestAdminUpdateCate = (data) => {
+  console.log(
+    "🚀 ~ file: cate-requests.js:55 ~ requestAdminUpdateCate ~ data:",
+    data.values
+  );
   const decodedToken = atob(getToken()); //giải mã base64
   if (!decodedToken) return;
 
@@ -63,4 +67,21 @@ export const requestAdminUpdateCate = (data) => {
   };
 
   return axios.put(`/api/admin/category/${data.id}`, data.values, config);
+};
+
+export const requestAdminSearchCate = (name) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.get(
+    `/api/admin/category/search_categories?name=${name}`,
+    config
+  );
 };

@@ -9,6 +9,7 @@ import IconSearch from "../../components/Icons/IconSearch";
 import CateTitle from "../category/parts/CateTitle";
 import BlogImage from "./parts/BlogImage";
 import BlogRencentlyItem from "./BlogRencentlyItem";
+import { useState } from "react";
 
 const BlogFilterItem = ({ result }) => {
   const dispatch = useDispatch();
@@ -23,18 +24,18 @@ const BlogFilterItem = ({ result }) => {
   const { dataCate } = useSelector((state) => state.category);
   const { dataPro } = useSelector((state) => state.product);
 
-  //lấy tất cả số lượng category tương ứng
-  const uniqueIds = [...new Set(dataPro.map((product) => product.category_id))]; //trả ra 1 mảng các category_id không trùng nhau
-  // Sắp xếp mảng uniqueIds theo thứ tự của dataCate
-  uniqueIds.sort((a, b) => {
-    const indexA = dataCate.findIndex((item) => item.id === a);
-    const indexB = dataCate.findIndex((item) => item.id === b);
-    return indexA - indexB;
-  });
+  //sắp xếp cate theo thứ tự giảm dần
+  const [sortedDataCate, setSortedDataCate] = useState([]);
 
-  const groupedProducts = uniqueIds.map((category_id) =>
-    dataPro.filter((product) => product.category_id === category_id)
-  );
+  useEffect(() => {
+    if (dataCate) {
+      const sortedData = [...dataCate].sort(
+        (a, b) => b.gross_product - a.gross_product
+      );
+      setSortedDataCate(sortedData);
+    }
+  }, [dataCate]);
+
   return (
     <div>
       <div>
@@ -59,8 +60,8 @@ const BlogFilterItem = ({ result }) => {
           <span className="text-gray9 text-[20px] font-medium block ">
             Top Categories
           </span>
-          {dataCate.length > 0 &&
-            dataCate.map((item, index) => (
+          {sortedDataCate.length > 0 &&
+            sortedDataCate.map((item, index) => (
               <div
                 key={item.id}
                 className="flex items-center justify-between mt-4"
@@ -71,7 +72,7 @@ const BlogFilterItem = ({ result }) => {
                 ></CateTitle>
 
                 <span className="ml-1 inline-block text-gray5 text-[14px] font-normal group-hover:text-primary">
-                  ({groupedProducts[index]?.length})
+                  ({item?.gross_product})
                 </span>
               </div>
             ))}

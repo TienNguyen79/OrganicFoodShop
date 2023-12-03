@@ -3,6 +3,7 @@ import {
   requestAdminAddCate,
   requestAdminDeleteCate,
   requestAdminGetDetailCate,
+  requestAdminSearchCate,
   requestAdminUpdateCate,
   requestCateData,
   requestCateDataWithId,
@@ -135,6 +136,10 @@ function* handleDeleteCategory(action) {
 
 function* handleUpdateCategory(action) {
   const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: cate-handlers.js:139 ~ function*handleUpdateCategory ~ payload:",
+    payload
+  );
 
   try {
     const response = yield call(requestAdminUpdateCate, payload);
@@ -142,10 +147,8 @@ function* handleUpdateCategory(action) {
       "🚀 ~ file: cate-handlers.js:118 ~ function*handleUpdateCategory ~ response:",
       response
     );
-
     if (response.status === 200) {
       const resultCateAll = yield call(requestCateData);
-
       yield put(updateData({ resultCateAll: resultCateAll.data.categories }));
       toast.success("Update Category success!");
       History.push("/admin/categories");
@@ -158,10 +161,33 @@ function* handleUpdateCategory(action) {
     );
   }
 }
+
+function* handleSearchCategory(action) {
+  const { payload, type } = action;
+
+  try {
+    const response = yield call(requestAdminSearchCate, payload);
+    console.log(
+      "🚀 ~ file: cate-handlers.js:168 ~ function*handleSearchCategory ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateData({ resultCateAll: response.data.categories }));
+    }
+  } catch (error) {
+    toast.error("No categories found!");
+    console.log(
+      "🚀 ~ file: cate-handlers.js:179 ~ function*handleSearchCategory ~ error:",
+      error
+    );
+  }
+}
 export {
   handleGetCateWithId,
   handlePostCategory,
   handleDeleteCategory,
   handleUpdateCategory,
   handleGetDetailCate,
+  handleSearchCategory,
 };

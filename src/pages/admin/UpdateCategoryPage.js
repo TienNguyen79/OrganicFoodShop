@@ -17,6 +17,7 @@ import {
   CateUpdate,
 } from "../../store/category/cate-slice";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
@@ -36,12 +37,16 @@ const UpdateCategoryPage = () => {
   const dispatch = useDispatch();
 
   const { slug } = useParams();
+  const { dataCate } = useSelector((state) => state.category);
+  console.log(
+    "🚀 ~ file: UpdateCategoryPage.js:41 ~ UpdateCategoryPage ~ dataCate:",
+    dataCate
+  );
+  const [nameImg, setNameImg] = useState("");
 
   useEffect(() => {
     dispatch(CateGetDetails(slug));
   }, [dispatch, slug]);
-
-  const { dataCate } = useSelector((state) => state.category);
 
   const handleUpdateCate = (values) => {
     if (!values.image || values.image === "") {
@@ -54,14 +59,22 @@ const UpdateCategoryPage = () => {
       );
     }
   };
-
   useEffect(() => {
-    setValue1("name", dataCate?.name);
-    setValue1("image", dataCate?.image);
-  }, [slug]);
+    if (dataCate?.name) {
+      setValue1("name", dataCate?.name);
+    }
+
+    if (dataCate?.image) {
+      setValue1("image", dataCate?.image);
+      setNameImg(getValues1("image"));
+    }
+  }, [dataCate, getValues1, setValue1]);
 
   return (
-    <LayoutAdminAct label="Update Category" content="Manage My Categories">
+    <LayoutAdminAct
+      label={`Update Category -- ${dataCate?.name}`}
+      content="Manage My Categories"
+    >
       <form action="" onSubmit={handleSubmit(handleUpdateCate)}>
         <div className="flex gap-x-4 justify-end py-5">
           <Button
@@ -96,7 +109,7 @@ const UpdateCategoryPage = () => {
               name="image"
               onChange={(name, data) => setValue1("image", data.url)}
               setValue1={setValue1}
-              getValues1={getValues1("image")}
+              getValues1={nameImg}
             ></ImageUpload>
           </BoxField>
         </BoxBigAdmin>

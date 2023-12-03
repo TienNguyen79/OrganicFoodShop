@@ -7,7 +7,7 @@ const SliderItem = ({ data }) => {
   return (
     <div>
       <div className="px-[238px] py-[70px] grid grid-cols-2 gap-x-[38px] ">
-        <div>
+        <div className="h-[330px]">
           <img
             src={data?.image || "/ProductImg.png"}
             className="w-full h-full object-cover rounded-lg"

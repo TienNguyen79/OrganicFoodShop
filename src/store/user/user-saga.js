@@ -2,6 +2,7 @@ import { takeLatest } from "redux-saga/effects";
 import {
   CustomerAdd,
   CustomerDelete,
+  CustomerDetails,
   CustomerGetAll,
   CustomerRole,
   CustomerSearch,
@@ -15,6 +16,7 @@ import handleUpdateUser, {
   handleChangePasswordUser,
   handleDeleteCustomer,
   handleGetAllCustomer,
+  handleGetCustomerDetail,
   handleRoleCustomer,
   handleSearchCustomer,
   handleStatusCustomer,
@@ -31,4 +33,5 @@ export default function* userSaga() {
   yield takeLatest(CustomerRole.type, handleRoleCustomer);
   yield takeLatest(CustomerStatus.type, handleStatusCustomer);
   yield takeLatest(CustomerSearch.type, handleSearchCustomer);
+  yield takeLatest(CustomerDetails.type, handleGetCustomerDetail);
 }
