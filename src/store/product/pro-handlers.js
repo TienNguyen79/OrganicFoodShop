@@ -1,5 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import {
+  requestAdminAddPro,
+  requestAdminGetPro,
   requestProAll,
   requestProBestSeller,
   requestProDetails,
@@ -206,6 +208,42 @@ function* handleGetProDetails(action) {
     yield put(setLoadings({ component: "details", value: false }));
   }
 }
+//ADMIN
+
+function* handleAdminGetProAll(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestAdminGetPro, payload);
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProAll: response.data.products }));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: pro-handlers.js:219 ~ function*handleAdminGetProAll ~ error:",
+      error
+    );
+  }
+}
+
+function* handleAdminAddPro(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestAdminAddPro, payload);
+
+    if (response.status === 200) {
+      const response2 = yield call(requestAdminGetPro);
+
+      yield put(updateData({ resultProAll: response2.data.products }));
+      toast.success("Add Product success!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: pro-handlers.js:241 ~ function*handleAdminAddPro ~ error:",
+      error
+    );
+  }
+}
 
 export {
   handleGetHotDeal,
@@ -216,4 +254,6 @@ export {
   handleGetProSearch,
   handleGetProQuickView,
   handleGetProDetails,
+  handleAdminGetProAll,
+  handleAdminAddPro,
 };

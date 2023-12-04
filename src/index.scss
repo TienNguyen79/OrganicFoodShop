@@ -246,11 +246,11 @@ ul.slick-dots {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* start showing ellipsis when 3rd line is reached */
+  -webkit-line-clamp: 2; /* start showing ellipsis when 2rd line is reached */
   white-space: pre-wrap; /* let the text wrap preserving spaces */
 }
 
-//format cho blog
+//format cho reactquill
 .entry-content,
 .entry-content .ql-snow .ql-editor {
   font-size: 16px;
@@ -316,4 +316,7 @@ ul.slick-dots {
       font-size: 20px;
     }
   }
+}
+.ql-editor {
+  min-height: 142px;
 }

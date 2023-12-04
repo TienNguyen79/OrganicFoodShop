@@ -1,5 +1,7 @@
 import { takeLatest } from "redux-saga/effects";
 import {
+  ProAdminAdd,
+  ProAdminGet,
   proGetAll,
   proGetBestSeller,
   proGetDetails,
@@ -11,6 +13,8 @@ import {
   proGetWithFilter,
 } from "./pro-slice";
 import handleGetProBestSeller, {
+  handleAdminAddPro,
+  handleAdminGetProAll,
   handleGetHotDeal,
   handleGetProAll,
   handleGetProDetails,
@@ -31,4 +35,6 @@ export default function* proSaga() {
   yield takeLatest(proGetSearch.type, handleGetProSearch);
   yield takeLatest(proGetQuickview.type, handleGetProQuickView);
   yield takeLatest(proGetDetails.type, handleGetProDetails);
+  yield takeLatest(ProAdminGet.type, handleAdminGetProAll);
+  yield takeLatest(ProAdminAdd.type, handleAdminAddPro);
 }

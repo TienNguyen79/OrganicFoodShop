@@ -11,7 +11,6 @@ const ImageUpload = ({
   getValues1 = "",
   className = "rounded-full",
 }) => {
-  console.log("🚀 ~ file: ImageUpload.js:14 ~ getValues1:", getValues1);
   const [showImage, setShowImage] = useState("");
   const handleUploadImage = async (e) => {
     const file = e.target.files;

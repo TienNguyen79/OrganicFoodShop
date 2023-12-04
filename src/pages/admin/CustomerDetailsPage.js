@@ -27,13 +27,10 @@ import ReactPaginate from "react-paginate";
 import IconPagiNext from "../../components/Icons/IconPagiNext";
 import IconPagiPrev from "../../components/Icons/IconPagiPrev";
 import { useState } from "react";
+import Button from "../../components/button/Button";
+import LabelRedirect from "../../components/label/LabelRedirect";
 const itemsPerPage = 10;
 const CustomerDetailsPage = () => {
-  //   //Phân trang
-  //   const [pageCount, setPageCount] = useState(0);
-  //   const [itemOffset, setItemOffset] = useState(0);
-  //   const [nextPage, setNextPage] = useState(1);
-
   const dispatch = useDispatch();
   const { slug } = useParams();
   const { dataAllCustomer } = useSelector((state) => state.user);
@@ -42,35 +39,25 @@ const CustomerDetailsPage = () => {
     dataAllCustomer
   );
 
-  //   const { handlePageClick, pageCount, nextPage } = usePagination(
-  //     dataAllCustomer?.order_details,
-  //     10
-  //   );
+  const { handlePageClick, pageCount, nextPage } = usePagination(
+    dataAllCustomer?.order_details,
+    dataAllCustomer?.order_details?.per_page
+  );
 
   useEffect(() => {
-    dispatch(CustomerDetails({ id: slug, page: 1 }));
-  }, [dispatch, slug]);
+    dispatch(CustomerDetails({ id: slug, page: nextPage }));
+  }, [dispatch, slug, nextPage]);
 
-  //   //xử lí phân trang
-  //   useEffect(() => {
-  //     if (
-  //       !dataAllCustomer?.order_details.data ||
-  //       !dataAllCustomer?.order_details.total
-  //     )
-  //       return;
-  //     setPageCount(
-  //       Math.ceil(dataAllCustomer?.order_details.total / itemsPerPage)
-  //     ); //xem có tất cả bao nhiêu trang vd có 5 trang (1 2 3 4 5)
-  //   }, [dataAllCustomer?.order_details.data, itemOffset]);
-
-  //   const handlePageClick = (event) => {
-  //     const newOffset =
-  //       (event.selected * itemsPerPage) % dataAllCustomer?.order_details.total;
-  //     setItemOffset(newOffset); //theo dõi vị trí bắt đầu của mục dữ liệu trên trang hiện tại khi bạn thực hiện phân trang hoặc điều hướng qua các trang dữ liệu.
-  //     setNextPage(event.selected + 1);
-  //   };
   return (
     <LayoutAdminAct label="Customer Detail" content="Manage My Customers">
+      <div className="flex justify-end py-2">
+        <LabelRedirect
+          title="Back List"
+          className="font-semibold hover:opacity-80"
+          icon={""}
+          url="/admin/customers"
+        ></LabelRedirect>
+      </div>
       <div className="grid grid-cols-3 gap-x-2">
         <div className="col-span-1">
           <BoxBigAdmin className="rounded-md">
@@ -93,19 +80,19 @@ const CustomerDetailsPage = () => {
                 }`}
               ></UserRole>
             </div>
-            <div className="flex items-center py-4 justify-center gap-x-10">
+            <div className="py-4 justify-center gap-x-10">
               <div className="flex items-center gap-x-3 ">
                 <span className="blog bg-[#e6f7d9] text-[#56ca00] p-2 rounded-md ">
                   <FontAwesomeIcon icon={faCartShopping} size="lg" />
                 </span>
-                <div>
+                <div className="flex flex-col justify-center items-center">
                   <h3 className="text-gray7 font-semibold">
-                    {dataAllCustomer?.order_details?.data?.length}
+                    {dataAllCustomer?.order_details?.total}
                   </h3>
                   <p className="text-gray5 font-normal">Order</p>
                 </div>
               </div>
-              <div className="flex items-center gap-x-3 ">
+              {/* <div className="flex items-center gap-x-3 ">
                 <span className="blog bg-[#e6f7d9] text-[#56ca00] py-2 px-3 rounded-md ">
                   <FontAwesomeIcon icon={faDollarSign} size="lg" />
                 </span>
@@ -113,7 +100,7 @@ const CustomerDetailsPage = () => {
                   <h3 className="text-gray7 font-semibold">$19291234</h3>
                   <p className="text-gray5 font-normal">Spent</p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -161,12 +148,15 @@ const CustomerDetailsPage = () => {
           </BoxBigAdmin>
         </div>
         <div className="col-span-2">
-          <BoxBigAdmin>
+          <BoxBigAdmin className="rounded-md">
             <div>
-              <h1 className="text-gray-500 text-[20px] font-semibold  pb-3">
-                Order History
-              </h1>
-              <div>
+              <div className="relative">
+                <h1 className="text-gray-500 text-[20px] font-semibold   ">
+                  Order History
+                </h1>
+                <div className="absolute after:bg-primary after:absolute after:contents-'' after:w-[130px] after:h-[1px] "></div>
+              </div>
+              <div className="mt-3">
                 <Table>
                   <table>
                     <thead>
@@ -181,7 +171,7 @@ const CustomerDetailsPage = () => {
                       {dataAllCustomer?.order_details?.data?.length > 0 &&
                         dataAllCustomer?.order_details?.data?.map((item) => (
                           <tr key={item?.id} className="bg-white">
-                            <td className="!text-center">{item?.id}</td>
+                            <td className="!text-center">#{item?.id}</td>
                             <td className="!text-center">
                               <div className="flex items-center gap-x-3">
                                 <div className=" ">
@@ -215,20 +205,21 @@ const CustomerDetailsPage = () => {
                 </Table>
               </div>
             </div>
-
-            {/* <div className="mt-8 ">
-              <ReactPaginate
-                // key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
-                breakLabel="..."
-                nextLabel={<IconPagiNext></IconPagiNext>}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
-                pageCount={pageCount}
-                previousLabel={<IconPagiPrev></IconPagiPrev>}
-                renderOnZeroPageCount={null}
-                className="pagination justify-center"
-              />
-            </div> */}
+            {dataAllCustomer?.order_details?.last_page > 1 && (
+              <div className="mt-8 ">
+                <ReactPaginate
+                  // key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
+                  breakLabel="..."
+                  nextLabel={<IconPagiNext></IconPagiNext>}
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+                  pageCount={pageCount}
+                  previousLabel={<IconPagiPrev></IconPagiPrev>}
+                  renderOnZeroPageCount={null}
+                  className="pagination justify-center"
+                />
+              </div>
+            )}
           </BoxBigAdmin>
         </div>
       </div>

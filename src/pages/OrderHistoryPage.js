@@ -23,6 +23,10 @@ const OrderHistoryPage = () => {
   }, [nextPage]);
 
   const { dataOrderAll } = useSelector((state) => state.order);
+  console.log(
+    "🚀 ~ file: OrderHistoryPage.js:26 ~ OrderHistoryPage ~ dataOrderAll:",
+    dataOrderAll
+  );
 
   //xử lí phân trang
   useEffect(() => {

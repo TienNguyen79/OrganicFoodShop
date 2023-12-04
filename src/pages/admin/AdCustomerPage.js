@@ -281,7 +281,6 @@ const AdCustomerPage = () => {
       {dataAllCustomer?.last_page > 1 && (
         <div className="flex justify-center items-center pt-10 ">
           <ReactPaginate
-            // key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
             breakLabel="..."
             nextLabel={<IconPagiNext></IconPagiNext>}
             onPageChange={handlePageClick}

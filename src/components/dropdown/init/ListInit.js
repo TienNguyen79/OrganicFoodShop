@@ -7,7 +7,7 @@ const ListInit = ({ children, className = "" }) => {
     <div>
       {show && (
         <div
-          className={`absolute top-full left-0 w-full bg-white shadow-sm ${className}`}
+          className={`absolute top-full left-0 w-full h-[195px] overflow-y-scroll scroll-hidden  bg-white shadow-sm ${className}`}
         >
           {children}
         </div>

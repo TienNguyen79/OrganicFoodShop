@@ -15,6 +15,8 @@ const Input = (props) => {
     className,
     kind = "search",
     cssEye = "",
+    min,
+    max,
     setNameCustomer,
     setNameCate,
     handleFilterChangeDebounced,
@@ -48,6 +50,8 @@ const Input = (props) => {
         <input
           type={type}
           id={name}
+          min={min}
+          max={max}
           className={`py-3 px-4 w-full border font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2 ${className} dark:text-white text-text1 ${
             error
               ? "border-danger "

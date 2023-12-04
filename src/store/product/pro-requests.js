@@ -1,4 +1,5 @@
 import axios from "../../api/axios";
+import { getToken } from "../../utils/auth";
 
 export const requestProAll = () => {
   return axios.get("/api/product");
@@ -49,4 +50,32 @@ export const requestProQuickview = (id) => {
 
 export const requestProDetails = (id) => {
   return axios.get(`/api/product/${id}`);
+};
+
+export const requestAdminGetPro = (page = 1) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.get(`/api/admin/product/show_products?page=${page}`, config);
+};
+
+export const requestAdminAddPro = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.post(`/api/admin/product`, { ...data }, config);
 };

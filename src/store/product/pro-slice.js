@@ -37,6 +37,11 @@ const productSlice = createSlice({
     proGetSearch: () => {},
     proGetQuickview: () => {},
     proGetDetails: () => {},
+    ProAdminGet: () => {},
+    ProAdminAdd: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateData: (state, action) => ({
       ...state,
       dataBestSeller: action.payload.resultBestSellers || state.dataBestSeller,
@@ -88,6 +93,8 @@ export const {
   setLoading,
   setLoadingSearchNamePro,
   setLoadings,
+  ProAdminGet,
+  ProAdminAdd,
 } = productSlice.actions;
 
 export default productSlice.reducer;

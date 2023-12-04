@@ -2,7 +2,7 @@ import React from "react";
 import { useDropdown } from "./dropdown-context2";
 
 const OptionsInit = (props) => {
-  const { onClick } = props;
+  const { onClick, className = "" } = props;
   const { setShow } = useDropdown();
 
   const handleClick = () => {
@@ -12,7 +12,7 @@ const OptionsInit = (props) => {
 
   return (
     <div
-      className="px-5 py-4  cursor-pointer flex items-center justify-between hover:bg-gray-100  "
+      className={`px-5 py-4  cursor-pointer flex items-center justify-between ${className} `}
       onClick={handleClick}
     >
       {props.children}
