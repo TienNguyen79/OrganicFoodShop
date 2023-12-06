@@ -18,10 +18,15 @@ import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUpload from "../../components/image/ImageUpload";
-import { ProAdminAdd } from "../../store/product/pro-slice";
+import {
+  ProAdminAdd,
+  ProAdminUpdate,
+  proGetDetails,
+} from "../../store/product/pro-slice";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Name is required"),
@@ -42,7 +47,7 @@ const schema = yup.object({
 
   // .min(5, "Please enter at least 8 characters"),
 });
-const AddProductPage = () => {
+const UpdateProduct = () => {
   const {
     control,
     watch,
@@ -63,8 +68,84 @@ const AddProductPage = () => {
   const [idCate, setIdCate] = useState("");
   const [rate, setRate] = useState("");
   const [content, setContent] = useState("");
+  const { slug } = useParams();
+  const [linkImgPri, setLinkImgPri] = useState("");
+  console.log(
+    "🚀 ~ file: UpdateProduct.js:69 ~ UpdateProduct ~ linkImgPri:",
+    linkImgPri
+  );
+  useEffect(() => {
+    dispatch(proGetDetails(slug));
+  }, []);
+  const { dataProDetails } = useSelector((state) => state.product);
 
-  const handleAddProduct = (values) => {
+  //spread
+  const { product: productDetails } = dataProDetails;
+  console.log(
+    "🚀 ~ file: UpdateProduct.js:79 ~ UpdateProduct ~ productDetails:",
+    productDetails
+  );
+
+  useEffect(() => {
+    setValue1("name", productDetails?.name);
+    setValue1("quantity", productDetails?.quantity);
+    setIdCate(productDetails?.category?.id);
+    setSearchCate(productDetails?.category?.name);
+    setContent(productDetails?.description);
+    setValue1("price", productDetails?.price);
+    setValue1("discount", productDetails?.discount);
+    setValue1("weight", productDetails?.weight);
+    setValue1("type", productDetails?.type);
+    if (productDetails?.imageUrl) {
+      setValue1("imgPrimary", productDetails?.imageUrl);
+    }
+    if (productDetails?.thumbnails[0]?.imageUrl) {
+      setValue1("thumb1", productDetails?.thumbnails[0]?.imageUrl);
+    }
+    if (productDetails?.thumbnails[1]?.imageUrl) {
+      setValue1("thumb2", productDetails?.thumbnails[1]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[2]?.imageUrl) {
+      setValue1("thumb3", productDetails?.thumbnails[2]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[3]?.imageUrl) {
+      setValue1("thumb4", productDetails?.thumbnails[3]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[4]?.imageUrl) {
+      setValue1("thumb5", productDetails?.thumbnails[4]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[5]?.imageUrl) {
+      setValue1("thumb6", productDetails?.thumbnails[5]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[6]?.imageUrl) {
+      setValue1("thumb7", productDetails?.thumbnails[6]?.imageUrl);
+    }
+
+    if (productDetails?.thumbnails[7]?.imageUrl) {
+      setValue1("thumb8", productDetails?.thumbnails[7]?.imageUrl);
+    }
+  }, [
+    getValues,
+    productDetails?.category?.id,
+    productDetails?.category?.name,
+    productDetails?.description,
+    productDetails?.discount,
+    productDetails?.imageUrl,
+    productDetails?.name,
+    productDetails?.price,
+    productDetails?.quantity,
+    productDetails?.thumbnails,
+    productDetails?.type,
+    productDetails?.weight,
+    setValue1,
+  ]);
+
+  const handleUpdateProduct = (values) => {
     const thumbnails = [];
 
     if (getValues("thumb1")) {
@@ -120,13 +201,12 @@ const AddProductPage = () => {
     } else if (content === "") {
       toast.error("Description is required");
     } else {
-      dispatch(ProAdminAdd(data));
+      dispatch(ProAdminUpdate({ id: slug, data: data }));
+      console.log(
+        "🚀 ~ file: AddProductPage.js:49 ~ handleUpdateProduct ~ data:",
+        data
+      );
     }
-
-    console.log(
-      "🚀 ~ file: AddProductPage.js:49 ~ handleAddProduct ~ data:",
-      data
-    );
   };
   const modules = useMemo(
     () => ({
@@ -144,11 +224,10 @@ const AddProductPage = () => {
 
   return (
     <LayoutAdminAct
-      label="Add Product"
-      content="Add a new Product"
-      content2="Manage My Products"
+      label={`Update Product - ${productDetails?.name} `}
+      content="Manage My Products"
     >
-      <form action="" onSubmit={handleSubmit(handleAddProduct)}>
+      <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
         <div className="flex gap-x-4 justify-end py-5">
           <Button
             kind="discard"
@@ -162,7 +241,7 @@ const AddProductPage = () => {
             type="submit"
             className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
           >
-            PUBLISH PRODUCT
+            UPDATE PRODUCT
           </Button>
         </div>
         <div>
@@ -325,6 +404,7 @@ const AddProductPage = () => {
                 className="w-full h-[100px]"
                 onChange={(name, data) => setValue1("imgPrimary", data.url)}
                 setValue1={setValue1}
+                getValues1={getValues("imgPrimary")}
               ></ImageUpload>
             </BoxField>
             <BoxField className="flex-1 ">
@@ -334,48 +414,56 @@ const AddProductPage = () => {
                   name="thumb1"
                   onChange={(name, data) => setValue1("thumb1", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb1")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb2"
                   onChange={(name, data) => setValue1("thumb2", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb2")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb3"
                   onChange={(name, data) => setValue1("thumb3", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb3")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb4"
                   onChange={(name, data) => setValue1("thumb4", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb4")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb5"
                   onChange={(name, data) => setValue1("thumb5", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb5")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb6"
                   onChange={(name, data) => setValue1("thumb6", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb6")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb7"
                   onChange={(name, data) => setValue1("thumb7", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb7")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
                 <ImageUpload
                   name="thumb8"
                   onChange={(name, data) => setValue1("thumb8", data.url)}
                   setValue1={setValue1}
+                  getValues1={getValues("thumb8")}
                   className="w-[60px] h-[60px] "
                 ></ImageUpload>
               </div>
@@ -387,4 +475,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default UpdateProduct;

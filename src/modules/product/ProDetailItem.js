@@ -184,6 +184,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
               </div>
               <div className="col-span-4">
                 <ProBigImage
+                  className="w-full h-[440px]"
                   imageUrl={linkImage ? linkImage : data?.imageUrl}
                 ></ProBigImage>
               </div>

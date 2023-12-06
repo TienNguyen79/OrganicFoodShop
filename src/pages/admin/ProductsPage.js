@@ -13,8 +13,8 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Table from "../../components/table/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { ProAdminGet } from "../../store/product/pro-slice";
-import { convertDate } from "../../constants/global";
+import { ProAdminDelete, ProAdminGet } from "../../store/product/pro-slice";
+import { convertDate, convertStockStatus } from "../../constants/global";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import IconPagiNext from "../../components/Icons/IconPagiNext";
@@ -24,7 +24,7 @@ import DropdownInit from "../../components/dropdown/init/DropdownInit";
 import SelectInit from "../../components/dropdown/init/SelectInit";
 import ListInit from "../../components/dropdown/init/ListInit";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
-
+import Swal from "sweetalert2";
 const ProductsPage = () => {
   const { control } = useForm();
   const dispatch = useDispatch();
@@ -34,25 +34,44 @@ const ProductsPage = () => {
     searchCate
   );
   const { dataPro } = useSelector((state) => state.product);
-
+  console.log(
+    "🚀 ~ file: ProductsPage.js:37 ~ ProductsPage ~ dataPro:",
+    dataPro
+  );
+  //pagination hook
   const { handlePageClick, pageCount, nextPage } = usePagination(
     dataPro,
     dataPro?.per_page
   );
-
+  //get pro
   useEffect(() => {
     dispatch(ProAdminGet(nextPage));
   }, [dispatch, nextPage]);
-  console.log(
-    "🚀 ~ file: ProductsPage.js:24 ~ ProductsPage ~ dataPro:",
-    dataPro
-  );
-
+  //delete pro
   useEffect(() => {
     dispatch(cateGetdataAll());
   }, []);
   const { dataCate } = useSelector((state) => state.category);
 
+  const handleDeletePro = (item) => {
+    Swal.fire({
+      title: `Are you sure to delete  <span class="capitalize font-semibold italic underline text-darkPrimary">${item?.name}</span>?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(ProAdminDelete({ page: dataPro.current_page, id: item.id }));
+      }
+    });
+    console.log(
+      "🚀 ~ file: ProductsPage.js:58 ~ handleDeletePro ~ item:",
+      item.id
+    );
+  };
   return (
     <LayoutAdminAct label="Product List" content="Manage My Products">
       <div>
@@ -153,19 +172,24 @@ const ProductsPage = () => {
                           );
                       })}
                     <td className="!text-center ">{item?.price}</td>
-                    <td className="!text-center">Stock</td>
+                    <td className="!text-center">
+                      {convertStockStatus(item?.stock)}
+                    </td>
                     <td className="!text-center">
                       <div className="flex items-center justify-center gap-x-4">
-                        <Link className="border p-2">
+                        {/* <Link className="border p-2">
                           <FontAwesomeIcon icon={faEye} size="lg" />
-                        </Link>
+                        </Link> */}
                         <Link
                           className="border p-2"
-                          to={"/admin/update_product"}
+                          to={`/admin/update_product/${item.id}`}
                         >
                           <FontAwesomeIcon icon={faPenToSquare} size="lg" />
                         </Link>
-                        <div className="border p-2 cursor-pointer">
+                        <div
+                          className="border p-2 cursor-pointer"
+                          onClick={() => handleDeletePro(item)}
+                        >
                           <FontAwesomeIcon icon={faTrashCan} size="lg" />
                         </div>
                       </div>

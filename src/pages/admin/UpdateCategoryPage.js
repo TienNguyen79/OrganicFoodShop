@@ -72,7 +72,7 @@ const UpdateCategoryPage = () => {
 
   return (
     <LayoutAdminAct
-      label={`Update Category -- ${dataCate?.name}`}
+      label={`Update Category - ${dataCate?.name}`}
       content="Manage My Categories"
     >
       <form action="" onSubmit={handleSubmit(handleUpdateCate)}>

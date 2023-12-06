@@ -43,6 +43,7 @@ const CustomerDetailsPage = lazy(() =>
 );
 const ProductsPage = lazy(() => import("./pages/admin/ProductsPage"));
 const AddProductPage = lazy(() => import("./pages/admin/AddProductPage"));
+const UpdateProduct = lazy(() => import("./pages/admin/UpdateProduct"));
 
 function App() {
   const { user, accessToken } = useSelector((state) => state.auth);
@@ -158,6 +159,10 @@ function App() {
         <Route
           path="/admin/add_product"
           element={<AddProductPage></AddProductPage>}
+        ></Route>
+        <Route
+          path="/admin/update_product/:slug"
+          element={<UpdateProduct></UpdateProduct>}
         ></Route>
 
         {/* ADMIN */}

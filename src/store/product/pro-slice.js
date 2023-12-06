@@ -42,6 +42,14 @@ const productSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    ProAdminDelete: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    ProAdminUpdate: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateData: (state, action) => ({
       ...state,
       dataBestSeller: action.payload.resultBestSellers || state.dataBestSeller,
@@ -95,6 +103,8 @@ export const {
   setLoadings,
   ProAdminGet,
   ProAdminAdd,
+  ProAdminDelete,
+  ProAdminUpdate,
 } = productSlice.actions;
 
 export default productSlice.reducer;

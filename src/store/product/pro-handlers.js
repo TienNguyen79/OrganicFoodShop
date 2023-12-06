@@ -1,7 +1,9 @@
 import { call, put } from "redux-saga/effects";
 import {
   requestAdminAddPro,
+  requestAdminDeletePro,
   requestAdminGetPro,
+  requestAdminUpdatePro,
   requestProAll,
   requestProBestSeller,
   requestProDetails,
@@ -22,7 +24,9 @@ import {
   updateData2,
 } from "./pro-slice";
 import { toast } from "react-toastify";
-
+import History from "../../utils/history";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 export default function* handleGetProBestSeller(action) {
   const { payload, type } = action;
 
@@ -236,10 +240,70 @@ function* handleAdminAddPro(action) {
 
       yield put(updateData({ resultProAll: response2.data.products }));
       toast.success("Add Product success!");
+      History.push("/admin/products/product_list");
+    }
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message?.imageUrl &&
+        error?.response?.data?.message?.imageUrl[0]
+    );
+    toast.error(
+      error?.response?.data?.message?.thumbnails &&
+        "Thumbnail must select at least 1 photo"
+    );
+    console.log(
+      "🚀 ~ file: pro-handlers.js:241 ~ function*handleAdminAddPro ~ error:",
+      error
+    );
+  }
+}
+
+function* handleAdmiDeletePro(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestAdminDeletePro, payload);
+
+    if (response.status === 200) {
+      const response2 = yield call(requestAdminGetPro, payload.page);
+
+      yield put(updateData({ resultProAll: response2.data.products }));
+      Swal.fire(
+        "Deleted!",
+        `Delete ProductId ${payload.id} success!`,
+        "success"
+      );
     }
   } catch (error) {
     console.log(
-      "🚀 ~ file: pro-handlers.js:241 ~ function*handleAdminAddPro ~ error:",
+      "🚀 ~ file: pro-handlers.js:277 ~ function*handleAdmiDeletePro ~ error:",
+      error
+    );
+  }
+}
+
+function* handleAdmiUpdatePro(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestAdminUpdatePro, payload);
+
+    if (response.status === 200) {
+      const response2 = yield call(requestAdminGetPro);
+
+      yield put(updateData({ resultProAll: response2.data.products }));
+      toast.success("Update Product success!");
+      History.push("/admin/products/product_list");
+    }
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message?.imageUrl &&
+        error?.response?.data?.message?.imageUrl[0]
+    );
+    toast.error(
+      error?.response?.data?.message?.thumbnails &&
+        "Thumbnail must select at least 1 photo"
+    );
+    console.log(
+      "🚀 ~ file: pro-handlers.js:296 ~ function*handleAdmiUpdatePro ~ error:",
       error
     );
   }
@@ -256,4 +320,6 @@ export {
   handleGetProDetails,
   handleAdminGetProAll,
   handleAdminAddPro,
+  handleAdmiDeletePro,
+  handleAdmiUpdatePro,
 };

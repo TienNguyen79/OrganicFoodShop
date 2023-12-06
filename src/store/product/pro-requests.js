@@ -52,6 +52,8 @@ export const requestProDetails = (id) => {
   return axios.get(`/api/product/${id}`);
 };
 
+//ADMIN
+
 export const requestAdminGetPro = (page = 1) => {
   const decodedToken = atob(getToken()); //giải mã base64
   if (!decodedToken) return;
@@ -78,4 +80,32 @@ export const requestAdminAddPro = (data) => {
   };
 
   return axios.post(`/api/admin/product`, { ...data }, config);
+};
+
+export const requestAdminDeletePro = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.delete(`/api/admin/product/${data.id}`, config);
+};
+
+export const requestAdminUpdatePro = (result) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.put(`/api/admin/product/${result.id}`, result.data, config);
 };

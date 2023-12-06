@@ -143,6 +143,25 @@ export const convertUserStatus = (status) => {
   }
 };
 
+export const convertStockStatus = (stock) => {
+  switch (stock) {
+    case false:
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#e6f7d9] text-[#56ca00]">
+          InStock
+        </span>
+      );
+    case true:
+      return (
+        <span className="block py-2 px-[8px] rounded-md text-center text-sm bg-[#ffe4e5] text-[#ff4c51]">
+          Out of Stock
+        </span>
+      );
+    default:
+      break;
+  }
+};
+
 //ROLE
 
 export const userRole = {
