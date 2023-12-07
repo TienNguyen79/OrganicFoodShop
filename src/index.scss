@@ -132,6 +132,7 @@ ul.slick-dots {
   margin-right: 95px;
   position: absolute;
   top: -31px;
+  left: 19px;
   transform: rotateZ(270deg);
 }
 .thumbslider button.slick-arrow.slick-prev {
@@ -263,7 +264,7 @@ ul.slick-dots {
   h3,
   h4 {
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   h2 {
     font-size: 32px;
@@ -303,6 +304,9 @@ ul.slick-dots {
     font-style: italic;
     font-size: 14px;
     color: #6b6b6b;
+  }
+  p {
+    margin-bottom: 16px;
   }
   @media screen and (max-width: 1023.98px) {
     font-size: 14px;

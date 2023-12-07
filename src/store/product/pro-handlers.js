@@ -3,6 +3,7 @@ import {
   requestAdminAddPro,
   requestAdminDeletePro,
   requestAdminGetPro,
+  requestAdminSearchNamePro,
   requestAdminUpdatePro,
   requestProAll,
   requestProBestSeller,
@@ -27,6 +28,7 @@ import { toast } from "react-toastify";
 import History from "../../utils/history";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { requestCateDataWithId } from "../category/cate-requests";
 export default function* handleGetProBestSeller(action) {
   const { payload, type } = action;
 
@@ -283,11 +285,15 @@ function* handleAdmiDeletePro(action) {
 
 function* handleAdmiUpdatePro(action) {
   const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: pro-handlers.js:288 ~ function*handleAdmiUpdatePro ~ payload:",
+    payload
+  );
   try {
     const response = yield call(requestAdminUpdatePro, payload);
 
     if (response.status === 200) {
-      const response2 = yield call(requestAdminGetPro);
+      const response2 = yield call(requestAdminGetPro, parseInt(payload.page));
 
       yield put(updateData({ resultProAll: response2.data.products }));
       toast.success("Update Product success!");
@@ -309,6 +315,42 @@ function* handleAdmiUpdatePro(action) {
   }
 }
 
+function* handleAdmiSearchNamePro(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestAdminSearchNamePro, payload);
+    console.log(
+      "🚀 ~ file: pro-handlers.js:317 ~ function*handleAdmiSearchNamePro ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProAll: response.data.products }));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: pro-handlers.js:323 ~ function*handleAdmiSearchNamePro ~ error:",
+      error
+    );
+  }
+}
+
+function* handleAdmiSearchProWithCate(action) {
+  const { payload, type } = action;
+  try {
+    const response = yield call(requestCateDataWithId, payload);
+
+    if (response.status === 200) {
+      yield put(updateData({ resultProAll: response.data.products }));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: pro-handlers.js:344 ~ function*handleAdmiSearchProWithCate ~ error:",
+      error
+    );
+  }
+}
+
 export {
   handleGetHotDeal,
   handleGetProTopRated,
@@ -322,4 +364,6 @@ export {
   handleAdminAddPro,
   handleAdmiDeletePro,
   handleAdmiUpdatePro,
+  handleAdmiSearchNamePro,
+  handleAdmiSearchProWithCate,
 };

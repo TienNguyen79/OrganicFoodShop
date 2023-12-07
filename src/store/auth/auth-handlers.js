@@ -26,8 +26,8 @@ export default function* handleAuthRegister(action) {
       response
     );
     // console.log(btoa(response.data.token));
-    const encodeToken = btoa(response.data.token); //mã hóa base64
-    saveToken(encodeToken);
+    // const encodeToken = btoa(response.data.token); //mã hóa base64
+    // saveToken(encodeToken);
 
     if (response.status === 200) {
       toast.success("Create new Account successfully!");

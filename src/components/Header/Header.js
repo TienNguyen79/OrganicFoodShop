@@ -19,8 +19,10 @@ import CartPopup from "../../modules/cart/CartPopup";
 import { cartGetAll, wishListGetAll } from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
 import Button from "../button/Button";
+import { authCheckToken } from "../../store/auth/auth-slice";
 const Header = () => {
   const { control, getValues } = useForm();
+
   const { user, accessToken } = useSelector((state) => state.auth);
   const [getTextSearch, setGetTextSearch] = useState("");
   const dispatch = useDispatch();
@@ -28,6 +30,9 @@ const Header = () => {
     dispatch(cartGetAll(getToken()));
     dispatch(wishListGetAll(getToken()));
   }, []);
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, [dispatch]);
 
   const { dataCartAll, dataWishListAll } = useSelector((state) => state.cart);
   const { dataProSearch, loading, loadingSearchNamePro, loadings } =

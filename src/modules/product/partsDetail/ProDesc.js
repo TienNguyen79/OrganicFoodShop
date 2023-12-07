@@ -1,11 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const ProDesc = ({ children }) => {
-  return (
-    <p className="text-gray5 text-sm font-normal mt-4 text-justify">
-      {children}
-    </p>
-  );
+  return <p>{children}</p>;
 };
 
 export default ProDesc;

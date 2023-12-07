@@ -19,6 +19,7 @@ const Input = (props) => {
     max,
     setNameCustomer,
     setNameCate,
+    setAdNamePro,
     handleFilterChangeDebounced,
     ...rest
   } = props;
@@ -34,6 +35,7 @@ const Input = (props) => {
   const debouncedSetName = debounce((text) => {
     setNameCustomer && setNameCustomer(text);
     setNameCate && setNameCate(text);
+    setAdNamePro && setAdNamePro(text);
   }, 300);
 
   useEffect(() => {

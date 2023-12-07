@@ -3,8 +3,9 @@ import UserAvatar from "../../user/parts/UserAvatar";
 import UserName from "../../user/parts/UserName";
 import IconStarYellow from "../../../components/Icons/IconStarYellow";
 import IconStarGray from "../../../components/Icons/IconStarGray";
+import ProFeauture from "./ProFeauture";
 
-const ProFeedback = ({ isHidden }) => {
+const ProFeedback = ({ isHidden, data }) => {
   //Cách 2 render star
   const starCount = parseInt(2); // Chuyển data thành số nguyên
   const maxStars = 5; // Số sao tối đa
@@ -44,7 +45,13 @@ const ProFeedback = ({ isHidden }) => {
           eveniet quidem perspiciatis.
         </p>
       </div>
-      <div className="col-span-1"></div>
+      <div className="col-span-1">
+        <ProFeauture
+          urlImage={data?.imageUrl}
+          percentDiscount={data?.average_rating}
+          nameCate={data?.category?.name}
+        ></ProFeauture>
+      </div>
     </div>
   );
 };

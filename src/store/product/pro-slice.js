@@ -50,6 +50,14 @@ const productSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    ProAdminSearchName: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    ProAdminSearchWithCate: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateData: (state, action) => ({
       ...state,
       dataBestSeller: action.payload.resultBestSellers || state.dataBestSeller,
@@ -105,6 +113,8 @@ export const {
   ProAdminAdd,
   ProAdminDelete,
   ProAdminUpdate,
+  ProAdminSearchName,
+  ProAdminSearchWithCate,
 } = productSlice.actions;
 
 export default productSlice.reducer;

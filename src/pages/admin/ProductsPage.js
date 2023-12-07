@@ -13,7 +13,12 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Table from "../../components/table/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { ProAdminDelete, ProAdminGet } from "../../store/product/pro-slice";
+import {
+  ProAdminDelete,
+  ProAdminGet,
+  ProAdminSearchName,
+  ProAdminSearchWithCate,
+} from "../../store/product/pro-slice";
 import { convertDate, convertStockStatus } from "../../constants/global";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
@@ -29,10 +34,13 @@ const ProductsPage = () => {
   const { control } = useForm();
   const dispatch = useDispatch();
   const [searchCate, setSearchCate] = useState("");
+  const [idCate, setIdCate] = useState("");
+  const [adNamePro, setAdNamePro] = useState("");
   console.log(
-    "🚀 ~ file: ProductsPage.js:31 ~ ProductsPage ~ searchCate:",
-    searchCate
+    "🚀 ~ file: ProductsPage.js:39 ~ ProductsPage ~ adNamePro:",
+    adNamePro
   );
+
   const { dataPro } = useSelector((state) => state.product);
   console.log(
     "🚀 ~ file: ProductsPage.js:37 ~ ProductsPage ~ dataPro:",
@@ -43,14 +51,38 @@ const ProductsPage = () => {
     dataPro,
     dataPro?.per_page
   );
-  //get pro
-  useEffect(() => {
-    dispatch(ProAdminGet(nextPage));
-  }, [dispatch, nextPage]);
-  //delete pro
+
+  const {
+    handlePageClick: handlePageClick1,
+    pageCount: pageCount1,
+    nextPage: nextPage1,
+    setNextPage: setNextPage1,
+    setPageCount: setPageCount1,
+  } = usePagination(dataPro, dataPro?.per_page);
+
+  const {
+    handlePageClick: handlePageClick2,
+    pageCount: pageCount2,
+    nextPage: nextPage2,
+    setNextPage: setNextPage2,
+    setPageCount: setPageCount2,
+    setItemOffset: setItemOffset2,
+  } = usePagination(dataPro, dataPro?.per_page);
+
   useEffect(() => {
     dispatch(cateGetdataAll());
   }, []);
+
+  //get pro
+  useEffect(() => {
+    if (adNamePro !== "") {
+      dispatch(ProAdminSearchName({ name: adNamePro, page: nextPage1 }));
+    } else if (searchCate !== "") {
+      dispatch(ProAdminSearchWithCate({ id: idCate, page: nextPage2 }));
+    } else {
+      dispatch(ProAdminGet(nextPage));
+    }
+  }, [adNamePro, dispatch, idCate, nextPage, nextPage1, nextPage2, searchCate]);
   const { dataCate } = useSelector((state) => state.category);
 
   const handleDeletePro = (item) => {
@@ -80,16 +112,25 @@ const ProductsPage = () => {
             <Input
               control={control}
               name="search"
-              className="!w-[300px]"
+              className={`!w-[300px] ${
+                searchCate !== "" && "pointer-events-none opacity-75"
+              } `}
               placeholder="Search my Product..."
+              setAdNamePro={setAdNamePro}
+              autoComplete="off"
             ></Input>
-            <div className="mt-[20px]">
+            <div
+              className={`mt-[20px]  ${
+                adNamePro !== "" && "pointer-events-none opacity-75"
+              }
+              `}
+            >
               <DropdownInit>
                 <SelectInit
                   className="bg-white "
                   placeholder={`${searchCate || "Search for Category"}  `}
                 ></SelectInit>
-                <ListInit>
+                <ListInit className={`${adNamePro !== "" && "hidden"}`}>
                   <div className="flex justify-center">
                     <span
                       className=" inline-block pt-1 px-4 text-center cursor-pointer"
@@ -104,8 +145,12 @@ const ProductsPage = () => {
                     dataCate.map((item) => (
                       <OptionsInit
                         key={item.id}
-                        className=" hover:bg-[#e6f7d9] text-gray5 font-medium"
-                        onClick={() => setSearchCate(item?.name)}
+                        className={`hover:bg-[#e6f7d9] text-gray5 font-medium  `}
+                        onClick={() => {
+                          setSearchCate(item?.name);
+                          setIdCate(adNamePro !== "" ? null : item?.id);
+                          setNextPage2(1);
+                        }}
                       >
                         {item?.name}
                       </OptionsInit>
@@ -149,7 +194,10 @@ const ProductsPage = () => {
                           />
                         </div>
                         <div className="flex flex-col justify-center items-start ">
-                          <h1 className="text-gray6 font-semibold">
+                          <h1
+                            className="text-gray6 font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[500px]
+"
+                          >
                             {item?.name}
                           </h1>
 
@@ -177,9 +225,12 @@ const ProductsPage = () => {
                     </td>
                     <td className="!text-center">
                       <div className="flex items-center justify-center gap-x-4">
-                        {/* <Link className="border p-2">
+                        <Link
+                          className="border p-2"
+                          to={`/admin/products/product_list/${item?.id}`}
+                        >
                           <FontAwesomeIcon icon={faEye} size="lg" />
-                        </Link> */}
+                        </Link>
                         <Link
                           className="border p-2"
                           to={`/admin/update_product/${item.id}`}
@@ -200,7 +251,7 @@ const ProductsPage = () => {
           </table>
         </Table>
       </div>
-      {dataPro?.last_page > 1 && (
+      {dataPro?.last_page > 1 && adNamePro === "" && searchCate === "" && (
         <div className="flex justify-center items-center pt-10 ">
           <ReactPaginate
             breakLabel="..."
@@ -208,6 +259,34 @@ const ProductsPage = () => {
             onPageChange={handlePageClick}
             pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
             pageCount={pageCount}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination justify-center"
+          />
+        </div>
+      )}
+      {dataPro?.last_page > 1 && adNamePro !== "" && (
+        <div className="flex justify-center items-center pt-10 ">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick1}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount1}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination justify-center"
+          />
+        </div>
+      )}
+      {dataPro?.last_page > 1 && searchCate !== "" && (
+        <div className="flex justify-center items-center pt-10 ">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick2}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount2}
             previousLabel={<IconPagiPrev></IconPagiPrev>}
             renderOnZeroPageCount={null}
             className="pagination justify-center"

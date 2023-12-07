@@ -5,8 +5,8 @@ export const requestCateData = () => {
   return axios.get("/api/categories");
 };
 
-export const requestCateDataWithId = (id) => {
-  return axios.get(`/api/categories/${id}`);
+export const requestCateDataWithId = (data) => {
+  return axios.get(`/api/categories/${data.id}?page=${data.page}`);
 };
 
 export const requestAdminGetDetailCate = (id) => {

@@ -28,7 +28,12 @@ import {
   proGetBestSeller,
   proGetWithFilter,
 } from "../store/product/pro-slice";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import lodash, { debounce } from "lodash";
 import ReactPaginate from "react-paginate";
 import IconHome from "../components/Icons/IconHome";
@@ -68,7 +73,7 @@ const ShopPage = () => {
   const watchRate = watch("rate");
   const [rangeValue, setRangeValue] = useState({ min: 0, max: 1000 });
   const { slug } = useParams(); //lấy ra được slug
-
+  const location = useLocation();
   // dispatch để dữ liệu trả về
   useEffect(() => {
     dispatch(cateGetdataAll());
@@ -151,7 +156,9 @@ const ShopPage = () => {
     const newPath = `?${queryParams.join("&")}`; //join : từ mảng chuyển thành chuỗi
 
     // Sử dụng navigate để cập nhật đường dẫn URL
-    navigate(newPath, { replace: true });
+    navigate(newPath, {
+      replace: true,
+    });
   }, [watchCate, watchRate, rangeValue, navigate, slug]);
 
   //khi chọn sang category khác sẽ được reset
@@ -328,8 +335,8 @@ const ShopPage = () => {
                       Price:{" "}
                     </span>
                     <div className="ml-1 text-gray9 text-sm font-medium">
-                      <span> {rangeValue.min}</span>-
-                      <span> {rangeValue.max}</span>
+                      <span> ${rangeValue.min}</span>-
+                      <span> ${rangeValue.max}</span>
                     </div>
                   </div>
                 </div>

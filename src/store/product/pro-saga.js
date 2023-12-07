@@ -3,6 +3,8 @@ import {
   ProAdminAdd,
   ProAdminDelete,
   ProAdminGet,
+  ProAdminSearchName,
+  ProAdminSearchWithCate,
   ProAdminUpdate,
   proGetAll,
   proGetBestSeller,
@@ -16,6 +18,8 @@ import {
 } from "./pro-slice";
 import handleGetProBestSeller, {
   handleAdmiDeletePro,
+  handleAdmiSearchNamePro,
+  handleAdmiSearchProWithCate,
   handleAdmiUpdatePro,
   handleAdminAddPro,
   handleAdminGetProAll,
@@ -43,4 +47,6 @@ export default function* proSaga() {
   yield takeLatest(ProAdminAdd.type, handleAdminAddPro);
   yield takeLatest(ProAdminDelete.type, handleAdmiDeletePro);
   yield takeLatest(ProAdminUpdate.type, handleAdmiUpdatePro);
+  yield takeLatest(ProAdminSearchName.type, handleAdmiSearchNamePro);
+  yield takeLatest(ProAdminSearchWithCate.type, handleAdmiSearchProWithCate);
 }

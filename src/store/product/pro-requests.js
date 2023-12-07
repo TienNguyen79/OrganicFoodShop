@@ -109,3 +109,24 @@ export const requestAdminUpdatePro = (result) => {
 
   return axios.put(`/api/admin/product/${result.id}`, result.data, config);
 };
+
+export const requestAdminSearchNamePro = (data) => {
+  console.log(
+    "🚀 ~ file: pro-requests.js:114 ~ requestAdminSearchNamePro ~ data:",
+    data
+  );
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.get(
+    `/api/admin/product/admin_search_product?name=${data.name}&&page=${data.page}`,
+    config
+  );
+};

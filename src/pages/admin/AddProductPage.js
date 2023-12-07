@@ -27,6 +27,7 @@ const schema = yup.object({
   name: yup.string().required("Name is required"),
   price: yup
     .number()
+    .max(1000, "Maximum price is 1000$")
     .typeError("Price must be a valid number")
     .required("Price is required"),
   // quantity: yup
@@ -65,7 +66,7 @@ const AddProductPage = () => {
   const [content, setContent] = useState("");
 
   const handleAddProduct = (values) => {
-    const thumbnails = [];
+    const thumbnails = [getValues("imgPrimary")];
 
     if (getValues("thumb1")) {
       thumbnails.push(getValues("thumb1"));

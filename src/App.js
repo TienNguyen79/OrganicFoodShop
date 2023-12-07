@@ -1,7 +1,8 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { authCheckToken } from "./store/auth/auth-slice";
+import { authCheckToken, authFetchMe } from "./store/auth/auth-slice";
+import { getToken } from "./utils/auth";
 
 const LayoutPrimary = lazy(() => import("./layout/LayoutPrimary"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -44,15 +45,16 @@ const CustomerDetailsPage = lazy(() =>
 const ProductsPage = lazy(() => import("./pages/admin/ProductsPage"));
 const AddProductPage = lazy(() => import("./pages/admin/AddProductPage"));
 const UpdateProduct = lazy(() => import("./pages/admin/UpdateProduct"));
+const AdProDetailPage = lazy(() => import("./pages/admin/AdProDetailPage"));
 
 function App() {
-  const { user, accessToken } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authCheckToken());
   }, [dispatch]);
+
+  const { user, accessToken } = useSelector((state) => state.auth);
+  console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
   return (
     <Suspense>
       <Routes>
@@ -163,6 +165,10 @@ function App() {
         <Route
           path="/admin/update_product/:slug"
           element={<UpdateProduct></UpdateProduct>}
+        ></Route>
+        <Route
+          path="/admin/products/product_list/:slug"
+          element={<AdProDetailPage></AdProDetailPage>}
         ></Route>
 
         {/* ADMIN */}

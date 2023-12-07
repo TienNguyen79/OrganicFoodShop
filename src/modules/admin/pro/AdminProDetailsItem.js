@@ -1,38 +1,29 @@
 import React, { Fragment, useState } from "react";
-import ProThumb from "./partsDetail/ProThumb";
-import ProBigImage from "./partsDetail/ProBigImage";
-import ProTitle from "./partsDetail/ProTitle";
-import ProLabel from "./partsDetail/ProLabel";
-import IconStarYellow from "../../components/Icons/IconStarYellow";
-import IconStarGray from "../../components/Icons/IconStarGray";
-import ProStart from "./parts/ProStart";
-import ProReview from "./partsDetail/ProReview";
-import ProPrice from "./partsDetail/ProPrice";
-import ProSale from "./partsDetail/ProSale";
-import ProDesc from "./partsDetail/ProDesc";
-import ProHandleQuantity from "./partsDetail/ProHandleQuantity";
-import Button from "../../components/button/Button";
-import IconBagProDetail from "../../components/Icons/IconBagProDetail";
-import Icontym2 from "../../components/Icons/Icontym2";
-import IconAR2 from "../../components/Icons/IconAR2";
-import IconRedTym from "../../components/Icons/IconRedTym";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import {
-  cartAddNew,
-  wishListAddNew,
-  wishListDelete,
-  wishListGetAll,
-} from "../../store/cart/cart-slice";
-import { getToken } from "../../utils/auth";
-import IconClose2 from "../../components/Icons/IconClose2";
-import IconHeart from "../../components/Icons/IconHeart";
-import IconRedHeart from "../../components/Icons/IconRedHeart";
-const ProDetailItem = ({ data, isClickClose, onClose }) => {
+import IconStarYellow from "../../../components/Icons/IconStarYellow";
+import IconStarGray from "../../../components/Icons/IconStarGray";
+import ProBigImage from "../../product/partsDetail/ProBigImage";
+import ProTitle from "../../product/partsDetail/ProTitle";
+import ProLabel from "../../product/partsDetail/ProLabel";
+import ProStart from "../../product/parts/ProStart";
+import ProReview from "../../product/partsDetail/ProReview";
+import ProPrice from "../../product/partsDetail/ProPrice";
+import ProSale from "../../product/partsDetail/ProSale";
+import ProDesc from "../../product/partsDetail/ProDesc";
+import ProThumb from "../../product/partsDetail/ProThumb";
+import parse from "html-react-parser";
+
+const AdminProDetailsItem = ({ data }) => {
+  console.log(
+    "🚀 ~ file: AdminProDetailsItem.js:23 ~ AdminProDetailsItem ~ data:",
+    data
+  );
   const { control, setValue, getValues, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {},
@@ -63,68 +54,9 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
     setLinkImage(data?.imageUrl);
   }, [data?.imageUrl]);
 
-  const [isClickTym, setIsClickTym] = useState(false);
   const [linkImage, setLinkImage] = useState(data?.imageUrl);
   const [selectedThumb, setSelectedThumb] = useState(1);
   const { loading } = useSelector((state) => state.product);
-  const { loadingCart } = useSelector((state) => state.cart);
-  console.log(
-    "🚀 ~ file: ProDetailItem.js:63 ~ ProDetailItem ~ loadingCart:",
-    loadingCart
-  );
-  const dispatch = useDispatch();
-  // const [formData, setFormData] = useState({
-  //   product_id: 1,
-  //   quantity: 1,
-  //   // Thêm các trường nhập liệu khác ở đây
-  // });
-  // console.log(
-  //   "🚀 ~ file: ProDetailItem.js:66 ~ ProDetailItem ~ formData:",
-  //   formData
-  // );
-
-  const HandleProDetails = async (values) => {
-    // setFormData({
-    //   ...formData,
-    //   product_id: data?.id,
-    //   quantity: values.quantity,
-    // });
-
-    dispatch(
-      cartAddNew({
-        product_id: data?.id,
-        quantity: values.quantity,
-        token: getToken(),
-      })
-    );
-    console.log({ product_id: data?.id, quantity: values.quantity });
-
-    //khi submit xong set số lượng về 1
-    setValue("quantity", 1);
-  };
-
-  useEffect(() => {
-    //khi có click đóng phải set về hình ảnh chính vì nếu không làm thế khi hover vào thumb nó sẽ giữ linkImg của thumb lại,set số lượng về 1 luôn
-    if (isClickClose) {
-      setLinkImage(data?.imageUrl);
-      setValue("quantity", 1);
-      // setIsClickTym(false);//để tạm chưa hợp lý
-    }
-  }, [data?.imageUrl, isClickClose]);
-
-  const [wishList, setWishList] = useState([]);
-
-  useEffect(() => {
-    dispatch(wishListGetAll());
-  }, []);
-
-  const { dataWishListAll } = useSelector((state) => state.cart);
-
-  useEffect(() => {
-    var arr = [];
-    dataWishListAll.map((item) => arr.push(item.pivot.product_id));
-    setWishList(arr);
-  }, [dataWishListAll]);
 
   return (
     <Fragment>
@@ -137,7 +69,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
           />
         </div>
       ) : (
-        <form onSubmit={handleSubmit(HandleProDetails)}>
+        <form>
           <div className="grid grid-cols-2 gap-x-6 ">
             <div className="grid grid-cols-5">
               <div className="thumbslider col-span-1 flex flex-col  pt-[40px] ">
@@ -184,7 +116,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
               </div>
               <div className="col-span-4">
                 <ProBigImage
-                  className="w-full h-[410px]"
+                  className="w-full h-[440px]"
                   imageUrl={linkImage ? linkImage : data?.imageUrl}
                 ></ProBigImage>
               </div>
@@ -230,74 +162,21 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                       <img src="/Mastercard.png" alt="" />
                     </div>
                   </div>
-
-                  <span className="block   cursor-pointer transition-all hover:scale-125">
-                    {wishList.includes(data?.id) ? (
-                      <div
-                        onClick={() => {
-                          dispatch(wishListDelete(data?.id));
-                        }}
-                      >
-                        <IconRedHeart></IconRedHeart>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => {
-                          dispatch(wishListAddNew({ product_id: data?.id }));
-                        }}
-                      >
-                        <IconHeart></IconHeart>
-                      </div>
-                    )}
-                  </span>
                 </div>
                 {/* <ProDesc>{data?.description}</ProDesc> */}
               </div>
-
-              <div className="py-[18px] border-b-2 flex items-center gap-x-2">
-                <ProHandleQuantity
-                  control={control}
-                  name="quantity"
-                ></ProHandleQuantity>
-
-                <Button
-                  kind="primary"
-                  type="submit"
-                  className="w-[160px] !px-[10px]"
-                  isLoading={loadingCart}
-                >
-                  <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                    <span className="block w-full text-sm">Add to Cart </span>
-                    <IconBagProDetail></IconBagProDetail>
-                  </div>
-                </Button>
-                <div
-                  onClick={() => {
-                    var arrayJSON = JSON.stringify({
-                      products_order: [data],
-                      quantity: getValues("quantity"),
-                      total_price:
-                        ((100 - parseInt(data?.discount)) / 100) *
-                        parseInt(data?.price) *
-                        getValues("quantity"),
-                    });
-                    localStorage.setItem("orderData", arrayJSON);
-                  }}
-                >
-                  <Button
-                    kind="secondary"
-                    href="/checkout"
-                    className="w-[160px]"
-                  >
-                    <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                      <span className="block w-full text-sm">Buy it Now </span>
-                      <IconAR2 color="#00B207"></IconAR2>
-                    </div>
-                  </Button>
+              <div className="py-6">
+                <div className="flex items-center gap-x-2">
+                  <span className="block text-gray9 text-sm font-medium">
+                    Quantity:
+                  </span>
+                  <span className="block text-gray5 text-sm font-normal">
+                    {data?.quantity}
+                  </span>
                 </div>
               </div>
 
-              <div className="py-6">
+              <div className="">
                 <div className="flex items-center gap-x-2">
                   <span className="block text-gray9 text-sm font-medium">
                     Category:
@@ -315,4 +194,4 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
   );
 };
 
-export default ProDetailItem;
+export default AdminProDetailsItem;

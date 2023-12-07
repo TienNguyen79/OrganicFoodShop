@@ -77,8 +77,8 @@ const WishListPage = () => {
                         </td>
                         <td>
                           <ProPrice
-                            priceOld={item?.price.toFixed(2)}
-                            currentPrice={item?.current_price.toFixed(2)}
+                            priceOld={item?.price?.slice(0, 5)}
+                            currentPrice={item?.current_price?.toFixed(2)}
                           ></ProPrice>
                         </td>
                         <td>

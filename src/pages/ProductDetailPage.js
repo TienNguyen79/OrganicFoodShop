@@ -11,6 +11,7 @@ import { proGetDetails } from "../store/product/pro-slice";
 import Label from "../components/label/Label";
 import ProductItem from "../modules/product/ProductItem";
 import ProQuickView from "../modules/product/ProQuickView";
+import parse from "html-react-parser";
 const tabs = [
   {
     id: 1,
@@ -83,7 +84,7 @@ const ProductDetailPage = () => {
           data={dataProDetails?.product}
           isHidden={`${tabClicked === 1 ? "block" : "hidden"} `}
         >
-          {dataProDetails?.product?.description}
+          {parse(dataProDetails?.product?.description || "")}
         </ProDescMore>
         <ProAdditionalInfo
           data={dataProDetails?.product}

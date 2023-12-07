@@ -32,6 +32,7 @@ const schema = yup.object({
   name: yup.string().required("Name is required"),
   price: yup
     .number()
+    .max(1000, "Maximum price is 1000$")
     .typeError("Price must be a valid number")
     .required("Price is required"),
   // quantity: yup
@@ -146,7 +147,7 @@ const UpdateProduct = () => {
   ]);
 
   const handleUpdateProduct = (values) => {
-    const thumbnails = [];
+    const thumbnails = [getValues("imgPrimary")];
 
     if (getValues("thumb1")) {
       thumbnails.push(getValues("thumb1"));
@@ -201,7 +202,13 @@ const UpdateProduct = () => {
     } else if (content === "") {
       toast.error("Description is required");
     } else {
-      dispatch(ProAdminUpdate({ id: slug, data: data }));
+      dispatch(
+        ProAdminUpdate({
+          id: slug,
+          data: data,
+          page: localStorage.getItem("pageAdmin"), //chưa hoạt động
+        })
+      );
       console.log(
         "🚀 ~ file: AddProductPage.js:49 ~ handleUpdateProduct ~ data:",
         data

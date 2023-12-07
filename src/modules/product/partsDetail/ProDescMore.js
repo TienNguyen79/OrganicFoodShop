@@ -10,10 +10,8 @@ const ProDescMore = ({
   return (
     <div className={`${isHidden} grid grid-cols-3 gap-x-[80px]`}>
       <div className="col-span-2">
-        <p className="text-gray5 text-sm font-normal text-justify ">
-          {children}
-        </p>
-        <div>
+        <div className="entry-content">{children}</div>
+        {/* <div>
           <div className="mt-5 flex items-center gap-x-2 relative">
             <span className="block p-[2px] rounded-full bg-primary mt-[4px]">
               <svg
@@ -104,7 +102,7 @@ const ProDescMore = ({
               industry
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="col-span-1">
         <ProFeauture
