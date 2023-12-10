@@ -68,7 +68,8 @@ const NavItemShop = () => {
                     if (pro.category_id === item.id) {
                       return (
                         <Link
-                          className="text-[15px] font-normal  text-gray5 hover:text-primary transition-all duration-200 cursor-pointer"
+                          className="text-[15px] font-normal  text-gray5 hover:text-primary transition-all duration-200 cursor-pointer whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[220px]
+"
                           key={pro?.id}
                           onClick={() => {
                             console.log(pro.id);

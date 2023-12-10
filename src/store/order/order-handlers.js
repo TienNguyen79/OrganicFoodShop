@@ -1,5 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import {
+  requestAdminCancelOrder,
+  requestAdminGetOrder,
+  requestAdminGetOrderDetail,
+  requestAdminUpdateStatusOrder,
+  requestGetFilterOrder,
+  requestGetFilterOrderUser,
   requestGetOrderAll,
   requestGetOrderDetails,
   requestPostOrder,
@@ -104,4 +110,180 @@ function* handleGetOrderDetails(action) {
   }
 }
 
-export { handlePostOrder, handleGetOrderDetails };
+function* handleGetFilterOrder(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestGetFilterOrder, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:115 ~ function*handleGetFilterOrder ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataOrder({ resultOrderAll: response.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:123 ~ function*handleGetFilterOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleGetFilterUserOrder(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestGetFilterOrderUser, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:140 ~ function*handleGetFilterUserOrder ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataOrder({ resultOrderAll: response.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:148 ~ function*handleGetFilterUserOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleAdminGetOrder(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestAdminGetOrder, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:166 ~ function*handleAdminGetOrder ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataOrder({ resultOrderAll: response.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:174 ~ function*handleAdminGetOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleAdminGetOrderDetail(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestAdminGetOrderDetail, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:194 ~ function*handleAdminGetOrderDetail ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataOrder({ resultOrderDetails: response.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:202 ~ function*handleAdminGetOrderDetail ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleAdminUpdateStastusOrder(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: order-handlers.js:188 ~ function*handleAdminUpdateStastusOrder ~ payload:",
+    payload
+  );
+
+  try {
+    // yield put(setLoading(true));
+    const response = yield call(requestAdminUpdateStatusOrder, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:192 ~ function*handleAdminUpdateStastusOrder ~ response:",
+      response
+    );
+    if (response.status === 200) {
+      toast.success("Thành công");
+      // const response2 = yield call(requestGetFilterOrder, {
+      //   status: "0",
+      //   page: payload.page,
+      // });
+      // yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:202 ~ function*handleAdminUpdateStastusOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleAdminCancelOrder(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: order-handlers.js:222 ~ function*handleAdminCancelOrder ~ payload:",
+    payload
+  );
+
+  try {
+    // yield put(setLoading(true));
+    const response = yield call(requestAdminCancelOrder, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:229 ~ function*handleAdminCancelOrder ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      toast.success("Hủy Thành công");
+      // const response2 = yield call(requestGetFilterOrder, {
+      //   status: "0",
+      //   page: payload.page,
+      // });
+      // yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:271 ~ function*handleAdminCancelOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+export {
+  handlePostOrder,
+  handleGetOrderDetails,
+  handleGetFilterOrder,
+  handleGetFilterUserOrder,
+  handleAdminGetOrder,
+  handleAdminUpdateStastusOrder,
+  handleAdminCancelOrder,
+  handleAdminGetOrderDetail,
+};

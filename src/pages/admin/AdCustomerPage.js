@@ -11,7 +11,12 @@ import {
   userStatus,
 } from "../../constants/global";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faCrown, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoffee,
+  faCrown,
+  faTruckFast,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import {
   faEye,
@@ -210,16 +215,26 @@ const AdCustomerPage = () => {
                     </td>
                     <td className="!text-center ">{item?.phone_number}</td>
                     <td
-                      className="!text-center cursor-pointer transition-all hover:scale-125 hover:text-primary"
+                      className="!text-center  "
                       onClick={() => handleUpdateRole(item)}
                     >
                       {item?.permission === userRole.USER ? (
-                        <span title="USER" className="text-[#4286f4]">
+                        <span
+                          title="USER"
+                          className="text-[#4286f4] block cursor-pointer transition-all hover:scale-125"
+                        >
                           <FontAwesomeIcon icon={faUser} size="lg" />
                         </span>
                       ) : item?.permission === userRole.ADMIN ? (
-                        <span title="ADMIN" className="text-[#FFC231]">
+                        <span
+                          title="ADMIN"
+                          className="text-[#FFC231] block cursor-pointer transition-all hover:scale-125"
+                        >
                           <FontAwesomeIcon icon={faCrown} size="lg" />
+                        </span>
+                      ) : item?.permission === userRole.SHIPPER ? (
+                        <span title="ADMIN" className="text-[#00B14F] ">
+                          <FontAwesomeIcon icon={faTruckFast} size="lg" />
                         </span>
                       ) : (
                         ""

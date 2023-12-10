@@ -11,6 +11,15 @@ const orderSlice = createSlice({
     orderGetDataAll: () => {},
     orderPost: (state, action) => ({ ...state, ...action.payload }),
     orderDetails: (state, action) => ({ ...state, ...action.payload }),
+    orderAdminFilter: (state, action) => ({ ...state, ...action.payload }),
+    orderUserFilter: (state, action) => ({ ...state, ...action.payload }),
+    orderAdminGet: (state, action) => ({ ...state, ...action.payload }),
+    orderAdminGetDetails: (state, action) => ({ ...state, ...action.payload }),
+    orderAdminCancel: (state, action) => ({ ...state, ...action.payload }),
+    orderAdmiUpdateStatusOrder: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateDataOrder: (state, action) => ({
       ...state,
       dataOrderAll: action.payload.resultOrderAll || state.dataOrderAll,
@@ -30,6 +39,12 @@ export const {
   orderPost,
   orderDetails,
   setLoadingOrder,
+  orderAdminFilter,
+  orderUserFilter,
+  orderAdminGet,
+  orderAdmiUpdateStatusOrder,
+  orderAdminCancel,
+  orderAdminGetDetails,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

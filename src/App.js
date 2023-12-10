@@ -46,6 +46,10 @@ const ProductsPage = lazy(() => import("./pages/admin/ProductsPage"));
 const AddProductPage = lazy(() => import("./pages/admin/AddProductPage"));
 const UpdateProduct = lazy(() => import("./pages/admin/UpdateProduct"));
 const AdProDetailPage = lazy(() => import("./pages/admin/AdProDetailPage"));
+const AdOrderPage = lazy(() => import("./pages/admin/AdOrderPage"));
+const AdOrderDetailsPage = lazy(() =>
+  import("./pages/admin/AdOrderDetailsPage")
+);
 
 function App() {
   const dispatch = useDispatch();
@@ -169,6 +173,14 @@ function App() {
         <Route
           path="/admin/products/product_list/:slug"
           element={<AdProDetailPage></AdProDetailPage>}
+        ></Route>
+        <Route
+          path="/admin/order"
+          element={<AdOrderPage></AdOrderPage>}
+        ></Route>
+        <Route
+          path="/admin/order/:slug"
+          element={<AdOrderDetailsPage></AdOrderDetailsPage>}
         ></Route>
 
         {/* ADMIN */}

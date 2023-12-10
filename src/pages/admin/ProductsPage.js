@@ -30,6 +30,7 @@ import SelectInit from "../../components/dropdown/init/SelectInit";
 import ListInit from "../../components/dropdown/init/ListInit";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import Swal from "sweetalert2";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const ProductsPage = () => {
   const { control } = useForm();
   const dispatch = useDispatch();
@@ -47,9 +48,17 @@ const ProductsPage = () => {
     dataPro
   );
   //pagination hook
-  const { handlePageClick, pageCount, nextPage } = usePagination(
-    dataPro,
-    dataPro?.per_page
+  const {
+    handlePageClick,
+    pageCount,
+    nextPage,
+    setNextPage,
+    setPageCount,
+    setItemOffset,
+  } = usePagination(dataPro, dataPro?.per_page);
+  console.log(
+    "🚀 ~ file: ProductsPage.js:51 ~ ProductsPage ~ nextPage:",
+    nextPage
   );
 
   const {
@@ -75,6 +84,17 @@ const ProductsPage = () => {
 
   //get pro
   useEffect(() => {
+    // if (adNamePro === "" && searchCate === "") {
+    //   dispatch(ProAdminGet(nextPage));
+    // }
+
+    // if (adNamePro !== "") {
+    //   dispatch(ProAdminSearchName({ name: adNamePro, page: nextPage1 }));
+    // }
+
+    // if (searchCate !== "") {
+    //   dispatch(ProAdminSearchWithCate({ id: idCate, page: nextPage2 }));
+    // }
     if (adNamePro !== "") {
       dispatch(ProAdminSearchName({ name: adNamePro, page: nextPage1 }));
     } else if (searchCate !== "") {
@@ -83,6 +103,17 @@ const ProductsPage = () => {
       dispatch(ProAdminGet(nextPage));
     }
   }, [adNamePro, dispatch, idCate, nextPage, nextPage1, nextPage2, searchCate]);
+
+  //lấy page để khi update về đúng trang đó
+  useEffect(() => {
+    localStorage.setItem("pageAdmin", dataPro?.current_page);
+  }, [dataPro?.current_page]);
+  //get dữ liệu trang product ở trang hiện tại của pro đó
+  useEffect(() => {
+    if (localStorage.getItem("pageAdmin")) {
+      dispatch(ProAdminGet(localStorage.getItem("pageAdmin")));
+    }
+  }, []);
   const { dataCate } = useSelector((state) => state.category);
 
   const handleDeletePro = (item) => {
@@ -96,7 +127,7 @@ const ProductsPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(ProAdminDelete({ page: dataPro.current_page, id: item.id }));
+        dispatch(ProAdminDelete({ id: item.id, page: dataPro.current_page }));
       }
     });
     console.log(
@@ -127,18 +158,22 @@ const ProductsPage = () => {
             >
               <DropdownInit>
                 <SelectInit
-                  className="bg-white "
+                  className="bg-white  !text-gray5 !font-medium "
                   placeholder={`${searchCate || "Search for Category"}  `}
                 ></SelectInit>
-                <ListInit className={`${adNamePro !== "" && "hidden"}`}>
-                  <div className="flex justify-center">
-                    <span
-                      className=" inline-block pt-1 px-4 text-center cursor-pointer"
-                      onClick={() => {
-                        setSearchCate("");
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faCircleXmark} size="lg" />
+                <ListInit
+                  className={`${
+                    adNamePro !== "" && "hidden"
+                  }  !shadow-lg rounded-md mt-2`}
+                >
+                  <div
+                    className="flex justify-center p-3 bg-purple-300 cursor-pointer text-white hover:opacity-80"
+                    onClick={() => {
+                      setSearchCate("");
+                    }}
+                  >
+                    <span className=" inline-block pt-1 px-4 text-center ">
+                      <FontAwesomeIcon icon={faXmark} size="xl" />
                     </span>
                   </div>
                   {dataCate.length > 0 &&

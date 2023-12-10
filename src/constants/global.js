@@ -167,6 +167,7 @@ export const convertStockStatus = (stock) => {
 export const userRole = {
   USER: 1,
   ADMIN: 2,
+  SHIPPER: 3,
 };
 
 export const userStatus = {

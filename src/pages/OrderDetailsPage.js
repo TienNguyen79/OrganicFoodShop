@@ -473,8 +473,9 @@ const OrderDetailsPage = () => {
                         ></ProImage>
                         <ProName
                           name={item?.name}
-                          className="inline-block"
+                          className="inline-block whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[200px]"
                           maxW="300px"
+                          title={item?.name}
                         ></ProName>
                       </div>
                     </td>

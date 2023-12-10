@@ -206,7 +206,7 @@ const UpdateProduct = () => {
         ProAdminUpdate({
           id: slug,
           data: data,
-          page: localStorage.getItem("pageAdmin"), //chưa hoạt động
+          page: localStorage.getItem("pageAdmin"),
         })
       );
       console.log(
