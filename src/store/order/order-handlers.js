@@ -225,12 +225,37 @@ function* handleAdminUpdateStastusOrder(action) {
       response
     );
     if (response.status === 200) {
-      toast.success("Thành công");
-      // const response2 = yield call(requestGetFilterOrder, {
-      //   status: "0",
-      //   page: payload.page,
-      // });
-      // yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      const response2 = yield call(requestGetFilterOrder, {
+        status: payload.status || "0",
+        page: payload.page,
+      });
+      yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      if (payload.status === "1") {
+        Swal.fire(
+          "Processing!",
+          `OrderID ${payload.id} is being processed!`,
+          "success"
+        );
+      } else if (payload.status === "2") {
+        Swal.fire(
+          "On the Way!",
+          `OrderID ${payload.id} on the way to delivery!`,
+          "success"
+        );
+      } else if (payload.status === "3") {
+        Swal.fire(
+          "Delivered!",
+          `OrderID ${payload.id} delivered successfully!`,
+          "success"
+        );
+      } else {
+        Swal.fire(
+          "Confirmed!",
+          `OrderID ${payload.id} has been confirmed!`,
+          "success"
+        );
+      }
+
       // yield put(setLoading(false));
     }
   } catch (error) {
@@ -259,12 +284,16 @@ function* handleAdminCancelOrder(action) {
     );
 
     if (response.status === 200) {
-      toast.success("Hủy Thành công");
-      // const response2 = yield call(requestGetFilterOrder, {
-      //   status: "0",
-      //   page: payload.page,
-      // });
-      // yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      const response2 = yield call(requestGetFilterOrder, {
+        status: payload.status || "0",
+        page: payload.page,
+      });
+      yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      Swal.fire(
+        "Canceled!",
+        `OrderID ${payload.id} has been Canceled!`,
+        "success"
+      );
       // yield put(setLoading(false));
     }
   } catch (error) {

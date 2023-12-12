@@ -448,8 +448,8 @@ const AdOrderDetailsPage = () => {
                 </thead>
                 <tbody>
                   {dataOrderDetails?.products_order?.length > 0 &&
-                    dataOrderDetails?.products_order?.map((item) => (
-                      <tr key={item.id}>
+                    dataOrderDetails?.products_order?.map((item, index) => (
+                      <tr key={index}>
                         <td>
                           <div className="inline-flex items-center gap-x-[6px]">
                             <ProImage

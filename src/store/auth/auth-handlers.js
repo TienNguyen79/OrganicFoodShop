@@ -154,4 +154,47 @@ function* handleLogOut(action) {
   yield 1;
 }
 
-export { handleAuthLogin, handleAuthFetchMe, handlecheckToken, handleLogOut };
+//login Admin
+
+function* handleAuthLoginAdmin(action) {
+  const { payload, type } = action;
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestAuthLogin, payload);
+    console.log(
+      "🚀 ~ file: auth-handlers.js:55 ~ function*handleAuthLogin ~ response:",
+      response
+    );
+    const encodeToken = btoa(response.data.token); //mã hóa base64
+
+    if (encodeToken) {
+      saveToken(encodeToken);
+      yield call(handleAuthFetchMe, { payload: encodeToken });
+    }
+
+    if (response.status === 200) {
+      toast.success("Login successfully!");
+      yield put(setLoading(false));
+      History.push("/admin/dashboards");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: auth-handlers.js:181 ~ function*handleAuthLoginAdmin ~ error:",
+      error
+    );
+
+    if (error.response.data.errors) {
+      toast.error(error.response.data.errors);
+    }
+    yield put(setLoading(false));
+    // toast.error("Email or Password incorrect!");
+  }
+}
+
+export {
+  handleAuthLogin,
+  handleAuthFetchMe,
+  handlecheckToken,
+  handleLogOut,
+  handleAuthLoginAdmin,
+};

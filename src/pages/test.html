@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call API Example with Token</title>
+  </head>
+  <body>
+    <h1>API Data:</h1>
+    <div id="apiData"></div>
+
+    <script>
+      // Replace 'your-api-endpoint' with the actual API endpoint URL
+      const apiUrl = "http://localhost:8000/api/admin/order/approve_orders/1";
+
+      // Replace 'your-access-token' with your actual access token
+      const accessToken = "2|aMQaikObS5rBxD3wM7fbMonlliZdSOQUziD8cT6Tafc8e4e0";
+
+      // Select the div where we'll display the API data
+      const apiDataContainer = document.getElementById("apiData");
+
+      // Make a GET request to the API with the Authorization header
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+          // Add other headers as needed
+        },
+      })
+        .then((response) => {
+          // Check if the request was successful (status code 200)
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          // Parse the JSON data in the response
+          return response.json();
+        })
+        .then((data) => {
+          // Process the data returned by the API
+          apiDataContainer.innerHTML = `<pre>${JSON.stringify(
+            data,
+            null,
+            2
+          )}</pre>`;
+        })
+        .catch((error) => {
+          // Handle any errors that occurred during the fetch
+          console.error("Fetch error:", error);
+        });
+    </script>
+  </body>
+</html>

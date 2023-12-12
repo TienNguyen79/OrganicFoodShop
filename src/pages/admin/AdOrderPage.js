@@ -116,11 +116,21 @@ const AdOrderPage = () => {
   };
 
   const handleCancelOrder = (item) => {
-    console.log(
-      "🚀 ~ file: AdOrderPage.js:118 ~ handleCancelOrder ~ item:",
-      item
-    );
-    dispatch(orderAdminCancel({ id: item.id }));
+    Swal.fire({
+      title: `Are you sure to Cancel OrderID <span class="capitalize font-semibold italic underline text-darkPrimary">#${item?.id}</span> ?`,
+      // text: "You won't be able to revert this!",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I'm Sure!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          orderAdminCancel({ id: item.id, page: dataOrderAll?.current_page })
+        );
+      }
+    });
   };
   return (
     <LayoutAdminAct label="Order List" content="Manage My Orders">
@@ -191,7 +201,7 @@ const AdOrderPage = () => {
                           <FontAwesomeIcon icon={faSquareCheck} size="xl" />
                         </span>
                         <span
-                          className="block py-[9px]"
+                          className="block py-[9px] cursor-pointer hover:text-danger"
                           onClick={() => handleCancelOrder(item)}
                         >
                           <FontAwesomeIcon icon={faRectangleXmark} size="xl" />

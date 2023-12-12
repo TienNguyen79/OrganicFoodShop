@@ -111,6 +111,10 @@ export const requestAdminGetOrderDetail = (id) => {
 
 export const requestAdminUpdateStatusOrder = (data) => {
   const decodedToken = atob(getToken()); //giải mã base64
+  console.log(
+    "🚀 ~ file: order-requests.js:114 ~ requestAdminUpdateStatusOrder ~ getToken():",
+    decodedToken
+  );
 
   if (!decodedToken) return;
   const config = {
@@ -120,7 +124,7 @@ export const requestAdminUpdateStatusOrder = (data) => {
     },
   };
 
-  return axios.put(`/api/admin/order/approve_orders/${data.id}`, config);
+  return axios.put(`/api/admin/order/approve_orders/${data.id}`, {}, config);
 };
 
 export const requestAdminCancelOrder = (data) => {
@@ -134,5 +138,5 @@ export const requestAdminCancelOrder = (data) => {
     },
   };
 
-  return axios.put(`/api/admin/order/cancel_order/${data.id}`, config);
+  return axios.put(`/api/admin/order/cancel_order/${data.id}`, {}, config);
 };

@@ -50,6 +50,8 @@ const AdOrderPage = lazy(() => import("./pages/admin/AdOrderPage"));
 const AdOrderDetailsPage = lazy(() =>
   import("./pages/admin/AdOrderDetailsPage")
 );
+const AdLoginPage = lazy(() => import("./pages/admin/AdLoginPage"));
+const ShipHomePage = lazy(() => import("./pages/ship/ShipHomePage"));
 
 function App() {
   const dispatch = useDispatch();
@@ -181,6 +183,16 @@ function App() {
         <Route
           path="/admin/order/:slug"
           element={<AdOrderDetailsPage></AdOrderDetailsPage>}
+        ></Route>
+
+        <Route
+          path="/admin/login"
+          element={<AdLoginPage></AdLoginPage>}
+        ></Route>
+
+        <Route
+          path="/ship/home"
+          element={<ShipHomePage></ShipHomePage>}
         ></Route>
 
         {/* ADMIN */}
