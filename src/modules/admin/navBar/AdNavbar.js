@@ -41,30 +41,6 @@ const navLink = [
       },
       {
         id: 2,
-        name: "Feauture Products",
-        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
-        to: "/admin/products/feauture_Products",
-      },
-      {
-        id: 3,
-        name: "Best Seller Products",
-        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
-        to: "/admin/products/bestSeller_Products",
-      },
-      {
-        id: 4,
-        name: "HotDeal Products",
-        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
-        to: "/admin/products/hotDeal_Products",
-      },
-      {
-        id: 5,
-        name: "TopRated Products",
-        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
-        to: "/admin/products/TopRated_Products",
-      },
-      {
-        id: 6,
         name: "Sale of the year",
         icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
         to: "/admin/saleOftheYear_Products",
@@ -143,7 +119,6 @@ const navLink = [
 ];
 
 const AdNavbar = ({ isFixNav, setIsFixNav }) => {
-  console.log("🚀 ~ file: AdNavbar.js:146 ~ AdNavbar ~ isFixNav:", isFixNav);
   const [openSubNav, setOpenSubNav] = useState(null);
 
   const toggleSubNav = (itemId) => {
@@ -238,7 +213,7 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
               <div
                 className={`z-[1] transition-all flex flex-col gap-y-3 duration-500 -translate-x-full  ${
                   openSubNav === item.id && openSubNav === 2
-                    ? "h-[240px] !translate-x-0 "
+                    ? "h-[60px] !translate-x-0 "
                     : openSubNav === item.id && openSubNav === 6
                     ? "h-[60px] !translate-x-0"
                     : "h-[0px]   "

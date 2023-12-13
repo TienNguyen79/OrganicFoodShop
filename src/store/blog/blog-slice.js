@@ -30,6 +30,18 @@ const blogSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    blogAdminAdd: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    blogAdminUpdate: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
+    blogAdminDelete: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     updateDataBlog: (state, action) => ({
       ...state,
       dataBlogAll: action.payload.resultBlogAll || state.dataBlogAll,
@@ -55,6 +67,9 @@ export const {
   setLoading,
   blogDeleteCmt,
   blogUpdateCmt,
+  blogAdminAdd,
+  blogAdminUpdate,
+  blogAdminDelete,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

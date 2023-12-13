@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import Table from "../../components/table/Table";
-import { convertStatus, defaultImage3 } from "../../constants/global";
+import {
+  convertDateTime,
+  convertStatus,
+  defaultImage3,
+} from "../../constants/global";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -186,7 +190,9 @@ const AdOrderPage = () => {
                 dataOrderAll?.data?.map((item) => (
                   <tr key={item?.id} className="bg-white">
                     <td className="!text-center">#{item?.id}</td>
-                    <td className="!text-center">Apr 15 2023</td>
+                    <td className="!text-center">
+                      {convertDateTime(item?.created_at)}
+                    </td>
                     <td className="!text-center">{item?.user_id}</td>
                     <td className="!text-center">${item?.total_price}</td>
                     <td className="!text-center">

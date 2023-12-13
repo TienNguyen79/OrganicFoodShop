@@ -2,45 +2,15 @@ import axios from "../../api/axios";
 import { getToken } from "../../utils/auth";
 
 export const requestBlogAll = (page) => {
-  const decodedToken = atob(getToken()); //giải mã base64
-  if (!decodedToken) return;
-  return axios.get(`/api/blog?page=${page}`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${decodedToken}`,
-    },
-  });
+  return axios.get(`/api/blog?page=${page}`);
 };
 
 export const requestBlogWithParam = (id) => {
-  const decodedToken = atob(getToken()); //giải mã base64
-  if (!decodedToken) return;
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${decodedToken}`,
-    },
-  };
-
-  return axios.get(`/api/blog/${id}`, config);
+  return axios.get(`/api/blog/${id}`);
 };
 
 export const requestCommentBlog = (data) => {
-  const decodedToken = atob(getToken()); //giải mã base64
-  if (!decodedToken) return;
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${decodedToken}`,
-    },
-  };
-
-  return axios.get(
-    `/api/blog/comments/${data.blog_id}?limit=${data.limit}`,
-    config
-  );
+  return axios.get(`/api/blog/comments/${data.blog_id}?limit=${data.limit}`);
 };
 
 export const requestAddCommentBlog = (data) => {
@@ -83,4 +53,47 @@ export const requestUpdateCommentBlog = (data) => {
   };
 
   return axios.put(`/api/comment/${data.idCmt}`, data, config);
+};
+
+//admin
+export const requestAdminAddBlog = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.post(`/api/admin/blog/create`, data, config);
+};
+
+export const requestAdminUpdateBlog = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.put(`/api/admin/blog/update/${data.id}`, data, config);
+};
+
+export const requestAdminDeleteBlog = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.delete(`api/admin/blog/delete/${data.id}`, config);
 };

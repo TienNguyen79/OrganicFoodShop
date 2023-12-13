@@ -1,6 +1,9 @@
 import { call, put } from "redux-saga/effects";
 import {
   requestAddCommentBlog,
+  requestAdminAddBlog,
+  requestAdminDeleteBlog,
+  requestAdminUpdateBlog,
   requestBlogAll,
   requestBlogWithParam,
   requestCommentBlog,
@@ -9,6 +12,7 @@ import {
 } from "./blog-requests";
 import { setDataCMT, setLoading, updateDataBlog } from "./blog-slice";
 import { toast } from "react-toastify";
+import History from "../../utils/history";
 
 export default function* handleGetBlogAll(action) {
   const { payload, type } = action;
@@ -195,10 +199,116 @@ function* handleBlogUpdateCmt(action) {
   }
 }
 
+//admin
+
+function* handleAdminAddBlog(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: blog-handler.js:203 ~ function*handleAdminAddBlog ~ payload:",
+    payload
+  );
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestAdminAddBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:210 ~ function*handleAdminAddBlog ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      //khi thành công update comment blog
+      const BlogResponse = yield call(requestBlogAll);
+
+      yield put(updateDataBlog({ resultBlogAll: BlogResponse.data }));
+
+      yield put(setLoading(false));
+      toast.success("Add Blog successfully!");
+      History.push("/admin/blog/blog_list");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:224 ~ function*handleAdminAddBlog ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
+function* handleAdminUpdateBlog(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: blog-handler.js:239 ~ function*handleAdminUpdateBlog ~ payload:",
+    payload
+  );
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestAdminUpdateBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:246 ~ function*handleAdminUpdateBlog ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      //khi thành công update comment blog
+      const BlogResponse = yield call(requestBlogAll, payload.page);
+
+      yield put(updateDataBlog({ resultBlogAll: BlogResponse.data }));
+
+      yield put(setLoading(false));
+      toast.success("Update Blog successfully!");
+      History.push("/admin/blog/blog_list");
+      localStorage.setItem("statusUpdate", "1");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:260 ~ function*handleAdminUpdateBlog ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
+function* handleAdmiDeleteBlog(action) {
+  const { payload, type } = action;
+  console.log(
+    "🚀 ~ file: blog-handler.js:275 ~ function*handleAdmiDeleteBlog ~ payload:",
+    payload
+  );
+
+  try {
+    yield put(setLoading(true));
+    const response = yield call(requestAdminDeleteBlog, payload);
+
+    if (response.status === 200) {
+      //khi thành công update comment blog
+      const BlogResponse = yield call(requestBlogAll, payload.page);
+
+      yield put(updateDataBlog({ resultBlogAll: BlogResponse.data }));
+
+      yield put(setLoading(false));
+      toast.success("Delete Blog successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:294 ~ function*handleAdmiDeleteBlog ~ error:",
+      error
+    );
+
+    yield put(setLoading(false));
+  }
+}
+
 export {
   handleGetBlogWithParam,
   handleGetCommentBlog,
   handleBlogAddCmtNew,
   handleBlogDeleteCmt,
   handleBlogUpdateCmt,
+  handleAdminAddBlog,
+  handleAdminUpdateBlog,
+  handleAdmiDeleteBlog,
 };

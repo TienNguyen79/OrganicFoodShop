@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import TextArea from "../components/input/TextArea";
 import Button from "../components/button/Button";
 import UserCmtItem from "../modules/user/UserCmtItem";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -23,6 +23,7 @@ import {
   blogGetWithParam,
 } from "../store/blog/blog-slice";
 import parse from "html-react-parser";
+import { getToken } from "../utils/auth";
 
 const BlogDetailPage = () => {
   const {
@@ -284,26 +285,36 @@ const BlogDetailPage = () => {
           <h1 className="text-gray9 text-[20px] font-medium py-4">
             Leave a Comment
           </h1>
-          <form onSubmit={handleSubmit(handleCommentBlog)}>
-            <div className="flex flex-col gap-y-2">
-              <span className="text-gray9 text-sm font-medium">Message</span>
-              <TextArea
-                control={control}
-                name="message"
-                placeholder="Write your comment here…"
-                setCommentBlog={setCommentBlog}
-              ></TextArea>
-            </div>
-            <Button
-              kind={getCommentBlog === "" ? "disable" : "primary"}
-              type="submit"
-              className="mt-6 w-[200px]"
-              disabled={getCommentBlog === "" ? true : false}
-              isLoading={loading}
-            >
-              Post Comments
-            </Button>
-          </form>
+          {getToken() ? (
+            <form onSubmit={handleSubmit(handleCommentBlog)}>
+              <div className="flex flex-col gap-y-2">
+                <span className="text-gray9 text-sm font-medium">Message</span>
+                <TextArea
+                  control={control}
+                  name="message"
+                  placeholder="Write your comment here…"
+                  setCommentBlog={setCommentBlog}
+                ></TextArea>
+              </div>
+              <Button
+                kind={getCommentBlog === "" ? "disable" : "primary"}
+                type="submit"
+                className="mt-6 w-[200px]"
+                disabled={getCommentBlog === "" ? true : false}
+                isLoading={loading}
+              >
+                Post Comments
+              </Button>
+            </form>
+          ) : (
+            <h1>
+              Please{" "}
+              <Link to={"/login"} className="text-primary hover:opacity-80">
+                login
+              </Link>{" "}
+              to comment
+            </h1>
+          )}
         </div>
         <div className="my-10">
           <h1 className="text-gray9 text-[20px] font-medium py-4">Comments</h1>

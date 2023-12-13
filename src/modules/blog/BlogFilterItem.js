@@ -10,6 +10,8 @@ import CateTitle from "../category/parts/CateTitle";
 import BlogImage from "./parts/BlogImage";
 import BlogRencentlyItem from "./BlogRencentlyItem";
 import { useState } from "react";
+import { blogGetAll } from "../../store/blog/blog-slice";
+import { Link } from "react-router-dom";
 
 const BlogFilterItem = ({ result }) => {
   const dispatch = useDispatch();
@@ -18,11 +20,17 @@ const BlogFilterItem = ({ result }) => {
   useEffect(() => {
     dispatch(cateGetdataAll());
     dispatch(proGetAll());
+    dispatch(blogGetAll(1));
   }, []);
+
+  const { dataBlogAll } = useSelector((state) => state.blog);
+  console.log(
+    "🚀 ~ file: BlogFilterItem.js:26 ~ BlogFilterItem ~ dataBlogAll:",
+    dataBlogAll
+  );
 
   //lấy được data đã trả về
   const { dataCate } = useSelector((state) => state.category);
-  const { dataPro } = useSelector((state) => state.product);
 
   //sắp xếp cate theo thứ tự giảm dần
   const [sortedDataCate, setSortedDataCate] = useState([]);
@@ -100,10 +108,12 @@ const BlogFilterItem = ({ result }) => {
           <span className="text-gray9 text-[20px] font-medium block ">
             Recently Added
           </span>
-          <BlogRencentlyItem></BlogRencentlyItem>
-          <BlogRencentlyItem></BlogRencentlyItem>
-          <BlogRencentlyItem></BlogRencentlyItem>
-          <BlogRencentlyItem></BlogRencentlyItem>
+          {dataBlogAll?.data?.length > 0 &&
+            dataBlogAll?.data?.slice(0, 4)?.map((item) => (
+              <Link key={item?.id} to={`/blog/${item?.id}`}>
+                <BlogRencentlyItem item={item}></BlogRencentlyItem>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

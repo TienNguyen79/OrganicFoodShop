@@ -201,7 +201,7 @@ const Header = () => {
                 <div className="relative">
                   <Link to="/wishList">
                     <IconTym></IconTym>
-                    {dataWishListAll.length > 0 && (
+                    {dataWishListAll.length > 0 && getToken() && (
                       <div className="absolute top-[-8px] right-[-5px] font-medium bg-darkPrimary w-[20px] h-[20px] text-center leading-[20px] text-[10px] rounded-full text-[#FFF]">
                         {dataWishListAll.length >= 100
                           ? "99+"
@@ -215,7 +215,7 @@ const Header = () => {
                   className="cursor-pointer relative"
                 >
                   <IconBag></IconBag>
-                  {dataCartAll.length > 0 && (
+                  {dataCartAll.length > 0 && getToken() && (
                     <div className="absolute top-[-8px] right-[-5px] font-medium bg-darkPrimary w-[20px] h-[20px] text-center leading-[20px] text-[10px] rounded-full text-[#FFF]">
                       {dataCartAll.length >= 100 ? "99+" : dataCartAll.length}
                     </div>

@@ -19,7 +19,7 @@ export default function usePagination(result, page) {
     setItemOffset(newOffset); //theo dõi vị trí bắt đầu của mục dữ liệu trên trang hiện tại khi bạn thực hiện phân trang hoặc điều hướng qua các trang dữ liệu.
     setNextPage(event.selected + 1);
 
-    // localStorage.setItem("pageAdmin", event.selected + 1);
+    localStorage.setItem("pageAdmin", event.selected + 1);
   };
 
   return {

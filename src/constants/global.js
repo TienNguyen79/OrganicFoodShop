@@ -1,3 +1,4 @@
+import moment from "moment";
 import IconStarGray from "../components/Icons/IconStarGray";
 import IconStarYellow from "../components/Icons/IconStarYellow";
 
@@ -76,6 +77,12 @@ export const convertDate = (data) => {
     ", " +
     date.toLocaleDateString("en-US", options)
   );
+};
+//datetime
+export const convertDateTime = (data) => {
+  const createdAt = data;
+  const formattedDate = moment(createdAt).format("DD MMM,YYYY HH:mm");
+  return formattedDate;
 };
 
 //convertStatus

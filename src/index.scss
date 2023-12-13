@@ -296,9 +296,12 @@ ul.slick-dots {
   figure {
     margin-bottom: 20px;
   }
-  figure img {
+  img {
     border-radius: 20px;
     margin-bottom: 10px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
   }
   figcaption {
     text-align: center;
@@ -308,6 +311,7 @@ ul.slick-dots {
   }
   p {
     margin-bottom: 16px;
+    @apply font-body;
   }
   @media screen and (max-width: 1023.98px) {
     font-size: 14px;

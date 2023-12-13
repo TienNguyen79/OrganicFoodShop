@@ -274,7 +274,7 @@ const ShipHomePage = () => {
                 className="bg-white !text-gray5 !font-medium"
               ></SelectInit>
               <ListInit className="w-full !shadow-lg rounded-md mt-2 ">
-                <div
+                {/* <div
                   className="flex justify-center p-3 bg-purple-300 cursor-pointer text-white hover:opacity-80"
                   onClick={() => {
                     setIdStatus("");
@@ -284,7 +284,7 @@ const ShipHomePage = () => {
                   <span className=" inline-block pt-1 px-4 text-center ">
                     <FontAwesomeIcon icon={faXmark} size="xl" />
                   </span>
-                </div>
+                </div> */}
                 {statusOrder.map((item) => (
                   <OptionsInit
                     key={item?.id}
