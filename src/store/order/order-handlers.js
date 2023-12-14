@@ -4,6 +4,7 @@ import {
   requestAdminGetOrder,
   requestAdminGetOrderDetail,
   requestAdminUpdateStatusOrder,
+  requestCancelOrder,
   requestGetFilterOrder,
   requestGetFilterOrderUser,
   requestGetOrderAll,
@@ -123,6 +124,7 @@ function* handleGetFilterOrder(action) {
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderAll: response.data }));
+
       // yield put(setLoading(false));
     }
   } catch (error) {
@@ -159,6 +161,39 @@ function* handleGetFilterUserOrder(action) {
     //   yield put(setLoading(false));
   }
 }
+
+function* handleCancelOrder(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestCancelOrder, payload);
+    console.log(
+      "🚀 ~ file: order-handlers.js:171 ~ function*handleCancelOrder ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      const response2 = yield call(requestGetFilterOrderUser, {
+        status: 0,
+        page: payload.page,
+      });
+      yield put(updateDataOrder({ resultOrderAll: response2.data }));
+      toast.success("Cancel Order Successfully!");
+      History.push("/order_history");
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:180 ~ function*handleCancelOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+//ADMIN
 
 function* handleAdminGetOrder(action) {
   const { payload, type } = action;
@@ -315,4 +350,5 @@ export {
   handleAdminUpdateStastusOrder,
   handleAdminCancelOrder,
   handleAdminGetOrderDetail,
+  handleCancelOrder,
 };

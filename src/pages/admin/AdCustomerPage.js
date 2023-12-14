@@ -45,28 +45,26 @@ const AdCustomerPage = () => {
   const { control } = useForm();
   const dispatch = useDispatch();
   const [nameCustomer, setNameCustomer] = useState("");
-  console.log(
-    "🚀 ~ file: AdCustomerPage.js:40 ~ AdCustomerPage ~ nameCustomer:",
-    nameCustomer
-  );
+
   const { dataAllCustomer } = useSelector((state) => state.user);
-  console.log(
-    "🚀 ~ file: AdCustomerPage.js:47 ~ AdCustomerPage ~ dataAllCustomer:",
-    dataAllCustomer
-  );
 
   const { handlePageClick, pageCount, nextPage } = usePagination(
     dataAllCustomer,
     10
   );
+  const {
+    handlePageClick: handlePageClick1,
+    pageCount: pageCount1,
+    nextPage: nextPage1,
+  } = usePagination(dataAllCustomer, 10);
 
   useEffect(() => {
-    dispatch(CustomerSearch(nameCustomer));
-  }, [dispatch, nameCustomer]);
-
-  useEffect(() => {
-    dispatch(CustomerGetAll(nextPage));
-  }, [nextPage]);
+    if (nameCustomer === "") {
+      dispatch(CustomerGetAll(nextPage));
+    } else {
+      dispatch(CustomerSearch({ name: nameCustomer, page: nextPage1 }));
+    }
+  }, [dispatch, nameCustomer, nextPage, nextPage1]);
 
   const { user } = useSelector((state) => state.auth);
   console.log("🚀 ~ file: AdCustomerPage.js:67 ~ AdCustomerPage ~ user:", user);
@@ -293,7 +291,7 @@ const AdCustomerPage = () => {
           </table>
         </Table>
       </div>
-      {dataAllCustomer?.last_page > 1 && (
+      {dataAllCustomer?.last_page > 1 && nameCustomer === "" && (
         <div className="flex justify-center items-center pt-10 ">
           <ReactPaginate
             breakLabel="..."
@@ -301,6 +299,20 @@ const AdCustomerPage = () => {
             onPageChange={handlePageClick}
             pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
             pageCount={pageCount}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination justify-center"
+          />
+        </div>
+      )}
+      {dataAllCustomer?.last_page > 1 && nameCustomer !== "" && (
+        <div className="flex justify-center items-center pt-10 ">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick1}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount1}
             previousLabel={<IconPagiPrev></IconPagiPrev>}
             renderOnZeroPageCount={null}
             className="pagination justify-center"

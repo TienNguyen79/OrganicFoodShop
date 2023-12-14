@@ -13,9 +13,11 @@ import ProQuantity from "../modules/product/partsCartAndTym/ProQuantity";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { orderDetails } from "../store/order/order-slice";
+import { orderDetails, orderUserCancel } from "../store/order/order-slice";
 import { authCheckToken } from "../store/auth/auth-slice";
 import { convertDate } from "../constants/global";
+import Button from "../components/button/Button";
+import Swal from "sweetalert2";
 
 const OrderDetailsPage = () => {
   const dispatch = useDispatch();
@@ -29,16 +31,29 @@ const OrderDetailsPage = () => {
   }, []);
 
   const { dataOrderDetails } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: OrderDetailsPage.js:32 ~ OrderDetailsPage ~ dataOrderDetails:",
-    dataOrderDetails
-  );
 
   const { user, accessToken } = useSelector((state) => state.auth);
   console.log(
     "🚀 ~ file: OrderDetailsPage.js:38 ~ OrderDetailsPage ~ user:",
     user
   );
+
+  const handleCancelOrder = () => {
+    Swal.fire({
+      title: `Are you sure to cancel orderID  <span class="capitalize font-semibold italic underline text-darkPrimary">${slug}</span>?`,
+      // text: "You won't be able to revert this!",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I'm Sure!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // dispatch(CateDelete({ name: item.name, id: item.id }));
+        dispatch(orderUserCancel({ id: slug, page: 1 }));
+      }
+    });
+  };
 
   const processOrder = (data) => {
     switch (data) {
@@ -292,6 +307,35 @@ const OrderDetailsPage = () => {
             {dataOrderDetails?.products_order?.length} Product
           </span>
         </div>
+        {dataOrderDetails?.approval_status === "0" && (
+          <Button
+            kind="discard"
+            className="!py-2 hover:text-white hover:bg-danger transition-all"
+            onClick={handleCancelOrder}
+          >
+            Cancel Order
+          </Button>
+        )}
+        {dataOrderDetails?.approval_status === "5" && (
+          <div
+            onClick={() => {
+              let data = {
+                products_order: [...dataOrderDetails?.products_order],
+                total_price: dataOrderDetails?.total_price,
+              };
+              var arrayJSON = JSON.stringify(data);
+              localStorage.setItem("orderData", arrayJSON);
+            }}
+          >
+            <Button
+              kind="secondary2"
+              href="/checkout"
+              className="!py-2 hover:text-white hover:bg-primary transition-all"
+            >
+              Buy Back
+            </Button>
+          </div>
+        )}
 
         <LabelRedirect
           icon=""
@@ -481,14 +525,14 @@ const OrderDetailsPage = () => {
                     </td>
                     <td>
                       {" "}
-                      <ProPrice price={item?.price.toFixed(2)}></ProPrice>
+                      <ProPrice price={item?.price?.toFixed(2)}></ProPrice>
                     </td>
                     <td className="text-center">
                       <ProQuantity quantity={item?.quantity}></ProQuantity>
                     </td>
                     <td>
                       <ProPrice
-                        price={(item?.price * item?.quantity).toFixed(2)}
+                        price={(item?.price * item?.quantity)?.toFixed(2)}
                       ></ProPrice>
                     </td>
                     {dataOrderDetails?.approval_status === "4" && (

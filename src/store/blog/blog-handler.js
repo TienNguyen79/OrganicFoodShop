@@ -8,6 +8,7 @@ import {
   requestBlogWithParam,
   requestCommentBlog,
   requestDeleteCommentBlog,
+  requestSearchBlog,
   requestUpdateCommentBlog,
 } from "./blog-requests";
 import { setDataCMT, setLoading, updateDataBlog } from "./blog-slice";
@@ -17,7 +18,7 @@ import History from "../../utils/history";
 export default function* handleGetBlogAll(action) {
   const { payload, type } = action;
   try {
-    //   yield put(setLoading(true));
+    yield put(setLoading(true));
     const response = yield call(requestBlogAll, payload);
     console.log(
       "🚀 ~ file: blog-handler.js:9 ~ function*handleGetBlogAll ~ response:",
@@ -26,7 +27,7 @@ export default function* handleGetBlogAll(action) {
 
     if (response.status === 200) {
       yield put(updateDataBlog({ resultBlogAll: response.data }));
-      // yield put(setLoading(false));
+      yield put(setLoading(false));
     }
   } catch (error) {
     console.log(
@@ -34,7 +35,7 @@ export default function* handleGetBlogAll(action) {
       error
     );
 
-    //   yield put(setLoading(false));
+    yield put(setLoading(false));
   }
 }
 
@@ -57,6 +58,32 @@ function* handleGetBlogWithParam(action) {
   } catch (error) {
     console.log(
       "🚀 ~ file: blog-handler.js:46 ~ function*handleGetBlogWithParam ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+
+function* handleSearchBlog(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestSearchBlog, payload);
+    console.log(
+      "🚀 ~ file: blog-handler.js:74 ~ function*handleSearchBlog ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(updateDataBlog({ resultBlogAll: response.data }));
+      // yield put(setLoading(false));
+      // toast.success("Add to cart successfully!");
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: blog-handler.js:83 ~ function*handleSearchBlog ~ error:",
       error
     );
 
@@ -311,4 +338,5 @@ export {
   handleAdminAddBlog,
   handleAdminUpdateBlog,
   handleAdmiDeleteBlog,
+  handleSearchBlog,
 };

@@ -23,7 +23,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import Table from "../../components/table/Table";
-import { convertStatus } from "../../constants/global";
+import { convertDateTime, convertStatus } from "../../constants/global";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IconPagiNext from "../../components/Icons/IconPagiNext";
@@ -251,9 +251,7 @@ const ShipHomePage = () => {
               Congratulations Shipper Tiến! 🎉
             </h1>
             <p className="pt-4 text-gray5">
-              There were a total of{" "}
-              <span className="text-primary font-medium text-[20px]">12</span>{" "}
-              orders today
+              Wishing you a safe delivery!
               <br />
               Have a good day 😍
             </p>
@@ -308,8 +306,9 @@ const ShipHomePage = () => {
                     <th>ID</th>
                     <th>Date</th>
                     <th>CustomerID</th>
+                    <th>Phone</th>
                     <th>Total Price</th>
-                    <th>Status</th>
+                    {/* <th>Status</th> */}
                     {IdStatus !== 5 && IdStatus !== 4 && <th>Handle</th>}
 
                     <th>Actions</th>
@@ -320,12 +319,17 @@ const ShipHomePage = () => {
                     dataOrderAll?.data?.map((item) => (
                       <tr key={item?.id} className="bg-white">
                         <td className="!text-center">#{item?.id}</td>
-                        <td className="!text-center">Apr 15 2023</td>
-                        <td className="!text-center">{item?.user_id}</td>
-                        <td className="!text-center">${item?.total_price}</td>
                         <td className="!text-center">
-                          {convertStatus(item?.approval_status)}
+                          {convertDateTime(item?.created_at)}
                         </td>
+                        <td className="!text-center">{item?.user?.name}</td>
+                        <td className="!text-center">
+                          {item?.user?.phone_number}
+                        </td>
+                        <td className="!text-center">${item?.total_price}</td>
+                        {/* <td className="!text-center">
+                          {convertStatus(item?.approval_status)}
+                        </td> */}
 
                         {item?.approval_status === "1" ? (
                           <td className=" flex items-center justify-center gap-x-5 ">
@@ -366,12 +370,22 @@ const ShipHomePage = () => {
 
                         <td className="!text-center">
                           <div className="flex items-center justify-center gap-x-4">
-                            <Link
+                            {/* <Link
                               className="border p-2"
                               to={`/admin/order/${item.id}`}
                             >
                               <FontAwesomeIcon icon={faEye} size="lg" />
-                            </Link>
+                            </Link> */}
+                            {IdStatus === 4 && (
+                              <span className="block text-primary font-medium">
+                                Deliverd Successfully!
+                              </span>
+                            )}
+                            {IdStatus === 5 && (
+                              <span className="block text-danger font-medium">
+                                Canceled!
+                              </span>
+                            )}
                             {IdStatus !== 5 && IdStatus !== 4 && (
                               <span
                                 className="block py-[9px] cursor-pointer border p-2 "

@@ -12,6 +12,11 @@ export const requestBlogWithParam = (id) => {
 export const requestCommentBlog = (data) => {
   return axios.get(`/api/blog/comments/${data.blog_id}?limit=${data.limit}`);
 };
+export const requestSearchBlog = (data) => {
+  return axios.get(
+    `/api/search_blog?content_search=${data.content}&&page=${data.page}`
+  );
+};
 
 export const requestAddCommentBlog = (data) => {
   const decodedToken = atob(getToken()); //giải mã base64

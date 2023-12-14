@@ -8,6 +8,7 @@ import {
   blogDeleteCmt,
   blogGetAll,
   blogGetWithParam,
+  blogSearch,
   blogUpdateCmt,
 } from "./blog-slice";
 import handleGetBlogAll, {
@@ -19,6 +20,7 @@ import handleGetBlogAll, {
   handleBlogUpdateCmt,
   handleGetBlogWithParam,
   handleGetCommentBlog,
+  handleSearchBlog,
 } from "./blog-handler";
 
 export default function* blogSaga() {
@@ -28,6 +30,7 @@ export default function* blogSaga() {
   yield takeLatest(blogAddCmtNew.type, handleBlogAddCmtNew);
   yield takeLatest(blogDeleteCmt.type, handleBlogDeleteCmt);
   yield takeLatest(blogUpdateCmt.type, handleBlogUpdateCmt);
+  yield takeLatest(blogSearch.type, handleSearchBlog);
   yield takeLatest(blogAdminAdd.type, handleAdminAddBlog);
   yield takeLatest(blogAdminUpdate.type, handleAdminUpdateBlog);
   yield takeLatest(blogAdminDelete.type, handleAdmiDeleteBlog);

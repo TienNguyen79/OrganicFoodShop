@@ -59,6 +59,10 @@ const OrderHistoryPage = () => {
   }, [dispatch, nextPage, tabClicked]);
 
   const { dataOrderAll } = useSelector((state) => state.order);
+  console.log(
+    "🚀 ~ file: OrderHistoryPage.js:62 ~ OrderHistoryPage ~ dataOrderAll:",
+    dataOrderAll
+  );
 
   //xử lí phân trang
   useEffect(() => {
@@ -139,7 +143,7 @@ const OrderHistoryPage = () => {
                       </span>
                     </td>
                     <td>{convertStatus(item?.approval_status)}</td>
-                    {tabClicked !== 4 ? (
+                    {tabClicked !== 4 && tabClicked !== 5 ? (
                       <td>
                         <LabelRedirect
                           icon=""
@@ -148,24 +152,46 @@ const OrderHistoryPage = () => {
                           url={`/order_details/${item?.id}`}
                         ></LabelRedirect>
                       </td>
-                    ) : (
+                    ) : tabClicked === 4 ? (
                       <div>
-                        <td className="flex leading-[61px] justify-center items-center ">
+                        <td>
+                          <div className="flex justify-center items-center ">
+                            <LabelRedirect
+                              icon=""
+                              className="text-sm  font-medium"
+                              title=" Details"
+                              url={`/order_details/${item?.id}`}
+                            ></LabelRedirect>
+                            <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
+                            <LabelRedirect
+                              icon=""
+                              className="text-sm  font-medium pl-2 "
+                              title=" Review"
+                              url={`#`}
+                            ></LabelRedirect>
+                          </div>
+                        </td>
+                      </div>
+                    ) : tabClicked === 5 ? (
+                      <td>
+                        <div className="flex  justify-center items-center  ">
                           <LabelRedirect
                             icon=""
-                            className="text-sm  font-medium"
+                            className="text-sm  font-medium hover:opacity-80"
                             title=" Details"
                             url={`/order_details/${item?.id}`}
                           ></LabelRedirect>
-
+                          {/* <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
                           <LabelRedirect
                             icon=""
-                            className="text-sm  font-medium"
-                            title=" Review"
+                            className="text-sm text-danger pl-2   font-semibold hover:opacity-80"
+                            title=" Buy back"
                             url={`#`}
-                          ></LabelRedirect>
-                        </td>
-                      </div>
+                          ></LabelRedirect> */}
+                        </div>
+                      </td>
+                    ) : (
+                      ""
                     )}
                   </tr>
                 );

@@ -61,6 +61,10 @@ const CheckOutPage = () => {
   });
   const navigate = useNavigate();
   const [dataOrder, setDataOrder] = useState([]);
+  console.log(
+    "🚀 ~ file: CheckOutPage.js:64 ~ CheckOutPage ~ dataOrder:",
+    dataOrder
+  );
   const { loadingOrder } = useSelector((state) => state.order);
   console.log(
     "🚀 ~ file: CheckOutPage.js:65 ~ CheckOutPage ~ loadingOrder:",
@@ -77,14 +81,19 @@ const CheckOutPage = () => {
         toast.warning("Upcoming feature will be available soon");
       } else {
         let ordered = {
+          //item?.pivot?.quantity : nhiều đơn hàng ; ((100 - parseInt(item?.discount)) / 100) *parseInt(item?.price) : 1 đơn hàng, có mỗi item.price là mua lại hàng đã hủy
+
           products_order: dataOrder.products_order.map((item) => ({
             id: item.id,
             name: item.name,
-            image: item.imageUrl,
-            quantity: item?.pivot?.quantity || dataOrder.quantity, //dataOrder.quantity đối với mua chỉ 1 đơn hàng à giá dưới sau có discount cũng thế,
+            image: item.imageUrl || item?.image,
+            quantity:
+              item?.pivot?.quantity || dataOrder.quantity || item?.quantity, //dataOrder.quantity đối với mua chỉ 1 đơn hàng và giá dưới sau có discount cũng thế,
             price:
-              item?.current_price ||
-              ((100 - parseInt(item?.discount)) / 100) * parseInt(item?.price),
+              item?.current_price || item?.discount
+                ? ((100 - parseInt(item?.discount)) / 100) *
+                  parseInt(item?.price)
+                : item.price,
           })),
           total_price: dataOrder.total_price,
           address_shipping:
@@ -499,14 +508,16 @@ const CheckOutPage = () => {
                     <GroupJusBeween key={item.id} className="my-2">
                       <div className="flex items-center gap-x-2">
                         <ProImage
-                          linkUrl={item?.imageUrl}
+                          linkUrl={item?.imageUrl || item?.image}
                           className="w-[60px] h-[60px]"
                         ></ProImage>
                         <div>
                           <ProName name={item?.name}></ProName>
                           <ProQuantity
                             quantity={
-                              item?.pivot?.quantity || dataOrder?.quantity
+                              item?.pivot?.quantity ||
+                              dataOrder?.quantity ||
+                              item?.quantity
                             }
                           ></ProQuantity>
                         </div>
@@ -514,11 +525,12 @@ const CheckOutPage = () => {
                       <ProPrice
                         className="font-medium"
                         price={
-                          item?.current_price?.toFixed(2) ||
-                          (
-                            ((100 - parseInt(item?.discount)) / 100) *
-                            parseInt(item?.price)
-                          ).toFixed(2)
+                          item?.current_price?.toFixed(2) || item?.discount
+                            ? (
+                                ((100 - parseInt(item?.discount)) / 100) *
+                                parseInt(item?.price)
+                              ).toFixed(2)
+                            : item?.price?.toFixed(2)
                         }
                       ></ProPrice>
                     </GroupJusBeween>

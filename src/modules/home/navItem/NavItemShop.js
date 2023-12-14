@@ -64,23 +64,24 @@ const NavItemShop = () => {
                   {item.name}
                 </h1>
                 <div className="flex flex-col justify-center gap-y-[10px]">
-                  {dataPro.map((pro) => {
-                    if (pro.category_id === item.id) {
-                      return (
-                        <Link
-                          className="text-[15px] font-normal  text-gray5 hover:text-primary transition-all duration-200 cursor-pointer whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[220px]
+                  {dataPro?.length > 0 &&
+                    dataPro.map((pro) => {
+                      if (pro.category_id === item.id) {
+                        return (
+                          <Link
+                            className="text-[15px] font-normal  text-gray5 hover:text-primary transition-all duration-200 cursor-pointer whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[220px]
 "
-                          key={pro?.id}
-                          onClick={() => {
-                            console.log(pro.id);
-                          }}
-                          to={`/productDetails/${pro.id}`}
-                        >
-                          {pro?.name}
-                        </Link>
-                      );
-                    }
-                  })}
+                            key={pro?.id}
+                            onClick={() => {
+                              console.log(pro.id);
+                            }}
+                            to={`/productDetails/${pro.id}`}
+                          >
+                            {pro?.name}
+                          </Link>
+                        );
+                      }
+                    })}
                 </div>
               </div>
             );

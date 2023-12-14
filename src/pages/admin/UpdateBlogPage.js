@@ -24,6 +24,7 @@ import {
   blogGetWithParam,
 } from "../../store/blog/blog-slice";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 const UpdateBlogPage = () => {
   const {
     control,
@@ -95,8 +96,24 @@ const UpdateBlogPage = () => {
       content: content,
       page: localStorage.getItem("pageAdmin"),
     };
+    console.log(
+      "🚀 ~ file: UpdateBlogPage.js:99 ~ handleUpdateBlog ~ dataBlog.image:",
+      dataBlog.image
+    );
+    if (dataBlog.title === "") {
+      toast.error("Title is Require");
+    } else if (dataBlog.image === "") {
+      toast.error("Image is Require");
+    } else if (dataBlog.content === "") {
+      toast.error("Content is Require");
+    } else if (dataBlog.content.length < 100) {
+      toast.error("Content is Content must be greater than 100 characters");
+    } else if (dataBlog.category_id === "") {
+      toast.error("Category is Require");
+    } else {
+      dispatch(blogAdminUpdate(dataBlog));
+    }
 
-    dispatch(blogAdminUpdate(dataBlog));
     console.log(
       "🚀 ~ file: AddBlogPage.js:61 ~ handleUpdateBlog ~ dataBlog:",
       dataBlog
@@ -104,8 +121,8 @@ const UpdateBlogPage = () => {
   };
   return (
     <LayoutAdminAct
-      label="Add Blog"
-      content="Add a new Blog"
+      label={`Update Blog - ${dataBlogWithParam?.title}`}
+      content="Update a  Blog"
       content2="Manage My Blogs"
     >
       <form action="" onSubmit={handleSubmit(handleUpdateBlog)}>

@@ -89,14 +89,15 @@ const BlogDetailPage = () => {
   // lúc mới vào khởi tao lại data cho đỡ trùng
   useEffect(() => {
     setLimit(5);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
-    <div className="grid grid-cols-3 gap-x-6">
-      <div className="col-span-2 mt-8">
+    <div>
+      <div className=" mt-8">
         <BlogImage
           linkUrl={dataBlogWithParam?.image}
-          className="w-full h-[500px] rounded-lg"
+          className="w-full h-[350px] rounded-lg"
         ></BlogImage>
         <div className="mt-8">
           <div className="flex gap-x-3 mb-1 ">
@@ -359,9 +360,9 @@ const BlogDetailPage = () => {
           )
         )}
       </div>
-      <div className="col-span-1 mt-8">
+      {/* <div className="col-span-1 mt-8">
         <BlogFilterItem result={dataBlogAll}></BlogFilterItem>
-      </div>
+      </div> */}
     </div>
   );
 };

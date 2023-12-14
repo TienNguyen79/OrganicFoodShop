@@ -19,6 +19,7 @@ import GroupJusBeween from "../../components/common/GroupJusBeween";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { blogAdminAdd } from "../../store/blog/blog-slice";
+import { toast } from "react-toastify";
 const AddBlogPage = () => {
   const {
     control,
@@ -59,8 +60,25 @@ const AddBlogPage = () => {
       image: getValues("image"),
       content: content,
     };
+    console.log(
+      "🚀 ~ file: AddBlogPage.js:63 ~ handleAddBlog ~ dataBlog:",
+      dataBlog.image
+    );
 
-    dispatch(blogAdminAdd(dataBlog));
+    if (dataBlog.title === "") {
+      toast.error("Title is Require");
+    } else if (dataBlog.image === undefined) {
+      toast.error("Image is Require");
+    } else if (dataBlog.content === "") {
+      toast.error("Content is Require");
+    } else if (dataBlog.content.length < 100) {
+      toast.error("Content is Content must be greater than 100 characters");
+    } else if (dataBlog.category_id === "") {
+      toast.error("Category is Require");
+    } else {
+      dispatch(blogAdminAdd(dataBlog));
+    }
+
     console.log(
       "🚀 ~ file: AddBlogPage.js:61 ~ handleAddBlog ~ dataBlog:",
       dataBlog

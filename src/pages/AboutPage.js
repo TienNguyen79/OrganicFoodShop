@@ -31,11 +31,11 @@ const AboutPage = () => {
         <div className="flex-1 ">
           <AboutHeading className="text-[40px] mb-8"></AboutHeading>
           <AboutDesc>
-            Morbi porttitor ligula in nunc varius sagittis. Proin dui nisi,
-            laoreet ut tempor ac, cursus vitae eros. Cras quis ultricies elit.
-            Proin ac lectus arcu. Maecenas aliquet vel tellus at accumsan. Donec
-            a eros non massa vulputate ornare. Vivamus ornare commodo ante, at
-            commodo felis congue vitae.
+            We are a team passionate about health and the environment, committed
+            to bringing the highest quality organic products to your doorstep.
+            We believe that nutrition is an essential part of a healthy
+            lifestyle, and we understand the value of organic food in
+            maintaining a wholesome way of life.
           </AboutDesc>
         </div>
         <div className="flex-1">
@@ -57,9 +57,11 @@ const AboutPage = () => {
         <div className="flex-1 ">
           <AboutHeading className="text-[40px] mb-8"></AboutHeading>
           <AboutDesc>
-            Pellentesque a ante vulputate leo porttitor luctus sed eget eros.
-            Nulla et rhoncus neque. Duis non diam eget est luctus tincidunt a a
-            mi. Nulla eu eros consequat tortor tincidunt feugiat.
+            We are proud to offer a wide range of organic products from trusted
+            sources. All of our products are carefully selected to ensure they
+            meet the highest standards of quality and provenance. Here, you can
+            find everything from vegetables, fruits, grains to prepared foods
+            and more.
           </AboutDesc>
         </div>
       </div>
@@ -70,10 +72,9 @@ const AboutPage = () => {
             className="text-[40px] mb-8"
           ></AboutHeading>
           <AboutDesc>
-            Ut suscipit egestas suscipit. Sed posuere pellentesque nunc,
-            ultrices consectetur velit dapibus eu. Mauris sollicitudin dignissim
-            diam, ac mattis eros accumsan rhoncus. Curabitur auctor bibendum
-            nunc eget elementum.
+            We are committed to providing a smooth and reliable delivery
+            experience for our customers. Below are four standards we adhere to
+            to ensure that your product arrives quickly and safely.
           </AboutDesc>
 
           <div className="mt-5 flex flex-col gap-y-4">
@@ -97,7 +98,7 @@ const AboutPage = () => {
                   </svg>
                 </span>
               </AboutIcon>
-              <AboutDesc>Sed in metus pellentesque.</AboutDesc>
+              <AboutDesc>Door-to-Door Delivery</AboutDesc>
             </div>
             <div className="flex items-center gap-y-4 gap-x-3">
               <AboutIcon>
@@ -119,7 +120,7 @@ const AboutPage = () => {
                   </svg>
                 </span>
               </AboutIcon>
-              <AboutDesc>Sed in metus pellentesque.</AboutDesc>
+              <AboutDesc>Secure Packaging</AboutDesc>
             </div>
             <div className="flex items-center gap-y-4 gap-x-3">
               <AboutIcon>
@@ -141,7 +142,7 @@ const AboutPage = () => {
                   </svg>
                 </span>
               </AboutIcon>
-              <AboutDesc>Sed in metus pellentesque.</AboutDesc>
+              <AboutDesc>On-Time Delivery</AboutDesc>
             </div>
             <div className="flex items-center gap-y-4 gap-x-3">
               <AboutIcon>
@@ -163,7 +164,7 @@ const AboutPage = () => {
                   </svg>
                 </span>
               </AboutIcon>
-              <AboutDesc>Sed in metus pellentesque.</AboutDesc>
+              <AboutDesc>Dedicated Customer Service</AboutDesc>
             </div>
           </div>
         </div>
@@ -180,9 +181,10 @@ const AboutPage = () => {
         <div className="text-center ">
           <Label className="text-[40px]">Our Awesome Team</Label>
           <span className="mt-2 text-gray6 text-[16px] font-normal text-center block  ">
-            Pellentesque a ante vulputate leo porttitor luctus sed eget eros.
-            Nulla et rhoncus neque. Duis non diam eget est luctus tincidunt a a
-            mi.
+            We are proud to have a team of experts with full experience and
+            passion for health and organic food. Every team member plays an
+            important part in ensuring that we deliver the best products and
+            services to our customers.
           </span>
         </div>
         <div className="mt-[50px] grid grid-cols-4 gap-x-6">
@@ -191,7 +193,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://e7.pngegg.com/pngimages/1019/187/png-clipart-computer-icons-avatar-encapsulated-postscript-avatar-heroes-hand.png"
+              linkUrl="/logoMT2.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">
@@ -208,7 +210,7 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://e7.pngegg.com/pngimages/1019/187/png-clipart-computer-icons-avatar-encapsulated-postscript-avatar-heroes-hand.png"
+              linkUrl="/logoMT2.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
               <h1 className="text-gray9 text-[18px] font-medium">
@@ -225,10 +227,10 @@ const AboutPage = () => {
               w="280px"
               h="260px"
               className=""
-              linkUrl="https://cdn1.iconfinder.com/data/icons/marketing-19/100/Profile-512.png"
+              linkUrl="https://www.kindpng.com/picc/m/247-2472283_transparent-admin-png-marketing-girl-cartoon-png-png.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
-              <h1 className="text-gray9 text-[18px] font-medium">John</h1>
+              <h1 className="text-gray9 text-[18px] font-medium">Rosé</h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
                 Employee

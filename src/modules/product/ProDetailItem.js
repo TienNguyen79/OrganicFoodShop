@@ -32,6 +32,7 @@ import { getToken } from "../../utils/auth";
 import IconClose2 from "../../components/Icons/IconClose2";
 import IconHeart from "../../components/Icons/IconHeart";
 import IconRedHeart from "../../components/Icons/IconRedHeart";
+import LoadingProQuickView from "../../components/loading/LoadingProQuickView";
 const ProDetailItem = ({ data, isClickClose, onClose }) => {
   const { control, setValue, getValues, handleSubmit } = useForm({
     mode: "onChange",
@@ -129,13 +130,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
   return (
     <Fragment>
       {loading ? (
-        <div className="h-[400px] flex justify-center items-center">
-          <img
-            src="/loading2.svg"
-            className="loadingsvg h-[60px] mx-auto"
-            alt="loading"
-          />
-        </div>
+        <LoadingProQuickView></LoadingProQuickView>
       ) : (
         <form onSubmit={handleSubmit(HandleProDetails)}>
           <div className="grid grid-cols-2 gap-x-6 ">

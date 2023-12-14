@@ -20,6 +20,7 @@ const Input = (props) => {
     setNameCustomer,
     setNameCate,
     setAdNamePro,
+    setContentBlog,
     handleFilterChangeDebounced,
     ...rest
   } = props;
@@ -36,6 +37,7 @@ const Input = (props) => {
     setNameCustomer && setNameCustomer(text);
     setNameCate && setNameCate(text);
     setAdNamePro && setAdNamePro(text);
+    setContentBlog && setContentBlog(text);
   }, 300);
 
   useEffect(() => {

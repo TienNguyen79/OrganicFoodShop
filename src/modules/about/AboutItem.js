@@ -48,50 +48,15 @@ const AboutItem = () => {
             <div>
               <AboutTitle></AboutTitle>
               <AboutDesc>
-                Maecenas vehicula a justo quis laoreet. Sed in placerat nibh, a
-                posuere ex. Morbi sem neque, aliquam sed orci et, rhoncus
-                lobortis felis. Sed vestibulum nisl sit amet sapien.
+                At our core, we are dedicated to providing a haven for
+                individuals who cherish a lifestyle centered around health and
+                wellness. Our commitment is reflected in the carefully curated
+                selection of healthy and natural foods we offer, tailored for
+                those who prioritize nourishing their bodies with goodness.
               </AboutDesc>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-y-[10px] mt-[26px]">
-          <div className=" flex gap-x-2 items-start">
-            <AboutIcon>
-              <span className="block p-[2px] rounded-full bg-primary mt-[4px]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={17}
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M13.3337 4.5L6.00033 11.8333L2.66699 8.5"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </AboutIcon>
-            <div>
-              <AboutTitle></AboutTitle>
-              <AboutDesc>
-                Maecenas vehicula a justo quis laoreet. Sed in placerat nibh, a
-                posuere ex. Morbi sem neque, aliquam sed orci et, rhoncus
-                lobortis felis. Sed vestibulum nisl sit amet sapien.
-              </AboutDesc>
-            </div>
-          </div>
-        </div>
-        {/* <Button kind="primary" className="mt-[26px] !px-[40px]">
-          Shop Now
-          <span className="block ml-[4px]">
-            <IconAR2></IconAR2>
-          </span>
-        </Button> */}
       </div>
     </div>
   );

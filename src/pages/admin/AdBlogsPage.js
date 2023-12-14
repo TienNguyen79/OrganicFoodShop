@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import {
   convertDate,
@@ -14,7 +14,11 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { blogAdminDelete, blogGetAll } from "../../store/blog/blog-slice";
+import {
+  blogAdminDelete,
+  blogGetAll,
+  blogSearch,
+} from "../../store/blog/blog-slice";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import IconPagiNext from "../../components/Icons/IconPagiNext";
@@ -28,21 +32,28 @@ import Swal from "sweetalert2";
 const AdBlogsPage = () => {
   const { control } = useForm();
   const dispatch = useDispatch();
-
+  const [contentBlog, setContentBlog] = useState("");
   const { dataBlogAll } = useSelector((state) => state.blog);
   //pagination hook
   const { handlePageClick, pageCount, nextPage } = usePagination(
     dataBlogAll,
     dataBlogAll?.per_page
   );
+  const {
+    handlePageClick: handlePageClick1,
+    pageCount: pageCount1,
+    nextPage: nextPage1,
+  } = usePagination(dataBlogAll, dataBlogAll?.per_page);
 
   useEffect(() => {
     if (localStorage.getItem("statusUpdate") === "0") {
-      console.log("vllllll");
-      dispatch(blogGetAll(nextPage));
+      if (contentBlog === "") {
+        dispatch(blogGetAll(nextPage));
+      } else {
+        dispatch(blogSearch({ content: contentBlog, page: nextPage1 }));
+      }
     }
-    console.log(localStorage.getItem("statusUpdate"));
-  }, [dispatch, nextPage]);
+  }, [contentBlog, dispatch, nextPage, nextPage1]);
 
   //mục đích để khi update blog ở trang nào sẽ quay về trang đó--- nhưng đang lỗi
   useEffect(() => {
@@ -76,6 +87,7 @@ const AdBlogsPage = () => {
           className={`!w-[300px] `}
           placeholder="Search my blogs..."
           autoComplete="off"
+          setContentBlog={setContentBlog}
         ></Input>
         <Button
           href="/admin/add_blog"
@@ -123,7 +135,10 @@ const AdBlogsPage = () => {
                   <td className="!text-center">{item?.category?.name}</td>
                   <td className="!text-center">
                     <div className="flex items-center justify-center gap-x-4">
-                      <Link className="border p-2">
+                      <Link
+                        className="border p-2"
+                        to={`/admin/blog/blog_list/${item?.id}`}
+                      >
                         <FontAwesomeIcon icon={faEye} size="lg" />
                       </Link>
                       <Link
@@ -145,7 +160,7 @@ const AdBlogsPage = () => {
           </tbody>
         </table>
       </Table>
-      {dataBlogAll?.last_page > 1 && (
+      {dataBlogAll?.last_page > 1 && contentBlog === "" && (
         <div className="flex justify-center items-center pt-10 ">
           <ReactPaginate
             breakLabel="..."
@@ -153,6 +168,20 @@ const AdBlogsPage = () => {
             onPageChange={handlePageClick}
             pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
             pageCount={pageCount}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination justify-center"
+          />
+        </div>
+      )}
+      {dataBlogAll?.last_page > 1 && contentBlog !== "" && (
+        <div className="flex justify-center items-center pt-10 ">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick1}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount1}
             previousLabel={<IconPagiPrev></IconPagiPrev>}
             renderOnZeroPageCount={null}
             className="pagination justify-center"

@@ -115,7 +115,7 @@ export const requestAdminStatusCustomer = (data) => {
   return axios.put(`/api/admin/user/ban_user`, data, config);
 };
 
-export const requestAdminSearchCustomer = (name) => {
+export const requestAdminSearchCustomer = (data) => {
   const decodedToken = atob(getToken()); //giải mã base64
   if (!decodedToken) return;
 
@@ -126,7 +126,10 @@ export const requestAdminSearchCustomer = (name) => {
     },
   };
 
-  return axios.get(`/api/admin/user/search_users?name=${name}`, config);
+  return axios.get(
+    `/api/admin/user/search_users?name=${data.name}&&page=${data.page}`,
+    config
+  );
 };
 
 export const requestAdminCustomerDetails = (data) => {

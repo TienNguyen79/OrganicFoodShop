@@ -12,9 +12,13 @@ import BlogRencentlyItem from "./BlogRencentlyItem";
 import { useState } from "react";
 import { blogGetAll } from "../../store/blog/blog-slice";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import Input from "../../components/input/Input";
 
-const BlogFilterItem = ({ result }) => {
+const BlogFilterItem = ({ result, setContentBlog }) => {
+  const { control } = useForm();
   const dispatch = useDispatch();
+  const [dataRencentlyBlog, setDataRencentlyBlog] = useState([]);
 
   // dispatch để dữ liệu trả về
   useEffect(() => {
@@ -24,10 +28,16 @@ const BlogFilterItem = ({ result }) => {
   }, []);
 
   const { dataBlogAll } = useSelector((state) => state.blog);
-  console.log(
-    "🚀 ~ file: BlogFilterItem.js:26 ~ BlogFilterItem ~ dataBlogAll:",
-    dataBlogAll
-  );
+
+  useEffect(() => {
+    let data = [];
+    if (dataBlogAll?.data?.length > 0) {
+      dataBlogAll?.data?.slice(0, 4)?.map((item) => {
+        data.push(item);
+      });
+      setDataRencentlyBlog(data);
+    }
+  }, []);
 
   //lấy được data đã trả về
   const { dataCate } = useSelector((state) => state.category);
@@ -54,14 +64,17 @@ const BlogFilterItem = ({ result }) => {
           </span>
         </Button>
 
-        <div className="flex justify-center relative">
-          <span className="absolute top-2/4 left-4 -translate-y-2/4 select-none cursor-pointer ">
-            <IconSearch></IconSearch>
-          </span>
-          <input
+        <div>
+          <Input
+            name="search"
             placeholder="Search for blogs..."
-            className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
-          ></input>
+            control={control}
+            kind="search"
+            setContentBlog={setContentBlog}
+            // className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
+          >
+            <IconSearch></IconSearch>
+          </Input>
         </div>
 
         <div className="mt-8">
@@ -108,8 +121,8 @@ const BlogFilterItem = ({ result }) => {
           <span className="text-gray9 text-[20px] font-medium block ">
             Recently Added
           </span>
-          {dataBlogAll?.data?.length > 0 &&
-            dataBlogAll?.data?.slice(0, 4)?.map((item) => (
+          {dataRencentlyBlog?.length > 0 &&
+            dataRencentlyBlog?.slice(0, 4)?.map((item) => (
               <Link key={item?.id} to={`/blog/${item?.id}`}>
                 <BlogRencentlyItem item={item}></BlogRencentlyItem>
               </Link>

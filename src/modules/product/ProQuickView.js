@@ -3,6 +3,7 @@ import Overlay from "../../components/common/Overlay";
 import IconClose from "../../components/Icons/IconClose";
 import ProDetailItem from "./ProDetailItem";
 import { useSelector } from "react-redux";
+import LoadingProQuickView from "../../components/loading/LoadingProQuickView";
 
 const ProQuickView = ({
   open = "invisible",
@@ -10,7 +11,8 @@ const ProQuickView = ({
   onClose = () => {},
   className = "top-[130px]",
 }) => {
-  const { dataQuickview } = useSelector((state) => state.product);
+  const { dataQuickview, loadings } = useSelector((state) => state.product);
+  console.log("🚀 ~ file: ProQuickView.js:15 ~ loading:", loadings);
 
   return (
     <div
@@ -29,13 +31,17 @@ const ProQuickView = ({
         >
           <IconClose></IconClose>
         </span>
-        <div>
-          <ProDetailItem
-            data={dataQuickview}
-            isClickClose={isClickClose}
-            onClose={onClose}
-          ></ProDetailItem>
-        </div>
+        {loadings?.quickview ? (
+          <LoadingProQuickView></LoadingProQuickView>
+        ) : (
+          <div>
+            <ProDetailItem
+              data={dataQuickview}
+              isClickClose={isClickClose}
+              onClose={onClose}
+            ></ProDetailItem>
+          </div>
+        )}
       </div>
     </div>
   );

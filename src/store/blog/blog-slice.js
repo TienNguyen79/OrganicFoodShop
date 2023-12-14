@@ -30,6 +30,10 @@ const blogSlice = createSlice({
       ...state,
       ...action.payload,
     }),
+    blogSearch: (state, action) => ({
+      ...state,
+      ...action.payload,
+    }),
     blogAdminAdd: (state, action) => ({
       ...state,
       ...action.payload,
@@ -70,6 +74,7 @@ export const {
   blogAdminAdd,
   blogAdminUpdate,
   blogAdminDelete,
+  blogSearch,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

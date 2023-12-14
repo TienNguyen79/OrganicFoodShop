@@ -21,6 +21,10 @@
   background-color: #edf2ee;
   color: black;
 }
+.link-admin.active {
+  color: #00b207;
+}
+
 .connectNav::before {
   content: "";
   position: absolute;

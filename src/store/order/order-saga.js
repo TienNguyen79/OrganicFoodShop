@@ -8,6 +8,7 @@ import {
   orderDetails,
   orderGetDataAll,
   orderPost,
+  orderUserCancel,
   orderUserFilter,
 } from "./order-slice";
 import handleGetOrderAll, {
@@ -15,6 +16,7 @@ import handleGetOrderAll, {
   handleAdminGetOrder,
   handleAdminGetOrderDetail,
   handleAdminUpdateStastusOrder,
+  handleCancelOrder,
   handleGetFilterOrder,
   handleGetFilterUserOrder,
   handleGetOrderDetails,
@@ -33,6 +35,7 @@ export default function* orderSaga() {
   yield takeLatest(orderAdminGet.type, handleAdminGetOrder);
   yield takeLatest(orderAdminGetDetails.type, handleAdminGetOrderDetail);
   yield takeLatest(orderAdminCancel.type, handleAdminCancelOrder);
+  yield takeLatest(orderUserCancel.type, handleCancelOrder);
   yield takeLatest(
     orderAdmiUpdateStatusOrder.type,
     handleAdminUpdateStastusOrder

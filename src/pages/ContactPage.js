@@ -10,10 +10,7 @@ const ContactPage = () => {
   return (
     <div className="py-[80px] grid grid-cols-4 gap-x-6">
       <div className="col-span-1 bg-white shadow-2xl rounded-md">
-        <BoxContact
-          content="2715 Ash Dr. San Jose, South Dakota 83475"
-          className="px-3"
-        >
+        <BoxContact content="Hà Nội" className="px-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width={52}
@@ -45,8 +42,8 @@ const ContactPage = () => {
           </svg>
         </BoxContact>
         <BoxContact
-          content="Proxy@gmail.com
-Help.proxy@gmail.com"
+          content="tientech2002@gmail.com
+thangbui11@gmail.com"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +83,7 @@ Help.proxy@gmail.com"
           </svg>
         </BoxContact>
         <BoxContact
-          content="(219) 555-0114
+          content="09199xxxxx
 "
         >
           <svg

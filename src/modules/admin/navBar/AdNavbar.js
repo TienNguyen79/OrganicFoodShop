@@ -31,7 +31,7 @@ const navLink = [
     name: "Products",
     icon: <FontAwesomeIcon icon={faBoxOpen} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
-    to: "#",
+    to: "/admin/products/product_list",
     navSub: [
       {
         id: 1,
@@ -76,7 +76,7 @@ const navLink = [
     name: "Blogs",
     icon: <FontAwesomeIcon icon={faBlog} size="lg" />,
     icondown: <FontAwesomeIcon icon={faAngleRight} />,
-    to: "#",
+    to: "/admin/blog/blog_list",
     navSub: [
       {
         id: 1,
@@ -84,32 +84,17 @@ const navLink = [
         icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
         to: "/admin/blog/blog_list",
       },
-      {
-        id: 2,
-        name: "Comment Blog",
-        icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
-        to: "/admin/commentBlog",
-      },
+      // {
+      //   id: 2,
+      //   name: "Comment Blog",
+      //   icon: <FontAwesomeIcon icon={faArrowRight} size="xs" />,
+      //   to: "/admin/commentBlog",
+      // },
     ],
   },
+
   {
     id: 7,
-    name: "AboutUs",
-    icon: <FontAwesomeIcon icon={faAddressCard} size="lg" />,
-    icondown: "",
-    to: "/admin/AboutUs",
-    navSub: [],
-  },
-  {
-    id: 8,
-    name: "Contact",
-    icon: <FontAwesomeIcon icon={faCircleInfo} size="lg" />,
-    icondown: "",
-    to: "/admin/contact",
-    navSub: [],
-  },
-  {
-    id: 9,
     name: "Settings",
     icon: <FontAwesomeIcon icon={faGear} size="lg" />,
     icondown: "",
@@ -177,13 +162,16 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
               >
                 <NavLink
                   to={item.to}
-                  className={`flex items-center gap-x-4 py-2 group-hover:text-primary  ${
+                  className={`flex items-center gap-x-4 py-2 group-hover:text-primary link-admin  ${
                     isHovered ? "" : " "
+                  } ${
+                    item.id === 2 || item.id === 6 ? "pointer-events-none" : ""
                   }`}
+                  activeclassname="active"
                 >
                   <span className="block ml-4">{item.icon}</span>
                   <span
-                    className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]  ${
+                    className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]   ${
                       isHovered || isFixNav
                         ? "opacity-100 translate-y-0 "
                         : "opacity-0 -translate-y-10 hidden "
@@ -215,7 +203,7 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
                   openSubNav === item.id && openSubNav === 2
                     ? "h-[60px] !translate-x-0 "
                     : openSubNav === item.id && openSubNav === 6
-                    ? "h-[60px] !translate-x-0"
+                    ? "h-[30px] !translate-x-0"
                     : "h-[0px]   "
                 }  ${!isFixNav && !isHovered && "hidden"}`}
               >

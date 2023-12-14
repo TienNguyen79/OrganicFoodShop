@@ -57,6 +57,7 @@ const ShipRegisterPage = lazy(() => import("./pages/ship/ShipRegisterPage"));
 const UpdateBlogPage = lazy(() => import("./pages/admin/UpdateBlogPage"));
 const AddBlogPage = lazy(() => import("./pages/admin/AddBlogPage"));
 const AdBlogsPage = lazy(() => import("./pages/admin/AdBlogsPage"));
+const AdBlogDetailsPage = lazy(() => import("./pages/admin/AdBlogDetailsPage"));
 
 function App() {
   const dispatch = useDispatch();
@@ -198,6 +199,10 @@ function App() {
         <Route
           path="/admin/blog/blog_list"
           element={<AdBlogsPage></AdBlogsPage>}
+        ></Route>
+        <Route
+          path="/admin/blog/blog_list/:slug"
+          element={<AdBlogDetailsPage></AdBlogDetailsPage>}
         ></Route>
         <Route
           path="/admin/add_blog"

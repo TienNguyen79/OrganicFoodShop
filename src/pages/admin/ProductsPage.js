@@ -84,17 +84,6 @@ const ProductsPage = () => {
 
   //get pro
   useEffect(() => {
-    // if (adNamePro === "" && searchCate === "") {
-    //   dispatch(ProAdminGet(nextPage));
-    // }
-
-    // if (adNamePro !== "") {
-    //   dispatch(ProAdminSearchName({ name: adNamePro, page: nextPage1 }));
-    // }
-
-    // if (searchCate !== "") {
-    //   dispatch(ProAdminSearchWithCate({ id: idCate, page: nextPage2 }));
-    // }
     if (adNamePro !== "") {
       dispatch(ProAdminSearchName({ name: adNamePro, page: nextPage1 }));
     } else if (searchCate !== "") {

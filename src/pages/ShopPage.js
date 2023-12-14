@@ -392,7 +392,7 @@ const ShopPage = () => {
         </div>
         <div className="col-span-3 ml-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-x-2 ">
+            {/* <div className="flex items-center gap-x-2 ">
               <span className="inline-block text-gray5 text-[16px] font-normal w-full ">
                 Sort by:
               </span>
@@ -407,7 +407,8 @@ const ShopPage = () => {
                   </ListInit>
                 </DropdownInit>
               </div>
-            </div>
+            </div> */}
+            <div></div>
             <div className="flex items-center gap-x-2">
               <span className="block text-gray9 text-[16px] font-semibold">
                 {dataProWithFilter?.total || 0}

@@ -36,6 +36,9 @@ const ProductDetailPage = () => {
   useEffect(() => {
     dispatch(proGetDetails(slug));
   }, [slug]);
+  useEffect(() => {
+    window.scrollTo({ top: 90, behavior: "smooth" });
+  }, []);
 
   const { dataProDetails } = useSelector((state) => state.product);
 
@@ -103,7 +106,10 @@ const ProductDetailPage = () => {
         <div className="grid grid-cols-4 gap-x-6 mt-8">
           {dataProDetails?.sameProducts?.length > 0 &&
             dataProDetails.sameProducts.slice(0, 4).map((item, index) => (
-              <div key={index}>
+              <div
+                key={index}
+                onClick={() => window.scrollTo({ top: 90, behavior: "smooth" })}
+              >
                 <ProductItem openModal={openModal} data={item}></ProductItem>
               </div>
             ))}

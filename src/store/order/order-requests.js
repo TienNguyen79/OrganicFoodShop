@@ -43,6 +43,20 @@ export const requestGetOrderDetails = (slug) => {
   return axios.get(`/api/order_detail/${slug}`, config);
 };
 
+export const requestCancelOrder = (data) => {
+  const decodedToken = atob(getToken()); //giải mã base64
+  if (!decodedToken) return;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${decodedToken}`,
+    },
+  };
+
+  return axios.put(`/api/cancel_order/${data.id}`, {}, config);
+};
+
 //ADMIN
 
 //filter in order admin

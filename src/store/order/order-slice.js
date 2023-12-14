@@ -11,6 +11,7 @@ const orderSlice = createSlice({
     orderGetDataAll: () => {},
     orderPost: (state, action) => ({ ...state, ...action.payload }),
     orderDetails: (state, action) => ({ ...state, ...action.payload }),
+    orderUserCancel: (state, action) => ({ ...state, ...action.payload }),
     orderAdminFilter: (state, action) => ({ ...state, ...action.payload }),
     orderUserFilter: (state, action) => ({ ...state, ...action.payload }),
     orderAdminGet: (state, action) => ({ ...state, ...action.payload }),
@@ -45,6 +46,7 @@ export const {
   orderAdmiUpdateStatusOrder,
   orderAdminCancel,
   orderAdminGetDetails,
+  orderUserCancel,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;
