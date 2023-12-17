@@ -52,12 +52,11 @@ const AdOrderDetailsPage = lazy(() =>
 );
 const AdLoginPage = lazy(() => import("./pages/admin/AdLoginPage"));
 const ShipHomePage = lazy(() => import("./pages/ship/ShipHomePage"));
-const ShipLoginPage = lazy(() => import("./pages/ship/ShipLogin"));
-const ShipRegisterPage = lazy(() => import("./pages/ship/ShipRegisterPage"));
 const UpdateBlogPage = lazy(() => import("./pages/admin/UpdateBlogPage"));
 const AddBlogPage = lazy(() => import("./pages/admin/AddBlogPage"));
 const AdBlogsPage = lazy(() => import("./pages/admin/AdBlogsPage"));
 const AdBlogDetailsPage = lazy(() => import("./pages/admin/AdBlogDetailsPage"));
+const AdSettingsPage = lazy(() => import("./pages/admin/AdSettingsPage"));
 
 function App() {
   const dispatch = useDispatch();
@@ -212,18 +211,14 @@ function App() {
           path="/admin/update_blog/:slug"
           element={<UpdateBlogPage></UpdateBlogPage>}
         ></Route>
+        <Route
+          path="/admin/settings"
+          element={<AdSettingsPage></AdSettingsPage>}
+        ></Route>
 
         <Route
           path="/ship/home"
           element={<ShipHomePage></ShipHomePage>}
-        ></Route>
-        <Route
-          path="/ship/login"
-          element={<ShipLoginPage></ShipLoginPage>}
-        ></Route>
-        <Route
-          path="/ship/register"
-          element={<ShipRegisterPage></ShipRegisterPage>}
         ></Route>
 
         {/* ADMIN */}

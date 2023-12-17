@@ -8,7 +8,7 @@ import {
   requestCateData,
   requestCateDataWithId,
 } from "./cate-requests";
-import { cateGetdataAll, updateData } from "./cate-slice";
+import { cateGetdataAll, setLoading, updateData } from "./cate-slice";
 import History from "../../utils/history";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -81,6 +81,7 @@ function* handleGetCateWithId(action) {
 }
 
 function* handlePostCategory(action) {
+  yield put(setLoading(true));
   const { payload, type } = action;
 
   try {
@@ -96,6 +97,7 @@ function* handlePostCategory(action) {
       yield put(updateData({ resultCateAll: resultCateAll.data.categories }));
       toast.success("Add a new Category success!");
       History.push("/admin/categories");
+      yield put(setLoading(false));
     }
   } catch (error) {
     toast.error("Name categories already exist");
@@ -103,6 +105,7 @@ function* handlePostCategory(action) {
       "🚀 ~ file: cate-handlers.js:81 ~ function*handlePostCategory ~ error:",
       error
     );
+    yield put(setLoading(false));
   }
 }
 
@@ -135,6 +138,7 @@ function* handleDeleteCategory(action) {
 }
 
 function* handleUpdateCategory(action) {
+  yield put(setLoading(true));
   const { payload, type } = action;
   console.log(
     "🚀 ~ file: cate-handlers.js:139 ~ function*handleUpdateCategory ~ payload:",
@@ -152,6 +156,7 @@ function* handleUpdateCategory(action) {
       yield put(updateData({ resultCateAll: resultCateAll.data.categories }));
       toast.success("Update Category success!");
       History.push("/admin/categories");
+      yield put(setLoading(false));
     }
   } catch (error) {
     toast.error("Name categories already exist");
@@ -159,6 +164,7 @@ function* handleUpdateCategory(action) {
       "🚀 ~ file: cate-handlers.js:81 ~ function*handlePostCategory ~ error:",
       error
     );
+    yield put(setLoading(false));
   }
 }
 

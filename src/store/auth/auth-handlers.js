@@ -192,92 +192,10 @@ function* handleAuthLoginAdmin(action) {
   }
 }
 
-//login shipper
-
-function* handleAuthLoginShip(action) {
-  const { payload, type } = action;
-  try {
-    yield put(setLoading(true));
-    const response = yield call(requestAuthLogin, payload);
-    console.log(
-      "🚀 ~ file: auth-handlers.js:55 ~ function*handleAuthLogin ~ response:",
-      response
-    );
-    const encodeToken = btoa(response.data.token); //mã hóa base64
-
-    if (encodeToken) {
-      saveToken(encodeToken);
-      yield call(handleAuthFetchMe, { payload: encodeToken });
-    }
-
-    if (response.status === 200) {
-      toast.success("Login successfully!");
-      yield put(setLoading(false));
-      History.push("/ship/home");
-    }
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: auth-handlers.js:218 ~ function*handleAuthLoginShip ~ error:",
-      error
-    );
-
-    if (error.response.data.errors) {
-      toast.error(error.response.data.errors);
-    }
-    yield put(setLoading(false));
-    // toast.error("Email or Password incorrect!");
-  }
-}
-
-//ship register
-
-function* handleAuthRegisterShip(action) {
-  const { payload, type } = action;
-
-  try {
-    yield put(setLoading(true));
-    const response = yield call(requestAuthRegister, payload);
-
-    // console.log(btoa(response.data.token));
-    // const encodeToken = btoa(response.data.token); //mã hóa base64
-    // saveToken(encodeToken);
-
-    if (response.status === 200) {
-      toast.success("Create new Account successfully!");
-      yield put(setLoading(false));
-      History.push("/ship/login");
-      //đặt navigate vào đây
-    }
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: auth-handlers.js:34 ~ function*handleAuthRegister ~ error:",
-      error
-    );
-
-    // if (error.response.status === 422) {
-    //   toast.error(error?.response?.data?.errors.email[0]);
-    //   // toast.error(error?.response?.data?.errors.phone_number[0]);
-    //   yield put(setLoading(false));
-    //   return;
-    // }
-    if (error?.response?.data?.errors.email) {
-      toast.error(error?.response?.data?.errors.email[0]);
-      yield put(setLoading(false));
-    }
-    if (error?.response?.data?.errors.phone_number) {
-      toast.error(error?.response?.data?.errors.phone_number[0]);
-      yield put(setLoading(false));
-    }
-    yield put(setLoading(false));
-  }
-}
-
 export {
   handleAuthLogin,
   handleAuthFetchMe,
   handlecheckToken,
   handleLogOut,
   handleAuthLoginAdmin,
-  handleAuthLoginShip,
-  handleAuthRegisterShip,
 };

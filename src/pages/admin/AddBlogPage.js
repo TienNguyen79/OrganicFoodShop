@@ -39,6 +39,7 @@ const AddBlogPage = () => {
   const [idCate, setIdCate] = useState("");
   const [content, setContent] = useState("");
   const { dataCate } = useSelector((state) => state.category);
+  const { loading } = useSelector((state) => state.blog);
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -58,7 +59,7 @@ const AddBlogPage = () => {
       title: values.title,
       category_id: idCate,
       image: getValues("image"),
-      content: content,
+      content: [content],
     };
     console.log(
       "🚀 ~ file: AddBlogPage.js:63 ~ handleAddBlog ~ dataBlog:",
@@ -71,18 +72,15 @@ const AddBlogPage = () => {
       toast.error("Image is Require");
     } else if (dataBlog.content === "") {
       toast.error("Content is Require");
-    } else if (dataBlog.content.length < 100) {
-      toast.error("Content is Content must be greater than 100 characters");
     } else if (dataBlog.category_id === "") {
       toast.error("Category is Require");
     } else {
       dispatch(blogAdminAdd(dataBlog));
+      console.log(
+        "🚀 ~ file: AddBlogPage.js:81 ~ handleAddBlog ~ dataBlog:",
+        dataBlog
+      );
     }
-
-    console.log(
-      "🚀 ~ file: AddBlogPage.js:61 ~ handleAddBlog ~ dataBlog:",
-      dataBlog
-    );
   };
   return (
     <LayoutAdminAct
@@ -102,7 +100,8 @@ const AddBlogPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[180px]"
+            isLoading={loading}
           >
             PUBLISH BLOG
           </Button>

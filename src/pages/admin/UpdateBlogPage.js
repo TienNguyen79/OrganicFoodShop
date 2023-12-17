@@ -51,7 +51,7 @@ const UpdateBlogPage = () => {
     dispatch(blogGetWithParam(slug));
   }, [dispatch, slug]);
 
-  const { dataBlogWithParam } = useSelector((state) => state.blog);
+  const { dataBlogWithParam, loading } = useSelector((state) => state.blog);
   console.log(
     "🚀 ~ file: UpdateBlogPage.js:52 ~ UpdateBlogPage ~ dataBlogWithParam:",
     dataBlogWithParam
@@ -61,7 +61,7 @@ const UpdateBlogPage = () => {
     setValue1("title", dataBlogWithParam?.title);
     setIdCate(dataBlogWithParam?.category_id);
     setSearchCate(dataBlogWithParam?.category?.name);
-    setContent(dataBlogWithParam?.content);
+    setContent(dataBlogWithParam?.content && dataBlogWithParam?.content[0]);
     setValue1("image", dataBlogWithParam?.image);
   }, [
     dataBlogWithParam?.category?.name,
@@ -93,25 +93,24 @@ const UpdateBlogPage = () => {
       title: values.title,
       category_id: idCate,
       image: getValues("image"),
-      content: content,
+      content: [content],
       page: localStorage.getItem("pageAdmin"),
     };
-    console.log(
-      "🚀 ~ file: UpdateBlogPage.js:99 ~ handleUpdateBlog ~ dataBlog.image:",
-      dataBlog.image
-    );
+
     if (dataBlog.title === "") {
       toast.error("Title is Require");
     } else if (dataBlog.image === "") {
       toast.error("Image is Require");
     } else if (dataBlog.content === "") {
       toast.error("Content is Require");
-    } else if (dataBlog.content.length < 100) {
-      toast.error("Content is Content must be greater than 100 characters");
     } else if (dataBlog.category_id === "") {
       toast.error("Category is Require");
     } else {
       dispatch(blogAdminUpdate(dataBlog));
+      console.log(
+        "🚀 ~ file: UpdateBlogPage.js:122 ~ handleUpdateBlog ~ values:",
+        dataBlog
+      );
     }
 
     console.log(
@@ -137,7 +136,8 @@ const UpdateBlogPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[175px]"
+            isLoading={loading}
           >
             UPDATE BLOG
           </Button>

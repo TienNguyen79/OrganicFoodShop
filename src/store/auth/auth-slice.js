@@ -12,19 +12,12 @@ const authSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    authRegisterShip: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
+
     authLogin: (state, action) => ({
       ...state,
       ...action.payload,
     }),
     authLoginAdmin: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-    authLoginShip: (state, action) => ({
       ...state,
       ...action.payload,
     }),
@@ -66,7 +59,5 @@ export const {
   authGetStatus,
   setLoading,
   authLoginAdmin,
-  authLoginShip,
-  authRegisterShip,
 } = authSlice.actions;
 export default authSlice.reducer;

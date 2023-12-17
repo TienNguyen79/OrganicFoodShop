@@ -37,7 +37,7 @@ const UpdateCategoryPage = () => {
   const dispatch = useDispatch();
 
   const { slug } = useParams();
-  const { dataCate } = useSelector((state) => state.category);
+  const { dataCate, loadingCate } = useSelector((state) => state.category);
   console.log(
     "🚀 ~ file: UpdateCategoryPage.js:41 ~ UpdateCategoryPage ~ dataCate:",
     dataCate
@@ -87,7 +87,8 @@ const UpdateCategoryPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[218px]"
+            isLoading={loadingCate}
           >
             UPDATE CATEGORY
           </Button>

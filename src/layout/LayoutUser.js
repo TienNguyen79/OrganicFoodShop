@@ -8,6 +8,7 @@ import DashBoard from "../components/Icons/iconNavUser/DashBoard";
 import CircleArrow from "../components/Icons/iconNavUser/CircleArrow";
 import Setting from "../components/Icons/iconNavUser/Setting";
 import IconLogout from "../components/Icons/iconNavUser/IconLogout";
+import { useDispatch } from "react-redux";
 
 const navLink = [
   {
@@ -28,15 +29,17 @@ const navLink = [
     name: "Settings",
     to: "/settings",
   },
-  {
-    id: 4,
-    icon: <IconLogout></IconLogout>,
-    name: "Log-out",
-    to: "/logout",
-  },
+  // {
+  //   id: 4,
+  //   icon: <IconLogout></IconLogout>,
+  //   name: "Log-out",
+  //   to: "#",
+
+  // },
 ];
 
 const LayoutUser = () => {
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col min-h-screen">
       <div className="">
@@ -47,7 +50,7 @@ const LayoutUser = () => {
       </div>
       <div className="px-[238px] pt-8 pb-[80px]  flex-grow">
         <div className="grid grid-cols-4 gap-x-4">
-          <div className="col-span-1 pt-6 pb-4 border border-[#E6E6E6] rounded-lg">
+          <div className="col-span-1 pt-6 pb-4 border h-[237px] border-[#E6E6E6] rounded-lg">
             <h1 className="text-gray9 text-[18px] font-medium pl-5 pb-4">
               Navigate
             </h1>

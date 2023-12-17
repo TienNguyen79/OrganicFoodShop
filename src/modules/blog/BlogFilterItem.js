@@ -117,16 +117,52 @@ const BlogFilterItem = ({ result, setContentBlog }) => {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col gap-y-5">
           <span className="text-gray9 text-[20px] font-medium block ">
-            Recently Added
+            Gallery Product
           </span>
-          {dataRencentlyBlog?.length > 0 &&
+          {/* {dataRencentlyBlog?.length > 0 &&
             dataRencentlyBlog?.slice(0, 4)?.map((item) => (
               <Link key={item?.id} to={`/blog/${item?.id}`}>
                 <BlogRencentlyItem item={item}></BlogRencentlyItem>
               </Link>
-            ))}
+            ))} */}
+          <div className="w-full h-full ">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1675798983878-604c09f6d154?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b3JnYW5pYyUyMGZvb2R8ZW58MHx8MHx8fDA%3D"
+              className="w-full h-[200px] object-cover rounded-md"
+              alt=""
+            />
+          </div>
+          <div className="w-full h-full ">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1664640733604-57507d390007?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-full object-cover rounded-md"
+              alt=""
+            />
+          </div>
+          <div className="w-full h-full ">
+            <img
+              src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-[200px] object-cover rounded-md"
+              alt=""
+            />
+          </div>
+          <div className="w-full h-full ">
+            <img
+              src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-full object-cover rounded-md"
+              alt=""
+            />
+          </div>
+
+          <div className="w-full h-full ">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1681506154991-4c031ad21318?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-[200px] object-cover rounded-md"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>

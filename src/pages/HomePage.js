@@ -251,12 +251,36 @@ const HomePage = () => {
           </GroupJusBeween>
         </Gap>
 
-        <div className="cateSlider  ">
-          <Slider {...settings}>
+        {dataCate.length >= 7 ? (
+          <div className="cateSlider">
+            <Slider {...settings}>
+              {dataCate.length > 0 &&
+                dataCate.map((item, index) => {
+                  return (
+                    <Link
+                      className="px-3"
+                      key={item.id}
+                      to={`/shop/${item.id}`}
+                    >
+                      <CategoryItem
+                        data={item}
+                        datatLength={item?.gross_product}
+                      ></CategoryItem>
+                    </Link>
+                  );
+                })}
+            </Slider>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center">
             {dataCate.length > 0 &&
               dataCate.map((item, index) => {
                 return (
-                  <Link className="px-3" key={item.id} to={`/shop/${item.id}`}>
+                  <Link
+                    className="px-3 w-[200px] "
+                    key={item.id}
+                    to={`/shop/${item.id}`}
+                  >
                     <CategoryItem
                       data={item}
                       datatLength={item?.gross_product}
@@ -264,26 +288,8 @@ const HomePage = () => {
                   </Link>
                 );
               })}
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-            <div className="px-3">
-              <CategoryItem></CategoryItem>
-            </div>
-          </Slider>
-        </div>
+          </div>
+        )}
 
         <div>
           <AboutItem></AboutItem>
@@ -308,10 +314,10 @@ const HomePage = () => {
               ></LabelRedirect>
             </GroupJusBeween>
           </Gap>
-          <div className="grid grid-cols-5 gap-x-5">
+          <div className="grid grid-cols-4 gap-x-5">
             {dataBestSeller.length > 0 &&
               dataBestSeller
-                .slice(0, 5)
+                .slice(0, 4)
                 .map((item) => (
                   <ProductItem
                     key={item.id}

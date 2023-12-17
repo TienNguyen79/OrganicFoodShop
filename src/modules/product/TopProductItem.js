@@ -53,7 +53,9 @@ const TopProductItem = ({
     dispatch(wishListGetAll());
   }, []);
 
-  const { dataWishListAll } = useSelector((state) => state.cart);
+  const { dataWishListAll, loadingWishList } = useSelector(
+    (state) => state.cart
+  );
 
   useEffect(() => {
     var arr = [];
@@ -105,25 +107,33 @@ const TopProductItem = ({
               ></IconBagPro>
             </div>
             <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all ">
-              <span className="flex justify-center items-center ">
-                {wishList.includes(data?.id) ? (
-                  <div
-                    onClick={() => {
-                      dispatch(wishListDelete(data?.id));
-                    }}
-                  >
-                    <IconRedHeart></IconRedHeart>
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => {
-                      dispatch(wishListAddNew({ product_id: data?.id }));
-                    }}
-                  >
-                    <IconHeart></IconHeart>
-                  </div>
-                )}
-              </span>
+              {loadingWishList ? (
+                <img
+                  src="/Spin-1s-200px.svg"
+                  className="w-[20px] h-[20px]"
+                  alt=""
+                ></img>
+              ) : (
+                <span className="flex justify-center items-center ">
+                  {wishList.includes(data?.id) ? (
+                    <div
+                      onClick={() => {
+                        dispatch(wishListDelete(data?.id));
+                      }}
+                    >
+                      <IconRedHeart></IconRedHeart>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => {
+                        dispatch(wishListAddNew({ product_id: data?.id }));
+                      }}
+                    >
+                      <IconHeart></IconHeart>
+                    </div>
+                  )}
+                </span>
+              )}
             </div>
             <div
               className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all   "

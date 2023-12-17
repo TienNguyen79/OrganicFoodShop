@@ -26,6 +26,10 @@ const AdBlogDetailsPage = () => {
 
   const { dataBlogWithParam, dataBlogAll, dataCommentBlog, loading } =
     useSelector((state) => state.blog);
+  console.log(
+    "🚀 ~ file: AdBlogDetailsPage.js:28 ~ AdBlogDetailsPage ~ dataBlogWithParam:",
+    dataBlogWithParam
+  );
   return (
     <LayoutAdminAct label={`Blog Details `} content="Manage My Blogs">
       <div className="flex justify-end py-2">
@@ -223,9 +227,11 @@ const AdBlogDetailsPage = () => {
               </div>
             </div>
           </div>
-          <div className="entry-content mt-6 ">
-            {parse(dataBlogWithParam?.content || "")}
-          </div>
+          {dataBlogWithParam?.content && (
+            <div className="entry-content mt-6 ">
+              {parse(dataBlogWithParam?.content[0] || "")}
+            </div>
+          )}
         </div>
       </BoxBigAdmin>
     </LayoutAdminAct>

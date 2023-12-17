@@ -15,7 +15,7 @@ import Button from "../../components/button/Button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CustomerAdd } from "../../store/user/user-slice";
 
 const schema = yup.object({
@@ -51,6 +51,7 @@ const AddCustomerPage = () => {
 
   const watchRole = watch("role_id");
   const dispatch = useDispatch();
+  const { loadingCusotmer } = useSelector((state) => state.user);
   const handleAddCustomer = (values) => {
     console.log(
       "🚀 ~ file: AddCustomerPage.js:51 ~ handleAddCustomer ~ values:",
@@ -79,7 +80,8 @@ const AddCustomerPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[222px]"
+            isLoading={loadingCusotmer}
           >
             PUBLISH CUSTOMER
           </Button>

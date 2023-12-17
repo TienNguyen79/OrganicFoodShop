@@ -333,3 +333,30 @@ ul.slick-dots {
 .ql-editor {
   min-height: 142px;
 }
+
+//rung phone
+
+.icon-wrapper {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Hiệu ứng CSS khi rung lắc */
+.vibrating {
+  animation: vibrateAnimation 0.2s linear;
+}
+
+@keyframes vibrateAnimation {
+  25% {
+    transform: translate(-2px, 2px);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(2px, -2px);
+  }
+}

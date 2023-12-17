@@ -1,5 +1,6 @@
 import { takeLatest } from "redux-saga/effects";
 import {
+  AdminDashBoard,
   CustomerAdd,
   CustomerDelete,
   CustomerDetails,
@@ -13,6 +14,7 @@ import {
 } from "./user-slice";
 import handleUpdateUser, {
   handleAddCustomer,
+  handleAdminDashBoard,
   handleChangePasswordUser,
   handleDeleteCustomer,
   handleGetAllCustomer,
@@ -34,4 +36,5 @@ export default function* userSaga() {
   yield takeLatest(CustomerStatus.type, handleStatusCustomer);
   yield takeLatest(CustomerSearch.type, handleSearchCustomer);
   yield takeLatest(CustomerDetails.type, handleGetCustomerDetail);
+  yield takeLatest(AdminDashBoard.type, handleAdminDashBoard);
 }

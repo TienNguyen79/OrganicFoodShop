@@ -77,11 +77,6 @@ const ShipHomePage = () => {
 
   const { dataOrderAll } = useSelector((state) => state.order);
 
-  console.log(
-    "🚀 ~ file: ShipHomePage.js:84 ~ ShipHomePage ~ dataOrderAll:",
-    dataOrderAll
-  );
-
   const { handlePageClick, pageCount, nextPage } = usePagination(
     dataOrderAll,
     dataOrderAll?.per_page

@@ -2,6 +2,7 @@ import { call, put } from "redux-saga/effects";
 import {
   requestAdminAddCustomer,
   requestAdminCustomerDetails,
+  requestAdminDashBoard,
   requestAdminDeleteCustomer,
   requestAdminGetAllCustomer,
   requestAdminRoleCustomer,
@@ -15,7 +16,7 @@ import { toast } from "react-toastify";
 import { getToken } from "../../utils/auth";
 import { requestAuthFetchMe } from "../auth/auth-requests";
 import { authUpdateUser } from "../auth/auth-slice";
-import { updateDataCustomer } from "./user-slice";
+import { setLoading, updateDataCustomer } from "./user-slice";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import History from "../../utils/history";
@@ -148,6 +149,7 @@ function* handleDeleteCustomer(action) {
 }
 
 function* handleAddCustomer(action) {
+  yield put(setLoading(true));
   const { payload, type } = action;
   console.log(
     "🚀 ~ file: user-handlers.js:147 ~ function*handleAddCustomer ~ payload:",
@@ -167,6 +169,7 @@ function* handleAddCustomer(action) {
       );
       History.push("/admin/customers");
       toast.success("Add Customer successfully!");
+      yield put(setLoading(false));
     }
   } catch (error) {
     console.log(
@@ -174,6 +177,7 @@ function* handleAddCustomer(action) {
       error
     );
     toast.error(error?.response?.data?.errors?.email[0]);
+    yield put(setLoading(false));
   }
 }
 
@@ -286,6 +290,29 @@ function* handleGetCustomerDetail(action) {
   }
 }
 
+function* handleAdminDashBoard(action) {
+  const { payload, type } = action;
+
+  try {
+    const response = yield call(requestAdminDashBoard, payload);
+    console.log(
+      "🚀 ~ file: user-handlers.js:296 ~ function*handleAdminDashBoard ~ response:",
+      response
+    );
+
+    if (response.status === 200) {
+      yield put(
+        updateDataCustomer({ resultDataAdminDashBoard: response.data })
+      );
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: user-handlers.js:303 ~ function*handleAdminDashBoard ~ error:",
+      error
+    );
+  }
+}
+
 export {
   handleChangePasswordUser,
   handleUpdateAddressUser,
@@ -296,4 +323,5 @@ export {
   handleStatusCustomer,
   handleSearchCustomer,
   handleGetCustomerDetail,
+  handleAdminDashBoard,
 };

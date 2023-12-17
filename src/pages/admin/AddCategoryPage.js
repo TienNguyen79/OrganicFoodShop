@@ -10,7 +10,7 @@ import LabelField from "../../modules/user/partsSetting/LabelField";
 import Input from "../../components/input/Input";
 import ImageUpload from "../../components/image/ImageUpload";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CateAdd } from "../../store/category/cate-slice";
 
 const schema = yup.object({
@@ -28,7 +28,7 @@ const AddCategoryPage = () => {
     mode: "onChange",
   });
   const dispatch = useDispatch();
-
+  const { loadingCate } = useSelector((state) => state.category);
   const handleAddCategory = (values) => {
     if (!values.image || values.image === "") {
       toast.error("You must select a image for the Category");
@@ -58,7 +58,8 @@ const AddCategoryPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[218px]"
+            isLoading={loadingCate}
           >
             PUBLISH CATEGORY
           </Button>

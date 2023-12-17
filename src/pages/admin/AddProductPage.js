@@ -60,6 +60,7 @@ const AddProductPage = () => {
     dispatch(cateGetdataAll());
   }, []);
   const { dataCate } = useSelector((state) => state.category);
+  const { loading } = useSelector((state) => state.product);
   const [searchCate, setSearchCate] = useState("");
   const [idCate, setIdCate] = useState("");
   const [rate, setRate] = useState("");
@@ -161,7 +162,8 @@ const AddProductPage = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[212px]"
+            isLoading={loading}
           >
             PUBLISH PRODUCT
           </Button>

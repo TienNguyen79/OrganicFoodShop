@@ -278,9 +278,11 @@ const BlogDetailPage = () => {
             </div>
           </div>
         </div>
-        <div className="entry-content mt-6 ">
-          {parse(dataBlogWithParam?.content || "")}
-        </div>
+        {dataBlogWithParam?.content && (
+          <div className="entry-content mt-6 ">
+            {parse(dataBlogWithParam?.content[0] || "")}
+          </div>
+        )}
 
         <div className="mt-10">
           <h1 className="text-gray9 text-[20px] font-medium py-4">

@@ -11,6 +11,7 @@ import {
 import {
   cartGetAll,
   setLoading,
+  setLoadingWishList,
   updateDataCart,
   updateDataWishList,
 } from "./cart-slice";
@@ -166,7 +167,7 @@ function* handleWishListAddNew(action) {
   );
 
   try {
-    yield put(setLoading(true));
+    yield put(setLoadingWishList(true));
     const response = yield call(requestWishListAddnew, payload);
 
     if (response.status === 200) {
@@ -177,7 +178,7 @@ function* handleWishListAddNew(action) {
           resultWishListAll: wishListResponse.data.wishList,
         })
       );
-      yield put(setLoading(false));
+      yield put(setLoadingWishList(false));
       toast.success("Add wishList successfully!");
     }
   } catch (error) {
@@ -186,7 +187,7 @@ function* handleWishListAddNew(action) {
       error
     );
 
-    yield put(setLoading(false));
+    yield put(setLoadingWishList(false));
   }
 }
 
@@ -198,7 +199,7 @@ function* handlewishListDelete(action) {
   );
 
   try {
-    // yield put(setLoading(true));
+    yield put(setLoadingWishList(true));
     const response = yield call(requestwishListDelete, payload);
     console.log(
       "🚀 ~ file: cart-handler.js:196 ~ function*handlewishListDelete ~ response:",
@@ -213,7 +214,7 @@ function* handlewishListDelete(action) {
           resultWishListAll: wishListResponse.data.wishList || [],
         })
       );
-      // yield put(setLoading(false));
+      yield put(setLoadingWishList(false));
       toast.success("Delete wishList successfully!");
     }
   } catch (error) {
@@ -221,7 +222,7 @@ function* handlewishListDelete(action) {
       "🚀 ~ file: cart-handler.js:77 ~ function*handleCartDelete ~ error:",
       error
     );
-    //   yield put(setLoading(false));
+    yield put(setLoadingWishList(false));
   }
 }
 

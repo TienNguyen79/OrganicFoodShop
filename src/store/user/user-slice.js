@@ -4,6 +4,8 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     dataAllCustomer: [],
+    dataAdminDashBoard: [],
+    loadingCusotmer: false,
   },
   reducers: {
     UserUpdate: (state, action) => ({ ...state, ...action.payload }),
@@ -16,10 +18,17 @@ const userSlice = createSlice({
     CustomerSearch: (state, action) => ({ ...state, ...action.payload }),
     CustomerStatus: (state, action) => ({ ...state, ...action.payload }),
     CustomerDetails: (state, action) => ({ ...state, ...action.payload }),
+    AdminDashBoard: (state, action) => ({ ...state, ...action.payload }),
     updateDataCustomer: (state, action) => ({
       ...state,
       dataAllCustomer:
         action.payload.resultDataCustomerAll || state.dataAllCustomer,
+      dataAdminDashBoard:
+        action.payload.resultDataAdminDashBoard || state.dataAdminDashBoard,
+    }),
+    setLoading: (state, action) => ({
+      ...state,
+      loadingCusotmer: action.payload,
     }),
   },
 });
@@ -36,5 +45,7 @@ export const {
   CustomerStatus,
   CustomerSearch,
   CustomerDetails,
+  AdminDashBoard,
+  setLoading,
 } = userSlice.actions;
 export default userSlice.reducer;

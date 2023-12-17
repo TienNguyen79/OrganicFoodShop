@@ -14,8 +14,13 @@ import {
   faGear,
   faAngleRight,
   faThumbTack,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { Fragment } from "react";
+import { useDispatch } from "react-redux";
+import { getToken, logOut } from "../../../utils/auth";
+import { authLogOut } from "../../../store/auth/auth-slice";
+import Swal from "sweetalert2";
 
 const navLink = [
   {
@@ -101,11 +106,19 @@ const navLink = [
     to: "/admin/settings",
     navSub: [],
   },
+  {
+    id: 8,
+    name: "Logout",
+    icon: <FontAwesomeIcon icon={faRightFromBracket} size="lg" />,
+    icondown: "",
+    to: "/#",
+    navSub: [],
+    onClick: () => {},
+  },
 ];
-
 const AdNavbar = ({ isFixNav, setIsFixNav }) => {
   const [openSubNav, setOpenSubNav] = useState(null);
-
+  const dispatch = useDispatch();
   const toggleSubNav = (itemId) => {
     //mới đầu ấn sẽ lên một cái itemId mới so khác null ban đầu thì nó lấy itemId mới
     //có nghĩa là khi nào ấn 2 lần  nó sẽ đóng lại(null) ,
@@ -124,6 +137,23 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
     setIsHovered(false);
     // setOpenSubNav(null);
   };
+
+  const handleLogOutAdmin = () => {
+    Swal.fire({
+      title: `Are you sure you want to LogOut?`,
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I'm Sure!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(authLogOut(getToken()));
+      }
+    });
+  };
+
   return (
     <Fragment>
       <div
@@ -152,80 +182,161 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
           </div>
         </div>
         {navLink.length > 0 &&
-          navLink.map((item) => (
-            <div key={item.id} className="pt-4 ">
-              <div
-                className="flex justify-between items-center cursor-pointer z-10 group"
-                onClick={() => {
-                  toggleSubNav(item.id);
-                }}
-              >
-                <NavLink
-                  to={item.to}
-                  className={`flex items-center gap-x-4 py-2 group-hover:text-primary link-admin  ${
-                    isHovered ? "" : " "
-                  } ${
-                    item.id === 2 || item.id === 6 ? "pointer-events-none" : ""
-                  }`}
-                  activeclassname="active"
-                >
-                  <span className="block ml-4">{item.icon}</span>
-                  <span
-                    className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]   ${
-                      isHovered || isFixNav
-                        ? "opacity-100 translate-y-0 "
-                        : "opacity-0 -translate-y-10 hidden "
-                    }  `}
+          navLink.map((item) => {
+            if (item.onClick) {
+              return (
+                <div key={item.id} className="pt-4 ">
+                  <div
+                    className="flex justify-between items-center cursor-pointer z-10 group"
+                    onClick={() => {
+                      toggleSubNav(item.id);
+                    }}
                   >
-                    {item.name}
-                  </span>
-                </NavLink>
+                    <div
+                      className={`flex items-center gap-x-4 py-2 group-hover:text-primary link-admin  ${
+                        isHovered ? "" : " "
+                      } ${
+                        item.id === 2 || item.id === 6
+                          ? "pointer-events-none"
+                          : ""
+                      } `}
+                      onClick={handleLogOutAdmin}
+                    >
+                      <span className="block ml-4">{item.icon}</span>
+                      <span
+                        className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]   ${
+                          isHovered || isFixNav
+                            ? "opacity-100 translate-y-0 "
+                            : "opacity-0 -translate-y-10 hidden "
+                        }  `}
+                      >
+                        {item.name}
+                      </span>
+                    </div>
+                    <div
+                      className={` group-hover:text-primary ${
+                        isHovered || isFixNav
+                          ? "opacity-100 visible"
+                          : "opacity-0 invisible"
+                      }`}
+                    >
+                      {openSubNav === item.id ? (
+                        <span className="transition-all   duration-300 rotate-90 block">
+                          {item.icondown}
+                        </span>
+                      ) : (
+                        <span className="transition-all duration-300 rotate-0 block">
+                          {item.icondown}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className={`z-[1] transition-all flex flex-col gap-y-3 duration-500 -translate-x-full  ${
+                      openSubNav === item.id && openSubNav === 2
+                        ? "h-[60px] !translate-x-0 "
+                        : openSubNav === item.id && openSubNav === 6
+                        ? "h-[30px] !translate-x-0"
+                        : "h-[0px]   "
+                    }  ${!isFixNav && !isHovered && "hidden"}`}
+                  >
+                    {openSubNav === item.id &&
+                      item.navSub.length > 0 &&
+                      item.navSub.map((navSub) => (
+                        <NavLink
+                          className={`pl-3 py-1 flex items-center gap-x-2 group `}
+                          key={navSub.id}
+                          to={navSub.to}
+                        >
+                          <span className="block group-hover:text-primary">
+                            {navSub.icon}
+                          </span>
+                          <span className="text-gray-600 text-[16px] group-hover:text-primary ">
+                            {navSub.name}
+                          </span>
+                        </NavLink>
+                      ))}
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={item.id} className="pt-4 ">
                 <div
-                  className={` group-hover:text-primary ${
-                    isHovered || isFixNav
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible"
-                  }`}
+                  className="flex justify-between items-center cursor-pointer z-10 group"
+                  onClick={() => {
+                    toggleSubNav(item.id);
+                  }}
                 >
-                  {openSubNav === item.id ? (
-                    <span className="transition-all   duration-300 rotate-90 block">
-                      {item.icondown}
+                  <NavLink
+                    to={item.to}
+                    className={`flex items-center gap-x-4 py-2 group-hover:text-primary link-admin  ${
+                      isHovered ? "" : " "
+                    } ${
+                      item.id === 2 || item.id === 6 || item.id === 8
+                        ? "pointer-events-none"
+                        : ""
+                    } `}
+                    activeclassname="active"
+                  >
+                    <span className="block ml-4">{item.icon}</span>
+                    <span
+                      className={`block transition-all text-gray-600 group-hover:text-primary  text-[18px]   ${
+                        isHovered || isFixNav
+                          ? "opacity-100 translate-y-0 "
+                          : "opacity-0 -translate-y-10 hidden "
+                      }  `}
+                    >
+                      {item.name}
                     </span>
-                  ) : (
-                    <span className="transition-all duration-300 rotate-0 block">
-                      {item.icondown}
-                    </span>
-                  )}
+                  </NavLink>
+                  <div
+                    className={` group-hover:text-primary ${
+                      isHovered || isFixNav
+                        ? "opacity-100 visible"
+                        : "opacity-0 invisible"
+                    }`}
+                  >
+                    {openSubNav === item.id ? (
+                      <span className="transition-all   duration-300 rotate-90 block">
+                        {item.icondown}
+                      </span>
+                    ) : (
+                      <span className="transition-all duration-300 rotate-0 block">
+                        {item.icondown}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div
+                  className={`z-[1] transition-all flex flex-col gap-y-3 duration-500 -translate-x-full  ${
+                    openSubNav === item.id && openSubNav === 2
+                      ? "h-[60px] !translate-x-0 "
+                      : openSubNav === item.id && openSubNav === 6
+                      ? "h-[30px] !translate-x-0"
+                      : "h-[0px]   "
+                  }  ${!isFixNav && !isHovered && "hidden"}`}
+                >
+                  {openSubNav === item.id &&
+                    item.navSub.length > 0 &&
+                    item.navSub.map((navSub) => (
+                      <NavLink
+                        className={`pl-3 py-1 flex items-center gap-x-2 group `}
+                        key={navSub.id}
+                        to={navSub.to}
+                      >
+                        <span className="block group-hover:text-primary">
+                          {navSub.icon}
+                        </span>
+                        <span className="text-gray-600 text-[16px] group-hover:text-primary ">
+                          {navSub.name}
+                        </span>
+                      </NavLink>
+                    ))}
                 </div>
               </div>
-              <div
-                className={`z-[1] transition-all flex flex-col gap-y-3 duration-500 -translate-x-full  ${
-                  openSubNav === item.id && openSubNav === 2
-                    ? "h-[60px] !translate-x-0 "
-                    : openSubNav === item.id && openSubNav === 6
-                    ? "h-[30px] !translate-x-0"
-                    : "h-[0px]   "
-                }  ${!isFixNav && !isHovered && "hidden"}`}
-              >
-                {openSubNav === item.id &&
-                  item.navSub.length > 0 &&
-                  item.navSub.map((navSub) => (
-                    <NavLink
-                      className={`pl-3 py-1 flex items-center gap-x-2 group `}
-                      key={navSub.id}
-                      to={navSub.to}
-                    >
-                      <span className="block group-hover:text-primary">
-                        {navSub.icon}
-                      </span>
-                      <span className="text-gray-600 text-[16px] group-hover:text-primary ">
-                        {navSub.name}
-                      </span>
-                    </NavLink>
-                  ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </Fragment>
   );

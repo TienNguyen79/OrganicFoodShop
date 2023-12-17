@@ -78,7 +78,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     dispatch(proGetDetails(slug));
   }, []);
-  const { dataProDetails } = useSelector((state) => state.product);
+  const { dataProDetails, loading } = useSelector((state) => state.product);
 
   //spread
   const { product: productDetails } = dataProDetails;
@@ -246,7 +246,8 @@ const UpdateProduct = () => {
           <Button
             kind="ghost"
             type="submit"
-            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all"
+            className="hover:bg-greenGray1 hover:text-primary uppercase transition-all w-[208px]"
+            isLoading={loading}
           >
             UPDATE PRODUCT
           </Button>

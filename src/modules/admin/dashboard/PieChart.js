@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   LineElement,
@@ -21,13 +21,40 @@ ChartJS.register(
   Legend,
   Tooltip
 );
-const PieChart = () => {
+const PieChart = ({ result }) => {
+  const [nameCate, setNameCate] = useState([]);
+  const [QuantityInCate, setQuantityInCate] = useState([]);
+
+  useEffect(() => {
+    if (result?.products_in_category) {
+      const keys = Object.keys(result?.products_in_category);
+      setNameCate(keys);
+    }
+    if (result?.products_in_category) {
+      const values = Object.values(result?.products_in_category);
+      setQuantityInCate(values);
+    }
+  }, [result?.products_in_category]);
+
   const data = {
-    labels: ["Category1", "Category2", "Category3", "Category4"],
+    labels: nameCate,
     datasets: [
       {
-        data: [12, 19, 3, 5],
-        backgroundColor: ["red", "blue", "yellow", "green", "purple", "orange"],
+        data: QuantityInCate,
+        backgroundColor: [
+          "#FF5733",
+          "#3498DB",
+          "#F1C40F",
+          "#2ECC71",
+          "#9B59B6",
+          "#F39C12",
+          "#1ABC9C",
+          "#D35400",
+          "#8E44AD",
+          "#27AE60",
+          "#2980B9",
+          "#C0392B",
+        ],
       },
     ],
   };

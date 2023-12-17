@@ -5,6 +5,7 @@ const categorySlice = createSlice({
   initialState: {
     dataCate: [],
     dataCateWithId: [],
+    loadingCate: false,
   },
   reducers: {
     cateGetdataAll: () => {},
@@ -37,6 +38,10 @@ const categorySlice = createSlice({
       dataCate: action.payload.resultCateAll || state.dataCate,
       dataCateWithId: action.payload.resultCateWithId || state.dataCateWithId,
     }),
+    setLoading: (state, action) => ({
+      ...state,
+      loadingCate: action.payload,
+    }),
   },
 });
 
@@ -49,6 +54,7 @@ export const {
   CateUpdate,
   CateGetDetails,
   CateSearch,
+  setLoading,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

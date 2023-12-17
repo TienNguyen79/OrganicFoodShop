@@ -62,6 +62,7 @@ function* handlePostOrder(action) {
         confirmButtonText: "Continue shopping",
         cancelButtonText: "Back Home",
         reverseButtons: true, // Đảo ngược vị trí của các nút
+        allowOutsideClick: false,
       }).then(async (result) => {
         if (result.isConfirmed) {
           // Thực hiện hành động khi nhấn "Mua Tiếp"

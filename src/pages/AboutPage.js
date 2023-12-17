@@ -9,6 +9,7 @@ import Gap from "../components/common/Gap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 const AboutPage = () => {
   const settings2 = {
     // className: "center",
@@ -188,7 +189,10 @@ const AboutPage = () => {
           </span>
         </div>
         <div className="mt-[50px] grid grid-cols-4 gap-x-6">
-          <div className="shadow-lg">
+          <Link
+            to="https://www.facebook.com/cristianoo.tiens"
+            className="shadow-lg rounded-md shadowgreen "
+          >
             <AboutImage
               w="280px"
               h="260px"
@@ -204,8 +208,11 @@ const AboutPage = () => {
                 Ceo & Founder
               </span>
             </div>
-          </div>
-          <div className="shadow-lg">
+          </Link>
+          <Link
+            to="https://www.facebook.com/Buiducthang.08037"
+            className="shadow-lg rounded-md shadowgreen "
+          >
             <AboutImage
               w="280px"
               h="260px"
@@ -221,7 +228,7 @@ const AboutPage = () => {
                 Ceo & Founder
               </span>
             </div>
-          </div>
+          </Link>
           <div className="shadow-lg">
             <AboutImage
               w="280px"
@@ -245,7 +252,7 @@ const AboutPage = () => {
               linkUrl="https://www.kindpng.com/picc/m/247-2472283_transparent-admin-png-marketing-girl-cartoon-png-png.png"
             ></AboutImage>
             <div className="bg-[#F5F5F5] pt-4 px-5 pb-5 w-full ">
-              <h1 className="text-gray9 text-[18px] font-medium">Liza</h1>
+              <h1 className="text-gray9 text-[18px] font-medium">Lisa</h1>
               <span className="block text-gray5 text-sm font-normal">
                 {" "}
                 Employee

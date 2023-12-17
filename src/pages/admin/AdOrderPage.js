@@ -73,10 +73,6 @@ const AdOrderPage = () => {
     IdStatus
   );
   const { dataOrderAll } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: AdOrderPage.js:71 ~ AdOrderPage ~ dataOrderAll:",
-    dataOrderAll
-  );
 
   const { handlePageClick, pageCount, nextPage } = usePagination(
     dataOrderAll,

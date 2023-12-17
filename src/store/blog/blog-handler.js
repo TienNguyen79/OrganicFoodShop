@@ -163,7 +163,6 @@ function* handleBlogDeleteCmt(action) {
   const { payload, type } = action;
 
   try {
-    yield put(setLoading(true));
     const response = yield call(requestDeleteCommentBlog, payload);
     console.log(
       "🚀 ~ file: blog-handler.js:134 ~ function*handleBlogDeleteCmt ~ response:",
@@ -181,7 +180,6 @@ function* handleBlogDeleteCmt(action) {
         BlogResponse
       );
       yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
-      yield put(setLoading(false));
       toast.success("Delete comment successfully!");
     }
   } catch (error) {
@@ -189,8 +187,6 @@ function* handleBlogDeleteCmt(action) {
       "🚀 ~ file: blog-handler.js:132 ~ function*handleBlogDeleteCmt ~ error:",
       error
     );
-
-    yield put(setLoading(false));
   }
 }
 
@@ -198,7 +194,6 @@ function* handleBlogUpdateCmt(action) {
   const { payload, type } = action;
 
   try {
-    yield put(setLoading(true));
     const response = yield call(requestUpdateCommentBlog, payload);
     console.log(
       "🚀 ~ file: blog-handler.js:173 ~ function*handleBlogUpdateCmt ~ response:",
@@ -213,7 +208,6 @@ function* handleBlogUpdateCmt(action) {
       });
 
       yield put(updateDataBlog({ resultCommentBlog: BlogResponse.data }));
-      yield put(setLoading(false));
       toast.success("Update comment successfully!");
     }
   } catch (error) {
@@ -221,8 +215,6 @@ function* handleBlogUpdateCmt(action) {
       "🚀 ~ file: blog-handler.js:188 ~ function*handleBlogUpdateCmt ~ error:",
       error
     );
-
-    yield put(setLoading(false));
   }
 }
 

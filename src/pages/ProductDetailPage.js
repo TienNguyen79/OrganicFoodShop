@@ -12,6 +12,7 @@ import Label from "../components/label/Label";
 import ProductItem from "../modules/product/ProductItem";
 import ProQuickView from "../modules/product/ProQuickView";
 import parse from "html-react-parser";
+import LoadingProQuickView from "../components/loading/LoadingProQuickView";
 const tabs = [
   {
     id: 1,
@@ -40,7 +41,7 @@ const ProductDetailPage = () => {
     window.scrollTo({ top: 90, behavior: "smooth" });
   }, []);
 
-  const { dataProDetails } = useSelector((state) => state.product);
+  const { dataProDetails, loadings } = useSelector((state) => state.product);
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClickClose, setIsClickClose] = useState(false);
@@ -61,7 +62,11 @@ const ProductDetailPage = () => {
         // data={datafake}
       />
       <div className="pt-[60px] ">
-        <ProDetailItem data={dataProDetails?.product}></ProDetailItem>
+        {loadings.details ? (
+          <LoadingProQuickView></LoadingProQuickView>
+        ) : (
+          <ProDetailItem data={dataProDetails?.product}></ProDetailItem>
+        )}
       </div>
       <div className="flex justify-center items-center mt-[80px] border-b-2 relative ">
         {tabs.map((item) => (

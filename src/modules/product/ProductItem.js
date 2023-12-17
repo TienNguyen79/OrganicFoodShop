@@ -16,70 +16,16 @@ import { Link, useNavigate } from "react-router-dom";
 import IconClose from "../../components/Icons/IconClose";
 import IconClose2 from "../../components/Icons/IconClose2";
 import {
+  cartAddNew,
   wishListAddNew,
   wishListDelete,
   wishListGetAll,
 } from "../../store/cart/cart-slice";
 import { useEffect } from "react";
 import IconRedHeart from "../../components/Icons/IconRedHeart";
+import { getToken } from "../../utils/auth";
 
 const ProductItem = ({ data, openModal }) => {
-  //   let temp = [];
-  //   switch (data) {
-  //     case "1":
-  //       temp = [
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //       ];
-  //       break;
-  //     case "2":
-  //       temp = [
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //       ];
-
-  //       break;
-  //     case "3":
-  //       temp = [
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarGray></IconStarGray>,
-  //         <IconStarGray></IconStarGray>,
-  //       ];
-
-  //       break;
-  //     case "4":
-  //       temp = [
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarGray></IconStarGray>,
-  //       ];
-
-  //       break;
-  //     case "5":
-  //       temp = [
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //         <IconStarYellow></IconStarYellow>,
-  //       ];
-
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
   const navigate = useNavigate();
   //Cách 2 render star
   const starCount = parseInt(data?.average_rating); // Chuyển data thành số nguyên
@@ -103,7 +49,13 @@ const ProductItem = ({ data, openModal }) => {
     dispatch(wishListGetAll());
   }, []);
 
-  const { dataWishListAll } = useSelector((state) => state.cart);
+  const { dataWishListAll, loadingWishList, loadingCart } = useSelector(
+    (state) => state.cart
+  );
+  console.log(
+    "🚀 ~ file: ProductItem.js:51 ~ ProductItem ~ loadingWishList:",
+    loadingWishList
+  );
 
   const [wishList, setWishList] = useState([]);
 
@@ -141,7 +93,18 @@ const ProductItem = ({ data, openModal }) => {
             </div>
           </Link>
           <div>
-            <div className="bg-gray-100 p-2 rounded-full group-hover:bg-primary hover:scale-110 shadowgreen transition-all ">
+            <div
+              className="bg-gray-100 p-2 rounded-full group-hover:bg-primary hover:scale-110 shadowgreen transition-all "
+              onClick={() =>
+                dispatch(
+                  cartAddNew({
+                    product_id: data?.id,
+                    quantity: 1,
+                    token: getToken(),
+                  })
+                )
+              }
+            >
               <IconBagPro
                 color={`${isGroupHovered ? "#FFF" : "#1A1A1A"}`}
               ></IconBagPro>
@@ -153,32 +116,33 @@ const ProductItem = ({ data, openModal }) => {
         )}
         <div className="flex flex-col gap-y-[6px] absolute top-[15px] right-[15px] scale-0 group-hover:scale-100 transition-all duration-300 invisible group-hover:visible ">
           <div className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer hover:scale-110 shadowgreen transition-all  ">
-            <span
-              className="flex justify-center items-center "
-              // onClick={() => {
-              //   setIsClickTym(!isClickTym);
-              //   dispatch(wishListAddNew({ product_id: data?.id }));
-              // }}
-            >
-              {/* {isClickTym ? <IconClose2></IconClose2> : <IconHeart></IconHeart>} */}
-              {wishList.includes(data?.id) ? (
-                <div
-                  onClick={() => {
-                    dispatch(wishListDelete(data?.id));
-                  }}
-                >
-                  <IconRedHeart></IconRedHeart>
-                </div>
-              ) : (
-                <div
-                  onClick={() => {
-                    dispatch(wishListAddNew({ product_id: data?.id }));
-                  }}
-                >
-                  <IconHeart></IconHeart>
-                </div>
-              )}
-            </span>
+            {loadingWishList ? (
+              <img
+                src="/Spin-1s-200px.svg"
+                className="w-[20px] h-[20px]"
+                alt=""
+              ></img>
+            ) : (
+              <span className="flex justify-center items-center ">
+                {wishList.includes(data?.id) ? (
+                  <div
+                    onClick={() => {
+                      dispatch(wishListDelete(data?.id));
+                    }}
+                  >
+                    <IconRedHeart></IconRedHeart>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      dispatch(wishListAddNew({ product_id: data?.id }));
+                    }}
+                  >
+                    <IconHeart></IconHeart>
+                  </div>
+                )}
+              </span>
+            )}
           </div>
           <div
             className=" rounded-full border border-[#F2F2F2] p-[10px] bg-white cursor-pointer z-50  hover:scale-110 shadowgreen transition-all  "

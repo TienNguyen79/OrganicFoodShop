@@ -242,7 +242,7 @@ const Header = () => {
                     </div>
                     {show && (
                       <div ref={nodeRef}>
-                        <PopupMe></PopupMe>
+                        <PopupMe setShow={setShow}></PopupMe>
                       </div>
                     )}
                   </div>
@@ -258,9 +258,12 @@ const Header = () => {
         <div className="shadow-lg bg-white text-gray6  py-3 flex items-center justify-between px-[275px]">
           <HomeNavigate></HomeNavigate>
           <div className="flex items-center gap-x-2">
-            <IconPhone></IconPhone>
+            {/* <IconPhone></IconPhone> */}
+            <div className="rotate-[20deg] ">
+              <img src="/iconscall2.gif" className="w-[30px]" alt="" />
+            </div>
             <span className="text-[14px] text-gray5 font-medium">
-              (219) 555-0114
+              0919985xxx
             </span>
           </div>
         </div>

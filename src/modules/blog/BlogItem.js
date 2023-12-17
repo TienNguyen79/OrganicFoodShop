@@ -19,7 +19,6 @@ const BlogItem = ({ className = "", data }) => {
   const options2 = { day: "numeric" };
   const formattedMonth = date.toLocaleDateString("en-US", options);
   const formattedDay = date.toLocaleDateString("en-US", options2);
-
   return (
     <div className={`relative ${className}`}>
       <BlogImage
@@ -88,9 +87,11 @@ const BlogItem = ({ className = "", data }) => {
             </div>
           </div>
 
-          <BlogDesc className=" text-[14px] mb-4 multiline-ellipsis">
-            {parse(data?.content || "")}
-          </BlogDesc>
+          {data?.content && (
+            <BlogDesc className=" text-[14px] mb-4 multiline-ellipsis">
+              {parse(data?.content[0] || "")}
+            </BlogDesc>
+          )}
         </div>
         <LabelRedirect
           className="text-[14px] font-semibold mt-auto"

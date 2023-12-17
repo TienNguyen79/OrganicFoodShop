@@ -233,6 +233,7 @@ function* handleAdminGetProAll(action) {
 }
 
 function* handleAdminAddPro(action) {
+  yield put(setLoading(true));
   const { payload, type } = action;
   try {
     const response = yield call(requestAdminAddPro, payload);
@@ -242,6 +243,8 @@ function* handleAdminAddPro(action) {
 
       yield put(updateData({ resultProAll: response2.data.products }));
       toast.success("Add Product success!");
+      yield put(setLoading(false));
+
       History.push("/admin/products/product_list");
     }
   } catch (error) {
@@ -257,6 +260,7 @@ function* handleAdminAddPro(action) {
       "🚀 ~ file: pro-handlers.js:241 ~ function*handleAdminAddPro ~ error:",
       error
     );
+    yield put(setLoading(false));
   }
 }
 
@@ -284,6 +288,7 @@ function* handleAdmiDeletePro(action) {
 }
 
 function* handleAdmiUpdatePro(action) {
+  yield put(setLoading(true));
   const { payload, type } = action;
   console.log(
     "🚀 ~ file: pro-handlers.js:288 ~ function*handleAdmiUpdatePro ~ payload:",
@@ -298,6 +303,7 @@ function* handleAdmiUpdatePro(action) {
       yield put(updateData({ resultProAll: response2.data.products }));
       toast.success("Update Product success!");
       History.push("/admin/products/product_list");
+      yield put(setLoading(false));
     }
   } catch (error) {
     toast.error(
@@ -312,6 +318,7 @@ function* handleAdmiUpdatePro(action) {
       "🚀 ~ file: pro-handlers.js:296 ~ function*handleAdmiUpdatePro ~ error:",
       error
     );
+    yield put(setLoading(false));
   }
 }
 

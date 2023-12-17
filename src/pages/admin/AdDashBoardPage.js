@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BoxOverviewItem from "../../modules/admin/dashboard/BoxOverviewItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,13 +10,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ChartExample from "../../modules/admin/dashboard/ChartExample";
 import PieChart from "../../modules/admin/dashboard/PieChart";
+import { useDispatch, useSelector } from "react-redux";
+import { AdminDashBoard } from "../../store/user/user-slice";
 const AdDashBoardPage = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(AdminDashBoard(1));
+  }, []);
+  const { dataAdminDashBoard } = useSelector((state) => state.user);
+  console.log(
+    "🚀 ~ file: AdDashBoardPage.js:17 ~ AdDashBoardPage ~ dataAdminDashBoard:",
+    dataAdminDashBoard
+  );
   return (
     <div className="">
       <div className="relative flex justify-between items-center bg-white p-5 mt-10 rounded-md">
         <div>
           <h1 className="text-[20px] font-medium text-gray-700">
-            Congratulations Tiến! 🎉
+            Congratulations Boss {user?.name?.split(" ").pop()}! 🎉
           </h1>
           <p className="pt-4 text-gray5">
             You have done 72% 😎 more sales today.
@@ -38,24 +50,29 @@ const AdDashBoardPage = () => {
           unit="$"
           icon={<FontAwesomeIcon icon={faSackDollar} size="2xl" />}
           colorIcon="text-[#ffb400]"
+          quantity={dataAdminDashBoard?.revenue?.totalRevenue}
+          to="/admin/order"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Total Order"
-          quantity={9998}
           icon={<FontAwesomeIcon icon={faReceipt} size="2xl" />}
           colorIcon="text-[#16b1ff]"
+          quantity={dataAdminDashBoard?.totalOrder?.total}
+          to="/admin/order"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Total Customer"
-          quantity="8000"
+          quantity={dataAdminDashBoard?.totalCustomer}
           icon={<FontAwesomeIcon icon={faUser} size="2xl" />}
           colorIcon="text-[#9055fd]"
+          to="/admin/customers"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Total products"
-          quantity={3000}
+          quantity={dataAdminDashBoard?.totalProducts}
           icon={<FontAwesomeIcon icon={faBagShopping} size="2xl" />}
           colorIcon="text-[#20c997]"
+          to="/admin/products/product_list"
         ></BoxOverviewItem>
       </div>
       <div className="mt-[80px]  flex items-start gap-x-[250px]">
@@ -63,7 +80,7 @@ const AdDashBoardPage = () => {
           <ChartExample></ChartExample>
         </div>
         <div>
-          <PieChart></PieChart>
+          <PieChart result={dataAdminDashBoard?.totalCategory}></PieChart>
         </div>
       </div>
     </div>
