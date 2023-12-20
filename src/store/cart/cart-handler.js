@@ -17,6 +17,7 @@ import {
 } from "./cart-slice";
 import { toast } from "react-toastify";
 import { getToken } from "../../utils/auth";
+import History from "../../utils/history";
 
 export default function* handleGetCartAll(action) {
   const { payload, type } = action;
@@ -65,6 +66,7 @@ function* handleCartAddNew(action) {
       toast.success("Add to cart successfully!");
     }
   } catch (error) {
+    History.push("/login");
     console.log(
       "🚀 ~ file: cart-handler.js:54 ~ function*handleCartAddNew ~ error:",
       error
@@ -182,11 +184,7 @@ function* handleWishListAddNew(action) {
       toast.success("Add wishList successfully!");
     }
   } catch (error) {
-    console.log(
-      "🚀 ~ file: cart-handler.js:142 ~ function*handleWishListAddNew ~ error:",
-      error
-    );
-
+    History.push("/login");
     yield put(setLoadingWishList(false));
   }
 }

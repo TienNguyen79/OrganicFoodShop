@@ -41,6 +41,12 @@ const schema = yup.object({
 });
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (getToken()) {
+      navigate("/");
+    }
+  }, [navigate]);
   const {
     handleSubmit,
     control,

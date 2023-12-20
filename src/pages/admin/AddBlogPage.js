@@ -20,7 +20,22 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { blogAdminAdd } from "../../store/blog/blog-slice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 const AddBlogPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     handleSubmit,

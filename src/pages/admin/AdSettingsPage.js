@@ -29,6 +29,7 @@ import SelectInit from "../../components/dropdown/init/SelectInit";
 import ListInit from "../../components/dropdown/init/ListInit";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import IconEyeToggle from "../../components/Icons/IconEyeToggle";
+import { getToken } from "../../utils/auth";
 const schema3 = yup.object({
   current_password: yup
     .string()
@@ -80,6 +81,19 @@ const schema2 = yup.object({
   // term: yup.boolean().required("Please accpect the terms and condition"),
 });
 const AdSettingsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control: control1,
     setValue: setValue1,
@@ -186,7 +200,6 @@ const AdSettingsPage = () => {
   const handleAccoutSetting = async (values) => {
     dispatch(UserUpdate(values));
   };
-  const navigate = useNavigate();
 
   const handleBillAddress = async (values) => {
     if (labelCity === "" || labelDistric === "" || labelvillage === "") {
@@ -219,9 +232,6 @@ const AdSettingsPage = () => {
     reset3({});
     // navigate("/");
   };
-
-  const { user, accessToken } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: SettingsPage.js:220 ~ SettingsPage ~ user:", user);
 
   useEffect(() => {
     dispatch(authCheckToken());

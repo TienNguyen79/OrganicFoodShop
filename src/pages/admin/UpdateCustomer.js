@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import BoxBigAdmin from "../../modules/admin/BoxBigAdmin";
 import ImageUpload from "../../components/image/ImageUpload";
@@ -12,8 +12,24 @@ import useToggleValue from "../../hooks/useToggleValue";
 import Radio from "../../components/checkbox/Radio";
 import { userRole, userStatus } from "../../constants/global";
 import Button from "../../components/button/Button";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 
 const UpdateCustomer = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const { control, watch, handleSubmit } = useForm();
   const { value: showEye2, handleToggleValue: handleToggleEye2 } =
     useToggleValue();

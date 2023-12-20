@@ -10,12 +10,26 @@ import UserAvatar from "../../modules/user/parts/UserAvatar";
 import UserName from "../../modules/user/parts/UserName";
 import BlogDate2 from "../../modules/blog/parts/BlogDate2";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { blogGetAll, blogGetWithParam } from "../../store/blog/blog-slice";
 import { convertDate } from "../../constants/global";
 import parse from "html-react-parser";
+import { getToken } from "../../utils/auth";
 
 const AdBlogDetailsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const dispatch = useDispatch();
   const { slug } = useParams();
 

@@ -17,6 +17,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomerAdd } from "../../store/user/user-slice";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
@@ -36,6 +38,19 @@ const schema = yup.object({
     .email("Field should contain a valid e-mail"),
 });
 const AddCustomerPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     watch,

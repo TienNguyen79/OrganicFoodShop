@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { proGetDetails } from "../../store/product/pro-slice";
 import ProDetailItem from "../../modules/product/ProDetailItem";
 import ProDescMore from "../../modules/product/partsDetail/ProDescMore";
@@ -11,6 +11,7 @@ import AdminProDetailsItem from "../../modules/admin/pro/AdminProDetailsItem";
 import BoxBigAdmin from "../../modules/admin/BoxBigAdmin";
 import LabelRedirect from "../../components/label/LabelRedirect";
 import parse from "html-react-parser";
+import { getToken } from "../../utils/auth";
 const tabs = [
   {
     id: 1,
@@ -26,6 +27,19 @@ const tabs = [
   },
 ];
 const AdProDetailPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const [tabClicked, setTabClicked] = useState(1);
   const [selectedThumb, setSelectedThumb] = useState(1);
   const dispatch = useDispatch();

@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { orderPost } from "../store/order/order-slice";
 import { useNavigate } from "react-router-dom";
 import { authCheckToken } from "../store/auth/auth-slice";
+import { getToken } from "../utils/auth";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
@@ -49,6 +50,11 @@ const schema = yup.object({
 });
 
 const CheckOutPage = () => {
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/login");
+    }
+  }, []);
   const {
     control,
     handleSubmit,

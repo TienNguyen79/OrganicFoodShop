@@ -33,6 +33,7 @@ const authSlice = createSlice({
     }),
     authCheckToken: () => {},
     authLogOut: (state, action) => ({ ...state, ...action.payload }),
+    authLogOutAdmin: (state, action) => ({ ...state, ...action.payload }),
     setLoading: (state, action) => ({
       ...state,
       loading: action.payload,
@@ -59,5 +60,6 @@ export const {
   authGetStatus,
   setLoading,
   authLoginAdmin,
+  authLogOutAdmin,
 } = authSlice.actions;
 export default authSlice.reducer;

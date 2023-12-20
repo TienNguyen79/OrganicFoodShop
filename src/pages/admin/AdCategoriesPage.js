@@ -7,7 +7,7 @@ import Button from "../../components/button/Button";
 import { convertDate, defaultImage3 } from "../../constants/global";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faEye,
   faPenToSquare,
@@ -22,7 +22,21 @@ import {
 } from "../../store/category/cate-slice";
 import { proGetAll } from "../../store/product/pro-slice";
 import Swal from "sweetalert2";
+import { getToken } from "../../utils/auth";
 const AdCategoriesPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const { control } = useForm();
   const [nameCate, setNameCate] = useState("");
   console.log(

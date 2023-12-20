@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import BoxBigAdmin from "../../modules/admin/BoxBigAdmin";
 import { useForm } from "react-hook-form";
@@ -12,12 +12,27 @@ import ImageUpload from "../../components/image/ImageUpload";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { CateAdd } from "../../store/category/cate-slice";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Name is required"),
 });
 const AddCategoryPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     handleSubmit,

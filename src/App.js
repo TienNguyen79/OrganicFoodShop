@@ -132,7 +132,7 @@ function App() {
         {/* ADMIN */}
         <Route element={<LayoutAdmin></LayoutAdmin>}>
           <Route
-            path="/admin/dashboards"
+            path="/admin"
             element={<AdDashBoardPage></AdDashBoardPage>}
           ></Route>
         </Route>

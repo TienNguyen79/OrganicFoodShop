@@ -102,7 +102,7 @@ const Header = () => {
             </svg>
 
             <span className="text-xs text-gray3 font-normal">
-              Store Location: Lincoln- 344, Illinois, Chicago, USA
+              Store Location: Thường Tín, Hà Nội
             </span>
           </div>
           <div className="flex gap-x-5 items-center">
@@ -158,9 +158,9 @@ const Header = () => {
         </div>
         <div className="  py-5 flex items-center justify-between px-[275px] border-b-[1px]">
           <Link to="/">
-            <div className="h-[38px]">
+            <div className="w-[160px]   ">
               <img
-                src="/LogoEco.png"
+                src="/logoPri.png"
                 alt="eco"
                 className="w-full h-full object-cover"
               />
@@ -222,7 +222,11 @@ const Header = () => {
                   )}
                 </div>
 
-                {!user && <span>Hello You</span>}
+                {!user && (
+                  <span className="block text-primary font-semibold">
+                    Welcome !
+                  </span>
+                )}
 
                 {user && (
                   <div className="relative">
@@ -248,9 +252,9 @@ const Header = () => {
                   </div>
                 )}
               </div>
-              <Button kind="secondary" href="/admin/dashboards">
+              {/* <Button kind="secondary" href="/admin">
                 ADMIN
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
@@ -263,7 +267,7 @@ const Header = () => {
               <img src="/iconscall2.gif" className="w-[30px]" alt="" />
             </div>
             <span className="text-[14px] text-gray5 font-medium">
-              0919985xxx
+              0919985502
             </span>
           </div>
         </div>

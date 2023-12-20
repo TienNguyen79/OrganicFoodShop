@@ -20,11 +20,11 @@ const BlogItem = ({ className = "", data }) => {
   const formattedMonth = date.toLocaleDateString("en-US", options);
   const formattedDay = date.toLocaleDateString("en-US", options2);
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative  ${className}`}>
       <BlogImage
         linkUrl={data?.image !== "" ? data?.image : defaultImage3}
       ></BlogImage>
-      <div className="flex flex-col justify-between p-4 bg-white rounded-b-lg">
+      <div className="h-[136px] flex flex-col justify-between p-4 bg-white  rounded-b-lg ">
         <div className="flex-grow">
           <div className="flex gap-x-3 mb-1 ">
             <div className="flex gap-x-1">

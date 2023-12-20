@@ -16,14 +16,28 @@ import {
   CateGetDetails,
   CateUpdate,
 } from "../../store/category/cate-slice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { getToken } from "../../utils/auth";
 
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Name is required"),
 });
 const UpdateCategoryPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     handleSubmit,

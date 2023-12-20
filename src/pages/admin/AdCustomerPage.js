@@ -17,7 +17,7 @@ import {
   faTruckFast,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faEye,
   faPenToSquare,
@@ -41,11 +41,23 @@ import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { debounce } from "lodash";
 import { authCheckToken } from "../../store/auth/auth-slice";
+import { getToken } from "../../utils/auth";
 const AdCustomerPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
   const { control } = useForm();
   const dispatch = useDispatch();
   const [nameCustomer, setNameCustomer] = useState("");
-
   const { dataAllCustomer } = useSelector((state) => state.user);
 
   const { handlePageClick, pageCount, nextPage } = usePagination(
@@ -66,7 +78,6 @@ const AdCustomerPage = () => {
     }
   }, [dispatch, nameCustomer, nextPage, nextPage1]);
 
-  const { user } = useSelector((state) => state.auth);
   console.log("🚀 ~ file: AdCustomerPage.js:67 ~ AdCustomerPage ~ user:", user);
   useEffect(() => {
     dispatch(authCheckToken());

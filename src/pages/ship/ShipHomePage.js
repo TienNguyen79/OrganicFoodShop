@@ -24,7 +24,7 @@ import {
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import Table from "../../components/table/Table";
 import { convertDateTime, convertStatus } from "../../constants/global";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IconPagiNext from "../../components/Icons/IconPagiNext";
 import IconPagiPrev from "../../components/Icons/IconPagiPrev";
@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/button/Button";
 import { CustomerGetAll } from "../../store/user/user-slice";
+import { getToken } from "../../utils/auth";
 const statusOrder = [
   {
     id: 1,
@@ -55,6 +56,18 @@ const statusOrder = [
   },
 ];
 const ShipHomePage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
   const [isFixNav, setIsFixNav] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 

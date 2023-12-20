@@ -14,6 +14,7 @@ import IconEyeToggle from "../../components/Icons/IconEyeToggle";
 import Checkbox from "../../components/checkbox/Checkbox";
 import Button from "../../components/button/Button";
 import { authLogin, authLoginAdmin } from "../../store/auth/auth-slice";
+import { getToken } from "../../utils/auth";
 const schema = yup.object({
   email: yup
     .string()
@@ -26,6 +27,14 @@ const schema = yup.object({
 });
 
 const AdLoginPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission === 2 && getToken()) {
+      navigate("/admin");
+    }
+  }, [navigate, user]);
+
   const {
     handleSubmit,
     control,
@@ -45,7 +54,6 @@ const AdLoginPage = () => {
   const { loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   // const slug = useParams();
   // console.log("🚀 ~ file: LoginPage.js:53 ~ LoginPage ~ slug:", slug);
 

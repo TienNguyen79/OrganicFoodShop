@@ -6,7 +6,7 @@ import {
   defaultImage3,
 } from "../../constants/global";
 import Table from "../../components/table/Table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -28,8 +28,22 @@ import Input from "../../components/input/Input";
 import { useForm } from "react-hook-form";
 import Button from "../../components/button/Button";
 import Swal from "sweetalert2";
+import { getToken } from "../../utils/auth";
 
 const AdBlogsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const { control } = useForm();
   const dispatch = useDispatch();
   const [contentBlog, setContentBlog] = useState("");

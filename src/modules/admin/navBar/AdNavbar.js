@@ -19,7 +19,7 @@ import {
 import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { getToken, logOut } from "../../../utils/auth";
-import { authLogOut } from "../../../store/auth/auth-slice";
+import { authLogOut, authLogOutAdmin } from "../../../store/auth/auth-slice";
 import Swal from "sweetalert2";
 
 const navLink = [
@@ -28,7 +28,7 @@ const navLink = [
     name: "Dasboards",
     icon: <FontAwesomeIcon icon={faHouse} size="lg" />,
     icondown: "",
-    to: "/admin/dashboards",
+    to: "/admin",
     navSub: [],
   },
   {
@@ -149,7 +149,7 @@ const AdNavbar = ({ isFixNav, setIsFixNav }) => {
       confirmButtonText: "Yes, I'm Sure!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(authLogOut(getToken()));
+        dispatch(authLogOutAdmin(getToken()));
       }
     });
   };

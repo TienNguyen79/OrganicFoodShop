@@ -20,7 +20,7 @@ import {
 } from "../../constants/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CustomerDetails } from "../../store/user/user-slice";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
@@ -29,8 +29,21 @@ import IconPagiPrev from "../../components/Icons/IconPagiPrev";
 import { useState } from "react";
 import Button from "../../components/button/Button";
 import LabelRedirect from "../../components/label/LabelRedirect";
+import { getToken } from "../../utils/auth";
 const itemsPerPage = 10;
 const CustomerDetailsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
   const dispatch = useDispatch();
   const { slug } = useParams();
   const { dataAllCustomer } = useSelector((state) => state.user);

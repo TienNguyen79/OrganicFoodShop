@@ -27,16 +27,15 @@ const Footer = () => {
   return (
     <div className="bg-gray9 text-white px-[238px] ">
       <div className="grid grid-cols-6 gap-x-4 py-[60px]  border-b-[1px] border-[#474747]">
-        <div className="col-span-2">
-          <img src="/LogoEcoFooter.png" className=" object-cover" alt="" />
+        <div className="col-span-2 ">
+          <img src="/logoPri.png" className="w-[150px]   object-cover" alt="" />
           <p className="text-gray5 text-sm font-normal py-4 leading-6">
-            We always put customers first, reputation creates quality, If you
-            need support, just contact us via the two methods below
+            If you need support, just contact us via the two methods below
           </p>
           <div className="flex gap-x-4 text-sm">
             <div className="relative">
-              <span>0919985xxx</span>
-              <div className="absolute after:bg-primary after:absolute after:contents-'' after:w-[98px] after:h-[2px] "></div>
+              <span>0919985502</span>
+              <div className="absolute after:bg-primary after:absolute after:contents-'' after:w-[86px] after:h-[2px] "></div>
             </div>
             <span className="text-gray5 ">or</span>
             <div className="relative">

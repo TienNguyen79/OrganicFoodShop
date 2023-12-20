@@ -17,6 +17,7 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getToken } from "../utils/auth";
 const schema = yup.object({
   email: yup
     .string()
@@ -29,6 +30,13 @@ const schema = yup.object({
 });
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (getToken()) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const {
     handleSubmit,
     control,
@@ -48,7 +56,6 @@ const LoginPage = () => {
   const { loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   // const slug = useParams();
   // console.log("🚀 ~ file: LoginPage.js:53 ~ LoginPage ~ slug:", slug);
 
@@ -61,6 +68,10 @@ const LoginPage = () => {
       console.log("🚀 ~ file: LoginPage.js:38 ~ handlelogin ~ error:", error);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <LayoutAuth heading="Login" navName="Register" navLink="/register">

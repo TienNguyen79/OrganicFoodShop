@@ -6,7 +6,7 @@ import {
   convertStatus,
   defaultImage3,
 } from "../../constants/global";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -33,6 +33,7 @@ import ListInit from "../../components/dropdown/init/ListInit";
 import { faCircleXmark, faXmark } from "@fortawesome/free-solid-svg-icons";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import Swal from "sweetalert2";
+import { getToken } from "../../utils/auth";
 const statusOrder = [
   {
     id: 0,
@@ -61,6 +62,18 @@ const statusOrder = [
 ];
 
 const AdOrderPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
   const dispatch = useDispatch();
   const [IdStatus, setIdStatus] = useState("");
   const [NameStatus, setNameStatus] = useState();

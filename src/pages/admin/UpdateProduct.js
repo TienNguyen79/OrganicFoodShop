@@ -26,7 +26,8 @@ import {
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 const schema = yup.object({
   // firstName: yup.string().required("FirstName is required"),
   name: yup.string().required("Name is required"),
@@ -49,6 +50,19 @@ const schema = yup.object({
   // .min(5, "Please enter at least 8 characters"),
 });
 const UpdateProduct = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     watch,

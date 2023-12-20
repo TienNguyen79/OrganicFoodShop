@@ -3,7 +3,7 @@ import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import Input from "../../components/input/Input";
 import { useForm } from "react-hook-form";
 import Button from "../../components/button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleXmark,
@@ -31,7 +31,21 @@ import ListInit from "../../components/dropdown/init/ListInit";
 import OptionsInit from "../../components/dropdown/init/OptionsInit";
 import Swal from "sweetalert2";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { getToken } from "../../utils/auth";
 const ProductsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const { control } = useForm();
   const dispatch = useDispatch();
   const [searchCate, setSearchCate] = useState("");

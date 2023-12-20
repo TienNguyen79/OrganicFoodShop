@@ -23,9 +23,23 @@ import {
   blogAdminUpdate,
   blogGetWithParam,
 } from "../../store/blog/blog-slice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getToken } from "../../utils/auth";
 const UpdateBlogPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+
   const {
     control,
     handleSubmit,

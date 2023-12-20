@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { orderAdminGetDetails } from "../../store/order/order-slice";
 import LayoutAdminAct from "../../layout/LayoutAdminAct";
 import LabelRedirect from "../../components/label/LabelRedirect";
@@ -16,6 +16,7 @@ import ProImage from "../../modules/product/partsCartAndTym/ProImage";
 import ProName from "../../modules/product/partsCartAndTym/ProName";
 import ProQuantity from "../../modules/product/partsCartAndTym/ProQuantity";
 import ProPrice from "../../modules/product/partsCartAndTym/ProPrice";
+import { getToken } from "../../utils/auth";
 const processOrder = (data) => {
   switch (data) {
     case "0":
@@ -249,6 +250,18 @@ const processOrder = (data) => {
 };
 
 const AdOrderDetailsPage = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
   const dispatch = useDispatch();
   const { slug } = useParams();
 

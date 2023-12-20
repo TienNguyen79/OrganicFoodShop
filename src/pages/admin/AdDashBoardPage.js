@@ -12,17 +12,32 @@ import ChartExample from "../../modules/admin/dashboard/ChartExample";
 import PieChart from "../../modules/admin/dashboard/PieChart";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminDashBoard } from "../../store/user/user-slice";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/auth";
+import { authCheckToken } from "../../store/auth/auth-slice";
 const AdDashBoardPage = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.permission !== 2) {
+      navigate("/admin/login");
+    }
+  }, [navigate, user]);
+  useEffect(() => {
+    if (!getToken()) {
+      navigate("/admin/login");
+    }
+  }, []);
+  useEffect(() => {
+    dispatch(authCheckToken());
+  }, []);
+
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(AdminDashBoard(1));
   }, []);
   const { dataAdminDashBoard } = useSelector((state) => state.user);
-  console.log(
-    "🚀 ~ file: AdDashBoardPage.js:17 ~ AdDashBoardPage ~ dataAdminDashBoard:",
-    dataAdminDashBoard
-  );
+
   return (
     <div className="">
       <div className="relative flex justify-between items-center bg-white p-5 mt-10 rounded-md">
