@@ -70,16 +70,10 @@ const HomePage = () => {
     className: "center",
     infinite: true,
     centerPadding: "60px",
-    slidesToShow: 6,
+    slidesToShow: 5,
     swipeToSlide: true,
   };
   const settings2 = {
-    // className: "center",
-    // centerMode: true,
-    // infinite: true,
-    // centerPadding: "10px",
-    // slidesToShow: 3,
-    // speed: 500,
     infinite: true,
     speed: 800,
     slidesToShow: 3,
@@ -87,6 +81,14 @@ const HomePage = () => {
     autoplay: true,
     autoplaySpeed: 5000, //5s trượt 1 lần
     cssEase: "ease-in-out",
+  };
+
+  const settings3 = {
+    className: "center",
+    infinite: true,
+    centerPadding: "20px",
+    slidesToShow: 3,
+    swipeToSlide: true,
   };
   const dispatch = useDispatch();
 
@@ -141,25 +143,37 @@ const HomePage = () => {
   };
   //--------------
 
-  //xử lý chèn số lượng sản phẩm với categoryId tương ứng ở Shop by Top Categories
-  // const [datatLength, setDatatLength] = useState([]);
+  //xử lý mobile slider
+  const [shouldShowSlider, setShouldShowSlider] = useState(true);
 
-  // useEffect(() => {
-  //   const arr = [];
-  //   const arrLength = [];
-  //   dataCate.map((item) => {
-  //     arr.push(item.id);
-  //   });
+  useEffect(() => {
+    const handleResize = () => {
+      // Kiểm tra kích thước màn hình và quyết định ẩn/hiển thị slider
+      setShouldShowSlider(window.innerWidth > 768);
+    };
 
-  //   arr.map((id) => {
-  //     const productsInCategory = dataPro.filter(
-  //       (product) => product.category_id === id
-  //     );
-  //     arrLength.push(productsInCategory.length);
-  //   });
-  //   setDatatLength(arrLength);
-  // }, [dataCate, dataPro]);
+    // Gọi hàm handleResize khi kích thước màn hình thay đổi
+    window.addEventListener("resize", handleResize);
 
+    // Gọi hàm handleResize ngay khi component được mount để kiểm tra kích thước ban đầu
+    handleResize();
+
+    // Xóa event listener khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  //sắp xếp cate theo thứ tự giảm dần
+  const [sortedDataCate, setSortedDataCate] = useState([]);
+  useEffect(() => {
+    if (dataCate) {
+      const sortedData = [...dataCate].sort(
+        (a, b) => b.gross_product - a.gross_product
+      );
+      setSortedDataCate(sortedData);
+    }
+  }, [dataCate]);
   return (
     <div>
       {loadings.bestSeller === true &&
@@ -169,7 +183,7 @@ const HomePage = () => {
         <div className="fixed h-full flex items-center inset-0  bg-white z-[999] ">
           <img
             src="/loading3.svg"
-            className="loadingsvg  h-[150px] mx-auto"
+            className="loadingsvg  h-[150px] mx-auto "
             alt="loading"
           />
         </div>
@@ -187,35 +201,20 @@ const HomePage = () => {
         />
       </div>
 
-      {/* <CartPopup
-        openCart={isModalOpenCart ? "visible" : "invisible"}
-        onClose={closeModalCart}
-        isClickClose={isClickCloseCart}
-      ></CartPopup> */}
       <SliderBanner></SliderBanner>
-      {/* <div>
-        {dataHotDeal?.length > 0 &&
-          dataHotDeal.map((item) => <h1 key={item.id}>{item?.name}</h1>)}
-      </div>
-      <div>
-        {dataBestSeller?.length > 0 &&
-          dataBestSeller.map((item) => (
-            <h1 className="bg-red-600" key={item.id}>
-              {item?.discount}
-            </h1>
-          ))}
-      </div> */}
 
-      <div className="px-[238px]  grid grid-cols-4 gap-x-6 relative ">
+      <div className="px-5 md:px-[30px] lg:px-[238px]   grid grid-cols-1  md:grid-cols-4 lg:grid-cols-4 gap-x-6 relative ">
         {dataUtil.length > 0 &&
           dataUtil.map((data) => (
             <UtilsFeautureItem data={data} key={data.id}></UtilsFeautureItem>
           ))}
       </div>
-      <div className="FeaturedProducts px-[238px] mb-[80px]">
+      <div className="FeaturedProducts md:px-[60px] lg:px-[238px] mb-[80px]">
         <Gap>
-          <GroupJusBeween>
-            <Label className="text-[35px]">Featured Products</Label>
+          <GroupJusBeween className="px-4 md:px-0 lg:px-0">
+            <Label className="text-[20px] md:text-[25px] lg:text-[35px]">
+              Featured Products
+            </Label>
             <LabelRedirect
               url="/featureProducts"
               title="View All"
@@ -223,12 +222,8 @@ const HomePage = () => {
             ></LabelRedirect>
           </GroupJusBeween>
         </Gap>
-        {/* <ProductItem
-                key={item.id}
-                data={item}
-                openModal={openModal}
-              ></ProductItem> */}
-        <div className="grid grid-cols-4  gap-x-6">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-5 px-5  gap-x-6">
           {dataFeauture.length > 0 &&
             dataFeauture.map((item) => (
               <ProductItem
@@ -239,10 +234,12 @@ const HomePage = () => {
             ))}
         </div>
       </div>
-      <div className="ShopbyTopCategories px-[238px]  bg-[#F3F5F3]">
+      <div className="ShopbyTopCategories px-3  lg:px-[238px]  bg-[#F3F5F3]">
         <Gap>
           <GroupJusBeween>
-            <Label className="text-[35px]">Shop by Top Categories</Label>
+            <Label className="text-[20px] md:text-[25px] lg:text-[35px]">
+              Shop by Top Categories
+            </Label>
             <LabelRedirect
               url="/shop"
               title="View All"
@@ -251,11 +248,11 @@ const HomePage = () => {
           </GroupJusBeween>
         </Gap>
 
-        {dataCate.length >= 7 ? (
+        {shouldShowSlider ? (
           <div className="cateSlider">
             <Slider {...settings}>
-              {dataCate.length > 0 &&
-                dataCate.map((item, index) => {
+              {sortedDataCate.length > 0 &&
+                sortedDataCate.map((item, index) => {
                   return (
                     <Link
                       className="px-3"
@@ -272,12 +269,12 @@ const HomePage = () => {
             </Slider>
           </div>
         ) : (
-          <div className="flex items-center justify-center">
-            {dataCate.length > 0 &&
-              dataCate.map((item, index) => {
+          <div className="grid grid-cols-2  ">
+            {sortedDataCate.length > 0 &&
+              sortedDataCate?.slice(0, 4)?.map((item, index) => {
                 return (
                   <Link
-                    className="px-3 w-[200px] "
+                    className="px-2 w-[180px] "
                     key={item.id}
                     to={`/shop/${item.id}`}
                   >
@@ -296,17 +293,19 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="bg-[#001109] py-[60px] px-[238px] gradient-achive">
+      <div className="bg-[#001109] py-[60px] md:px-[60px] lg:px-[238px] gradient-achive">
         <AchieveFeauture></AchieveFeauture>
       </div>
 
-      <div className=" px-[238px] py-[80px] bg-white">
+      <div className=" md:px-[60px] lg:px-[238px] py-[80px] bg-white">
         <BannerItem data={dataCate}></BannerItem>
 
         <div className="BestSellerProducts">
           <Gap>
-            <GroupJusBeween>
-              <Label className="text-[35px]">Best Seller Products</Label>
+            <GroupJusBeween className="px-4 md:px-0 lg:px-0">
+              <Label className="text-[20px] md:text-[25px] lg:text-[35px]">
+                Best Seller Products
+              </Label>
               <LabelRedirect
                 url="/topProducts"
                 title="View All"
@@ -314,7 +313,7 @@ const HomePage = () => {
               ></LabelRedirect>
             </GroupJusBeween>
           </Gap>
-          <div className="grid grid-cols-4 gap-x-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 px-5 lg:grid-cols-4 gap-x-5">
             {dataBestSeller.length > 0 &&
               dataBestSeller
                 .slice(0, 4)
@@ -327,7 +326,7 @@ const HomePage = () => {
                 ))}
           </div>
 
-          <div className="grid grid-cols-3 gap-x-6 mt-10">
+          <div className="grid grid-cols-1 px-5 md:grid-cols-2 gap-y-4 lg:grid-cols-3 gap-x-6 mt-10">
             <div className="flex flex-col gap-y-4">
               <Label className="!font-medium text-[20px] mb-4">Hot Deals</Label>
               {dataHotDeal.length > 0 &&
@@ -373,11 +372,13 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="BlogLatestNews bg-[#F2F2F2] px-[238px]">
+      <div className="BlogLatestNews bg-[#F2F2F2] md:px-[20px] lg:px-[238px]">
         <div className="text-center">
-          <Label className="text-[35px] pt-[80px] pb-10">Latest News</Label>
+          <Label className="text-[20px] md:text-[30px] lg:text-[35px] pt-[80px] pb-10">
+            Latest News
+          </Label>
         </div>
-        <div className="pb-[80px] grid grid-cols-3 gap-x-6">
+        <div className="pb-5 md:pb-10 lg:pb-[80px] gap-y-5 px-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-6">
           {dataBlogAll?.data?.length > 0 &&
             dataBlogAll?.data
               ?.slice(0, 3)
@@ -385,43 +386,99 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="Testimonial bg-[#FAFBFA] px-[238px]">
+      <div className="Testimonial bg-[#FAFBFA] md:px-5 lg:px-[238px] pb-5">
         <Gap>
-          <Label className="text-[35px] ">What Our Customer Says</Label>
+          <Label className="ml-5 text-[20px] md:text-[30px] lg:text-[35px] ">
+            What Our Customer Says
+          </Label>
         </Gap>
 
-        <Slider {...settings2}>
-          <div className="px-3">
-            <TestimonialItem></TestimonialItem>
+        {shouldShowSlider ? (
+          <Slider {...settings2}>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+          </Slider>
+        ) : (
+          <div className="flex flex-col px-5 ">
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
+            <div className="px-3">
+              <TestimonialItem></TestimonialItem>
+            </div>
           </div>
-          <div className="px-3">
-            <TestimonialItem></TestimonialItem>
-          </div>
-          <div className="px-3">
-            <TestimonialItem></TestimonialItem>
-          </div>
-          <div className="px-3">
-            <TestimonialItem></TestimonialItem>
-          </div>
-          <div className="px-3">
-            <TestimonialItem></TestimonialItem>
-          </div>
-        </Slider>
-
-        {/* <div className="grid grid-cols-3 gap-x-6">
-          <TestimonialItem></TestimonialItem>
-          <TestimonialItem></TestimonialItem>
-          <TestimonialItem></TestimonialItem>
-        </div> */}
+        )}
       </div>
 
-      <div className="px-[238px] bg-white flex items-center justify-center gap-x-20 pt-[80px]">
-        <img src="/imgFoot/img1.png" alt="" />
-        <img src="/imgFoot/img2.png" alt="" />
-        <img src="/imgFoot/img3.png" alt="" />
-        <img src="/imgFoot/img4.png" alt="" />
-        <img src="/imgFoot/img5.png" alt="" />
-        <img src="/imgFoot/img7.png" alt="" />
+      <div className="md:px-[60px] lg:px-[238px] bg-white  pt-[80px]">
+        {shouldShowSlider ? (
+          <div className="flex items-center justify-center gap-x-20">
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img1.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img2.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img3.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img4.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img5.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img7.png"
+              alt=""
+            />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-x-7">
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img1.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img2.png"
+              alt=""
+            />
+            <img
+              className="md:w-[50px] lg:w-full"
+              src="/imgFoot/img3.png"
+              alt=""
+            />
+          </div>
+        )}
       </div>
     </div>
   );

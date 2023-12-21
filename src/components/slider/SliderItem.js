@@ -6,8 +6,8 @@ import IconAR2 from "../Icons/IconAR2";
 const SliderItem = ({ data }) => {
   return (
     <div>
-      <div className="px-[238px] py-[70px] grid grid-cols-2 gap-x-[38px] ">
-        <div className="h-[330px]">
+      <div className="px-[10px] md:px-[60px] lg:px-[238px] py-[70px] grid grid-cols-2 gap-x-[38px] ">
+        <div className="h-[240px] md:h-[200px] lg:h-[330px] ">
           <img
             src={data?.image || "/ProductImg.png"}
             className="w-full h-full object-cover rounded-lg"
@@ -18,10 +18,10 @@ const SliderItem = ({ data }) => {
           <h3 className="text-sm text-primary font-medium uppercase ">
             Welcome to shopery
           </h3>
-          <Label className="text-[50px] leading-[1.2] capitalize mt-2">
+          <Label className="md:text-[20px] lg:text-[50px] md:leading-[0.7] lg:leading-[1.2] capitalize mt-2">
             {data?.name}
           </Label>
-          <div className="flex items-center gap-x-2 text-[27px] mt-[16px]">
+          <div className="flex items-center gap-x-2 md:text-[16px] lg:text-[27px] mt-[16px]">
             <h2 className="font-normal">Sale up to </h2>
             <span className="block text-warning font-semibold">30% OFF</span>
           </div>
@@ -32,7 +32,7 @@ const SliderItem = ({ data }) => {
           <div className="mt-[30px]">
             <Button
               kind="primary"
-              className="!px-[40px] w-[195px] transition-all hover:scale-105"
+              className="!px-[20px] w-[140px] md:w-[195px] lg:w-[195px] text-[13px]  md:text-[14px] lg:text-[16px] transition-all hover:scale-105"
               href={`/shop/${data.id}`}
             >
               Shop Now

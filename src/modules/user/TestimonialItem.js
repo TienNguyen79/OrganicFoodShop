@@ -9,7 +9,7 @@ import IconStarGray from "../../components/Icons/IconStarGray";
 
 const TestimonialItem = () => {
   return (
-    <div className="relative p-6 bg-white mb-10">
+    <div className="relative p-6 bg-white mb-5 md:mb-10 lg:mb-10">
       <img src="/phayphay.png" className="absolute" alt="" />
       <div className="mt-10">
         <UserComment>

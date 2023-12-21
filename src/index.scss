@@ -67,6 +67,18 @@
 }
 
 //custom slider
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    display: none !important;
+  }
+}
 button.slick-arrow.slick-next {
   display: block;
   margin-right: 80px;

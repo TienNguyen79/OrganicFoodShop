@@ -27,7 +27,7 @@ const SliderBanner = () => {
   const { dataCate } = useSelector((state) => state.category);
 
   return (
-    <div className="bg-greenGray1 ">
+    <div className="bg-greenGray1 w-full">
       <Slider {...settings}>
         {dataCate.length > 0 &&
           dataCate.map((item) => (

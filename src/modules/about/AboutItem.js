@@ -23,7 +23,7 @@ const AboutItem = () => {
         ></AboutImage>
       </div>
       <div className="flex-1 ">
-        <AboutHeading></AboutHeading>
+        <AboutHeading className="text-[20px] mt-3 md:text-[25px] lg:text-[40px]"></AboutHeading>
         <div className="flex flex-col gap-y-[10px] mt-[26px]">
           <div className=" flex gap-x-2 items-start">
             <AboutIcon>

@@ -1,29 +1,37 @@
 import React, { Fragment, useEffect, useState } from "react";
 import HomeNavigate from "../../modules/home/HomeNavigate";
-import IconPhone from "../Icons/IconPhone";
 import IconSearch from "../Icons/IconSearch";
 import IconTym from "../Icons/IconTym";
 import IconBag from "../Icons/IconBag";
-import IconUser from "../Icons/IconUser";
-import Input from "../input/Input";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PopupMe from "../popup/PopupMe";
 import useClickOutSide from "../../hooks/useClickOutSide";
-import { cateGetdataAll } from "../../store/category/cate-slice";
 import PopupSearch from "../popup/PopupSearch";
 import { proGetSearch } from "../../store/product/pro-slice";
-import lodash, { debounce } from "lodash";
+import { debounce } from "lodash";
 import CartPopup from "../../modules/cart/CartPopup";
 import { cartGetAll, wishListGetAll } from "../../store/cart/cart-slice";
 import { getToken } from "../../utils/auth";
-import Button from "../button/Button";
 import { authCheckToken } from "../../store/auth/auth-slice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import IconArrowDown from "../Icons/IconArrowDown";
+import NavItemShopMobile from "../../modules/home/navItem/NavItemShopMobile";
+const navLinks = [
+  { icon: "", title: "Home", url: "/" },
+  {
+    icon: <IconArrowDown></IconArrowDown>,
+    title: "Shop",
+    url: "/shop",
+    navItem: true,
+  },
+  { icon: "", title: "Blog", url: "/blog" },
+  { icon: "", title: "About Us", url: "/about" },
+  { icon: "", title: "Contact Us", url: "/contact" },
+];
 const Header = () => {
-  const { control, getValues } = useForm();
-
-  const { user, accessToken } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [getTextSearch, setGetTextSearch] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
@@ -35,12 +43,7 @@ const Header = () => {
   }, [dispatch]);
 
   const { dataCartAll, dataWishListAll } = useSelector((state) => state.cart);
-  const { dataProSearch, loading, loadingSearchNamePro, loadings } =
-    useSelector((state) => state.product);
-  console.log(
-    "🚀 ~ file: Header.js:34 ~ Header ~ loadings searchNamePro:",
-    loadings.searchNamePro
-  );
+  const { dataProSearch, loadings } = useSelector((state) => state.product);
 
   const { show, setShow, nodeRef } = useClickOutSide();
   const {
@@ -48,6 +51,13 @@ const Header = () => {
     setShow: setShow2,
     nodeRef: nodeRef2,
   } = useClickOutSide();
+
+  const {
+    show: show3,
+    setShow: setShow3,
+    nodeRef: nodeRef3,
+  } = useClickOutSide();
+  console.log("🚀 ~ file: Header.js:46 ~ Header ~ show3:", show3);
 
   //xử lý tìm kiếm theo tên
   const handleFilterChangeDebounced = debounce((searchTerm) => {
@@ -69,7 +79,9 @@ const Header = () => {
     setModalOpenCart(false);
     setIsClickCloseCart(true);
   };
-
+  const [openMenuSub, setOpenMenuSub] = useState(false);
+  const navigate = useNavigate();
+  console.log("🚀 ~ file: Header.js:83 ~ Header ~ openMenuSub:", openMenuSub);
   return (
     <Fragment>
       <CartPopup
@@ -78,7 +90,7 @@ const Header = () => {
         isClickClose={isClickCloseCart}
       ></CartPopup>
       <div className="w-full fixed z-[30] bg-white ">
-        <div className="h-[42px] bg-gray8 text-gray3 border-b-[1px] flex  justify-around  ">
+        <div className=" bg-gray8 text-gray3 border-b-[1px]  flex    p-3 justify-between md:flex-row  md:justify-around lg:flex-row lg:justify-around  ">
           <div className="flex  items-center gap-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +118,7 @@ const Header = () => {
             </span>
           </div>
           <div className="flex gap-x-5 items-center">
-            <span className="flex gap-x-1 items-center text-gray3 text-xs font-normal">
+            <span className="flex gap-x-1 items-center text-gray3 text-xs font-normal invisible md:visible lg:visible  ">
               Eng
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +135,7 @@ const Header = () => {
                 />
               </svg>
             </span>
-            <span className="flex gap-x-1 items-center text-gray3 text-xs font-normal">
+            <span className="flex gap-x-1 items-center text-gray3 text-xs font-normal invisible md:visible lg:visible">
               USD
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +154,7 @@ const Header = () => {
             </span>
             {!user && (
               <Fragment>
-                <div className="w-[1px] h-[15px] bg-white opacity-10"></div>
+                <div className="w-[1px] h-[15px] bg-white opacity-10 hidden md:block lg:block"></div>
                 <div className="flex text-xs text-gray3 font-normal gap-x-1">
                   <Link to="/login">
                     <span className="hover:opacity-75">SignIn</span>
@@ -156,9 +168,134 @@ const Header = () => {
             )}
           </div>
         </div>
-        <div className="  py-5 flex items-center justify-between px-[275px] border-b-[1px]">
+
+        {/* mobile */}
+        <div className="  py-5 flex items-center justify-between px-6 md:px-[60px] lg:px-[275px] border-b-[1px]">
+          <div className="">
+            <span
+              className="block md:hidden lg:hidden cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
+                setShow3(!show3);
+              }}
+            >
+              <FontAwesomeIcon icon={faBars} size="xl" />
+            </span>
+
+            <div
+              className={`bg-black opacity-75 fixed top-0 bottom-0 left-0 right-0 z-40 ${
+                show3 ? "translate-x-0" : "-translate-x-full"
+              } `}
+            ></div>
+
+            <div ref={nodeRef3}>
+              <div
+                className={`bg-white shadow-lg fixed top-0 bottom-0 left-0 w-[80%] z-[41] transition-all ${
+                  show3 ? "translate-x-0" : "-translate-x-full"
+                }    `}
+              >
+                <span
+                  className="absolute top-5 right-5 cursor-pointer z-50"
+                  onClick={() => setShow3(false)}
+                >
+                  <FontAwesomeIcon icon={faTimes} size="xl" />
+                </span>
+
+                <div className="relative top-14 px-2 ">
+                  <div className="flex justify-center group">
+                    <span className="absolute top-2/4 left-4 -translate-y-2/4 select-none cursor-pointer ">
+                      <IconSearch></IconSearch>
+                    </span>
+                    <input
+                      placeholder="Search for product..."
+                      className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
+                      onChange={handleFilterChange}
+                      onClick={(e) => {
+                        e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
+                        setShow2(!show);
+                      }}
+                    ></input>
+                  </div>
+                  {show2 && (
+                    <div ref={nodeRef2} className="">
+                      <PopupSearch
+                        data={dataProSearch}
+                        loading={loadings.searchNamePro}
+                        text={getTextSearch}
+                        setShow3={setShow3}
+                      ></PopupSearch>
+                    </div>
+                  )}
+                </div>
+                <div className="">
+                  <div className="cursor-pointer  absolute w-[90%]   top-[130px] flex flex-col items-start pl-4 gap-y-[20px]  h-full overflow-y-auto scroll-hidden ">
+                    {navLinks.length > 0 &&
+                      navLinks.map((link) => {
+                        return (
+                          <div
+                            key={link.title}
+                            className=" relative connectNav border-b-2 w-full p-2 "
+                          >
+                            <div
+                              key={link.title}
+                              className=" flex items-center justify-between gap-x-1 text-[16px] font-medium text-gray6 menu-item "
+                              onClick={(e) => {
+                                link.title === "Shop" &&
+                                  localStorage.setItem("nameShop", "");
+                              }}
+                            >
+                              <span
+                                className="block"
+                                onClick={() => {
+                                  navigate(link.url);
+                                  setShow3(false);
+                                }}
+                              >
+                                {link.title}
+                              </span>
+
+                              <div>
+                                {openMenuSub ? (
+                                  <span
+                                    className="block rotate-180 transition-all "
+                                    onClick={() => {
+                                      setOpenMenuSub(!openMenuSub);
+                                    }}
+                                  >
+                                    {link.icon}
+                                  </span>
+                                ) : (
+                                  <span
+                                    className="block transition-all"
+                                    onClick={() => {
+                                      setOpenMenuSub(!openMenuSub);
+                                    }}
+                                  >
+                                    {link.icon}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className={`${openMenuSub ? "" : "hidden"}`}>
+                              {link?.navItem === true && (
+                                <NavItemShopMobile
+                                  setShow3={setShow3}
+                                ></NavItemShopMobile>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* --------------- */}
+
           <Link to="/">
-            <div className="w-[160px]   ">
+            <div className=" w-[100px] md:w-[140px] lg:w-[160px]   ">
               <img
                 src="/logoPri.png"
                 alt="eco"
@@ -167,7 +304,7 @@ const Header = () => {
             </div>
           </Link>
 
-          <div className="relative">
+          <div className="relative hidden md:block md:mx-3 lg:block">
             <div className="flex justify-center group">
               <span className="absolute top-2/4 left-4 -translate-y-2/4 select-none cursor-pointer ">
                 <IconSearch></IconSearch>
@@ -223,7 +360,7 @@ const Header = () => {
                 </div>
 
                 {!user && (
-                  <span className="block text-primary font-semibold">
+                  <span className=" text-primary font-semibold hidden md:hidden lg:block">
                     Welcome !
                   </span>
                 )}
@@ -259,7 +396,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="shadow-lg bg-white text-gray6  py-3 flex items-center justify-between px-[275px]">
+        <div className="shadow-lg bg-white text-gray6  py-3  items-center justify-between md:px-[120px] lg:px-[275px] hidden md:flex lg:flex">
           <HomeNavigate></HomeNavigate>
           <div className="flex items-center gap-x-2">
             {/* <IconPhone></IconPhone> */}

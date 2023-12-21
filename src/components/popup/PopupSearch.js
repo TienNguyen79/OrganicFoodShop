@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const PopupSearch = ({ data, loading, text }) => {
+const PopupSearch = ({ data, loading, text, setShow3 }) => {
   return (
     <div className="absolute top-full left-0 z-50 bg-white shadow-lg w-full mt-2 rounded-md py-4 max-h-[319px] overflow-y-auto  ">
       <div>
@@ -28,6 +28,7 @@ const PopupSearch = ({ data, loading, text }) => {
             key={item.id}
             className="flex items-center gap-x-3 py-2 px-3 cursor-pointer hover:bg-gray-100"
             to={`productDetails/${item?.id}`}
+            onClick={() => setShow3(false)}
           >
             <img
               src={item?.imageUrl || null}

@@ -54,7 +54,7 @@ const BannerItem = ({ data }) => {
   }, []);
 
   return (
-    <div className="flex items-center gap-x-6">
+    <div className="flex flex-col gap-y-3 px-3 md:flex-col lg:flex-row items-center gap-x-6">
       <div className="relative">
         <div className="w-[full] h-[360px]  ">
           <img

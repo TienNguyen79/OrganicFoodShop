@@ -14,7 +14,7 @@ const LayoutPrimary = () => {
       </div>
       {/* <Overlay></Overlay> */}
 
-      <div className="pb-[80px] pt-[191px] flex-grow">
+      <div className="pb-[80px] pt-[124px] md:pt-[191px] lg:pt-[191px] flex-grow">
         <Outlet></Outlet>
       </div>
       <div className="mt-auto">
