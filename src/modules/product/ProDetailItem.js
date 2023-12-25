@@ -58,6 +58,13 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
     slidesToScroll: 1, // Trượt một slide cùng lúc
     vertical: true, // Cho phép trượt chiều dọc
   };
+  const settings2 = {
+    className: "center",
+    infinite: true,
+    centerPadding: "40px",
+    slidesToShow: 4,
+    swipeToSlide: true,
+  };
 
   useEffect(() => {
     //mới đầu vào cũng phải xét thế này tránh bug hover ảnh ở productdetails
@@ -133,9 +140,9 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
         <LoadingProQuickView></LoadingProQuickView>
       ) : (
         <form onSubmit={handleSubmit(HandleProDetails)}>
-          <div className="grid grid-cols-2 gap-x-6 ">
-            <div className="grid grid-cols-5">
-              <div className="thumbslider col-span-1 flex flex-col  pt-[40px] ">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-x-6 ">
+            <div className="grid md:col-span-1 md:grid-cols-5 lg:grid-cols-5">
+              <div className=" md:hidden lg:flex thumbslider  lg:col-span-1 hidden flex-col  pt-[40px] ">
                 {data?.thumbnails?.length >= 5 ? (
                   <Slider {...settings}>
                     {data?.thumbnails?.length > 0 &&
@@ -159,7 +166,10 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                   </Slider>
                 ) : (
                   data?.thumbnails?.map((item) => (
-                    <div key={item.id} className="py-1 block">
+                    <div
+                      key={item.id}
+                      className="py-1 hidden md:hidden lg:block"
+                    >
                       <div
                         className="inline-block"
                         onMouseEnter={() => {
@@ -177,15 +187,44 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                   ))
                 )}
               </div>
-              <div className="col-span-4">
+              <div className="md:col-span-5 lg:col-span-4 ">
                 <ProBigImage
-                  className="w-full h-[410px]"
+                  className="w-[95%]  md:w-full lg:w-full h-[410px]"
                   imageUrl={linkImage ? linkImage : data?.imageUrl}
                 ></ProBigImage>
+
+                {/* Mobile */}
+                <Fragment>
+                  <div className=" md:block lg:hidden  md:col-span-1 lg:col-span-1   pt-[20px] w-screen md:w-[350px] overflow-x-auto ">
+                    <div className="flex items-center  gap-x-[10px]  ">
+                      {data?.thumbnails?.map((item) => (
+                        <div
+                          key={item.id}
+                          className="py-1 block md:block lg:hidden"
+                        >
+                          <div
+                            className="inline-block"
+                            onMouseEnter={() => {
+                              setLinkImage(item.imageUrl);
+                            }}
+                          >
+                            <ProThumb
+                              UrlThumb={item.imageUrl}
+                              item={item}
+                              selectedThumb={selectedThumb}
+                              setSelectedThumb={setSelectedThumb}
+                              className="w-[70px] h-[80px]"
+                            ></ProThumb>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Fragment>
               </div>
             </div>
 
-            <div>
+            <div className="md:col-span-1">
               <div className="border-b-2">
                 <div className="flex items-center gap-x-2">
                   <ProTitle title={data?.name}></ProTitle>
@@ -213,7 +252,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
               </div>
 
               <div className="py-6 border-b-2">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-x-[70px] md:gap-x-0 lg:gap-x-0 lg:justify-between md:justify-between">
                   <div className="flex items-center gap-x-2">
                     <span className="block text-gray9 text-sm font-normal">
                       Payment:{" "}
@@ -249,46 +288,51 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
                 {/* <ProDesc>{data?.description}</ProDesc> */}
               </div>
 
-              <div className="py-[18px] border-b-2 flex items-center gap-x-2">
-                <ProHandleQuantity
-                  control={control}
-                  name="quantity"
-                ></ProHandleQuantity>
-
-                <Button
-                  kind="primary"
-                  type="submit"
-                  className="w-[160px] !px-[10px]"
-                  isLoading={loadingCart}
-                >
-                  <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                    <span className="block w-full text-sm">Add to Cart </span>
-                    <IconBagProDetail></IconBagProDetail>
-                  </div>
-                </Button>
-                <div
-                  onClick={() => {
-                    var arrayJSON = JSON.stringify({
-                      products_order: [data],
-                      quantity: getValues("quantity"),
-                      total_price:
-                        ((100 - parseInt(data?.discount)) / 100) *
-                        parseInt(data?.price) *
-                        getValues("quantity"),
-                    });
-                    localStorage.setItem("orderData", arrayJSON);
-                  }}
-                >
+              <div className="py-[18px] border-b-2 flex md:flex-col lg:flex-row flex-col items-center gap-y-3 gap-x-2">
+                <div className="self-start">
+                  <ProHandleQuantity
+                    control={control}
+                    name="quantity"
+                  ></ProHandleQuantity>
+                </div>
+                <div className="flex items-center gap-x-2 self-start">
                   <Button
-                    kind="secondary"
-                    href="/checkout"
-                    className="w-[160px]"
+                    kind="primary"
+                    type="submit"
+                    className="w-[160px] !px-[10px]"
+                    isLoading={loadingCart}
                   >
                     <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
-                      <span className="block w-full text-sm">Buy it Now </span>
-                      <IconAR2 color="#00B207"></IconAR2>
+                      <span className="block w-full text-sm">Add to Cart </span>
+                      <IconBagProDetail></IconBagProDetail>
                     </div>
                   </Button>
+                  <div
+                    onClick={() => {
+                      var arrayJSON = JSON.stringify({
+                        products_order: [data],
+                        quantity: getValues("quantity"),
+                        total_price:
+                          ((100 - parseInt(data?.discount)) / 100) *
+                          parseInt(data?.price) *
+                          getValues("quantity"),
+                      });
+                      localStorage.setItem("orderData", arrayJSON);
+                    }}
+                  >
+                    <Button
+                      kind="secondary"
+                      href="/checkout"
+                      className="w-[160px]"
+                    >
+                      <div className="flex items-center gap-x-2 transition-all  hover:opacity-70 hover:scale-110">
+                        <span className="block w-full text-sm">
+                          Buy it Now{" "}
+                        </span>
+                        <IconAR2 color="#00B207"></IconAR2>
+                      </div>
+                    </Button>
+                  </div>
                 </div>
               </div>
 

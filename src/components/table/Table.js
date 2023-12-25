@@ -7,13 +7,16 @@ const TableStyle = styled.div`
   overflow-x: auto;
   /* border-radius: 10px; */
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     /* Mobile styles */
     width: 330px;
+    th {
+      width: 100%;
+    }
   }
   /* Tablet styles (>=768px and <1024px) */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    width: 800px;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    min-width: 700px;
   }
   table {
     width: 100%;
@@ -29,6 +32,7 @@ const TableStyle = styled.div`
     text-transform: uppercase;
   }
   tbody tr td {
+    /* display: inline-block; */
     padding: 12px 20px;
     border-bottom: 1px solid #e6e6e6;
     text-align: left;

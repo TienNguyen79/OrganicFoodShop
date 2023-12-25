@@ -67,7 +67,7 @@ const ProductItem = ({ data, openModal }) => {
   return (
     <Fragment>
       <div
-        className="border  border-gray-200 bg-white rounded-lg h-[407px] cursor-pointer flex flex-col relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
+        className="border  border-gray-200 bg-white rounded-lg h-[300px] md:h-[407px] lg:h-[407px] cursor-pointer flex flex-col relative group transition-all hover:border hover:border-primary hover:shadow-xl hover:scale-105  shadowgreen"
         //phục vụ mỗi việc đổi màu icon Bag :<ProImage
         onMouseEnter={() => setIsGroupHovered(true)}
         onMouseLeave={() => setIsGroupHovered(false)}

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const ProImage = ({
   linkUrl = defaultImage3,
-  className = "h-[260px] w-full",
+  className = " h-[200px] md:h-[260px] lg:h-[260px] w-full",
   href,
 }) => {
   if (href) {

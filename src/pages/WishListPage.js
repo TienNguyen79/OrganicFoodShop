@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import Label from "../components/label/Label";
 import Table from "../components/table/Table";
 import ProImage from "../modules/product/partsCartAndTym/ProImage";
@@ -17,6 +17,7 @@ import {
 } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
 import { Link } from "react-router-dom";
+import ProItemMobile from "../modules/product/ProItemMobile";
 
 const WishListPage = () => {
   const dispatch = useDispatch();
@@ -31,12 +32,35 @@ const WishListPage = () => {
     "🚀 ~ file: WishListPage.js:23 ~ WishListPage ~ dataWishListAll:",
     dataWishListAll
   );
+
+  //hien thị trong mobile
+  const [shouldShowMobile, setShouldShowMobile] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Kiểm tra kích thước màn hình mobile
+      setShouldShowMobile(window.innerWidth < 768);
+    };
+
+    // Gọi hàm handleResize khi kích thước màn hình thay đổi
+    window.addEventListener("resize", handleResize);
+
+    // Gọi hàm handleResize ngay khi component được mount để kiểm tra kích thước ban đầu
+    handleResize();
+
+    // Xóa event listener khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div className="mt-10 mb-[80px]">
       <div className="text-center mb-8">
-        <Label className="text-[35px]">My Wishlist</Label>
+        <Label className="text-[20px] md:text-[30px] lg:text-[35px]">
+          My Wishlist
+        </Label>
       </div>
-      {dataWishListAll.length > 0 ? (
+      {dataWishListAll.length > 0 && !shouldShowMobile ? (
         <div>
           <Table>
             <div className="w-full">
@@ -104,7 +128,7 @@ const WishListPage = () => {
                               );
                             }}
                             kind="primary"
-                            className="transition-all  hover:opacity-80 hover:scale-110"
+                            className="transition-all hover:opacity-80 hover:scale-110 text-[12px] md:text-sm lg:text-[16px] md:w-[145px] lg:w-[180px]"
                           >
                             Add to Cart
                           </Button>
@@ -138,9 +162,22 @@ const WishListPage = () => {
             </div>
           </Table>
         </div>
+      ) : dataWishListAll.length > 0 && shouldShowMobile ? (
+        <Fragment>
+          <h1 className="text-end">
+            Total:{" "}
+            <span className="text-primary font-semibold">
+              {dataWishListAll?.length}
+            </span>
+          </h1>
+          {dataWishListAll?.length > 0 &&
+            dataWishListAll.map((item) => (
+              <ProItemMobile key={item?.id} item={item}></ProItemMobile>
+            ))}
+        </Fragment>
       ) : (
         <div>
-          <div className="p-10 w-[500px]  mx-auto ">
+          <div className=" p-10 w-[250px]  md:w-[400px] lg:w-[500px]  mx-auto ">
             <img
               src="https://www.shopperswarehouse.com/assets/e_website/assets/site_image/empty_wishlist.png"
               alt=""

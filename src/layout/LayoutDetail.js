@@ -9,10 +9,10 @@ const LayoutDetail = () => {
       <div className="">
         <Header></Header>
       </div>
-      <div className="mt-[191px]">
+      <div className="mt-[128px] md:mt-[145px] lg:mt-[191px]">
         <BannerNav></BannerNav>
       </div>
-      <div className="px-[238px] pb-[80px]  flex-grow">
+      <div className="px-[10px] md:px-[40px] lg:px-[238px]  md:pb-[60px] lg:pb-[80px]  flex-grow">
         <Outlet></Outlet>
       </div>
       <div className="mt-auto">

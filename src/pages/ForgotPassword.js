@@ -36,13 +36,14 @@ const ForgotPassword = () => {
         We will send you an email to reset your password.
       </p>
 
-      <div className="mt-8 w-[350px] mx-auto">
+      <div className="mt-8 max-w-[350px] mx-auto">
         <Input
           type="email"
           control={control}
           name="email"
           placeholder="Enter Email..."
           error={errors.email?.message}
+          className=" "
         ></Input>
 
         <Button type="submit" kind="ghost" className="w-full mt-6">

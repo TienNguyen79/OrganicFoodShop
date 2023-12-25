@@ -8,9 +8,11 @@ const ProDescMore = ({
   data,
 }) => {
   return (
-    <div className={`${isHidden} grid grid-cols-3 gap-x-[80px]`}>
-      <div className="col-span-2">
-        <div className="entry-content">{children}</div>
+    <div
+      className={`${isHidden} grid  md:grid-cols-2 lg:md:grid-cols-3 gap-x-[80px]`}
+    >
+      <div className=" col-span-1 md:col-span-1  lg:col-span-2">
+        <div className="entry-content my-4">{children}</div>
         {/* <div>
           <div className="mt-5 flex items-center gap-x-2 relative">
             <span className="block p-[2px] rounded-full bg-primary mt-[4px]">

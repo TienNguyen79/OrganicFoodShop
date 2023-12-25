@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Label from "../components/label/Label";
 import Table from "../components/table/Table";
 import ProImage from "../modules/product/partsCartAndTym/ProImage";
@@ -18,6 +18,7 @@ import { cartDelete, cartGetAll, cartUpdate } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
 import { handleCartDelete } from "../store/cart/cart-handler";
 import { Link } from "react-router-dom";
+import ProItem2Mobile from "../modules/product/ProItem2Mobile";
 
 const ShoppingCartPage = () => {
   const { control, setValue, handleSubmit, watch } = useForm();
@@ -55,16 +56,36 @@ const ShoppingCartPage = () => {
       values
     );
   };
+  //hien thị trong mobile
+  const [shouldShowMobile, setShouldShowMobile] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Kiểm tra kích thước màn hình mobile
+      setShouldShowMobile(window.innerWidth < 768);
+    };
+
+    // Gọi hàm handleResize khi kích thước màn hình thay đổi
+    window.addEventListener("resize", handleResize);
+
+    // Gọi hàm handleResize ngay khi component được mount để kiểm tra kích thước ban đầu
+    handleResize();
+
+    // Xóa event listener khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="mt-10 mb-[80px]">
       <div className="text-center mb-8">
         <Label className="text-[35px]">My Shopping Cart</Label>
       </div>
-      {dataCartAll.length > 0 ? (
+      {dataCartAll.length > 0 && !shouldShowMobile ? (
         <form onSubmit={handleSubmit(handleCart)}>
-          <div className="grid grid-cols-4 gap-x-6">
-            <div className="col-span-3 flex flex-col">
+          <div className="grid lg:grid-cols-4 gap-x-6">
+            <div className="lg:col-span-3 flex flex-col ">
               <Table>
                 <div>
                   <table className="table-fixed w-full">
@@ -116,7 +137,7 @@ const ShoppingCartPage = () => {
                               ></ProHandleQuantity>
                               {/* <input type="text" value={item?.pivot?.quantity} /> */}
                             </td>
-                            <td className="text-gray9 font-medium text-[16px]">
+                            <td className="text-gray9 font-medium text-[16px] ">
                               {(
                                 item?.current_price * item?.pivot?.quantity
                               ).toFixed(2)}{" "}
@@ -142,7 +163,7 @@ const ShoppingCartPage = () => {
                 </div>
               </Table>
 
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <BoxBill className="flex items-center  ">
                   <Label className="text-[18px] ">Coupon Code</Label>
                   <div className="flex items-center mx-auto gap-x-4">
@@ -155,9 +176,9 @@ const ShoppingCartPage = () => {
                     <Button kind="secondary">Apply Coupon</Button>
                   </div>
                 </BoxBill>
-              </div>
+              </div> */}
             </div>
-            <div className="col-span-1">
+            <div className="lg:col-span-1 md:px-3 md:mt-4 lg:px-0 lg:mt-0">
               <BoxBill>
                 <Label className="text-[18px] !font-medium">Cart Total</Label>
                 <div className="my-4">
@@ -180,7 +201,7 @@ const ShoppingCartPage = () => {
                   <GroupJusBeween className="border-b-[1px] py-2 ">
                     <BillLabel label="Total:"></BillLabel>
                     <ProPrice
-                      className="font-semibold"
+                      className="font-semibold "
                       price={totalPrice.toFixed(2)}
                     ></ProPrice>
                   </GroupJusBeween>
@@ -212,9 +233,53 @@ const ShoppingCartPage = () => {
             </div>
           </div>
         </form>
+      ) : dataCartAll.length > 0 && shouldShowMobile ? (
+        <Fragment>
+          <h1 className="text-end text-[18px]">
+            Total:{" "}
+            <span className="text-primary font-semibold ">
+              {dataCartAll.length}
+            </span>
+          </h1>
+          {dataCartAll.map((item) => (
+            <ProItem2Mobile key={item.id} item={item}></ProItem2Mobile>
+          ))}
+          <div className="mt-8 flex flex-col gap-y-3">
+            <div className="flex items-center justify-between">
+              <p className="text-[20px] font-semibold">Subtotal</p>
+              <h1 className="text-[20px] font-medium">
+                {" "}
+                ${totalPrice.toFixed(2)}
+              </h1>
+            </div>
+            <p className="text-sm font-normal">
+              Taxes and shipping calculated at checkout
+            </p>
+
+            <div
+              onClick={() => {
+                let data = {
+                  products_order: [...dataCartAll],
+                  total_price: totalPrice,
+                };
+                var arrayJSON = JSON.stringify(data);
+                localStorage.setItem("orderData", arrayJSON);
+              }}
+            >
+              <Button
+                kind="primary"
+                type="submit"
+                className="w-full mt-2 hover:opacity-80 hover:scale-110 transition-all"
+                href="/checkout"
+              >
+                Checkout
+              </Button>
+            </div>
+          </div>
+        </Fragment>
       ) : (
         <div>
-          <div className="p-10 w-[500px]  mx-auto ">
+          <div className="p-10 w-[250px]  md:w-[400px] lg:w-[500px]  mx-auto ">
             <img
               src="https://web.nvnstatic.net/tp/T0199/img/empty_cart.png?v=3"
               alt=""

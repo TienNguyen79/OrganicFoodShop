@@ -13,6 +13,8 @@ import ProductItem from "../modules/product/ProductItem";
 import ProQuickView from "../modules/product/ProQuickView";
 import parse from "html-react-parser";
 import LoadingProQuickView from "../components/loading/LoadingProQuickView";
+import LoadingProQuickView2 from "../components/loading/LoadingQuickView2";
+import LoadingQuickViewTablet from "../components/loading/LoadingQuickViewTablet";
 const tabs = [
   {
     id: 1,
@@ -52,6 +54,29 @@ const ProductDetailPage = () => {
     setModalOpen(false);
     setIsClickClose(true);
   };
+  //hien thị trong mobile
+  const [shouldShowMobile, setShouldShowMobile] = useState(true);
+
+  const [shouldShowTablet, setShouldShowTablet] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Kiểm tra kích thước màn hình mobile
+      setShouldShowMobile(window.innerWidth < 768);
+      setShouldShowTablet(window.innerWidth > 768 && window.innerWidth < 1024);
+    };
+
+    // Gọi hàm handleResize khi kích thước màn hình thay đổi
+    window.addEventListener("resize", handleResize);
+
+    // Gọi hàm handleResize ngay khi component được mount để kiểm tra kích thước ban đầu
+    handleResize();
+
+    // Xóa event listener khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Fragment>
@@ -62,13 +87,17 @@ const ProductDetailPage = () => {
         // data={datafake}
       />
       <div className="pt-[60px] ">
-        {loadings.details ? (
+        {loadings.details && !shouldShowMobile && !shouldShowTablet ? (
           <LoadingProQuickView></LoadingProQuickView>
+        ) : loadings.details && shouldShowMobile ? (
+          <LoadingProQuickView2></LoadingProQuickView2>
+        ) : loadings.details && shouldShowTablet ? (
+          <LoadingQuickViewTablet></LoadingQuickViewTablet>
         ) : (
           <ProDetailItem data={dataProDetails?.product}></ProDetailItem>
         )}
       </div>
-      <div className="flex justify-center items-center mt-[80px] border-b-2 relative ">
+      <div className="flex flex-col md:flex-row lg:flex-row justify-center items-center mt-5 md:mt-[80px] lg:mt-[80px] border-b-2 relative ">
         {tabs.map((item) => (
           <span
             key={item.id}
@@ -87,7 +116,7 @@ const ProductDetailPage = () => {
           </span>
         ))}
       </div>
-      <div className="mt-8 ">
+      <div className="mt-8  ">
         <ProDescMore
           data={dataProDetails?.product}
           isHidden={`${tabClicked === 1 ? "block" : "hidden"} `}
@@ -104,11 +133,11 @@ const ProductDetailPage = () => {
         ></ProFeedback>
       </div>
 
-      <div className="mt-[80px]">
+      <div className="mt-[80px] mb-10 lg:mb-0 md:mb-0">
         <div className="text-center">
           <Label className="text-[35px]">Related Products</Label>
         </div>
-        <div className="grid grid-cols-4 gap-x-6 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 gap-x-4 md:gap-x-6 lg:gap-x-6 mt-8">
           {dataProDetails?.sameProducts?.length > 0 &&
             dataProDetails.sameProducts.slice(0, 4).map((item, index) => (
               <div

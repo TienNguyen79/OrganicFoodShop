@@ -3,8 +3,10 @@ import ProFeauture from "./ProFeauture";
 
 const ProAdditionalInfo = ({ isHidden, data }) => {
   return (
-    <div className={`${isHidden} grid grid-cols-3 gap-x-[80px] `}>
-      <div className="col-span-2">
+    <div
+      className={`${isHidden} grid lg:grid-cols-3 md:grid-cols-2 gap-x-[80px] `}
+    >
+      <div className="col-span-1  mb-4 md:mb-0 lg:mb-0 md:col-span-1 lg:col-span-2">
         <div className="flex items-center gap-x-7 mt-3">
           <span className="text-gray9 text-sm font-normal">Weight:</span>
           <span className="text-gray6 text-sm font-normal">{data?.weight}</span>

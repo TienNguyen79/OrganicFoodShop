@@ -169,11 +169,11 @@ const Header = () => {
           </div>
         </div>
 
-        {/* mobile */}
+        {/* mobile and tablet */}
         <div className="  py-5 flex items-center justify-between px-6 md:px-[60px] lg:px-[275px] border-b-[1px]">
           <div className="">
             <span
-              className="block md:hidden lg:hidden cursor-pointer"
+              className="block  md:hidden lg:hidden cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
                 setShow3(!show3);
@@ -201,14 +201,14 @@ const Header = () => {
                   <FontAwesomeIcon icon={faTimes} size="xl" />
                 </span>
 
-                <div className="relative top-14 px-2 ">
+                <div className="md:hidden relative top-14 px-4 ">
                   <div className="flex justify-center group">
-                    <span className="absolute top-2/4 left-4 -translate-y-2/4 select-none cursor-pointer ">
+                    <span className="absolute top-2/4 left-6 -translate-y-2/4 select-none cursor-pointer ">
                       <IconSearch></IconSearch>
                     </span>
                     <input
                       placeholder="Search for product..."
-                      className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
+                      className="w-full py-3  px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
                       onChange={handleFilterChange}
                       onClick={(e) => {
                         e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
@@ -228,7 +228,7 @@ const Header = () => {
                   )}
                 </div>
                 <div className="">
-                  <div className="cursor-pointer  absolute w-[90%]   top-[130px] flex flex-col items-start pl-4 gap-y-[20px]  h-full overflow-y-auto scroll-hidden ">
+                  <div className="cursor-pointer  absolute w-[90%]   top-[130px] flex flex-col items-start pl-4 gap-y-[20px]  h-screen overflow-y-auto scroll-hidden ">
                     {navLinks.length > 0 &&
                       navLinks.map((link) => {
                         return (
@@ -311,7 +311,7 @@ const Header = () => {
               </span>
               <input
                 placeholder="Search for product..."
-                className="w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
+                className="md:w-[250px] lg:w-[400px] py-3 px-4 border font-medium pl-12  rounded-md placeholder:text-text4 dark:placeholder:text-text2 dark:text-white text-text1 "
                 onChange={handleFilterChange}
                 onClick={(e) => {
                   e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
@@ -335,6 +335,15 @@ const Header = () => {
           <div>
             <div className="flex items-center gap-x-5 ">
               <div className="flex items-center gap-x-5">
+                <span
+                  className="block hidden md:block  lg:hidden cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
+                    setShow3(!show3);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faBars} size="xl" />
+                </span>
                 <div className="relative">
                   <Link to="/wishList">
                     <IconTym></IconTym>
@@ -396,7 +405,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="shadow-lg bg-white text-gray6  py-3  items-center justify-between md:px-[120px] lg:px-[275px] hidden md:flex lg:flex">
+        <div className="shadow-lg bg-white text-gray6  py-3  items-center justify-between md:px-[120px] lg:px-[275px] hidden md:hidden lg:flex">
           <HomeNavigate></HomeNavigate>
           <div className="flex items-center gap-x-2">
             {/* <IconPhone></IconPhone> */}

@@ -17,8 +17,10 @@ const ProFeedback = ({ isHidden, data }) => {
   stars.fill(<IconStarGray></IconStarGray>, starCount); //thay thế từ vị trí start đến hết thành stargray
 
   return (
-    <div className={`${isHidden} grid grid-cols-3 gap-x-[80px] `}>
-      <div className="col-span-2">
+    <div
+      className={`${isHidden} grid md:grid-cols-3 lg:grid-cols-3 gap-x-[80px] `}
+    >
+      <div className=" grid-cols-1 mb-4 lg:mb-0 md:mb-0 md:col-span-3 lg:col-span-2">
         <div className="flex items-center justify-between">
           <div className="flex flex-col ">
             <div className="flex items-center  gap-x-2">
@@ -45,7 +47,7 @@ const ProFeedback = ({ isHidden, data }) => {
           eveniet quidem perspiciatis.
         </p>
       </div>
-      <div className="col-span-1">
+      <div className="col-span-1 md:hidden lg:block">
         <ProFeauture
           urlImage={data?.imageUrl}
           percentDiscount={data?.average_rating}

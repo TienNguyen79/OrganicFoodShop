@@ -14,7 +14,7 @@ const BannerNav = () => {
     setNameUrl(Part1);
   }, []);
   return (
-    <div className="w-full h-[120px] gradient-banner px-[238px] leading-[120px] ">
+    <div className="w-full h-[120px] gradient-banner px-5 md:px-[120px] lg:px-[238px] leading-[120px] ">
       <div className="flex items-center  gap-x-3">
         <IconHome></IconHome>
         <span>

@@ -32,7 +32,7 @@ import { cateGetdataAll } from "../store/category/cate-slice";
 import ProQuickView from "../modules/product/ProQuickView";
 import CartPopup from "../modules/cart/CartPopup";
 import { blogGetAll } from "../store/blog/blog-slice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { wishListGetAll } from "../store/cart/cart-slice";
 import { getToken } from "../utils/auth";
 import ProductLoading from "../modules/product/ProductLoading";
@@ -66,6 +66,10 @@ const dataUtil = [
 ];
 
 const HomePage = () => {
+  const { pathname } = useLocation();
+
+  console.log("pathname", pathname);
+
   const settings = {
     className: "center",
     infinite: true,
