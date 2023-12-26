@@ -8,8 +8,8 @@ import Button from "../components/button/Button";
 const ContactPage = () => {
   const { control } = useForm();
   return (
-    <div className="py-[80px] grid grid-cols-4 gap-x-6">
-      <div className="col-span-1 bg-white shadow-2xl rounded-md">
+    <div className="lg:py-[80px] pt-5 grid grid-cols-1 lg:grid-cols-4 gap-x-6">
+      <div className=" lg:col-span-1 bg-white lg:shadow-2xl rounded-md">
         <BoxContact content="Hà Nội" className="px-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ const ContactPage = () => {
           </svg>
         </BoxContact>
         <BoxContact
-          content="tientech2002@gmail.com
+          content="tientech2002@gmail.com ,
 thangbui11@gmail.com"
         >
           <svg
@@ -117,7 +117,7 @@ thangbui11@gmail.com"
           </svg>
         </BoxContact>
       </div>
-      <div className="col-span-3 shadow-2xl pt-[44px] px-[50px] pb-[50px] rounded-lg">
+      <div className=" lg:col-span-3 lg:shadow-2xl pt-[44px] lg:px-[50px] pb-[50px] rounded-lg">
         <h1 className="text-gray9 text-[20px] font-semibold">
           Just Say Hello!
         </h1>

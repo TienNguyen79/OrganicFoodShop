@@ -279,7 +279,7 @@ const BlogDetailPage = () => {
           </div>
         </div>
         {dataBlogWithParam?.content && (
-          <div className="entry-content mt-6 ">
+          <div className="entry-content mt-6 !text-[16px] ">
             {parse(dataBlogWithParam?.content[0] || "")}
           </div>
         )}
@@ -344,6 +344,7 @@ const BlogDetailPage = () => {
               setIsLoadMore(true);
               setLimit(() => limit + 3);
             }}
+            className="my-5 md:my-0 lg:my-0"
           >
             Load More
           </Button>
@@ -352,7 +353,7 @@ const BlogDetailPage = () => {
           dataCommentBlog?.comment?.length === dataCommentBlog?.count && (
             <Button
               kind="secondary"
-              className="!text-white !bg-[#2388FF]"
+              className="!text-white !bg-[#2388FF] my-5 md:my-0 lg:my-0"
               onClick={() => {
                 setLimit(5);
               }}

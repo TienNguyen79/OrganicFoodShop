@@ -5,10 +5,11 @@ const AboutImage = ({
   linkUrl = defaultImage2,
   w = "100px",
   h = "100px",
+  lgh = "",
   className = "rounded-md",
 }) => {
   return (
-    <div className={`w-[${w}] h-[${h}]`}>
+    <div className={` w-[${w}] h-[${h}]   `}>
       <img
         src={linkUrl}
         className={`w-full h-full object-cover ${className}`}

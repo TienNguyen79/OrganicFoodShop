@@ -64,17 +64,17 @@ const BlogPage = () => {
     }
   }, [contentBlog, dispatch, nextPage, nextPage1]);
   return (
-    <div className="grid grid-cols-3 gap-x-6 mt-8 my-10">
-      <div className="col-span-1 mt-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-x-6 mt-8 my-10">
+      <div className="md:col-span-1 lg:col-span-1 mt-5">
         <BlogFilterItem
           result={dataBlogAll}
           setContentBlog={setContentBlog}
         ></BlogFilterItem>
       </div>
-      <div className="col-span-2">
+      <div className="md:col-span-2 lg:col-span-2">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-baseline gap-x-2 "></div>
-          <div className="flex items-center gap-x-2 pr-[61px] py-5">
+          <div className="flex items-center gap-x-2 pt-5 md:pr-[61px] lg:pr-[61px]  md:py-5 lg:py-5">
             <span className="block text-gray9 text-[16px] font-semibold">
               {dataBlogAll?.total}
             </span>
@@ -84,7 +84,7 @@ const BlogPage = () => {
           </div>
         </div>
         {loading ? (
-          <div className="grid grid-cols-2 gap-6 px-[60px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-[20px] lg:px-[60px]">
             {Array(10)
               .fill(0)
               .map((item, index) => (
@@ -94,7 +94,7 @@ const BlogPage = () => {
               ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-6 px-[60px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-[20px] lg:px-[60px]">
             {dataBlogAll?.data?.length > 0 &&
               dataBlogAll?.data.map((item) => (
                 <BlogItem

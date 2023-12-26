@@ -22,6 +22,10 @@
   color: black;
 }
 
+.link-admin.active {
+  color: #00b207;
+}
+
 .connectNav::before {
   content: "";
   position: absolute;
@@ -54,6 +58,21 @@
   padding: 5px; /* Kích thước của mỗi ô vuông */
 }
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  button.slick-arrow.slick-next,
+  button.slick-arrow.slick-prev {
+    display: none !important;
+  }
+  .pagination.mobi {
+    font-size: 14px !important;
+  }
+}
 button.slick-arrow.slick-next {
   display: block;
   margin-right: 80px;
@@ -120,6 +139,7 @@ ul.slick-dots {
   margin-right: 95px;
   position: absolute;
   top: -31px;
+  left: 19px;
   transform: rotateZ(270deg);
 }
 
@@ -200,6 +220,7 @@ ul.slick-dots {
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 6px;
 }
 
 /* Track */
@@ -233,7 +254,7 @@ ul.slick-dots {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* start showing ellipsis when 3rd line is reached */
+  -webkit-line-clamp: 2; /* start showing ellipsis when 2rd line is reached */
   white-space: pre-wrap; /* let the text wrap preserving spaces */
 }
 
@@ -253,7 +274,7 @@ ul.slick-dots {
 .entry-content .ql-snow .ql-editor h3,
 .entry-content .ql-snow .ql-editor h4 {
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .entry-content h2,
 .entry-content .ql-snow .ql-editor h2 {
@@ -294,10 +315,14 @@ ul.slick-dots {
 .entry-content .ql-snow .ql-editor figure {
   margin-bottom: 20px;
 }
-.entry-content figure img,
-.entry-content .ql-snow .ql-editor figure img {
+.entry-content img,
+.entry-content .ql-snow .ql-editor img {
   border-radius: 20px;
   margin-bottom: 10px;
+  width: 300px;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .entry-content figcaption,
 .entry-content .ql-snow .ql-editor figcaption {
@@ -305,6 +330,11 @@ ul.slick-dots {
   font-style: italic;
   font-size: 14px;
   color: #6b6b6b;
+}
+.entry-content p,
+.entry-content .ql-snow .ql-editor p {
+  margin-bottom: 16px;
+  @apply font-body;
 }
 @media screen and (max-width: 1023.98px) {
   .entry-content,
@@ -322,5 +352,34 @@ ul.slick-dots {
   .entry-content h4,
   .entry-content .ql-snow .ql-editor h4 {
     font-size: 20px;
+  }
+}
+
+.ql-editor {
+  min-height: 142px;
+}
+
+.icon-wrapper {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Hiệu ứng CSS khi rung lắc */
+.vibrating {
+  animation: vibrateAnimation 0.2s linear;
+}
+
+@keyframes vibrateAnimation {
+  25% {
+    transform: translate(-2px, 2px);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(2px, -2px);
   }
 }/*# sourceMappingURL=index.css.map */

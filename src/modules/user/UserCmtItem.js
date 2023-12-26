@@ -12,17 +12,13 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/button/Button";
 import { useState } from "react";
 import TextArea from "../../components/input/TextArea";
+import { convertDate } from "../../constants/global";
 
 const UserCmtItem = ({ data, limit, loading }) => {
   // console.log("🚀 ~ file: UserCmtItem.js:17 ~ UserCmtItem ~ loading:", loading);
   // console.log("🚀 ~ file: UserCmtItem.js:17 ~ UserCmtItem ~ page:", page);
   const { control, setValue, handleSubmit, watch } = useForm();
   // console.log("🚀 ~ file: UserCmtItem.js:12 ~ UserCmtItem ~ data:", data);
-  const dateTimeString = data?.created_at;
-  const date = new Date(dateTimeString);
-  // Định dạng ngày và tháng
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = date.toLocaleDateString("en-US", options);
 
   const { show, setShow, nodeRef } = useClickOutSide();
   const [showEditCmt, setShowEditCmt] = useState(false);
@@ -56,22 +52,24 @@ const UserCmtItem = ({ data, limit, loading }) => {
   return (
     <div>
       <div className="flex items-center justify-between group">
-        <div className="flex items-center gap-x-2 py-6 border-b-[1px] flex-1 ">
+        <div className="flex items-start md:items-start lg:items-center gap-x-2 py-6 border-b-[1px] flex-1 ">
           <UserAvatar linkUrl={data?.avata}></UserAvatar>
-          <div className="flex-1">
+          <div className="flex-1 bg-[#F2F3F5] md:bg-[#F2F3F5] lg:bg-white p-3 md:p-4 lg:p-4  rounded-md w-[200px]">
             <div className="flex items-center gap-x-2">
               <UserName name={data?.name}></UserName>{" "}
-              <div className="w-[2px] h-[2px] p-[2px] bg-gray9 rounded-full font-semibold "></div>{" "}
-              <BlogDate2 date={formattedDate}></BlogDate2>
+              <div className="w-[2px] h-[2px] p-[2px] bg-gray9 rounded-full font-semibold hidden md:block lg:block"></div>{" "}
+              <div className="hidden md:block lg:block">
+                <BlogDate2 date={convertDate(data?.created_at)}></BlogDate2>
+              </div>
             </div>
-            <p className="text-gray6 text-sm font-normal text-left w-[550px]">
+            <p className="text-gray6 text-[16px] lg:text-sm font-normal py-2 text-left w-full">
               {data?.content}
             </p>
           </div>
         </div>
         <div className="relative">
           <span
-            className={`cursor-pointer hidden  group-hover:block 
+            className={`cursor-pointer lg:hidden transition-all  group-hover:block 
             }`}
             onClick={(e) => {
               e.stopPropagation(); //ngăn chặn lan truyền lên các pt cha
@@ -143,6 +141,7 @@ const UserCmtItem = ({ data, limit, loading }) => {
             ))}
         </div>
       </div>
+
       {showEditCmt && (
         <form action="" onSubmit={handleSubmit(handleUpdateCmt)}>
           <div className="flex flex-col ">

@@ -57,12 +57,12 @@ const BlogFilterItem = ({ result, setContentBlog }) => {
   return (
     <div>
       <div>
-        <Button className="!py-[10px] mb-6" kind="primary">
+        {/* <Button className="!py-[10px] mb-6" kind="primary">
           Filter
           <span className="inline-block ml-2">
             <IconFilter />
           </span>
-        </Button>
+        </Button> */}
 
         <div>
           <Input
@@ -77,7 +77,7 @@ const BlogFilterItem = ({ result, setContentBlog }) => {
           </Input>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 hidden md:block lg:block">
           <span className="text-gray9 text-[20px] font-medium block ">
             Top Categories
           </span>
@@ -99,7 +99,7 @@ const BlogFilterItem = ({ result, setContentBlog }) => {
             ))}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 ">
           <span className="text-gray9 text-[20px] font-medium block ">
             Our Gallery
           </span>
@@ -111,13 +111,13 @@ const BlogFilterItem = ({ result, setContentBlog }) => {
                   <BlogImage
                     key={item.id}
                     linkUrl={item.image}
-                    className="w-[70px] h-[70px] rounded-lg"
+                    className="w-[70px] h-[70px] md:w-[50px] md:h-[50px] lg:w-[70px] lg:h-[70px] rounded-lg"
                   ></BlogImage>
                 ))}
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-y-5">
+        <div className="mt-8  flex-col gap-y-5 hidden md:flex lg:flex">
           <span className="text-gray9 text-[20px] font-medium block ">
             Gallery Product
           </span>
