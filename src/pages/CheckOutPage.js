@@ -246,9 +246,9 @@ const CheckOutPage = () => {
         <Label className="text-[25px]">Billing Information</Label>
       </div>
       <form action="" onSubmit={handleSubmit(handleBill)}>
-        <div className="grid grid-cols-3 gap-x-6">
-          <div className="col-span-2">
-            <div className="flex items-center  gap-x-3 ">
+        <div className="grid lg:grid-cols-3 gap-x-6">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col md:flex-row lg:flex-row  items-center gap-y-3  gap-x-3 ">
               {/* <FieldBill>
                 <BillLabel
                   className="text-gray9 font-normal"
@@ -261,7 +261,7 @@ const CheckOutPage = () => {
                   error={errors?.firstName?.message}
                 ></Input>
               </FieldBill> */}
-              <div className="flex-1">
+              <div className="flex-1 w-full ">
                 <FieldBill>
                   <BillLabel
                     className="text-gray9 font-normal"
@@ -275,7 +275,7 @@ const CheckOutPage = () => {
                   ></Input>
                 </FieldBill>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full ">
                 <FieldBill>
                   <BillLabel
                     className="text-gray9 font-normal"
@@ -291,8 +291,8 @@ const CheckOutPage = () => {
             </div>
 
             <div className="mt-4 ">
-              <div className="flex items-baseline gap-x-3  ">
-                <div className="flex-1">
+              <div className="flex flex-col md:flex-row lg:flex-row items-baseline gap-x-3  ">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
@@ -304,41 +304,43 @@ const CheckOutPage = () => {
                         placeholder={labelCity || "Select"}
                       ></SelectInit>
                       <ListInit>
-                        <div className="bg-white p-4 ">
-                          <input
-                            control={control}
-                            placeholder="Search..."
-                            className="py-3 px-4 w-full border  font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2  dark:text-white text-text1"
-                            onChange={(e) =>
-                              handleCityChangeDebounced(e.target.value)
-                            }
-                          ></input>
-                        </div>
-                        <div className="max-h-[230px] overflow-y-auto">
-                          {city.length > 0 &&
-                            city.map((item, index) => (
-                              <OptionsInit
-                                key={index}
-                                onClick={() => {
-                                  setLabelCity(item.name);
-                                  setCodeCity(item.code);
-                                }}
-                              >
-                                {item.name}
-                              </OptionsInit>
-                            ))}
+                        <div>
+                          <div className="bg-white p-4 ">
+                            <input
+                              control={control}
+                              placeholder="Search..."
+                              className="py-3 px-4 w-full border  font-medium  rounded-md placeholder:text-text4 dark:placeholder:text-text2  dark:text-white text-text1"
+                              onChange={(e) =>
+                                handleCityChangeDebounced(e.target.value)
+                              }
+                            ></input>
+                          </div>
+                          <div className="max-h-[230px] overflow-y-auto">
+                            {city.length > 0 &&
+                              city.map((item, index) => (
+                                <OptionsInit
+                                  key={index}
+                                  onClick={() => {
+                                    setLabelCity(item.name);
+                                    setCodeCity(item.code);
+                                  }}
+                                >
+                                  {item.name}
+                                </OptionsInit>
+                              ))}
+                          </div>
                         </div>
                       </ListInit>
                     </DropdownInit>
                   </FieldBill>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full ">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal "
                       label="District*"
                     ></BillLabel>
-                    <DropdownInit>
+                    <DropdownInit className="!z-[7]">
                       <SelectInit
                         placeholder={labelDistric || "Select"}
                         className={`w-full ${
@@ -377,13 +379,13 @@ const CheckOutPage = () => {
                     </DropdownInit>
                   </FieldBill>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
                       label="Village*"
                     ></BillLabel>
-                    <DropdownInit>
+                    <DropdownInit className="!z-[6]">
                       <SelectInit
                         placeholder={labelvillage || "Select"}
                         className={`w-full ${
@@ -452,8 +454,8 @@ const CheckOutPage = () => {
             </div>
 
             <div className="mt-4">
-              <div className="flex items-center gap-x-3 ">
-                <div className="flex-1">
+              <div className="flex flex-col md:flex-row lg:flex-row  items-center gap-y-3 gap-x-3 ">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
@@ -467,7 +469,7 @@ const CheckOutPage = () => {
                     ></Input>
                   </FieldBill>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
@@ -505,7 +507,7 @@ const CheckOutPage = () => {
               </FieldBill>
             </div>
           </div>
-          <div className="col-span-1">
+          <div className="lg:col-span-1 mt-5">
             <BoxBill>
               <Label className="text-[18px] !font-medium">Order Summery</Label>
               <div className="my-5 max-h-[220px] overflow-y-auto scroll-hidden">

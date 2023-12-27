@@ -62,13 +62,15 @@ const TopProductPage = () => {
         <div className="text-center">
           <Label className="text-[35px]">Top Products</Label>
         </div>
-        <div className="flex justify-center items-center mt-[40px] border-b-2 relative ">
+        <div className="flex flex-col md:flex-row lg:flex-row justify-center items-center mt-[40px] border-b-2 relative ">
           {tabs.map((item) => (
             <span
               key={item.id}
               className={`text-gray5 text-center w-[220px] text-[16px] font-medium p-4 after:absolute  after:top-full after:flex after:hover:bg-primary after:hover:h-[2px] after:content-[''] after:w-[180px] after:h-[1px] 
              cursor-pointer ${
-               item.id === tabClicked ? "after:bg-primary after:h-[2px]" : ""
+               item.id === tabClicked
+                 ? "after:bg-primary text-primary after:h-[2px]"
+                 : ""
              } `}
               onClick={() => {
                 setTabClicked(item.id);
@@ -82,7 +84,7 @@ const TopProductPage = () => {
           <div
             className={`BestSeller ${tabClicked === 1 ? "block" : "hidden"} `}
           >
-            <div className=" grid grid-cols-4 gap-6 ">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 md:mb-0 lg:mb-0 gap-6 ">
               {dataBestSeller.length > 0 &&
                 dataBestSeller.map((item) => (
                   <div>
@@ -95,7 +97,7 @@ const TopProductPage = () => {
             </div>
           </div>
           <div className={`HotDeal ${tabClicked === 2 ? "block" : "hidden"} `}>
-            <div className=" grid grid-cols-4 gap-6 ">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 md:mb-0 lg:mb-0 gap-6 ">
               {dataHotDeal.length > 0 &&
                 dataHotDeal.map((item) => (
                   <div>
@@ -108,7 +110,7 @@ const TopProductPage = () => {
             </div>
           </div>
           <div className={`TopRated ${tabClicked === 3 ? "block" : "hidden"} `}>
-            <div className=" grid grid-cols-4 gap-6 ">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8 md:mb-0 lg:mb-0 gap-6 ">
               {dataTopRated.length > 0 &&
                 dataTopRated.map((item) => (
                   <div>

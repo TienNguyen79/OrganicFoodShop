@@ -11,6 +11,7 @@ import ReactPaginate from "react-paginate";
 import IconPagiNext from "../components/Icons/IconPagiNext";
 import IconPagiPrev from "../components/Icons/IconPagiPrev";
 import { useSpring, animated } from "react-spring";
+import OrderItemMobile from "../modules/product/OrderItemMobile";
 
 const tabs = [
   {
@@ -76,6 +77,26 @@ const OrderHistoryPage = () => {
     setNextPage(event.selected + 1);
   };
 
+  const [shouldShowMobileTablet, setShouldShowMobileTablet] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Kiểm tra kích thước màn hình mobile
+      setShouldShowMobileTablet(window.innerWidth < 1024);
+    };
+
+    // Gọi hàm handleResize khi kích thước màn hình thay đổi
+    window.addEventListener("resize", handleResize);
+
+    // Gọi hàm handleResize ngay khi component được mount để kiểm tra kích thước ban đầu
+    handleResize();
+
+    // Xóa event listener khi component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="select-none">
       <div className=" py-4 px-3 ">
@@ -84,7 +105,7 @@ const OrderHistoryPage = () => {
           <div className="absolute after:bg-primary after:absolute after:contents-'' after:w-[130px] after:h-[2px] "></div>
         </div>
       </div>
-      <div className="mb-4 overflow-x-auto py-2 ">
+      <div className="mb-4 overflow-x-auto md:w-[750px] lg:w-full w-screen py-2 ">
         <div className="flex  items-center mt-[10px] ">
           {tabs.map((item) => (
             <span
@@ -104,114 +125,131 @@ const OrderHistoryPage = () => {
           ))}
         </div>
       </div>
-
-      <Table>
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataOrderAll?.data?.length > 0 &&
-              dataOrderAll?.data?.map((item) => {
-                return (
-                  <tr key={item.id}>
-                    <td className="text-gray8 text-sm">#{item?.id}</td>
-                    <td>{convertDate(item?.created_at)}</td>
-                    <td
-                      className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[170px]"
-                      title={
-                        item?.total_price +
-                        " (" +
-                        item?.products_order?.length +
-                        ") Product"
-                      }
-                    >
-                      <span className="text-gray8 text-[16px] font-semibold">
-                        ${item?.total_price}
-                      </span>{" "}
-                      <span
-                        className="text-gray8 text-sm font-medium "
-                        title="Product"
-                      >
-                        ({item?.products_order?.length} Product)
-                      </span>
-                    </td>
-                    <td>{convertStatus(item?.approval_status)}</td>
-                    {tabClicked !== 4 && tabClicked !== 5 ? (
-                      <td>
-                        <LabelRedirect
-                          icon=""
-                          className="text-sm  font-medium"
-                          title="View Details"
-                          url={`/order_details/${item?.id}`}
-                        ></LabelRedirect>
+      {!shouldShowMobileTablet ? (
+        <Table>
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataOrderAll?.data?.length > 0 &&
+                dataOrderAll?.data?.map((item) => {
+                  return (
+                    <tr key={item.id}>
+                      <td className="text-[18px] font-semibold text-darkPrimary text-sm">
+                        #{item?.id}
                       </td>
-                    ) : tabClicked === 4 ? (
-                      <div>
+                      <td className="text-gray-500 text-sm">
+                        {convertDate(item?.created_at)}
+                      </td>
+                      <td
+                        className="text-sm font-medium whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[170px]"
+                        title={
+                          item?.total_price +
+                          " (" +
+                          item?.products_order?.length +
+                          ") Product"
+                        }
+                      >
+                        <span className="text-gray8 text-[16px] font-semibold">
+                          ${item?.total_price}
+                        </span>{" "}
+                        <span
+                          className="text-gray8 text-sm font-medium "
+                          title="Product"
+                        >
+                          ({item?.products_order?.length} Product)
+                        </span>
+                      </td>
+                      <td>{convertStatus(item?.approval_status)}</td>
+                      {tabClicked !== 4 && tabClicked !== 5 ? (
                         <td>
-                          <div className="flex justify-center items-center ">
+                          <LabelRedirect
+                            icon=""
+                            className="text-sm  font-medium"
+                            title="View Details"
+                            url={`/order_details/${item?.id}`}
+                          ></LabelRedirect>
+                        </td>
+                      ) : tabClicked === 4 ? (
+                        <div>
+                          <td>
+                            <div className="flex justify-center items-center ">
+                              <LabelRedirect
+                                icon=""
+                                className="text-sm  font-medium"
+                                title=" Details"
+                                url={`/order_details/${item?.id}`}
+                              ></LabelRedirect>
+                              <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
+                              <LabelRedirect
+                                icon=""
+                                className="text-sm  font-medium pl-2 "
+                                title=" Review"
+                                url={`#`}
+                              ></LabelRedirect>
+                            </div>
+                          </td>
+                        </div>
+                      ) : tabClicked === 5 ? (
+                        <td>
+                          <div className="flex  justify-center items-center  ">
                             <LabelRedirect
                               icon=""
-                              className="text-sm  font-medium"
+                              className="text-sm  font-medium hover:opacity-80"
                               title=" Details"
                               url={`/order_details/${item?.id}`}
                             ></LabelRedirect>
-                            <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
-                            <LabelRedirect
-                              icon=""
-                              className="text-sm  font-medium pl-2 "
-                              title=" Review"
-                              url={`#`}
-                            ></LabelRedirect>
-                          </div>
-                        </td>
-                      </div>
-                    ) : tabClicked === 5 ? (
-                      <td>
-                        <div className="flex  justify-center items-center  ">
-                          <LabelRedirect
-                            icon=""
-                            className="text-sm  font-medium hover:opacity-80"
-                            title=" Details"
-                            url={`/order_details/${item?.id}`}
-                          ></LabelRedirect>
-                          {/* <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
+                            {/* <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
                           <LabelRedirect
                             icon=""
                             className="text-sm text-danger pl-2   font-semibold hover:opacity-80"
                             title=" Buy back"
                             url={`#`}
                           ></LabelRedirect> */}
-                        </div>
-                      </td>
-                    ) : (
-                      ""
-                    )}
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </Table>
-      <div className="mt-8 ">
-        <ReactPaginate
-          // key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
-          breakLabel="..."
-          nextLabel={<IconPagiNext></IconPagiNext>}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
-          pageCount={pageCount}
-          previousLabel={<IconPagiPrev></IconPagiPrev>}
-          renderOnZeroPageCount={null}
-          className="pagination justify-center"
-        />
-      </div>
+                          </div>
+                        </td>
+                      ) : (
+                        ""
+                      )}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </Table>
+      ) : (
+        dataOrderAll?.data?.length > 0 &&
+        dataOrderAll?.data?.map((item) => (
+          <div key={item?.id} className="flex flex-col my-3">
+            <OrderItemMobile
+              item={item}
+              tabClicked={tabClicked}
+            ></OrderItemMobile>
+          </div>
+        ))
+      )}
+      {dataOrderAll?.data?.length > 0 && dataOrderAll?.last_page > 1 && (
+        <div className="mt-8 mb-8">
+          <ReactPaginate
+            // key={watchCate} //key duy nhất đảm bảo rằng component sẽ được unmount và mount lại khi thay đổi radio category
+            breakLabel="..."
+            nextLabel={<IconPagiNext></IconPagiNext>}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5} //đến khoảng số thứ 5 thì có dấu ...
+            pageCount={pageCount}
+            previousLabel={<IconPagiPrev></IconPagiPrev>}
+            renderOnZeroPageCount={null}
+            className="pagination justify-center"
+          />
+        </div>
+      )}
     </div>
   );
 };

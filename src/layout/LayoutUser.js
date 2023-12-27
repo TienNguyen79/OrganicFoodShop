@@ -45,12 +45,12 @@ const LayoutUser = () => {
       <div className="">
         <Header></Header>
       </div>
-      <div className="mt-[191px]">
+      <div className="mt-[128px] md:mt-[145px] lg:mt-[191px]">
         <BannerNav></BannerNav>
       </div>
-      <div className="px-[238px] pt-8 pb-[80px]  flex-grow">
-        <div className="grid grid-cols-4 gap-x-4">
-          <div className="col-span-1 pt-6 pb-4 border h-[237px] border-[#E6E6E6] rounded-lg">
+      <div className="px-[10px] md:px-[40px] lg:px-[238px] pt-8 md:pb-[60px] lg:pb-[80px]   flex-grow">
+        <div className="grid lg:grid-cols-4 gap-x-4">
+          <div className="lg:col-span-1 pt-6 pb-4 border h-[237px] border-[#E6E6E6] rounded-lg hidden lg:block">
             <h1 className="text-gray9 text-[18px] font-medium pl-5 pb-4">
               Navigate
             </h1>
@@ -66,7 +66,7 @@ const LayoutUser = () => {
               </NavLink>
             ))}
           </div>
-          <div className="col-span-3">
+          <div className="lg:col-span-3">
             <Outlet></Outlet>
           </div>
         </div>

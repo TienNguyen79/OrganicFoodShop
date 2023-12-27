@@ -12,7 +12,7 @@ const OptionsInit = (props) => {
 
   return (
     <div
-      className={`px-5 py-4  cursor-pointer flex items-center justify-between ${className} `}
+      className={`px-5 py-4 cursor-pointer flex items-center justify-between  ${className} `}
       onClick={handleClick}
     >
       {props.children}
