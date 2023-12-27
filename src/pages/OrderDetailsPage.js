@@ -18,6 +18,7 @@ import { authCheckToken } from "../store/auth/auth-slice";
 import { convertDate } from "../constants/global";
 import Button from "../components/button/Button";
 import Swal from "sweetalert2";
+import ProMobileInOrderDetail from "../modules/product/ProMobileInOrderDetail";
 
 const OrderDetailsPage = () => {
   const dispatch = useDispatch();
@@ -287,10 +288,217 @@ const OrderDetailsPage = () => {
     }
   };
 
+  const processOrderMobile = (data) => {
+    switch (data) {
+      case "0":
+        return (
+          <div className="flex flex-col">
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Order Revived</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Processing</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">On The Way</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Delivered</h1>
+            </div>
+          </div>
+        );
+      case "1":
+        return (
+          <div className="flex flex-col">
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Order Revived</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Processing</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">On The Way</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Delivered</h1>
+            </div>
+          </div>
+        );
+      case "2":
+        return (
+          <div className="flex flex-col">
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Order Revived</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Processing</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">On The Way</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Delivered</h1>
+            </div>
+          </div>
+        );
+      case "3":
+        return (
+          <div className="flex flex-col">
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Order Revived</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Processing</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-gray-100"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">On The Way</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px]  rounded-[50%] "></div>
+                </div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Delivered</h1>
+            </div>
+          </div>
+        );
+      case "4":
+        return (
+          <div className="flex flex-col">
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Order Revived</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Processing</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary  rounded-[50%] "></div>
+                </div>
+                <div className="h-[60px] w-[1px] bg-primary"></div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">On The Way</h1>
+            </div>
+            <div className="flex items-start gap-x-2">
+              <div className="flex flex-col justify-center items-center">
+                <div className="bg-gray-100 w-[20px] h-[20px] rounded-[50%] p-[2px] flex justify-center items-center ">
+                  <div className="w-[12px] h-[12px] bg-primary rounded-[50%] "></div>
+                </div>
+              </div>
+              <h1 className="text-gray6 text-sm font-medium">Delivered 🥳</h1>
+            </div>
+          </div>
+        );
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
-      <div className="flex items-center justify-between py-4 px-3 ">
-        <div className="flex items-center gap-x-2">
+      <div className="flex flex-col md:flex-row lg:flex-row items-start gap-y-4 md:items-center  lg:items-center justify-between  py-4 px-3 ">
+        <div className="flex  items-center  gap-x-2">
           <div className="relative">
             <Label className="text-[20px] ">Order Details</Label>
             <div className="absolute after:bg-primary after:absolute after:contents-'' after:w-[130px] after:h-[2px] "></div>
@@ -307,46 +515,48 @@ const OrderDetailsPage = () => {
             {dataOrderDetails?.products_order?.length} Product
           </span>
         </div>
-        {dataOrderDetails?.approval_status === "0" && (
-          <Button
-            kind="discard"
-            className="!py-2 hover:text-white hover:bg-danger transition-all"
-            onClick={handleCancelOrder}
-          >
-            Cancel Order
-          </Button>
-        )}
-        {dataOrderDetails?.approval_status === "5" && (
-          <div
-            onClick={() => {
-              let data = {
-                products_order: [...dataOrderDetails?.products_order],
-                total_price: dataOrderDetails?.total_price,
-              };
-              var arrayJSON = JSON.stringify(data);
-              localStorage.setItem("orderData", arrayJSON);
-            }}
-          >
+        <div className="flex items-center w-full justify-between md:w-auto lg:w-auto gap-x-6">
+          {dataOrderDetails?.approval_status === "0" && (
             <Button
-              kind="secondary2"
-              href="/checkout"
-              className="!py-2 hover:text-white hover:bg-primary transition-all"
+              kind="discard"
+              className="!py-2 hover:text-white hover:bg-danger transition-all"
+              onClick={handleCancelOrder}
             >
-              Buy Back
+              Cancel Order
             </Button>
-          </div>
-        )}
+          )}
+          {dataOrderDetails?.approval_status === "5" && (
+            <div
+              onClick={() => {
+                let data = {
+                  products_order: [...dataOrderDetails?.products_order],
+                  total_price: dataOrderDetails?.total_price,
+                };
+                var arrayJSON = JSON.stringify(data);
+                localStorage.setItem("orderData", arrayJSON);
+              }}
+            >
+              <Button
+                kind="secondary2"
+                href="/checkout"
+                className="!py-2 hover:text-white hover:bg-primary transition-all"
+              >
+                Buy Back
+              </Button>
+            </div>
+          )}
 
-        <LabelRedirect
-          icon=""
-          className="text-sm  font-medium"
-          title="Back to List"
-          url="/order_history"
-        ></LabelRedirect>
+          <LabelRedirect
+            icon=""
+            className="text-sm  font-medium"
+            title="Back to List"
+            url="/order_history"
+          ></LabelRedirect>
+        </div>
       </div>
 
-      <div className="grid grid-cols-3 mt-3 gap-x-6">
-        <div className="col-span-2 flex ">
+      <div className="grid md:grid-cols-3 gap-y-4 lg:grid-cols-3 mt-3 gap-x-6">
+        <div className="  md:col-span-2 lg:col-span-2 flex flex-col md:flex-row lg:flex-row gap-y-6">
           <div className=" pl-[20px] pb-[20px] pr-[10px]  border-2 rounded-tl-lg rounded-bl-lg">
             <h1 className="text-[#999] text-sm font-medium uppercase py-[18px] border-b-2">
               Shop Address
@@ -416,7 +626,7 @@ const OrderDetailsPage = () => {
             )}
           </div>
         </div>
-        <div className="col-span-1 pl-[20px]  pr-[10px]  border-2 rounded-lg">
+        <div className="md:col-span-1 lg:col-span-1 pl-[20px]  pr-[10px]  border-2 rounded-lg">
           <div className="py-[18px] px-[10px] flex  gap-x-6 border-b-2">
             <div className=" flex flex-col">
               <h1 className="text-[#999] text-[12px] font-medium uppercase">
@@ -489,9 +699,18 @@ const OrderDetailsPage = () => {
         </div>
       </div> */}
       {/* thanh tiến trình */}
-      {processOrder(dataOrderDetails?.approval_status)}
+      <div className="md:block lg:block hidden">
+        {processOrder(dataOrderDetails?.approval_status)}
+      </div>
 
-      <div className="mt-10">
+      <div className="md:hidden lg:hidden block mt-8">
+        <h1 className="text-gray-700 text-[20px] font-medium my-3">
+          Shipping Information
+        </h1>
+        {processOrderMobile(dataOrderDetails?.approval_status)}
+      </div>
+
+      <div className="mt-10 hidden md:block">
         <Table>
           <table>
             <thead>
@@ -549,6 +768,15 @@ const OrderDetailsPage = () => {
             </tbody>
           </table>
         </Table>
+      </div>
+      <div className="my-10 md:hidden lg:hidden flex flex-col gap-y-3">
+        <h1 className="text-gray-700 text-[20px] font-medium">All Product</h1>
+        {dataOrderDetails?.products_order?.length > 0 &&
+          dataOrderDetails?.products_order?.map((item) => (
+            <div key={item.id}>
+              <ProMobileInOrderDetail item={item}></ProMobileInOrderDetail>
+            </div>
+          ))}
       </div>
     </div>
   );

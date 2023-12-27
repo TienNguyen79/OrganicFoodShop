@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import LabelRedirect from "../components/label/LabelRedirect";
 import Table from "../components/table/Table";
 import Label from "../components/label/Label";
@@ -96,7 +96,9 @@ const OrderHistoryPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  const handleTabClick = (item) => {
+    setTabClicked(item.id);
+  };
   return (
     <div className="select-none">
       <div className=" py-4 px-3 ">
@@ -116,9 +118,7 @@ const OrderHistoryPage = () => {
                  ? " bg-[#e6f7d9] rounded text-primary after:h-[2px]"
                  : ""
              } `}
-              onClick={() => {
-                setTabClicked(item.id);
-              }}
+              onClick={() => handleTabClick(item)}
             >
               {item.title}
             </span>
@@ -227,7 +227,7 @@ const OrderHistoryPage = () => {
       ) : (
         dataOrderAll?.data?.length > 0 &&
         dataOrderAll?.data?.map((item) => (
-          <div key={item?.id} className="flex flex-col my-3">
+          <div key={item?.id} className="flex flex-col my-8 md:my-0">
             <OrderItemMobile
               item={item}
               tabClicked={tabClicked}

@@ -270,15 +270,15 @@ const SettingsPage = () => {
     <div>
       <BoxSettings label="Account Settings">
         <form action="" onSubmit={handleSubmit1(handleAccoutSetting)}>
-          <div className="flex items-center gap-x-10">
-            <div className="flex flex-col flex-1 gap-y-4">
+          <div className="flex flex-col-reverse md:flex-row lg:flex-row items-center  gap-x-10 gap-y-4">
+            <div className="flex flex-col flex-1 gap-y-4 w-full">
               <BoxField>
                 <LabelField label="Name"></LabelField>
                 <Input
                   control={control1}
                   name="name"
                   placeholder="Enter your Name..."
-                  className="placeholder:opacity-80 placeholder:text-[14px]"
+                  className="placeholder:opacity-80 placeholder:text-[14px] w-full"
                   error={errors1?.name?.message}
                 ></Input>
               </BoxField>
@@ -306,12 +306,12 @@ const SettingsPage = () => {
               <Button
                 kind="primary"
                 type="submit"
-                className="w-[180px] text-sm"
+                className="w-[180px] text-sm self-center md:self-start lg:self-start"
               >
                 Save Changes
               </Button>
             </div>
-            <div className="flex flex-1 justify-center">
+            <div className="flex flex-1 justify-end w-full">
               {/* <Input control={control} type="file" name="image"></Input> */}
               <ImageUpload
                 name="avata"
@@ -325,28 +325,28 @@ const SettingsPage = () => {
       </BoxSettings>
       <BoxSettings label="Billing Address" className="mt-[26px]">
         <form action="" onSubmit={handleSubmit2(handleBillAddress)}>
-          <div className="flex flex-col gap-y-4">
-            <div className="flex items-center gap-x-2">
-              <div className="flex-1">
+          <div className="flex flex-col gap-y-4 ">
+            <div className="flex flex-col md:flex-row lg:flex-row gap-y-4  items-center gap-x-2">
+              <div className="flex-1 w-full">
                 <BoxField>
                   <LabelField label="Name"></LabelField>
                   <Input
                     control={control2}
                     name="name"
                     placeholder="Enter your Name..."
-                    className="placeholder:opacity-80 placeholder:text-[14px]"
+                    className="placeholder:opacity-80 placeholder:text-[14px] w-full"
                     error={errors2?.name?.message}
                   ></Input>
                 </BoxField>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <BoxField>
                   <LabelField label="Company Name (optional)"></LabelField>
                   <Input
                     control={control2}
                     name="company_name"
                     placeholder="Enter your CompanyName..."
-                    className="placeholder:opacity-80 placeholder:text-[14px]"
+                    className="placeholder:opacity-80 placeholder:text-[14px] w-full"
                   ></Input>
                 </BoxField>
               </div>
@@ -363,8 +363,8 @@ const SettingsPage = () => {
             </BoxField>
 
             <div>
-              <div className="flex items-center gap-x-3  ">
-                <div className="flex-1">
+              <div className="flex flex-col md:flex-row lg:flex-row items-center gap-x-3  ">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
@@ -405,13 +405,13 @@ const SettingsPage = () => {
                     </DropdownInit>
                   </FieldBill>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal "
                       label="District*"
                     ></BillLabel>
-                    <DropdownInit>
+                    <DropdownInit className="z-[7]">
                       <SelectInit
                         placeholder={labelDistric || "Select"}
                         className={`w-full ${
@@ -439,13 +439,13 @@ const SettingsPage = () => {
                     </DropdownInit>
                   </FieldBill>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <FieldBill>
                     <BillLabel
                       className="text-gray9 font-normal"
                       label="Village*"
                     ></BillLabel>
-                    <DropdownInit>
+                    <DropdownInit className="z-[6]">
                       <SelectInit
                         placeholder={labelvillage || "Select"}
                         className={`w-full ${
@@ -473,7 +473,7 @@ const SettingsPage = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-x-4">
+            <div className="flex flex-col md:flex-row lg:flex-row gap-y-4 items-center gap-x-4">
               <div className="w-full">
                 <BoxField>
                   <LabelField label="Email"></LabelField>
@@ -499,14 +499,21 @@ const SettingsPage = () => {
                 </BoxField>
               </div>
             </div>
-            <Button kind="primary" type="submit" className="w-[180px] text-sm">
+            <Button
+              kind="primary"
+              type="submit"
+              className="w-[180px] text-sm self-center md:self-start lg:self-start"
+            >
               Save Changes
             </Button>
           </div>
         </form>
       </BoxSettings>
 
-      <BoxSettings label="Change Password" className="mt-[26px]">
+      <BoxSettings
+        label="Change Password"
+        className="mt-[26px] mb-8 md:mb-0 lg:mb-0"
+      >
         <form action="" onSubmit={handleSubmit3(handleChangePassword)}>
           <div className="flex flex-col gap-y-4">
             <BoxField>
@@ -528,8 +535,8 @@ const SettingsPage = () => {
               </Input>
             </BoxField>
 
-            <div className="flex items-center gap-x-3 ">
-              <div className="flex-1">
+            <div className="flex flex-col md:flex-row lg:flex-row gap-y-4 items-center gap-x-3 ">
+              <div className="flex-1 w-full">
                 <BoxField>
                   <LabelField label="New Password "></LabelField>
                   <Input
@@ -549,7 +556,7 @@ const SettingsPage = () => {
                   </Input>
                 </BoxField>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <BoxField>
                   <LabelField label="Confirm Password "></LabelField>
                   <Input
@@ -570,7 +577,11 @@ const SettingsPage = () => {
                 </BoxField>
               </div>
             </div>
-            <Button kind="primary" type="submit" className="w-[200px]  text-sm">
+            <Button
+              kind="primary"
+              type="submit"
+              className="w-[200px]  text-sm self-center md:self-start lg:self-start"
+            >
               Change Password
             </Button>
           </div>
