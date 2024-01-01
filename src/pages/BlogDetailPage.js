@@ -36,10 +36,6 @@ const BlogDetailPage = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const [limit, setLimit] = useState(5);
-  console.log(
-    "🚀 ~ file: BlogDetailPage.js:45 ~ BlogDetailPage ~ limit:",
-    limit
-  );
 
   useEffect(() => {
     dispatch(blogGetWithParam(slug));
@@ -83,8 +79,6 @@ const BlogDetailPage = () => {
   //thực hiện validate khi chưa nhập cmt
   const [getCommentBlog, setCommentBlog] = useState("");
   //------------
-  // const { user } = useSelector((state) => state.auth);
-  // console.log("🚀 ~ file: BlogDetailPage.js:81 ~ BlogDetailPage ~ user:", user);
 
   // lúc mới vào khởi tao lại data cho đỡ trùng
   useEffect(() => {

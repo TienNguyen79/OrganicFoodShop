@@ -67,19 +67,12 @@ const CheckOutPage = () => {
   });
   const navigate = useNavigate();
   const [dataOrder, setDataOrder] = useState([]);
-  console.log(
-    "🚀 ~ file: CheckOutPage.js:64 ~ CheckOutPage ~ dataOrder:",
-    dataOrder
-  );
+
   const { loadingOrder } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: CheckOutPage.js:65 ~ CheckOutPage ~ loadingOrder:",
-    loadingOrder
-  );
+
   const watchMethod = watch("method");
   const dispatch = useDispatch();
   const handleBill = async (values) => {
-    console.log("🚀 ~ file: CheckOutPage.js:74 ~ handleBill ~ values:", values);
     try {
       if (labelCity === "" || labelDistric === "" || labelvillage === "") {
         toast.error("Address must be complete");
@@ -140,10 +133,7 @@ const CheckOutPage = () => {
   const [city, setCity] = useState([]);
   const [queryCity, setQueryCity] = useState("Hà Nội");
   const [labelCity, setLabelCity] = useState("");
-  console.log(
-    "🚀 ~ file: CheckOutPage.js:87 ~ CheckOutPage ~ labelCity:",
-    labelCity
-  );
+
   const [codeCity, setCodeCity] = useState("");
   useEffect(() => {
     async function fetchData() {
@@ -211,7 +201,6 @@ const CheckOutPage = () => {
   }, []);
 
   const { user, accessToken } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
 
   useEffect(() => {
     dispatch(authCheckToken());

@@ -67,13 +67,11 @@ const ShopPage = () => {
     maxPrice: 1000,
     nextPage: 1,
   });
-  console.log("🚀 ~ file: ShopPage.js:59 ~ ShopPage ~ dataFilter:", dataFilter);
 
   const [searchParam, setSearchParam] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const watchCate = watch("cate");
-  console.log("🚀 ~ file: ShopPage.js:66 ~ ShopPage ~ watchCate:", watchCate);
   const watchRate = watch("rate");
   const [rangeValue, setRangeValue] = useState({ min: 0, max: 1000 });
   const { slug } = useParams(); //lấy ra được slug
@@ -95,10 +93,7 @@ const ShopPage = () => {
   const { dataProWithFilter, dataBestSeller, dataPro } = useSelector(
     (state) => state.product
   );
-  console.log(
-    "🚀 ~ file: ShopPage.js:87 ~ ShopPage ~ dataProWithFilter:",
-    dataProWithFilter
-  );
+
   const { loading } = useSelector((state) => state.product);
 
   //set các field đã được chọn or set lấy giá trị trên url

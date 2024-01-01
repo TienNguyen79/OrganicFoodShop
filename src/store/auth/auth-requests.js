@@ -1,15 +1,6 @@
-// import axios from "../../api/axios";
-
 import axios from "../../api/axios";
-import { getToken } from "../../utils/auth";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export const requestAuthRegister = (data) => {
-  console.log(
-    "🚀 ~ file: auth-requests.js:4 ~ requestAuthRegister ~ data:",
-    data
-  );
-
   return axios.post("/api/register", {
     ...data,
   });
@@ -21,6 +12,7 @@ export const requestAuthLogin = (data) => {
   });
 };
 
+//lấy ra được thông tin của user đang đăng nhập thông qua token
 export const requestAuthFetchMe = (token) => {
   const decodedToken = atob(token); //giải mã base64
   if (!decodedToken) return;

@@ -29,9 +29,9 @@ import History from "../../utils/history";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { requestCateDataWithId } from "../category/cate-requests";
-export default function* handleGetProBestSeller(action) {
-  const { payload, type } = action;
 
+//lấy sản phẩm bán chạy nhất
+export default function* handleGetProBestSeller(action) {
   try {
     yield put(setLoadings({ component: "bestSeller", value: true }));
     const response = yield call(requestProBestSeller);
@@ -47,9 +47,9 @@ export default function* handleGetProBestSeller(action) {
       error
     );
   }
-  yield 1;
 }
 
+//lấy sản phẩm deal ngol
 function* handleGetHotDeal() {
   try {
     yield put(setLoadings({ component: "hotDeal", value: true }));
@@ -68,6 +68,7 @@ function* handleGetHotDeal() {
   }
 }
 
+//lấy những sản phẩm được đánh giá cao
 function* handleGetProTopRated() {
   try {
     yield put(setLoadings({ component: "topRated", value: true }));
@@ -86,6 +87,7 @@ function* handleGetProTopRated() {
   }
 }
 
+//lấy những sản phẩm nổi bật
 function* handleGetProFeature() {
   try {
     yield put(setLoadings({ component: "feauture", value: true }));
@@ -104,6 +106,7 @@ function* handleGetProFeature() {
   }
 }
 
+//lấy tất cả sản phẩm
 function* handleGetProAll() {
   try {
     yield put(setLoading(true));
@@ -122,19 +125,13 @@ function* handleGetProAll() {
   }
 }
 
+//bộ lọc trong shop
 function* handleGetProWithFilter(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: pro-handlers.js:120 ~ function*handleGetProWithFilter ~ payload:",
-    payload
-  );
+
   try {
     yield put(setLoading(true));
     const response = yield call(requestProWithFilter, payload);
-    console.log(
-      "🚀 ~ file: pro-handlers.js:126 ~ function*handleGetProWithFilter ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateData({ resultProWithFilter: response.data.products }));
@@ -148,9 +145,8 @@ function* handleGetProWithFilter(action) {
       error
     );
   }
-  yield 1;
 }
-
+//tìm kiếm sản phẩm theo tên
 function* handleGetProSearch(action) {
   const { payload } = action;
 
@@ -170,19 +166,15 @@ function* handleGetProSearch(action) {
       error
     );
   }
-  yield 1;
 }
 
+//lấy thông tin xem nhanh của sản phẩm
 function* handleGetProQuickView(action) {
   const { payload, type } = action;
 
   try {
     yield put(setLoadings({ component: "quickview", value: true }));
     const response = yield call(requestProQuickview, payload);
-    console.log(
-      "🚀 ~ file: pro-handlers.js:172 ~ function*handleGetProQuickView ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateData({ resultProQuickView: response.data.product }));
@@ -194,16 +186,13 @@ function* handleGetProQuickView(action) {
   }
 }
 
+//xem chi tiết sản phẩm
 function* handleGetProDetails(action) {
   const { payload, type } = action;
 
   try {
     yield put(setLoadings({ component: "details", value: true }));
     const response = yield call(requestProDetails, payload);
-    console.log(
-      "🚀 ~ file: pro-handlers.js:194 ~ function*handleGetProDetails ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateData({ resultProDetails: response.data }));
@@ -216,6 +205,7 @@ function* handleGetProDetails(action) {
 }
 //ADMIN
 
+//lấy tất cả sản phẩm
 function* handleAdminGetProAll(action) {
   const { payload, type } = action;
   try {
@@ -232,6 +222,7 @@ function* handleAdminGetProAll(action) {
   }
 }
 
+//thêm sản phẩm
 function* handleAdminAddPro(action) {
   yield put(setLoading(true));
   const { payload, type } = action;
@@ -264,6 +255,7 @@ function* handleAdminAddPro(action) {
   }
 }
 
+//xóa sản phẩm
 function* handleAdmiDeletePro(action) {
   const { payload, type } = action;
   try {
@@ -287,13 +279,12 @@ function* handleAdmiDeletePro(action) {
   }
 }
 
+//cập nhật sản phẩm
+
 function* handleAdmiUpdatePro(action) {
   yield put(setLoading(true));
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: pro-handlers.js:288 ~ function*handleAdmiUpdatePro ~ payload:",
-    payload
-  );
+
   try {
     const response = yield call(requestAdminUpdatePro, payload);
 
@@ -322,6 +313,7 @@ function* handleAdmiUpdatePro(action) {
   }
 }
 
+//tìm kiếm sản phẩm
 function* handleAdmiSearchNamePro(action) {
   const { payload, type } = action;
   try {
@@ -341,7 +333,7 @@ function* handleAdmiSearchNamePro(action) {
     );
   }
 }
-
+//tìm kiếm sản phẩm thông qua category
 function* handleAdmiSearchProWithCate(action) {
   const { payload, type } = action;
   try {

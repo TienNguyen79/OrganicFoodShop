@@ -5,9 +5,6 @@ import Label from "../components/label/Label";
 import GroupJusBeween from "../components/common/GroupJusBeween";
 import Gap from "../components/common/Gap";
 import LabelRedirect from "../components/label/LabelRedirect";
-import IconAR2 from "../components/Icons/IconAR2";
-import IconArrowDown from "../components/Icons/IconArrowDown";
-import IconArrowRight from "../components/Icons/IconArrowRight";
 import ProductItem from "../modules/product/ProductItem";
 import CategoryItem from "../modules/category/CategoryItem";
 import Slider from "react-slick";
@@ -27,16 +24,11 @@ import {
   proGetHotDeal,
   proGetTopRated,
 } from "../store/product/pro-slice";
-import axios from "../api/axios";
 import { cateGetdataAll } from "../store/category/cate-slice";
 import ProQuickView from "../modules/product/ProQuickView";
-import CartPopup from "../modules/cart/CartPopup";
 import { blogGetAll } from "../store/blog/blog-slice";
 import { Link, useLocation } from "react-router-dom";
-import { wishListGetAll } from "../store/cart/cart-slice";
-import { getToken } from "../utils/auth";
-import ProductLoading from "../modules/product/ProductLoading";
-import Skeleton from "react-loading-skeleton";
+
 import "react-loading-skeleton/dist/skeleton.css";
 const dataUtil = [
   {
@@ -66,10 +58,7 @@ const dataUtil = [
 ];
 
 const HomePage = () => {
-  const { pathname } = useLocation();
-
-  console.log("pathname", pathname);
-
+  //setting dùng cho slider
   const settings = {
     className: "center",
     infinite: true,
@@ -106,34 +95,10 @@ const HomePage = () => {
     dispatch(blogGetAll(1));
   }, []);
 
-  // useEffect(() => {
-  // }, []);
-  // useEffect(() => {
-  // }, []);
-
-  // useEffect(() => {
-  // }, [dispatch]);
-  // useEffect(() => {
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(cateGetdataAll());
-  // }, []);
-
-  const {
-    dataBestSeller,
-    dataHotDeal,
-    dataTopRated,
-    dataFeauture,
-    loading,
-    loadings,
-    dataProSearch,
-    dataPro,
-  } = useSelector((state) => state.product);
-  console.log("🚀 ~ file: HomePage.js:126 ~ HomePage ~ dataPro:", dataPro);
+  const { dataBestSeller, dataHotDeal, dataTopRated, dataFeauture, loadings } =
+    useSelector((state) => state.product);
 
   const { dataCate } = useSelector((state) => state.category);
-  const { dataQuickview } = useSelector((state) => state.product);
   const { dataBlogAll } = useSelector((state) => state.blog);
 
   const [isModalOpen, setModalOpen] = useState(false);

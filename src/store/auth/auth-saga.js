@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import {
   authCheckToken,
   authLogOut,
@@ -22,5 +22,4 @@ export default function* authSaGa() {
   yield takeLatest(authCheckToken.type, handlecheckToken);
   yield takeLatest(authLogOut.type, handleLogOut);
   yield takeLatest(authLogOutAdmin.type, handleLogOutAdmin);
-  // yield takeLatest(authFetchMe.type, handleAuthFetchMe);
 }

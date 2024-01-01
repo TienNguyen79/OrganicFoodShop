@@ -56,8 +56,6 @@ const LoginPage = () => {
   const { loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  // const slug = useParams();
-  // console.log("🚀 ~ file: LoginPage.js:53 ~ LoginPage ~ slug:", slug);
 
   const handlelogin = async (values) => {
     console.log("🚀 ~ file: LoginPage.js:28 ~ handlelogin ~ values:", values);

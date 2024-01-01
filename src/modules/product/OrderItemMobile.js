@@ -36,17 +36,17 @@ const OrderItemMobile = ({ item, tabClicked }) => {
           </div>{" "}
           {/* Mục đích để hiện lên cái review */}
           {tabClicked !== 4 && tabClicked !== 5 ? (
-            <td>
+            <div>
               <LabelRedirect
                 icon=""
                 className="text-sm  font-medium"
                 title="View Details"
                 url={`/order_details/${item?.id}`}
               ></LabelRedirect>
-            </td>
+            </div>
           ) : tabClicked === 4 ? (
             <div>
-              <td>
+              <div>
                 <div className="flex justify-center items-center ">
                   <LabelRedirect
                     icon=""
@@ -62,10 +62,10 @@ const OrderItemMobile = ({ item, tabClicked }) => {
                     url={`#`}
                   ></LabelRedirect>
                 </div>
-              </td>
+              </div>
             </div>
           ) : tabClicked === 5 ? (
-            <td>
+            <div>
               <div className="flex  justify-center items-center  ">
                 <LabelRedirect
                   icon=""
@@ -81,7 +81,7 @@ const OrderItemMobile = ({ item, tabClicked }) => {
                             url={`#`}
                           ></LabelRedirect> */}
               </div>
-            </td>
+            </div>
           ) : (
             ""
           )}

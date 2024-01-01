@@ -11,7 +11,6 @@ import { cartAddNew, wishListDelete } from "../../store/cart/cart-slice";
 import { useDispatch } from "react-redux";
 
 const ProItemMobile = ({ item }) => {
-  console.log("🚀 ~ file: ProItemMobile.js:11 ~ ProItemMobile ~ data:", item);
   const dispatch = useDispatch();
   return (
     <div className="border-b-[1px] py-3 px-2">

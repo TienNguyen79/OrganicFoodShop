@@ -23,10 +23,7 @@ const UserDashBoardPage = () => {
   }, []);
   const { user, accessToken } = useSelector((state) => state.auth);
   const { dataOrderAll } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: UserDashBoardPage.js:25 ~ UserDashBoardPage ~ dataOrderAll:",
-    dataOrderAll
-  );
+
   //hien thị trong mobile
 
   const [shouldShowMobileTablet, setShouldShowMobileTablet] = useState(true);

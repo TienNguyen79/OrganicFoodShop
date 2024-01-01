@@ -11,10 +11,7 @@ const FeautureProPage = () => {
     dispatch(proGetFeauture());
   }, []);
   const { dataFeauture } = useSelector((state) => state.product);
-  console.log(
-    "🚀 ~ file: FeautureProPage.js:12 ~ FeautureProPage ~ dataFeauture:",
-    dataFeauture
-  );
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClickClose, setIsClickClose] = useState(false);
   const openModal = () => {

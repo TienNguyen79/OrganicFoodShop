@@ -57,10 +57,6 @@ export const requestCartUpdate = (data) => {
 //wishList
 
 export const requestWishListAll = (token) => {
-  console.log(
-    "🚀 ~ file: cart-requests.js:60 ~ requestWishListAll ~ token:",
-    token
-  );
   const decodedToken = atob(token); //giải mã base64
   if (!decodedToken) return;
   return axios.get("/api/wish_list", {

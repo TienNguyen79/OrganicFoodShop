@@ -12,7 +12,6 @@ const ProQuickView = ({
   className = "top-[130px]",
 }) => {
   const { dataQuickview, loadings } = useSelector((state) => state.product);
-  console.log("🚀 ~ file: ProQuickView.js:15 ~ loading:", loadings);
 
   return (
     <div

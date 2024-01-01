@@ -33,12 +33,6 @@ const OrderDetailsPage = () => {
 
   const { dataOrderDetails } = useSelector((state) => state.order);
 
-  const { user, accessToken } = useSelector((state) => state.auth);
-  console.log(
-    "🚀 ~ file: OrderDetailsPage.js:38 ~ OrderDetailsPage ~ user:",
-    user
-  );
-
   const handleCancelOrder = () => {
     Swal.fire({
       title: `Are you sure to cancel orderID  <span class="capitalize font-semibold italic underline text-darkPrimary">${slug}</span>?`,

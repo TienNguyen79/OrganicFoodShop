@@ -64,8 +64,6 @@ function App() {
     dispatch(authCheckToken());
   }, [dispatch]);
 
-  const { user, accessToken } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: LoginPage.js:32 ~ LoginPage ~ user:", user);
   return (
     <Suspense>
       <Routes>

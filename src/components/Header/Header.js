@@ -57,7 +57,6 @@ const Header = () => {
     setShow: setShow3,
     nodeRef: nodeRef3,
   } = useClickOutSide();
-  console.log("🚀 ~ file: Header.js:46 ~ Header ~ show3:", show3);
 
   //xử lý tìm kiếm theo tên
   const handleFilterChangeDebounced = debounce((searchTerm) => {
@@ -81,7 +80,6 @@ const Header = () => {
   };
   const [openMenuSub, setOpenMenuSub] = useState(false);
   const navigate = useNavigate();
-  console.log("🚀 ~ file: Header.js:83 ~ Header ~ openMenuSub:", openMenuSub);
   return (
     <Fragment>
       <CartPopup

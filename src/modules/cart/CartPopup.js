@@ -21,8 +21,6 @@ const CartPopup = ({
     dispatch(cartGetAll(getToken()));
   }, []);
 
-  console.log("🚀 ~ file: CartPopup.js:23 ~ dataCartAll:", dataCartAll);
-
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {

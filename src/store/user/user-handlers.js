@@ -20,16 +20,15 @@ import { setLoading, updateDataCustomer } from "./user-slice";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import History from "../../utils/history";
+
+//cập nhật thông tin user
 export default function* handleUpdateUser(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestUserUpdate, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:10 ~ function*handleUpdateUser ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       const response = yield call(requestAuthFetchMe, getToken());
 
@@ -43,17 +42,13 @@ export default function* handleUpdateUser(action) {
     );
   }
 }
-
+//thay đổi mật khẩu
 function* handleChangePasswordUser(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestUserChangePassword, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:39 ~ function*handleChangePasswordUser ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const response = yield call(requestAuthFetchMe, getToken());
@@ -70,20 +65,13 @@ function* handleChangePasswordUser(action) {
   }
 }
 
+//cập nhật địa chỉ user
 function* handleUpdateAddressUser(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: user-handlers.js:64 ~ function*handleUpdateAddressUser ~ payload:",
-    payload
-  );
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestUserUpdateAddress, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:68 ~ function*handleUpdateAddressUser ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const response = yield call(requestAuthFetchMe, getToken());
@@ -98,18 +86,15 @@ function* handleUpdateAddressUser(action) {
     );
   }
 }
-//ADMIN
+//----------------ADMIN------------------
 
+//lấy tất cả thông tin của khách hàng
 function* handleGetAllCustomer(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestAdminGetAllCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:100 ~ function*handleGetAllCustomer ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataCustomer({ resultDataCustomerAll: response.data }));
@@ -122,15 +107,12 @@ function* handleGetAllCustomer(action) {
   }
 }
 
+//xóa khách hàng
 function* handleDeleteCustomer(action) {
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminDeleteCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:123 ~ function*handleDeleteCustomer ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const customerAll = yield call(requestAdminGetAllCustomer);
@@ -148,20 +130,14 @@ function* handleDeleteCustomer(action) {
   }
 }
 
+//thêm user
 function* handleAddCustomer(action) {
   yield put(setLoading(true));
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: user-handlers.js:147 ~ function*handleAddCustomer ~ payload:",
-    payload
-  );
 
   try {
     const response = yield call(requestAdminAddCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:149 ~ function*handleAddCustomer ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       const customerAll = yield call(requestAdminGetAllCustomer);
       yield put(
@@ -181,19 +157,12 @@ function* handleAddCustomer(action) {
   }
 }
 
+//cập nhật role user
 function* handleRoleCustomer(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: user-handlers.js:176 ~ function*handleRoleCustomer ~ payload:",
-    payload
-  );
 
   try {
     const response = yield call(requestAdminRoleCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:182 ~ function*handleRoleCustomer ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const customerAll = yield call(requestAdminGetAllCustomer, payload.page);
@@ -212,19 +181,12 @@ function* handleRoleCustomer(action) {
   }
 }
 
+//cập nhật trạng thái active hay Ban
 function* handleStatusCustomer(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: user-handlers.js:207 ~ function*handleStatusCustomer ~ payload:",
-    payload
-  );
 
   try {
     const response = yield call(requestAdminStatusCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:213 ~ function*handleStatusCustomer ~ requestAdminStatusCustomer:",
-      requestAdminStatusCustomer
-    );
 
     if (response.status === 200) {
       const customerAll = yield call(requestAdminGetAllCustomer, payload.page);
@@ -244,19 +206,12 @@ function* handleStatusCustomer(action) {
   }
 }
 
+//tìm kiếm theo tên user
 function* handleSearchCustomer(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: user-handlers.js:238 ~ function*handleSearchCustomer ~ payload:",
-    payload
-  );
 
   try {
     const response = yield call(requestAdminSearchCustomer, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:244 ~ function*handleSearchCustomer ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataCustomer({ resultDataCustomerAll: response.data }));
@@ -269,15 +224,12 @@ function* handleSearchCustomer(action) {
   }
 }
 
+//xem thông tin chi tiết User
 function* handleGetCustomerDetail(action) {
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminCustomerDetails, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:275 ~ function*handleGetCustomerDetail ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataCustomer({ resultDataCustomerAll: response.data }));
@@ -290,15 +242,12 @@ function* handleGetCustomerDetail(action) {
   }
 }
 
+//dashboard admin
 function* handleAdminDashBoard(action) {
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminDashBoard, payload);
-    console.log(
-      "🚀 ~ file: user-handlers.js:296 ~ function*handleAdminDashBoard ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(

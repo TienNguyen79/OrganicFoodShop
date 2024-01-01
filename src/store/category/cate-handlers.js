@@ -13,19 +13,14 @@ import History from "../../utils/history";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-export default function* handleGetCate(action) {
-  const { payload, type } = action;
 
+//lấy tất cả category
+export default function* handleGetCate(action) {
   try {
     const response = yield call(requestCateData);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:9 ~ function*handleGetCate ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateData({ resultCateAll: response.data.categories }));
-      console.log("ok");
     }
   } catch (error) {
     console.log(
@@ -33,18 +28,33 @@ export default function* handleGetCate(action) {
       error
     );
   }
-  yield 1;
 }
 
+//lấy chi tiết cate -- nó trả ra tất cả sản phẩm thuộc về category đó
+function* handleGetCateWithId(action) {
+  const { payload, type } = action;
+
+  try {
+    const response = yield call(requestCateDataWithId, payload);
+
+    if (response.status === 200) {
+      yield put(updateData({ resultCateWithId: response.data.products }));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: pro-handlers.js:14 ~ function*handleGetProBestSeller ~ error:",
+      error
+    );
+  }
+}
+//-------------------ADMIN--------------------
+
+//lấy chi tiết category--admin
 function* handleGetDetailCate(action) {
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminGetDetailCate, payload);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:9 ~ function*handleGetCate ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateData({ resultCateAll: response.data.category }));
@@ -57,39 +67,13 @@ function* handleGetDetailCate(action) {
   }
 }
 
-function* handleGetCateWithId(action) {
-  const { payload, type } = action;
-
-  try {
-    const response = yield call(requestCateDataWithId, payload);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:9 ~ function*handleGetCate ~ response:",
-      response
-    );
-
-    if (response.status === 200) {
-      yield put(updateData({ resultCateWithId: response.data.products }));
-      console.log("ok");
-    }
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: pro-handlers.js:14 ~ function*handleGetProBestSeller ~ error:",
-      error
-    );
-  }
-  yield 1;
-}
-
+//thêm category
 function* handlePostCategory(action) {
   yield put(setLoading(true));
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminAddCate, payload);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:57 ~ function*handlePostCategory ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const resultCateAll = yield call(requestCateData);
@@ -109,15 +93,12 @@ function* handlePostCategory(action) {
   }
 }
 
+//xóa category
 function* handleDeleteCategory(action) {
   const { payload, type } = action;
 
   try {
     const response = yield call(requestAdminDeleteCate, payload);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:86 ~ function*handleDeleteCategory ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const resultCateAll2 = yield call(requestCateData);
@@ -137,20 +118,14 @@ function* handleDeleteCategory(action) {
   }
 }
 
+//cập nhật category
 function* handleUpdateCategory(action) {
   yield put(setLoading(true));
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cate-handlers.js:139 ~ function*handleUpdateCategory ~ payload:",
-    payload
-  );
 
   try {
     const response = yield call(requestAdminUpdateCate, payload);
-    console.log(
-      "🚀 ~ file: cate-handlers.js:118 ~ function*handleUpdateCategory ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       const resultCateAll = yield call(requestCateData);
       yield put(updateData({ resultCateAll: resultCateAll.data.categories }));
@@ -168,6 +143,7 @@ function* handleUpdateCategory(action) {
   }
 }
 
+//tìm kiếm với name category
 function* handleSearchCategory(action) {
   const { payload, type } = action;
 

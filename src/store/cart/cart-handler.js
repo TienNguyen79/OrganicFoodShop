@@ -19,20 +19,13 @@ import { toast } from "react-toastify";
 import { getToken } from "../../utils/auth";
 import History from "../../utils/history";
 
+//lấy tất cả product trong giỏ hàng
 export default function* handleGetCartAll(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cart-handler.js:22 ~ function*handleGetCartAll ~ payload:",
-    payload
-  );
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestCartAll, payload);
-    console.log(
-      "🚀 ~ file: cart-handler.js:10 ~ function*handleGetCartAll ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataCart({ resultCartAll: response.data.cart }));
@@ -47,12 +40,9 @@ export default function* handleGetCartAll(action) {
   }
 }
 
+//thêm sản phẩm vào giỏ hàng
 function* handleCartAddNew(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cart-handler.js:32 ~ function*handleCartAddNew ~ payload:",
-    payload
-  );
 
   try {
     yield put(setLoading(true));
@@ -74,13 +64,9 @@ function* handleCartAddNew(action) {
     yield put(setLoading(false));
   }
 }
-
+//xóa sản phẩm trong giỏ hàng
 function* handleCartDelete(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cart-handler.js:32 ~ function*handleCartAddNew ~ payload:",
-    payload
-  );
 
   try {
     //   yield put(setLoading(true));
@@ -104,7 +90,7 @@ function* handleCartDelete(action) {
   }
 }
 
-//cart update
+//update sản phẩm trong giỏ hàng
 
 function* handleCartUpdate(action) {
   const { payload, type } = action;
@@ -134,17 +120,13 @@ function* handleCartUpdate(action) {
 }
 
 //wishList
-
+//lấy tất cả sản phẩm yêu thích
 function* handleGetWishListAll(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestWishListAll, payload);
-    console.log(
-      "🚀 ~ file: cart-handler.js:96 ~ function*handleGetWishListAll ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(
@@ -153,20 +135,13 @@ function* handleGetWishListAll(action) {
       // yield put(setLoading(false));
     }
   } catch (error) {
-    // console.log(
-    //   "🚀 ~ file: cart-handler.js:104 ~ function*handleGetWishListAll ~ error:",
-    //   error
-    // );
     //   yield put(setLoading(false));
   }
 }
 
+//thêm những sản phẩm mình ưa thích
 function* handleWishListAddNew(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cart-handler.js:123 ~ function*handleWishListAddNew ~ payload:",
-    payload
-  );
 
   try {
     yield put(setLoadingWishList(true));
@@ -189,24 +164,17 @@ function* handleWishListAddNew(action) {
   }
 }
 
+//xóa sản phẩm ưa thích
 function* handlewishListDelete(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: cart-handler.js:156 ~ function*handlewishListDelete ~ payload:",
-    payload
-  );
 
   try {
     yield put(setLoadingWishList(true));
     const response = yield call(requestwishListDelete, payload);
-    console.log(
-      "🚀 ~ file: cart-handler.js:196 ~ function*handlewishListDelete ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       //khi thành công update luôn wishList
       const wishListResponse = yield call(requestWishListAll, getToken());
-      console.log("CÓ VÀO");
       yield put(
         updateDataWishList({
           resultWishListAll: wishListResponse.data.wishList || [],

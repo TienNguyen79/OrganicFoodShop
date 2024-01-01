@@ -76,10 +76,7 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
   const [selectedThumb, setSelectedThumb] = useState(1);
   const { loading } = useSelector((state) => state.product);
   const { loadingCart } = useSelector((state) => state.cart);
-  console.log(
-    "🚀 ~ file: ProDetailItem.js:63 ~ ProDetailItem ~ loadingCart:",
-    loadingCart
-  );
+
   const dispatch = useDispatch();
   // const [formData, setFormData] = useState({
   //   product_id: 1,
@@ -105,7 +102,6 @@ const ProDetailItem = ({ data, isClickClose, onClose }) => {
         token: getToken(),
       })
     );
-    console.log({ product_id: data?.id, quantity: values.quantity });
 
     //khi submit xong set số lượng về 1
     setValue("quantity", 1);

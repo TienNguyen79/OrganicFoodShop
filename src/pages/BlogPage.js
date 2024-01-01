@@ -35,7 +35,6 @@ const BlogPage = () => {
   // }, [nextPage]);
 
   const { dataBlogAll, loading } = useSelector((state) => state.blog);
-  console.log("🚀 ~ file: BlogPage.js:35 ~ BlogPage ~ loading:", loading);
 
   //xử lí phân trang
   useEffect(() => {

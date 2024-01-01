@@ -41,7 +41,6 @@ const ProductItem = ({ data, openModal }) => {
 
   const dispatch = useDispatch();
   const handleOpenModal = (id) => {
-    console.log("🚀 ~ file: ProductItem.js:83 ~ handleOpenModal ~ id:", id);
     openModal();
     dispatch(proGetQuickview(id));
   };
@@ -51,10 +50,6 @@ const ProductItem = ({ data, openModal }) => {
 
   const { dataWishListAll, loadingWishList, loadingCart } = useSelector(
     (state) => state.cart
-  );
-  console.log(
-    "🚀 ~ file: ProductItem.js:51 ~ ProductItem ~ loadingWishList:",
-    loadingWishList
   );
 
   const [wishList, setWishList] = useState([]);

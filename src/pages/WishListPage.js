@@ -22,16 +22,11 @@ import ProItemMobile from "../modules/product/ProItemMobile";
 const WishListPage = () => {
   const dispatch = useDispatch();
 
-  console.log("🚀 ~ file: WishListPage.js:19 ~ getToken:999", getToken());
   useEffect(() => {
     dispatch(wishListGetAll(getToken()));
   }, []);
 
   const { dataWishListAll } = useSelector((state) => state.cart);
-  console.log(
-    "🚀 ~ file: WishListPage.js:23 ~ WishListPage ~ dataWishListAll:",
-    dataWishListAll
-  );
 
   //hien thị trong mobile
   const [shouldShowMobile, setShouldShowMobile] = useState(true);

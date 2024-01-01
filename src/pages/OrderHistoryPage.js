@@ -60,10 +60,6 @@ const OrderHistoryPage = () => {
   }, [dispatch, nextPage, tabClicked]);
 
   const { dataOrderAll } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: OrderHistoryPage.js:62 ~ OrderHistoryPage ~ dataOrderAll:",
-    dataOrderAll
-  );
 
   //xử lí phân trang
   useEffect(() => {
@@ -125,7 +121,7 @@ const OrderHistoryPage = () => {
           ))}
         </div>
       </div>
-      {!shouldShowMobileTablet ? (
+      {!shouldShowMobileTablet && dataOrderAll?.data?.length > 0 ? (
         <Table>
           <table>
             <thead>
@@ -178,42 +174,36 @@ const OrderHistoryPage = () => {
                           ></LabelRedirect>
                         </td>
                       ) : tabClicked === 4 ? (
-                        <div>
-                          <td>
-                            <div className="flex justify-center items-center ">
-                              <LabelRedirect
-                                icon=""
-                                className="text-sm  font-medium"
-                                title=" Details"
-                                url={`/order_details/${item?.id}`}
-                              ></LabelRedirect>
-                              <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
-                              <LabelRedirect
-                                icon=""
-                                className="text-sm  font-medium pl-2 "
-                                title=" Review"
-                                url={`#`}
-                              ></LabelRedirect>
-                            </div>
-                          </td>
-                        </div>
+                        <td className="flex justify-center items-center ">
+                          <LabelRedirect
+                            icon=""
+                            className="text-sm  font-medium"
+                            title=" Details"
+                            url={`/order_details/${item?.id}`}
+                          ></LabelRedirect>
+                          <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
+                          <LabelRedirect
+                            icon=""
+                            className="text-sm  font-medium pl-2 "
+                            title=" Review"
+                            url={`#`}
+                          ></LabelRedirect>
+                        </td>
                       ) : tabClicked === 5 ? (
-                        <td>
-                          <div className="flex  justify-center items-center  ">
-                            <LabelRedirect
-                              icon=""
-                              className="text-sm  font-medium hover:opacity-80"
-                              title=" Details"
-                              url={`/order_details/${item?.id}`}
-                            ></LabelRedirect>
-                            {/* <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
+                        <td className="flex  justify-center items-center  ">
+                          <LabelRedirect
+                            icon=""
+                            className="text-sm  font-medium hover:opacity-80"
+                            title=" Details"
+                            url={`/order_details/${item?.id}`}
+                          ></LabelRedirect>
+                          {/* <div className="w-[2px]  h-[19px] bg-slate-300 mx-1"></div>
                           <LabelRedirect
                             icon=""
                             className="text-sm text-danger pl-2   font-semibold hover:opacity-80"
                             title=" Buy back"
                             url={`#`}
                           ></LabelRedirect> */}
-                          </div>
                         </td>
                       ) : (
                         ""
@@ -224,7 +214,7 @@ const OrderHistoryPage = () => {
             </tbody>
           </table>
         </Table>
-      ) : (
+      ) : shouldShowMobileTablet && dataOrderAll?.data?.length > 0 ? (
         dataOrderAll?.data?.length > 0 &&
         dataOrderAll?.data?.map((item) => (
           <div key={item?.id} className="flex flex-col my-8 md:my-0">
@@ -234,6 +224,14 @@ const OrderHistoryPage = () => {
             ></OrderItemMobile>
           </div>
         ))
+      ) : (
+        <div className="w-[250px] h-[250px]  mx-auto mb-4 md:mb-0 lg:mb-0">
+          <img
+            src="/noOrder.png"
+            className="w-full h-full object-contain"
+            alt=""
+          />
+        </div>
       )}
       {dataOrderAll?.data?.length > 0 && dataOrderAll?.last_page > 1 && (
         <div className="mt-8 mb-8">

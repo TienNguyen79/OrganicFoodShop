@@ -220,7 +220,6 @@ const SettingsPage = () => {
   };
 
   const { user, accessToken } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: SettingsPage.js:220 ~ SettingsPage ~ user:", user);
 
   useEffect(() => {
     dispatch(authCheckToken());

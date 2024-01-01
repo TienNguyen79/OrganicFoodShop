@@ -16,16 +16,14 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import History from "../../utils/history";
+
+//lấy tất cả đơn hàng
 export default function* handleGetOrderAll(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestGetOrderAll, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:10 ~ function*handleGetCartAll ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderAll: response.data }));
@@ -40,17 +38,14 @@ export default function* handleGetOrderAll(action) {
     //   yield put(setLoading(false));
   }
 }
-
+// mua hàng
 function* handlePostOrder(action) {
   const { payload, type } = action;
 
   yield put(setLoadingOrder(true));
   try {
     const response = yield call(requestPostOrder, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:37 ~ function*handlePostOrder ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       Swal.fire({
         title: "Your order has been placed!",
@@ -87,16 +82,13 @@ function* handlePostOrder(action) {
   }
 }
 
+//xem chi tiết đơn hàng
 function* handleGetOrderDetails(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestGetOrderDetails, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:64 ~ function*handleGetOrderDetails ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderDetails: response.data }));
@@ -112,16 +104,37 @@ function* handleGetOrderDetails(action) {
   }
 }
 
+//lọc đơn hàng theo trạng thái trong user
+function* handleGetFilterUserOrder(action) {
+  const { payload, type } = action;
+
+  try {
+    //   yield put(setLoading(true));
+    const response = yield call(requestGetFilterOrderUser, payload);
+
+    if (response.status === 200) {
+      yield put(updateDataOrder({ resultOrderAll: response.data }));
+      // yield put(setLoading(false));
+    }
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: order-handlers.js:148 ~ function*handleGetFilterUserOrder ~ error:",
+      error
+    );
+
+    //   yield put(setLoading(false));
+  }
+}
+//-----------------ADMIN----------------
+
+//lọc đơn hàng theo trạng thái trong admin
+
 function* handleGetFilterOrder(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestGetFilterOrder, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:115 ~ function*handleGetFilterOrder ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderAll: response.data }));
@@ -138,30 +151,7 @@ function* handleGetFilterOrder(action) {
   }
 }
 
-function* handleGetFilterUserOrder(action) {
-  const { payload, type } = action;
-
-  try {
-    //   yield put(setLoading(true));
-    const response = yield call(requestGetFilterOrderUser, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:140 ~ function*handleGetFilterUserOrder ~ response:",
-      response
-    );
-
-    if (response.status === 200) {
-      yield put(updateDataOrder({ resultOrderAll: response.data }));
-      // yield put(setLoading(false));
-    }
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: order-handlers.js:148 ~ function*handleGetFilterUserOrder ~ error:",
-      error
-    );
-
-    //   yield put(setLoading(false));
-  }
-}
+//hủy bỏ đơn hàng
 
 function* handleCancelOrder(action) {
   const { payload, type } = action;
@@ -194,7 +184,7 @@ function* handleCancelOrder(action) {
   }
 }
 
-//ADMIN
+//lấy tất cả đơn hàng --admin
 
 function* handleAdminGetOrder(action) {
   const { payload, type } = action;
@@ -202,10 +192,6 @@ function* handleAdminGetOrder(action) {
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestAdminGetOrder, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:166 ~ function*handleAdminGetOrder ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderAll: response.data }));
@@ -221,16 +207,13 @@ function* handleAdminGetOrder(action) {
   }
 }
 
+//xem chi tiết đơn hàng
 function* handleAdminGetOrderDetail(action) {
   const { payload, type } = action;
 
   try {
     //   yield put(setLoading(true));
     const response = yield call(requestAdminGetOrderDetail, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:194 ~ function*handleAdminGetOrderDetail ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       yield put(updateDataOrder({ resultOrderDetails: response.data }));
@@ -246,20 +229,14 @@ function* handleAdminGetOrderDetail(action) {
   }
 }
 
+//cập nhật trạng thái đơn hàng. mỗi lần gửi request nó sẽ tăng dần trạng thái từ 0-->5
 function* handleAdminUpdateStastusOrder(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: order-handlers.js:188 ~ function*handleAdminUpdateStastusOrder ~ payload:",
-    payload
-  );
 
   try {
     // yield put(setLoading(true));
     const response = yield call(requestAdminUpdateStatusOrder, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:192 ~ function*handleAdminUpdateStastusOrder ~ response:",
-      response
-    );
+
     if (response.status === 200) {
       const response2 = yield call(requestGetFilterOrder, {
         status: payload.status || "0",
@@ -303,21 +280,13 @@ function* handleAdminUpdateStastusOrder(action) {
     //   yield put(setLoading(false));
   }
 }
-
+//hủy bỏ đơn hàng
 function* handleAdminCancelOrder(action) {
   const { payload, type } = action;
-  console.log(
-    "🚀 ~ file: order-handlers.js:222 ~ function*handleAdminCancelOrder ~ payload:",
-    payload
-  );
 
   try {
     // yield put(setLoading(true));
     const response = yield call(requestAdminCancelOrder, payload);
-    console.log(
-      "🚀 ~ file: order-handlers.js:229 ~ function*handleAdminCancelOrder ~ response:",
-      response
-    );
 
     if (response.status === 200) {
       const response2 = yield call(requestGetFilterOrder, {

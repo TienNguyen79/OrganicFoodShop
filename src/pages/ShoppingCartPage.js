@@ -29,10 +29,6 @@ const ShoppingCartPage = () => {
   }, []);
 
   const { dataCartAll } = useSelector((state) => state.cart);
-  console.log(
-    "🚀 ~ file: ShoppingCartPage.js:29 ~ ShoppingCartPage ~ dataCartAll:",
-    dataCartAll
-  );
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -214,10 +210,6 @@ const ShoppingCartPage = () => {
                     };
                     var arrayJSON = JSON.stringify(data);
                     localStorage.setItem("orderData", arrayJSON);
-                    console.log(
-                      "🚀 ~ file: ShoppingCartPage.js:60 ~ handleCart ~ data:",
-                      data
-                    );
                   }}
                 >
                   <Button

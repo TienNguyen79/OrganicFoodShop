@@ -38,16 +38,7 @@ const authSlice = createSlice({
       ...state,
       loading: action.payload,
     }),
-    // authGetStatus: (state, action) => ({
-    //   ...state,
-    //   statusErrorMess: action.payload,
-    // }),
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(otherAction, (state, action) => {
-  //     state.navigateSuccess = action.payload;
-  //   });
-  // },
 });
 
 export const {

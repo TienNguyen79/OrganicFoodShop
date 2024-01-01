@@ -60,7 +60,7 @@ export const requestUpdateCommentBlog = (data) => {
   return axios.put(`/api/comment/${data.idCmt}`, data, config);
 };
 
-//admin
+//ADMIN
 export const requestAdminAddBlog = (data) => {
   const decodedToken = atob(getToken()); //giải mã base64
   if (!decodedToken) return;
